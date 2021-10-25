@@ -6,8 +6,10 @@ enum class TokenType
     NumberLiteral,
     StringLiteral,
     Operator,
+    Bracket,
     UpperCaseIdentifier,
     LowerCaseIdentifier,
     Semicolon,
-    EndOfLine
+    EndOfLine,
+    EndOfSource
 };

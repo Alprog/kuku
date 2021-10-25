@@ -17,8 +17,8 @@ int wmain(int argc, const wchar_t* argv[])
         {
             break;
         }
-        Scanner scanner;
-        scanner.process(line);
+        Scanner scanner{ line };
+        scanner.process();
     }
     return 0;
 }

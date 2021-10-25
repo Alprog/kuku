@@ -8,12 +8,13 @@
 class Scanner
 {
 public:
-    Scanner();
-    void process(std::wstring line);
+    Scanner(std::wstring sourceText);
+    void process();
 
 private:
-    void flushToken(TokenType type);
+    Token getNextToken();
+    Token createToken(TokenType type, int length = 1);
 
-    int tokenStartIndex;
-    std::vector<Token> tokens;
+    std::wstring sourceText;
+    int currentIndex;
 };
