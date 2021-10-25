@@ -14,4 +14,41 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scanner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Instruction.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Class.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Instance.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenType.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VirtualMachine.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Token.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scanner.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
