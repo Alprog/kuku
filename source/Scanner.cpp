@@ -53,29 +53,29 @@ Token Scanner::getNextToken()
         wchar_t c = sourceText[currentIndex++];
         switch (c)
         {
-        case ' ':
-            continue;
+            case ' ':
+                continue;
 
-        case '\0':
-            return createToken(TokenType::EndOfSource);
+            case '\0':
+                return createToken(TokenType::EndOfSource);
 
-        case '\n':
-            return createToken(TokenType::EndOfLine);
+            case '\n':
+                return createToken(TokenType::EndOfLine);
 
-        case ';':
-            return createToken(TokenType::Semicolon);
+            case ';':
+                return createToken(TokenType::Semicolon);
 
-        case '{':
-        case '}':
-        case '(':
-        case ')':
-            return createToken(TokenType::Bracket);
+            case '{':
+            case '}':
+            case '(':
+            case ')':
+                return createToken(TokenType::Bracket);
 
-        case '+':
-        case '*':
-        case '/':
-        case '=':
-            return createToken(TokenType::Operator);
+            case '+':
+            case '*':
+            case '/':
+            case '=':
+                return createToken(TokenType::Operator);
         }
 
         if (isDigit(c) || c == '-')
