@@ -1,9 +1,11 @@
 #pragma once
 
-struct Class;
+union Cell;
 
 struct Instance
 {
-    Class* _class;
+public:
+    void Dump();
 
+    Cell* Cells;
 };

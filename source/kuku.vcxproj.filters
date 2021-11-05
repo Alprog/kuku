@@ -24,6 +24,18 @@
     <ClCompile Include="Console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TypeRegistry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Class.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Instance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Instruction.h">
@@ -48,6 +60,27 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Console.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Function.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Stack.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="primitives.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataType.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cell.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeRegistry.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

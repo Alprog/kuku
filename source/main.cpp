@@ -4,11 +4,15 @@
 #include <locale>
 
 #include "Scanner.h";
-
 #include "Console.h"
+
+#include "VirtualMachine.h"
 
 int wmain(int argc, const wchar_t* argv[])
 {
+    VirtualMachine VM;
+    VM.test();
+
     while (true)
     {
         std::cout << "> ";
