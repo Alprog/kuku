@@ -5,10 +5,10 @@
 #include "Token.h"
 #include "TokenType.h"
 
-class Scanner
+class Lexer
 {
 public:
-    Scanner(std::wstring sourceText);
+    Lexer(std::wstring sourceText);
     void process();
 
 private:

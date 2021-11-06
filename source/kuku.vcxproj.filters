@@ -13,12 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Encoder">
+      <UniqueIdentifier>{eefb6964-d677-4c1b-8822-4687f82a2a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Repl">
+      <UniqueIdentifier>{1f757459-e80d-446d-8dc6-a08660de6445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lexer">
+      <UniqueIdentifier>{2a0ef2df-7ac8-4c06-8eae-327c747ea0be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Console.cpp">
@@ -36,9 +42,15 @@
     <ClCompile Include="Instance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Lexer.cpp">
+      <Filter>Source Files\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="Encoder.cpp">
+      <Filter>Source Files\Encoder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Instruction.h">
+    <ClInclude Include="InstructionType.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Class.h">
@@ -54,9 +66,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Token.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scanner.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Console.h">
@@ -82,6 +91,15 @@
     </ClInclude>
     <ClInclude Include="TypeRegistry.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lexer.h">
+      <Filter>Source Files\Lexer</Filter>
+    </ClInclude>
+    <ClInclude Include="Repl.h">
+      <Filter>Source Files\Repl</Filter>
+    </ClInclude>
+    <ClInclude Include="Encoder.h">
+      <Filter>Source Files\Encoder</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

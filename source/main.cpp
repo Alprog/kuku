@@ -1,28 +1,33 @@
 ﻿
 #include <iostream>
 #include <string>
-#include <locale>
+#include "Repl.h"
 
-#include "Scanner.h";
-#include "Console.h"
-
-#include "VirtualMachine.h"
-
-int wmain(int argc, const wchar_t* argv[])
+void printHelp()
 {
-    VirtualMachine VM;
-    VM.test();
+    std::cout << "usage:" << std::endl;
+    std::cout << "-h | --help: print help" << std::endl;
+    std::cout << "repl: enter repl mode" << std::endl;
+}
 
-    while (true)
+int main(int argc, const char* argv[])
+{
+    std::string command{ argc > 1 ? argv[1] : "repl" };
+
+
+    if (command == "-h" || command == "--help")
     {
-        std::cout << "> ";
-        std::wstring line = Console::readline();
-        if (line == L"exit")
-        {
-            break;
-        }
-        Scanner scanner{ line };
-        scanner.process();
+        printHelp();
     }
+    else if (command == "repl")
+    {
+        Repl();
+    }
+    else
+    {
+        std::cout << "unknown command: " << command << std::endl;
+        printHelp();
+    }
+
     return 0;
 }

@@ -1,8 +1,8 @@
 
-#include "Scanner.h"
+#include "Lexer.h"
 #include "Console.h"
 
-Scanner::Scanner(std::wstring sourceText)
+Lexer::Lexer(std::wstring sourceText)
     : sourceText{ sourceText + L'\0' }
     , currentIndex{0}
 {
@@ -25,7 +25,7 @@ bool isAlphaOrDigit(wchar_t c)
     return isDigit(c) || isAlpha(c);
 }
 
-void Scanner::process()
+void Lexer::process()
 {
     std::vector<Token> tokens;
 
@@ -46,7 +46,7 @@ void Scanner::process()
     }    
 }
 
-Token Scanner::getNextToken()
+Token Lexer::getNextToken()
 {
     while (true)
     {
@@ -100,7 +100,7 @@ Token Scanner::getNextToken()
     }
 }
 
-Token Scanner::createToken(TokenType type, int length)
+Token Lexer::createToken(TokenType type, int length)
 {
     return { currentIndex - length, length, type };
 }

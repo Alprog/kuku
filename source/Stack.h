@@ -1,16 +1,17 @@
 #pragma once
 
 #include "primitives.h"
+#include "Cell.h"
 
 class Stack
 {
 public:
     Stack()
     {
-        Memory = new byte[1024 * 1024]; // 1 MB
+        Cells = new Cell[1024 * 1024 / sizeof(Cell)]; // 1 MB
         Pointer = nullptr;
     }
 
-    byte* Memory;
-    byte* Pointer;
+    Cell* Cells;
+    Cell* Pointer;
 };

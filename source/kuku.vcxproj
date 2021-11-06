@@ -145,10 +145,11 @@
   <ItemGroup>
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Console.cpp" />
+    <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="Instance.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Scanner.cpp" />
+    <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="TypeRegistry.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,11 +157,13 @@
     <ClInclude Include="Class.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="DataType.h" />
+    <ClInclude Include="Encoder.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="Function.h" />
     <ClInclude Include="Instance.h" />
-    <ClInclude Include="Instruction.h" />
-    <ClInclude Include="Scanner.h" />
+    <ClInclude Include="InstructionType.h" />
+    <ClInclude Include="Lexer.h" />
+    <ClInclude Include="Repl.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="TokenType.h" />

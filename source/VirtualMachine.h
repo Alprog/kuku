@@ -22,10 +22,15 @@ public:
         auto vectorInstance = vectorClass.CreateInstance();
 
         Cell cell;
-        cell.number = 4;
+        cell.number = 41;
 
         SetField(vectorInstance, 2, cell);
         vectorInstance.Dump();
+    }
+
+    void SetLocal(int cellIndex, Cell cellValue)
+    {
+        Stack.Cells[cellIndex] = cellValue;
     }
 
     void SetField(Instance instance, int cellIndex, Cell cellValue)
