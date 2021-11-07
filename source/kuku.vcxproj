@@ -159,6 +159,7 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="DataType.h" />
     <ClInclude Include="Encoder.h" />
+    <ClInclude Include="Encoding.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="Function.h" />
     <ClInclude Include="Instance.h" />

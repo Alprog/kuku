@@ -3,6 +3,8 @@
 #include <iostream>
 #include "Lexer.h";
 #include "Console.h"
+#include "primitives.h"
+#include "Unicode.h"
 
 void Repl()
 {
@@ -15,7 +17,14 @@ void Repl()
         {
             break;
         }
-        Lexer lexer{ line };
+
+        std::vector<byte> bytes;
+        for (auto& c : line)
+        {
+            unicode::writeUTF8(c, bytes);
+        }
+
+        Lexer lexer{ bytes };
         lexer.process();
     }
 }

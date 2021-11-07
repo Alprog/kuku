@@ -107,5 +107,8 @@
     <ClInclude Include="Unicode.h">
       <Filter>Source Files\Encoder</Filter>
     </ClInclude>
+    <ClInclude Include="Encoding.h">
+      <Filter>Source Files\Encoder</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

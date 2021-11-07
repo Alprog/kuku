@@ -2,18 +2,18 @@
 #include "Lexer.h"
 #include "Console.h"
 
-Lexer::Lexer(std::wstring sourceText)
-    : sourceText{ sourceText + L'\0' }
+Lexer::Lexer(std::vector<byte>& bytes)
+    : encoder{bytes, Encoding::UTF8}
     , currentIndex{0}
 {
 }
 
-bool isDigit(wchar_t c)
+bool isDigit(character c)
 {
     return c >= '0' && c <= '9';
 }
 
-bool isAlpha(wchar_t c)
+bool isAlpha(character c)
 {
     return (c >= 'a' && c <= 'z') ||
            (c >= 'A' && c <= 'Z') ||
@@ -48,9 +48,9 @@ void Lexer::process()
 
 Token Lexer::getNextToken()
 {
-    while (true)
+    while (encoder.next())
     {
-        wchar_t c = sourceText[currentIndex++];
+        character c = encoder.character;
         switch (c)
         {
             case ' ':
@@ -98,6 +98,8 @@ Token Lexer::getNextToken()
             return createToken(TokenType::UpperCaseIdentifier, currentIndex - startIndex);
         }
     }
+
+    return Token(0, 0, TokenType::EndOfSource);
 }
 
 Token Lexer::createToken(TokenType type, int length)
