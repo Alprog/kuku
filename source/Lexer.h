@@ -15,9 +15,14 @@ public:
 
 private:
     Token getNextToken();
-    Token createToken(TokenType type, int length = 1);
+    Token createToken(TokenType type);
 
+    void omitCharacter();
+    void captureCharacter();
+
+    std::vector<byte>& bytes;
     Encoder encoder;
-    std::wstring sourceText;
-    int currentIndex;
+
+    int captureStart;
+    int captureEnd;
 };

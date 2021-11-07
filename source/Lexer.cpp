@@ -4,7 +4,9 @@
 
 Lexer::Lexer(std::vector<byte>& bytes)
     : encoder{bytes, Encoding::UTF8}
-    , currentIndex{0}
+    , bytes{bytes}
+    , captureStart{0}
+    , captureEnd{0}
 {
 }
 
@@ -39,10 +41,12 @@ void Lexer::process()
         tokens.push_back(token);
     }
 
-    for (auto& token : tokens)
+    //for (auto& token : tokens)
     {
-        std::wstring result = sourceText.substr(token.Start, token.Length);
-        Console::writeline(result);
+        //bytes.
+
+        //std::string result = sourceText.substr(token.Start, token.Length);
+        //Console::writeline(result);
     }    
 }
 
@@ -80,29 +84,41 @@ Token Lexer::getNextToken()
 
         if (isDigit(c) || c == '-')
         {
-            int startIndex = currentIndex - 1;
-            while (isDigit(sourceText[currentIndex])) currentIndex++;
-            if (sourceText[currentIndex] == '.')
+            captureCharacter();
+            while (isDigit(encoder.character)) captureCharacter();
+            if (encoder.character == '.')
             {
-                currentIndex++;
-                while (isDigit(sourceText[currentIndex])) currentIndex++;
-                return createToken(TokenType::NumberLiteral, currentIndex - startIndex);
+                captureCharacter();
+                while (isDigit(encoder.character)) captureCharacter();
+                return createToken(TokenType::NumberLiteral);
             }
-            return createToken(TokenType::IntegerLiteral, currentIndex - startIndex);
+            return createToken(TokenType::IntegerLiteral);
         }
 
         if (isAlpha(c))
         {
-            int startIndex = currentIndex - 1;
-            while (isAlphaOrDigit(sourceText[currentIndex])) currentIndex++;
-            return createToken(TokenType::UpperCaseIdentifier, currentIndex - startIndex);
+            captureCharacter();
+            while (isAlphaOrDigit(encoder.character)) captureCharacter();
+            return createToken(TokenType::UpperCaseIdentifier);
         }
     }
 
     return Token(0, 0, TokenType::EndOfSource);
 }
 
-Token Lexer::createToken(TokenType type, int length)
+void Lexer::omitCharacter()
 {
-    return { currentIndex - length, length, type };
+    captureStart = encoder.character;
+    captureEnd = encoder.character;
+}
+
+void Lexer::captureCharacter()
+{
+    captureEnd = encoder.position;
+    encoder.next();
+}
+
+Token Lexer::createToken(TokenType type)
+{
+    return { captureStart, captureEnd - captureStart, type };
 }
