@@ -151,6 +151,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="TypeRegistry.cpp" />
+    <ClCompile Include="Unicode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="TokenType.h" />
     <ClInclude Include="primitives.h" />
     <ClInclude Include="TypeRegistry.h" />
+    <ClInclude Include="Unicode.h" />
     <ClInclude Include="VirtualMachine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -48,6 +48,9 @@
     <ClCompile Include="Encoder.cpp">
       <Filter>Source Files\Encoder</Filter>
     </ClCompile>
+    <ClCompile Include="Unicode.cpp">
+      <Filter>Source Files\Encoder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InstructionType.h">
@@ -99,6 +102,9 @@
       <Filter>Source Files\Repl</Filter>
     </ClInclude>
     <ClInclude Include="Encoder.h">
+      <Filter>Source Files\Encoder</Filter>
+    </ClInclude>
+    <ClInclude Include="Unicode.h">
       <Filter>Source Files\Encoder</Filter>
     </ClInclude>
   </ItemGroup>

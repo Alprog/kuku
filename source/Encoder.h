@@ -1,11 +1,17 @@
 #pragma once
 
 #include <vector>
+#include "primitives.h"
 
 class Encoder
 {
 public:
-    std::vector<char> Bytes;
+    Encoder(std::vector<byte>& bytes);
+    bool next();
 
-    char* Pointer;
+    character character = '\0';
+    size_t position = 0;
+
+private:
+    std::vector<byte>& bytes;
 };
