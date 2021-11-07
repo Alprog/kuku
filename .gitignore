@@ -1,3 +1,8 @@
 **/.vs
 **/Debug
 *.user
+tools/kuku-support/out
+tools/kuku-support/dist
+tools/kuku-support/node_modules
+tools/kuku-support/.vscode-test/
+tools/kuku-support/*.vsix
