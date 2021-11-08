@@ -154,6 +154,7 @@
     <ClCompile Include="SourceFile.cpp" />
     <ClCompile Include="TypeRegistry.cpp" />
     <ClCompile Include="Unicode.cpp" />
+    <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Function.h" />
     <ClInclude Include="Instance.h" />
     <ClInclude Include="InstructionType.h" />
+    <ClInclude Include="json.h" />
     <ClInclude Include="LanguageServer.h" />
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="Repl.h" />
@@ -175,6 +177,7 @@
     <ClInclude Include="primitives.h" />
     <ClInclude Include="TypeRegistry.h" />
     <ClInclude Include="Unicode.h" />
+    <ClInclude Include="utils.h" />
     <ClInclude Include="VirtualMachine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

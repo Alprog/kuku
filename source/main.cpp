@@ -69,7 +69,7 @@ int main(int argc, const char* argv[])
     }
     else if (mode == "lang-server")
     {
-        language_server::run();
+        language_server{};
     }
     else
     {

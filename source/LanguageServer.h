@@ -1,6 +1,14 @@
 #pragma once
 
-namespace language_server
+#include <string>
+#include "json.h"
+
+class language_server
 {
-    void run();
-}
+public:
+    language_server();
+
+private:
+    void processMessage(std::string message);
+    void onInitialize(nlohmann::json json);
+};

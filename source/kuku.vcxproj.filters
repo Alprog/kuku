@@ -60,6 +60,9 @@
     <ClCompile Include="LanguageServer.cpp">
       <Filter>Source Files\LanguageServer</Filter>
     </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InstructionType.h">
@@ -121,6 +124,12 @@
     </ClInclude>
     <ClInclude Include="LanguageServer.h">
       <Filter>Source Files\LanguageServer</Filter>
+    </ClInclude>
+    <ClInclude Include="json.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
