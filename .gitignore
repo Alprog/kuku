@@ -1,5 +1,6 @@
 **/.vs
 **/Debug
+**/Release
 *.user
 tools/kuku-support/out
 tools/kuku-support/dist

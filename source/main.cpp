@@ -4,35 +4,80 @@
 #include "Repl.h"
 #include "LanguageServer.h"
 
+#include "Windows.h"
+#include "debugapi.h"
+
+struct
+{
+    bool help;
+    bool debug;
+} options = {};
+
 void printHelp()
 {
-    std::cout << "usage:" << std::endl;
-    std::cout << "-h | --help: print help" << std::endl;
-    std::cout << "repl: enter repl mode" << std::endl;
-    std::cout << "lang-server: run language server" << std::endl;
+    std::cout << 
+        "usage: kuku [mode] [options]\n"
+        "\n"
+
+        "modes:\n"
+        "  repl        : run read-eval-print loop\n"
+        "  lang-server : run language server\n"
+        "\n"
+
+        "options:\n"
+        "  -h | --help  : print help message\n"
+        "  -d | --debug : wait debugger attach before start\n"
+        "\n";
 }
 
 int main(int argc, const char* argv[])
 {
-    std::string command{ argc > 1 ? argv[1] : "repl" };
+    std::string mode{ "repl" }; // default mode
 
+    for (int i = 1; i < argc; i++)
+    {
+        std::string arg{ argv[i] };
+        if (arg[0] == '-') // option
+        {
+            if (arg == "-h" || arg == "--help")
+                options.help = true;
 
-    if (command == "-h" || command == "--help")
+            if (arg == "-d" || arg == "--debug")
+                options.debug = true;
+        }
+        else // mode
+        {
+            mode = arg;
+        }
+    }
+
+    if (options.debug)
+    {
+        while (!IsDebuggerPresent()) Sleep(100);
+    }
+
+    if (options.help)
     {
         printHelp();
     }
-    else if (command == "repl")
+
+    std::string command{ argc > 1 ? argv[1] : "repl" };
+
+    if (mode == "repl")
     {
         Repl();
     }
-    else if (command == "lang-server")
+    else if (mode == "lang-server")
     {
         language_server::run();
     }
     else
     {
-        std::cout << "unknown command: " << command << std::endl;
-        printHelp();
+        std::cout << "unknown mode: " << mode << std::endl;
+        if (!options.help)
+        {
+            printHelp();
+        }
     }
 
     return 0;
