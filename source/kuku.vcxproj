@@ -148,8 +148,10 @@
     <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="Instance.cpp" />
+    <ClCompile Include="LanguageServer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Lexer.cpp" />
+    <ClCompile Include="SourceFile.cpp" />
     <ClCompile Include="TypeRegistry.cpp" />
     <ClCompile Include="Unicode.cpp" />
   </ItemGroup>
@@ -164,6 +166,7 @@
     <ClInclude Include="Function.h" />
     <ClInclude Include="Instance.h" />
     <ClInclude Include="InstructionType.h" />
+    <ClInclude Include="LanguageServer.h" />
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="Repl.h" />
     <ClInclude Include="Stack.h" />

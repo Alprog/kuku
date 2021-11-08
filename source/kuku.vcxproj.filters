@@ -22,6 +22,9 @@
     <Filter Include="Source Files\Lexer">
       <UniqueIdentifier>{2a0ef2df-7ac8-4c06-8eae-327c747ea0be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\LanguageServer">
+      <UniqueIdentifier>{e161bafe-0a87-4731-b59a-584924988d44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="Unicode.cpp">
       <Filter>Source Files\Encoder</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LanguageServer.cpp">
+      <Filter>Source Files\LanguageServer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="Encoding.h">
       <Filter>Source Files\Encoder</Filter>
+    </ClInclude>
+    <ClInclude Include="LanguageServer.h">
+      <Filter>Source Files\LanguageServer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,12 +2,14 @@
 #include <iostream>
 #include <string>
 #include "Repl.h"
+#include "LanguageServer.h"
 
 void printHelp()
 {
     std::cout << "usage:" << std::endl;
     std::cout << "-h | --help: print help" << std::endl;
     std::cout << "repl: enter repl mode" << std::endl;
+    std::cout << "lang-server: run language server" << std::endl;
 }
 
 int main(int argc, const char* argv[])
@@ -22,6 +24,10 @@ int main(int argc, const char* argv[])
     else if (command == "repl")
     {
         Repl();
+    }
+    else if (command == "lang-server")
+    {
+        language_server::run();
     }
     else
     {
