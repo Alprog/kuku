@@ -2,8 +2,8 @@
 **/Debug
 **/Release
 *.user
-tools/kuku-support/out
-tools/kuku-support/dist
-tools/kuku-support/node_modules
-tools/kuku-support/.vscode-test/
-tools/kuku-support/*.vsix
+tools/vscode-extension/out
+tools/vscode-extension/dist
+tools/vscode-extension/node_modules
+tools/vscode-extension/.vscode-test/
+tools/vscode-extension/*.vsix
