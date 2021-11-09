@@ -51,7 +51,7 @@ int main(int argc, const char* argv[])
         }
     }
 
-    if (options.debug)
+    if (true || options.debug)
     {
         while (!IsDebuggerPresent()) Sleep(100);
     }

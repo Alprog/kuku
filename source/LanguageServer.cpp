@@ -41,11 +41,14 @@ void language_server::onInitialize(nlohmann::json json)
 {
     auto name = json["params"]["clientInfo"]["name"].get<std::string>();
 
-    nlohmann::json response = {
-        { "capabilities", {} }
-    };
+    auto id = json["id"].get<int>();
+    auto content = R"({"jsonrpc": "2.0", "id": )" + std::to_string(id) + R"(, "result": null })";
 
-    std::string responseText = response.dump();
+    auto count = content.size();
+    
+    std::string header = "Content-Length: " + std::to_string(count) + "\n\n";
 
-    std::cout << responseText << std::endl;
+    std::string fullMessage = header + content;
+
+    std::cout << fullMessage;
 }
