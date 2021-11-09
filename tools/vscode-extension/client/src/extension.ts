@@ -48,7 +48,7 @@ export function activate(context: ExtensionContext) {
 	};
 
 	const serverCommand : Executable = {
-		command: "C:/KuKu/source/x64/Debug/kuku.exe",
+		command: context.asAbsolutePath("../../source/x64/Debug/kuku.exe"),
 		args: ["lang-server", "--debug"]
 	};
 
