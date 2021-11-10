@@ -63,6 +63,9 @@
     <ClCompile Include="utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IDEConnection.cpp">
+      <Filter>Source Files\LanguageServer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InstructionType.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="utils.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDEConnection.h">
+      <Filter>Source Files\LanguageServer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

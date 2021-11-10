@@ -10,45 +10,53 @@ language_server::language_server()
     std::ofstream ofile;
     ofile.open("C:/KuKu/source/x64/Debug/out.txt");
 
-    std::string message;
     while (true)
     { 
-        getline(std::cin, message);
-        auto index = message.find(':');
-        auto count = std::atoi(message.substr(index + 1).c_str());
-        
-        getline(std::cin, message);
-        
-        message.resize(count, 'x');
-        std::cin.read(&message[0], count);
-
+        nlohmann::json message;
+        ideConnection >> message;
         processMessage(message);           
     }
 }
 
-void language_server::processMessage(std::string message)
+void language_server::processMessage(nlohmann::json& message)
 {
-    auto json = nlohmann::json::parse(message);
-    auto method = json["method"].get<std::string>();
+    auto method = message["method"].get<std::string>();
 
     if (method == "initialize")
-        onInitialize(json);
+        onInitialize(message);
     else
         throw new std::exception("unknown method");
 }
 
-void language_server::onInitialize(nlohmann::json json)
+void language_server::onInitialize(nlohmann::json& message)
 {
-    auto name = json["params"]["clientInfo"]["name"].get<std::string>();
+    auto name = message["params"]["clientInfo"]["name"].get<std::string>();
 
-    auto id = json["id"].get<int>();
-    auto content = R"({"jsonrpc": "2.0", "id": )" + std::to_string(id) + R"(, "result": null })";
+    auto id = message["id"].get<int>();
 
-    auto count = content.size();
-    
-    std::string header = "Content-Length: " + std::to_string(count) + "\n\n";
+    nlohmann::json response;
+    response["jsonrpc"] = "2.0";
+    response["id"] = id;
+    response["result"] = nlohmann::json::parse(R"(
+        {
+            "capabilities": 
+            {
+                "textDocumentSync": 2,
+                "completionProvider":
+                {
+                    "resolveProvider": true
+                },
+                "workspace": 
+                {
+                    "workspaceFolders": 
+                    {
+                        "supported": true
+                    }
+                }
+            }
+        }
+    )");
 
-    std::string fullMessage = header + content;
 
-    std::cout << fullMessage;
+    ideConnection << response;
 }

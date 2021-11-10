@@ -2,6 +2,7 @@
 
 #include <string>
 #include "json.h"
+#include "IDEConnection.h"
 
 class language_server
 {
@@ -9,6 +10,8 @@ public:
     language_server();
 
 private:
-    void processMessage(std::string message);
-    void onInitialize(nlohmann::json json);
+    void processMessage(nlohmann::json& message);
+    void onInitialize(nlohmann::json& message);
+
+    IDEConnection ideConnection;
 };
