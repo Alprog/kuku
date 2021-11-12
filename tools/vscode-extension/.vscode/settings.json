@@ -5,5 +5,5 @@
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": true
 	},
-	"languageServerExample.maxNumberOfProblems": 888,
+	"kukuLanguageServer.maxNumberOfProblems": 888
 }

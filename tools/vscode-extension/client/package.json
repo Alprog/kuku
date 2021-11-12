@@ -1,6 +1,6 @@
 {
-	"name": "lsp-sample-client",
-	"description": "VSCode part of a language server",
+	"name": "kuku-support-lspclient",
+	"description": "VSCode part of a kuku lanuage server",
 	"author": "Microsoft Corporation",
 	"license": "MIT",
 	"version": "0.0.1",
