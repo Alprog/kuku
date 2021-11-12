@@ -30,6 +30,8 @@ void language_server::processMessage(nlohmann::json& message)
         onDidChange(message);
     else if (method == "textDocument/completion")
         onCompletion(message);
+    else if (method == "$/cancelRequest")
+        {} // nothing to do
     else
         throw new std::exception("unknown method");
 }
