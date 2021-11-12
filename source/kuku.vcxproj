@@ -172,6 +172,7 @@
     <ClInclude Include="LanguageServer.h" />
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="IDEConnection.h" />
+    <ClInclude Include="LSPEnums.h" />
     <ClInclude Include="Repl.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="Token.h" />

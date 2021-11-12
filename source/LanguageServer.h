@@ -12,6 +12,9 @@ public:
 private:
     void processMessage(nlohmann::json& message);
     void onInitialize(nlohmann::json& message);
+    void onDidOpen(nlohmann::json& message);
+    void onDidChange(nlohmann::json& message);
+    void onCompletion(nlohmann::json& message);
 
     IDEConnection ideConnection;
 };

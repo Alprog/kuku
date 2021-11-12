@@ -33,7 +33,7 @@ IDEConnection& operator<<(IDEConnection& ide, nlohmann::json& message)
 
     // header
     std::cout << "Content-Length: " << std::to_string(contentLength) << lineEnding;
-    std::cout << "Content-Type: utf-8" << contentType << lineEnding;
+    std::cout << "Content-Type: " << contentType << lineEnding;
 
     std::cout << lineEnding; // separator
 

@@ -30,6 +30,8 @@ void printHelp()
         "\n";
 }
 
+#include "json.h"
+
 int main(int argc, const char* argv[])
 {
     std::string mode{ "repl" }; // default mode

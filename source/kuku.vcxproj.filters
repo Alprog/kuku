@@ -137,5 +137,8 @@
     <ClInclude Include="IDEConnection.h">
       <Filter>Source Files\LanguageServer</Filter>
     </ClInclude>
+    <ClInclude Include="LSPEnums.h">
+      <Filter>Source Files\LanguageServer</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
