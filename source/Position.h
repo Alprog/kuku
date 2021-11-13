@@ -23,16 +23,4 @@ public:
     unsigned int character;
 
     SCHEME(Position, ARG(line), ARG(character))
-
-    Position(nlohmann::json json)
-    {
-        auto a = JsonField("line", &Position::line);
-        unsigned int  b = 3;
-        a.set(*this, b);
-
-        auto& g = a.get(*this);
-
-        line = json["line"].get<unsigned int>();
-        character = json["character"].get<unsigned int>();
-    }
 };

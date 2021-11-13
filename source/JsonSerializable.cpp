@@ -9,7 +9,7 @@ nlohmann::json JsonSerializable::toJson()
 
     for (auto field : this->GetJsonScheme().fields)
     {
-        field->write(json, this);
+        field->serialize(this, json);
     }
 
     return json;

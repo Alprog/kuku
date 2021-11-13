@@ -11,7 +11,8 @@ public:
     {
     }
 
-    virtual void write(nlohmann::json& json, void* instance) = 0;
+    virtual void serialize(void* instance, nlohmann::json& json) = 0;
+    virtual void deserialize(nlohmann::json& json, void* instance) = 0;
 
     std::string fieldName;
 };
@@ -28,28 +29,13 @@ public:
     {
     }
 
-    virtual void write(nlohmann::json& json, void* instance) override
+    virtual void serialize(void* instance, nlohmann::json& json) override
     {
         json[fieldName] = static_cast<ClassType*>(instance)->*member;
     }
 
-    void set(ClassType& instance, FieldType& value)
+    virtual void deserialize(nlohmann::json& json, void* instance) override
     {
-        instance.*member = value;
-    }
-
-    FieldType& get(ClassType& instance)
-    {
-        return instance.*member;
-    }
-
-    void tryRead(nlohmann::json& json)
-    {
-        json[fieldName].is_number();
-    }
-
-    void write(nlohmann::json& json)
-    {
-        json[fieldName] = 3;
+        static_cast<ClassType*>(instance)->*member = json[fieldName].get<unsigned int>();
     }
 };

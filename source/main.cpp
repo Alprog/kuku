@@ -38,7 +38,9 @@ int main(int argc, const char* argv[])
 {
     nlohmann::json json = { {"line", 3}, {"character", 4} };
 
-    auto p = Position(json);
+    auto p = Position();
+    p.line = 3;
+    p.character = 17;
     
     auto s = p.toJson().dump();
 
