@@ -149,6 +149,7 @@
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="IDEConnection.cpp" />
     <ClCompile Include="Instance.cpp" />
+    <ClCompile Include="JsonSerializable.cpp" />
     <ClCompile Include="LanguageServer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Lexer.cpp" />
@@ -169,12 +170,18 @@
     <ClInclude Include="Instance.h" />
     <ClInclude Include="InstructionType.h" />
     <ClInclude Include="json.h" />
+    <ClInclude Include="JsonField.h" />
+    <ClInclude Include="JsonScheme.h" />
     <ClInclude Include="LanguageServer.h" />
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="IDEConnection.h" />
     <ClInclude Include="LSPEnums.h" />
+    <ClInclude Include="Position.h" />
+    <ClInclude Include="Range.h" />
     <ClInclude Include="Repl.h" />
+    <ClInclude Include="JsonSerializable.h" />
     <ClInclude Include="Stack.h" />
+    <ClInclude Include="TextDocument.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="TokenType.h" />
     <ClInclude Include="primitives.h" />

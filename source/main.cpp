@@ -32,8 +32,18 @@ void printHelp()
 
 #include "json.h"
 
+#include "Position.h"
+
 int main(int argc, const char* argv[])
 {
+    nlohmann::json json = { {"line", 3}, {"character", 4} };
+
+    auto p = Position(json);
+    
+    auto s = p.toJson().dump();
+
+    return 0;
+
     std::string mode{ "repl" }; // default mode
 
     for (int i = 1; i < argc; i++)

@@ -16,14 +16,20 @@
     <Filter Include="Source Files\Encoder">
       <UniqueIdentifier>{eefb6964-d677-4c1b-8822-4687f82a2a17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Repl">
-      <UniqueIdentifier>{1f757459-e80d-446d-8dc6-a08660de6445}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Lexer">
       <UniqueIdentifier>{2a0ef2df-7ac8-4c06-8eae-327c747ea0be}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\LanguageServer">
       <UniqueIdentifier>{e161bafe-0a87-4731-b59a-584924988d44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TextDocument">
+      <UniqueIdentifier>{840cefc8-df40-44bf-a05c-7fd76842cf10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\JsonSchema">
+      <UniqueIdentifier>{96553e2f-0524-4f49-b6ef-9e99b077bc35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Repl">
+      <UniqueIdentifier>{1f757459-e80d-446d-8dc6-a08660de6445}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="IDEConnection.cpp">
       <Filter>Source Files\LanguageServer</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonSerializable.cpp">
+      <Filter>Source Files\JsonSchema</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +148,24 @@
     </ClInclude>
     <ClInclude Include="LSPEnums.h">
       <Filter>Source Files\LanguageServer</Filter>
+    </ClInclude>
+    <ClInclude Include="TextDocument.h">
+      <Filter>Source Files\TextDocument</Filter>
+    </ClInclude>
+    <ClInclude Include="Position.h">
+      <Filter>Source Files\TextDocument</Filter>
+    </ClInclude>
+    <ClInclude Include="Range.h">
+      <Filter>Source Files\TextDocument</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonScheme.h">
+      <Filter>Source Files\JsonSchema</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonField.h">
+      <Filter>Source Files\JsonSchema</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonSerializable.h">
+      <Filter>Source Files\JsonSchema</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
