@@ -70,7 +70,6 @@ void language_server::onDidOpen(nlohmann::json& message)
 {
     auto json = message["params"]["textDocument"];
     auto document = fromJson<OpenedTextDocument>(json);
-
 }
 
 void language_server::onDidChange(nlohmann::json& message)

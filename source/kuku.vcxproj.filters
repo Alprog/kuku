@@ -54,7 +54,7 @@
     <ClCompile Include="Lexer.cpp">
       <Filter>Source Files\Lexer</Filter>
     </ClCompile>
-    <ClCompile Include="Encoder.cpp">
+    <ClCompile Include="SourceIterator.cpp">
       <Filter>Source Files\Encoder</Filter>
     </ClCompile>
     <ClCompile Include="Unicode.cpp">
@@ -77,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="JsonField.cpp">
       <Filter>Source Files\JsonSchema</Filter>
+    </ClCompile>
+    <ClCompile Include="TextDocument.cpp">
+      <Filter>Source Files\TextDocument</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,7 +131,7 @@
     <ClInclude Include="Repl.h">
       <Filter>Source Files\Repl</Filter>
     </ClInclude>
-    <ClInclude Include="Encoder.h">
+    <ClInclude Include="SourceIterator.h">
       <Filter>Source Files\Encoder</Filter>
     </ClInclude>
     <ClInclude Include="Unicode.h">

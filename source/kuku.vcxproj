@@ -145,7 +145,7 @@
   <ItemGroup>
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Console.cpp" />
-    <ClCompile Include="Encoder.cpp" />
+    <ClCompile Include="SourceIterator.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="IDEConnection.cpp" />
     <ClCompile Include="Instance.cpp" />
@@ -155,6 +155,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="SourceFile.cpp" />
+    <ClCompile Include="TextDocument.cpp" />
     <ClCompile Include="TypeRegistry.cpp" />
     <ClCompile Include="Unicode.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -164,7 +165,7 @@
     <ClInclude Include="Class.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="DataType.h" />
-    <ClInclude Include="Encoder.h" />
+    <ClInclude Include="SourceIterator.h" />
     <ClInclude Include="Encoding.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="Function.h" />

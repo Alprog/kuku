@@ -2,20 +2,20 @@
 #include "Lexer.h"
 #include "Console.h"
 
-Lexer::Lexer(std::vector<byte>& bytes)
-    : encoder{bytes, Encoding::UTF8}
-    , bytes{bytes}
-    , captureStart{0}
-    , captureEnd{0}
+Lexer::Lexer(TextDocument& textDocument)
+    : textDocument{textDocument}
+    , sourceIterator{textDocument}
+    , captureStart{0, 0}
+    , captureEnd{0, 0}
 {
 }
 
-bool isDigit(character c)
+bool isDigit(uint16_t c)
 {
     return c >= '0' && c <= '9';
 }
 
-bool isAlpha(character c)
+bool isAlpha(uint16_t c)
 {
     return (c >= 'a' && c <= 'z') ||
            (c >= 'A' && c <= 'Z') ||
@@ -34,91 +34,85 @@ void Lexer::process()
     while (true)
     {
         auto token = getNextToken();
-        if (token.Type == TokenType::EndOfSource)
+        if (token.type == TokenType::EndOfSource)
         {
             break;
         }
         tokens.push_back(token);
     }
 
-    //for (auto& token : tokens)
+    for (auto& token : tokens)
     {
-        //bytes.
-
-        //std::string result = sourceText.substr(token.Start, token.Length);
-        //Console::writeline(result);
+        Console::writeline(std::to_wstring(token.range.start.line) + L' ' + std::to_wstring(token.range.start.character) + L' ' +
+                           std::to_wstring(token.range.end.line) + L' ' + std::to_wstring(token.range.end.character));
     }    
 }
 
 Token Lexer::getNextToken()
 {
-    while (encoder.next())
+    while (true)
     {
-        character c = encoder.character;
+        uint16_t c = *sourceIterator;
         switch (c)
         {
             case ' ':
+                sourceIterator.next();
                 continue;
 
             case '\0':
-                return createToken(TokenType::EndOfSource);
+                return createSingleToken(TokenType::EndOfSource);
 
             case '\n':
-                return createToken(TokenType::EndOfLine);
+                return createSingleToken(TokenType::EndOfLine);
 
             case ';':
-                return createToken(TokenType::Semicolon);
+                return createSingleToken(TokenType::Semicolon);
 
             case '{':
             case '}':
             case '(':
             case ')':
-                return createToken(TokenType::Bracket);
+                return createSingleToken(TokenType::Bracket);
 
             case '+':
             case '*':
             case '/':
             case '=':
-                return createToken(TokenType::Operator);
+                return createSingleToken(TokenType::Operator);
         }
 
         if (isDigit(c) || c == '-')
         {
-            captureCharacter();
-            while (isDigit(encoder.character)) captureCharacter();
-            if (encoder.character == '.')
+            auto start = sourceIterator.position;
+            sourceIterator.next();
+            while (isDigit(*sourceIterator)) sourceIterator.next();
+            if (*sourceIterator == '.')
             {
-                captureCharacter();
-                while (isDigit(encoder.character)) captureCharacter();
-                return createToken(TokenType::NumberLiteral);
+                sourceIterator.next();
+                while (isDigit(*sourceIterator)) sourceIterator.next();
+                return createToken(start, TokenType::NumberLiteral);
             }
-            return createToken(TokenType::IntegerLiteral);
+            return createToken(start, TokenType::IntegerLiteral);
         }
 
         if (isAlpha(c))
         {
-            captureCharacter();
-            while (isAlphaOrDigit(encoder.character)) captureCharacter();
-            return createToken(TokenType::UpperCaseIdentifier);
+            auto start = sourceIterator.position;
+            sourceIterator.next();
+            while (isAlphaOrDigit(*sourceIterator)) sourceIterator.next();
+            return createToken(start, TokenType::UpperCaseIdentifier);
         }
     }
-
-    return Token(0, 0, TokenType::EndOfSource);
 }
 
-void Lexer::omitCharacter()
+Token Lexer::createSingleToken(TokenType type)
 {
-    captureStart = encoder.character;
-    captureEnd = encoder.character;
+    auto start = sourceIterator.position;
+    sourceIterator.next();
+    return { start, sourceIterator.position, type };
 }
 
-void Lexer::captureCharacter()
+Token Lexer::createToken(Position startPosition, TokenType type)
 {
-    captureEnd = encoder.position;
-    encoder.next();
-}
-
-Token Lexer::createToken(TokenType type)
-{
-    return { captureStart, captureEnd - captureStart, type };
+    return { startPosition, sourceIterator.position, type };
 }

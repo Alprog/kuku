@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Encoder.h"
-
 #include <vector>
 #include "primitives.h"
 

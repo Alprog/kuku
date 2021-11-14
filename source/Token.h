@@ -1,17 +1,16 @@
 #pragma once
 
 #include "TokenType.h"
+#include "Range.h"
 
 struct Token
 {
-    int Start;
-    int Length;
-    TokenType Type;
+    Range range;
+    TokenType type;
 
-    Token(int start, int length, TokenType type)
+    Token(Position start, Position end, TokenType type)
+        : range {start, end}
+        , type {type}
     {
-        this->Start = start;
-        this->Length = length;
-        this->Type = type;
     }
 };

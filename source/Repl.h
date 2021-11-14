@@ -5,6 +5,7 @@
 #include "Console.h"
 #include "primitives.h"
 #include "Unicode.h"
+#include "TextDocument.h"
 
 void Repl()
 {
@@ -18,13 +19,12 @@ void Repl()
             break;
         }
 
-        std::vector<byte> bytes;
-        for (auto& c : line)
-        {
-            unicode::writeUTF8(c, bytes);
-        }
+        auto u16string = std::u16string(std::begin(line), std::end(line));
 
-        Lexer lexer{ bytes };
+        TextDocument document;
+        document.lines.push_back(u16string);
+
+        Lexer lexer{ document };
         lexer.process();
     }
 }

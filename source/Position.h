@@ -9,6 +9,12 @@
 class Position : public JsonSerializable
 {
 public:
+    Position(int line = 0, int character = 0)
+        : line{ line }
+        , character{ character }
+    {
+    }
+
     int line;
     int character;
 

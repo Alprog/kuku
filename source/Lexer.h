@@ -5,24 +5,24 @@
 #include "Token.h"
 #include "TokenType.h"
 #include "primitives.h"
-#include "Encoder.h"
+#include "TextDocument.h"
+#include "SourceIterator.h"
 
 class Lexer
 {
 public:
-    Lexer(std::vector<byte>& bytes);
+    Lexer(TextDocument& textDocument);
     void process();
 
 private:
     Token getNextToken();
-    Token createToken(TokenType type);
 
-    void omitCharacter();
-    void captureCharacter();
+    Token createSingleToken(TokenType type);
+    Token createToken(Position startPosition, TokenType type);
 
-    std::vector<byte>& bytes;
-    Encoder encoder;
+    TextDocument& textDocument;
+    SourceIterator sourceIterator;
 
-    int captureStart;
-    int captureEnd;
+    Position captureStart;
+    Position captureEnd;
 };

@@ -6,6 +6,12 @@
 class Range : public JsonSerializable
 {
 public:
+    Range(Position start, Position end)
+        : start{ start }
+        , end{ end }
+    {
+    }
+
     Position start;
     Position end;
 
