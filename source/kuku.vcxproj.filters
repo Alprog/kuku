@@ -170,5 +170,8 @@
     <ClInclude Include="JsonSerializable.h">
       <Filter>Source Files\JsonSchema</Filter>
     </ClInclude>
+    <ClInclude Include="OpenedTextDocument.h">
+      <Filter>Source Files\TextDocument</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

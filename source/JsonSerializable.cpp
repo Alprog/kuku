@@ -15,7 +15,7 @@ nlohmann::json JsonSerializable::toJson()
     return json;
 }
 
-void JsonSerializable::readFields(nlohmann::json json)
+void JsonSerializable::readFields(nlohmann::json& json)
 {
     for (auto field : this->GetJsonScheme().fields)
     {

@@ -8,7 +8,7 @@ class JsonSerializable
 {
 public:
     nlohmann::json toJson();
-    void readFields(nlohmann::json json);
+    void readFields(nlohmann::json& json);
 
     virtual JsonScheme& GetJsonScheme() = 0;
 };

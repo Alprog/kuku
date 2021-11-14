@@ -177,6 +177,7 @@
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="IDEConnection.h" />
     <ClInclude Include="LSPEnums.h" />
+    <ClInclude Include="OpenedTextDocument.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="Range.h" />
     <ClInclude Include="Repl.h" />

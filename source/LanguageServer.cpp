@@ -5,6 +5,7 @@
 #include <fstream>
 #include "primitives.h"
 #include "LSPEnums.h"
+#include "OpenedTextDocument.h"
 
 language_server::language_server()
 {
@@ -67,14 +68,9 @@ void language_server::onInitialize(nlohmann::json& message)
 
 void language_server::onDidOpen(nlohmann::json& message)
 {
-    /*
-        "textDocument": {
-        "uri": "file:///c%3A/Users/alpro/Desktop/1.txt",
-        "languageId": "plaintext",
-        "version": 1,
-        "text": "лке AA "
-    }
-    ]*/
+    auto json = message["params"]["textDocument"];
+    auto document = fromJson<OpenedTextDocument>(json);
+
 }
 
 void language_server::onDidChange(nlohmann::json& message)
