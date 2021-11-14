@@ -17,10 +17,16 @@
 		"vscode": "^1.43.0"
 	},
 	"activationEvents": [
-		"onLanguage:plaintext"
+		"onLanguage:kuku"
 	],
 	"main": "./client/out/extension",
 	"contributes": {
+		"languages": [
+			{
+				"id": "kuku",
+				"extensions": [".kuku"]
+			}
+		],
 		"configuration": {
 			"type": "object",
 			"title": "Example configuration",

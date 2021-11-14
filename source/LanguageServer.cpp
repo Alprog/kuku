@@ -69,24 +69,11 @@ void language_server::onDidOpen(nlohmann::json& message)
 {
     /*
         "textDocument": {
-            "uri": "file:///c%3A/Users/alpro/Desktop/2.txt",
-            "version": 3
-        },
-        "contentChanges": [
-            {
-                "range": {
-                    "start": {
-                        "line": 5,
-                        "character": 0
-                    },
-                    "end": {
-                        "line": 5,
-                        "character": 0
-                    }
-                },
-                "rangeLength": 0,
-                "text": "A"
-            }
+        "uri": "file:///c%3A/Users/alpro/Desktop/1.txt",
+        "languageId": "plaintext",
+        "version": 1,
+        "text": "лке AA "
+    }
     ]*/
 }
 
