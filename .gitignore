@@ -7,3 +7,4 @@ tools/vscode-extension/dist
 tools/vscode-extension/node_modules
 tools/vscode-extension/.vscode-test/
 tools/vscode-extension/*.vsix
+cloc-1.64.exe
