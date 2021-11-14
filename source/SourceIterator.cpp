@@ -14,7 +14,7 @@ uint16_t SourceIterator::operator*()
     return textDocument.getCharacter(position);
 }
 
-void SourceIterator::next()
+SourceIterator& SourceIterator::operator++()
 {
     position.character++;
 
@@ -27,4 +27,13 @@ void SourceIterator::next()
             position.character = 0;
         }
     }
+
+    return *this;
+}
+
+SourceIterator SourceIterator::operator++(int)
+{
+    auto old = *this;
+    operator++();
+    return old;
 }

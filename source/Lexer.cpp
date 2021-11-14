@@ -4,7 +4,7 @@
 
 Lexer::Lexer(TextDocument& textDocument)
     : textDocument{textDocument}
-    , sourceIterator{textDocument}
+    , it{textDocument}
     , captureStart{0, 0}
     , captureEnd{0, 0}
 {
@@ -52,67 +52,60 @@ Token Lexer::getNextToken()
 {
     while (true)
     {
-        uint16_t c = *sourceIterator;
+        uint16_t c = *it;
         switch (c)
         {
             case ' ':
-                sourceIterator.next();
+                ++it;
                 continue;
 
             case '\0':
-                return createSingleToken(TokenType::EndOfSource);
+                return createToken(it++, TokenType::EndOfSource);
 
             case '\n':
-                return createSingleToken(TokenType::EndOfLine);
+                return createToken(it++, TokenType::EndOfLine);
 
             case ';':
-                return createSingleToken(TokenType::Semicolon);
+                return createToken(it++, TokenType::Semicolon);
 
             case '{':
             case '}':
             case '(':
             case ')':
-                return createSingleToken(TokenType::Bracket);
+                return createToken(it++, TokenType::Bracket);
 
             case '+':
             case '*':
             case '/':
             case '=':
-                return createSingleToken(TokenType::Operator);
+                return createToken(it++, TokenType::Operator);
         }
 
         if (isDigit(c) || c == '-')
         {
-            auto start = sourceIterator.position;
-            sourceIterator.next();
-            while (isDigit(*sourceIterator)) sourceIterator.next();
-            if (*sourceIterator == '.')
+            auto startIt = it++;
+            while (isDigit(*it)) ++it;
+            if (*it == '.')
             {
-                sourceIterator.next();
-                while (isDigit(*sourceIterator)) sourceIterator.next();
-                return createToken(start, TokenType::NumberLiteral);
+                ++it;
+                while (isDigit(*it)) ++it;
+                return createToken(startIt, TokenType::NumberLiteral);
             }
-            return createToken(start, TokenType::IntegerLiteral);
+            return createToken(startIt, TokenType::IntegerLiteral);
         }
 
         if (isAlpha(c))
         {
-            auto start = sourceIterator.position;
-            sourceIterator.next();
-            while (isAlphaOrDigit(*sourceIterator)) sourceIterator.next();
-            return createToken(start, TokenType::UpperCaseIdentifier);
+            auto startIt = it++;
+            while (isAlphaOrDigit(*it)) ++it;
+            return createToken(startIt, TokenType::UpperCaseIdentifier);
         }
+
+        ++it;
     }
 }
 
-Token Lexer::createSingleToken(TokenType type)
+Token Lexer::createToken(SourceIterator startIt, TokenType type)
 {
-    auto start = sourceIterator.position;
-    sourceIterator.next();
-    return { start, sourceIterator.position, type };
-}
-
-Token Lexer::createToken(Position startPosition, TokenType type)
-{
-    return { startPosition, sourceIterator.position, type };
+    return { startIt.position, it.position, type };
 }

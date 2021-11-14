@@ -17,11 +17,10 @@ public:
 private:
     Token getNextToken();
 
-    Token createSingleToken(TokenType type);
-    Token createToken(Position startPosition, TokenType type);
+    Token createToken(SourceIterator start, TokenType type);
 
     TextDocument& textDocument;
-    SourceIterator sourceIterator;
+    SourceIterator it;
 
     Position captureStart;
     Position captureEnd;

@@ -11,8 +11,10 @@ class TextDocument;
 class SourceIterator
 {
 public:
+    SourceIterator& operator++();
+    SourceIterator operator++(int);
+
     SourceIterator(TextDocument& textDocument);
-    void next();
 
     uint16_t operator*();
 
