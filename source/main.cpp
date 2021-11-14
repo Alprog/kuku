@@ -37,24 +37,6 @@ void printHelp()
 
 int main(int argc, const char* argv[])
 {
-    nlohmann::json json = { {"line", 3}, {"character", 4} };
-
-    auto r = Range();
-    
-    auto p = Position();
-    p.line = 3;
-    p.character = 17;
-    
-    r.start = p;
-    r.end = p;
-    r.end.character = 22;
-
-    auto s = r.toJson();
-
-    Range rr = fromJson<Range>(s);
-
-    return 0;
-
     std::string mode{ "repl" }; // default mode
 
     for (int i = 1; i < argc; i++)
