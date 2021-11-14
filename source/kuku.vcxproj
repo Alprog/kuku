@@ -149,6 +149,7 @@
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="IDEConnection.cpp" />
     <ClCompile Include="Instance.cpp" />
+    <ClCompile Include="JsonField.cpp" />
     <ClCompile Include="JsonSerializable.cpp" />
     <ClCompile Include="LanguageServer.cpp" />
     <ClCompile Include="main.cpp" />

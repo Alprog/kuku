@@ -33,16 +33,25 @@ void printHelp()
 #include "json.h"
 
 #include "Position.h"
+#include "Range.h"
 
 int main(int argc, const char* argv[])
 {
     nlohmann::json json = { {"line", 3}, {"character", 4} };
 
+    auto r = Range();
+    
     auto p = Position();
     p.line = 3;
     p.character = 17;
     
-    auto s = p.toJson().dump();
+    r.start = p;
+    r.end = p;
+    r.end.character = 22;
+
+    auto s = r.toJson();
+
+    Range rr = fromJson<Range>(s);
 
     return 0;
 

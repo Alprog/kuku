@@ -75,6 +75,9 @@
     <ClCompile Include="JsonSerializable.cpp">
       <Filter>Source Files\JsonSchema</Filter>
     </ClCompile>
+    <ClCompile Include="JsonField.cpp">
+      <Filter>Source Files\JsonSchema</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InstructionType.h">
