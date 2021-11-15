@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-#include "Position.h"
+#include "Range.h"
 
 class TextDocument
 {
@@ -11,4 +11,5 @@ public:
     std::vector<std::u16string> lines;
 
     uint16_t getCharacter(Position position);
+    std::u16string getSubstring(Range range);
 };

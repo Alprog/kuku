@@ -43,8 +43,8 @@ void Lexer::process()
 
     for (auto& token : tokens)
     {
-        Console::writeline(std::to_wstring(token.range.start.line) + L' ' + std::to_wstring(token.range.start.character) + L' ' +
-                           std::to_wstring(token.range.end.line) + L' ' + std::to_wstring(token.range.end.character));
+        auto substring = textDocument.getSubstring(token.range);
+        Console::writeline(substring);
     }    
 }
 

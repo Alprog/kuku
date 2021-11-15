@@ -13,16 +13,14 @@ void Repl()
     while (true)
     {
         std::cout << "> ";
-        std::wstring line = Console::readline();
-        if (line == L"exit")
+        std::u16string line = Console::readline();
+        if (line == u"exit")
         {
             break;
         }
 
-        auto u16string = std::u16string(std::begin(line), std::end(line));
-
         TextDocument document;
-        document.lines.push_back(u16string);
+        document.lines.push_back(line);
 
         Lexer lexer{ document };
         lexer.process();
