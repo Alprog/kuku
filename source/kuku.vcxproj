@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Console.cpp" />
+    <ClCompile Include="Test.cpp" />
     <ClCompile Include="SourceIterator.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="IDEConnection.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="TextDocument.cpp" />
     <ClCompile Include="TypeRegistry.cpp" />
     <ClCompile Include="Unicode.cpp" />
+    <ClCompile Include="UnicodeStreams.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -185,12 +187,14 @@
     <ClInclude Include="JsonSerializable.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="Streams.h" />
+    <ClInclude Include="Test.h" />
     <ClInclude Include="TextDocument.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="TokenType.h" />
-    <ClInclude Include="primitives.h" />
+    <ClInclude Include="types.h" />
     <ClInclude Include="TypeRegistry.h" />
     <ClInclude Include="Unicode.h" />
+    <ClInclude Include="UnicodeStreams.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="VirtualMachine.h" />
   </ItemGroup>

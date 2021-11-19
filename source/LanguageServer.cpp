@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "primitives.h"
+#include "types.h"
 #include "LSPEnums.h"
 #include "OpenedTextDocument.h"
 

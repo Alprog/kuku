@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Lexer.h";
 #include "Console.h"
-#include "primitives.h"
+#include "types.h"
 #include "Unicode.h"
 #include "TextDocument.h"
 

@@ -10,12 +10,12 @@ Lexer::Lexer(TextDocument& textDocument)
 {
 }
 
-bool isDigit(uint16_t c)
+bool isDigit(utf16unit c)
 {
     return c >= '0' && c <= '9';
 }
 
-bool isAlpha(uint16_t c)
+bool isAlpha(utf16unit c)
 {
     return (c >= 'a' && c <= 'z') ||
            (c >= 'A' && c <= 'Z') ||
@@ -52,7 +52,7 @@ Token Lexer::getNextToken()
 {
     while (true)
     {
-        uint16_t c = *it;
+        utf16unit c = *it;
         switch (c)
         {
             case ' ':

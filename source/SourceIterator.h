@@ -1,10 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "primitives.h"
+#include "types.h"
 #include "Encoding.h"
 #include "Position.h"
-#include <cstdint>
 
 class TextDocument;
 
@@ -16,7 +15,7 @@ public:
 
     SourceIterator(TextDocument& textDocument);
 
-    uint16_t operator*();
+    utf16unit operator*();
 
     Position position;
     TextDocument& textDocument;

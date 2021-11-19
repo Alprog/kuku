@@ -1,11 +1,14 @@
 #pragma once
 
+#include "types.h"
 #include <vector>
-#include "primitives.h"
+#include <queue>
 #include "Streams.h"
 
 namespace unicode
 {
     void writeUTF8(character character, std::vector<byte>& bytes);
     character readUTF8(InputStream<byte>& stream);
+
+    void writeUTF16(character character, std::queue<utf16unit>& units);
 }

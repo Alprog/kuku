@@ -4,7 +4,7 @@
 #include <vector>
 #include "Token.h"
 #include "TokenType.h"
-#include "primitives.h"
+#include "types.h"
 #include "TextDocument.h"
 #include "SourceIterator.h"
 

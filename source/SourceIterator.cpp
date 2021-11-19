@@ -9,7 +9,7 @@ SourceIterator::SourceIterator(TextDocument& textDocument)
 {
 }
 
-uint16_t SourceIterator::operator*()
+utf16unit SourceIterator::operator*()
 {
     return textDocument.getCharacter(position);
 }

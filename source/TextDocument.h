@@ -4,12 +4,16 @@
 #include <string>
 
 #include "Range.h"
+#include "Streams.h"
 
 class TextDocument
 {
 public:
+    TextDocument();
+    TextDocument(InputStream<utf16unit>& stream);
+
     std::vector<std::u16string> lines;
 
-    uint16_t getCharacter(Position position);
+    utf16unit getCharacter(Position position);
     std::u16string getSubstring(Range range);
 };

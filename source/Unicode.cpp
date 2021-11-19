@@ -2,6 +2,10 @@
 #include "Unicode.h"
 #include "Cell.h"
 
+constexpr int COUNT_7_BIT = 128;
+constexpr int COUNT_11_BIT = 2048;
+constexpr int COUNT_16_BIT = 65536;
+
 constexpr byte HAS_2_OCTETS = 0b11000000;
 constexpr byte HAS_3_OCTETS = 0b11100000;
 constexpr byte HAS_4_OCTETS = 0b11110000;
@@ -9,16 +13,16 @@ constexpr byte CONTINUATION = 0b10000000;
 
 void unicode::writeUTF8(character character, std::vector<byte>& bytes)
 {
-    if (character < 128) // 7 bit
+    if (character < COUNT_7_BIT)
     {
         bytes.push_back(character);
     }
-    else if (character < 2048) // 11 bit
+    else if (character < COUNT_11_BIT)
     {
         bytes.push_back((character >> 6) & 0b00011111 | HAS_2_OCTETS); // 5
         bytes.push_back((character >> 0) & 0b00111111 | CONTINUATION); // 6
     }
-    else if (character < 65536) // 16 bit
+    else if (character < COUNT_16_BIT)
     {
         bytes.push_back((character >> 12) & 0b00001111 | HAS_3_OCTETS); // 4
         bytes.push_back((character >> 06) & 0b00111111 | CONTINUATION); // 6
@@ -81,4 +85,31 @@ character unicode::readUTF8(InputStream<byte>& stream)
     }
 
     return character;
+}
+
+constexpr utf16unit SURROGATES_START = 0xD800;
+constexpr utf16unit SURROGATES_HALF = 0xDC00;
+constexpr utf16unit SURROGATES_END = 0xE000;
+
+void unicode::writeUTF16(character character, std::queue<utf16unit>& units)
+{
+    if (character < COUNT_16_BIT)
+    {
+        if (character >= SURROGATES_START && character < SURROGATES_END)
+        {
+            throw std::exception("can't write surrogate pair as utf-16");
+        }
+        else
+        {
+            units.push(character);
+        }
+    }
+    else
+    {
+        auto remainder = character - COUNT_16_BIT; // 20-bit remainder
+        auto w1 = SURROGATES_START + (remainder >> 10);         // high 10 bits
+        auto w2 = SURROGATES_HALF + (remainder & 0b1111111111); // low 10 bits
+        units.push(w1);
+        units.push(w2);
+    }
 }

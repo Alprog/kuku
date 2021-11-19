@@ -1,6 +1,6 @@
 #pragma once
 
-#include "primitives.h"
+#include "types.h"
 #include "Cell.h"
 
 class Stack

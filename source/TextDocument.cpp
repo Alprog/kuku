@@ -1,7 +1,21 @@
 
 #include "TextDocument.h"
 
-uint16_t TextDocument::getCharacter(Position position)
+TextDocument::TextDocument()
+{
+
+}
+
+TextDocument::TextDocument(InputStream<utf16unit>& stream)
+{
+    utf16unit unit;
+    while (stream.next(unit))
+    {
+
+    }
+}
+
+utf16unit TextDocument::getCharacter(Position position)
 {
     if (position.line < lines.size())
     {

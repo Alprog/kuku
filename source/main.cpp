@@ -3,6 +3,7 @@
 #include <string>
 #include "Repl.h"
 #include "LanguageServer.h"
+#include "Test.h"
 
 #include "Windows.h"
 #include "debugapi.h"
@@ -71,6 +72,10 @@ int main(int argc, const char* argv[])
     if (mode == "repl")
     {
         Repl();
+    }
+    else if (mode == "test")
+    {
+        Test();
     }
     else if (mode == "lang-server")
     {

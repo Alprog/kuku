@@ -1,9 +1,7 @@
 #pragma once
 
 #include <string.h>
-#include <cstdint>
-#include "primitives.h"
-#include "Unicode.h"
+#include "types.h"
 #include <iostream>
 #include <fstream>
 
@@ -15,7 +13,7 @@ public:
 };
 
 template <typename T>
-class FileInputStream : InputStream<T>
+class FileInputStream : public InputStream<T>
 {
 public:
 	std::basic_fstream<T> fs;
@@ -23,6 +21,11 @@ public:
 	FileInputStream(std::string filePath)
 	{
 		fs.open(filePath);
+	}
+
+	~FileInputStream()
+	{
+		fs.close();
 	}
 
 	virtual bool next(T& outCharacter) override
@@ -34,17 +37,3 @@ public:
 		return true;
 	}
 };
-
-
-/*class Utf8ToStream
-{
-public:
-	InputStream stream;
-
-	virtual bool next(uint16_t& outCharacter)
-	{
-		character c = unicode::readUTF8(stream);
-	
-		unicode::writeUTF16(c, )
-	}
-};*/
