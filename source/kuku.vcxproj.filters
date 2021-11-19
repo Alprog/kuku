@@ -176,5 +176,8 @@
     <ClInclude Include="OpenedTextDocument.h">
       <Filter>Source Files\TextDocument</Filter>
     </ClInclude>
+    <ClInclude Include="Streams.h">
+      <Filter>Source Files\Encoder</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

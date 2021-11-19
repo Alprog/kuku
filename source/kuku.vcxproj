@@ -184,6 +184,7 @@
     <ClInclude Include="Repl.h" />
     <ClInclude Include="JsonSerializable.h" />
     <ClInclude Include="Stack.h" />
+    <ClInclude Include="Streams.h" />
     <ClInclude Include="TextDocument.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="TokenType.h" />

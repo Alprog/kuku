@@ -33,9 +33,10 @@ void unicode::writeUTF8(character character, std::vector<byte>& bytes)
     }
 }
 
-character unicode::readUTF8(std::vector<byte>& bytes, size_t& position)
+character unicode::readUTF8(InputStream<byte>& stream)
 {
-    auto byte = bytes[position++];
+    byte byte;
+    stream.next(byte);
     if (byte < 128)
     {
         return byte;
@@ -65,13 +66,13 @@ character unicode::readUTF8(std::vector<byte>& bytes, size_t& position)
 
     while (continuation_count > 0)
     {
-        byte = bytes[position];
+        stream.next(byte);
 
         if ((byte & 0b11000000) == CONTINUATION)
         {
             character = (character << 6) + (byte & 0b00111111);
             continuation_count--;
-            position++;
+            //stream.get();
         }
         else
         {
