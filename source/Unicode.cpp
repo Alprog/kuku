@@ -113,3 +113,21 @@ void unicode::writeUTF16(character character, std::queue<utf16unit>& units)
         units.push(w2);
     }
 }
+
+character unicode::readUTF16(InputStream<utf16unit>& stream)
+{
+    utf16unit firstUnit;
+    stream.next(firstUnit);
+
+    if (firstUnit < SURROGATES_START || firstUnit >= SURROGATES_END)
+    {
+        return firstUnit;
+    }
+
+    utf16unit secondUnit;
+    stream.next(secondUnit);
+
+    auto highBits = (character)(firstUnit - SURROGATES_START) << 10;
+    auto lowBits = (character)(secondUnit - SURROGATES_END);
+    return highBits + lowBits + COUNT_16_BIT;    
+}

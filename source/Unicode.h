@@ -11,4 +11,5 @@ namespace unicode
     character readUTF8(InputStream<byte>& stream);
 
     void writeUTF16(character character, std::queue<utf16unit>& units);
+    character readUTF16(InputStream<utf16unit>& stream);
 }
