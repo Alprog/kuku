@@ -8,11 +8,37 @@ TextDocument::TextDocument()
 
 TextDocument::TextDocument(InputStream<utf16unit>& stream)
 {
-    utf16unit unit;
+    std::vector<utf16unit> line;
+
+    auto flushLine = [this, &line]()
+    {
+        lines.push_back({ std::begin(line), std::end(line) });
+        line.clear();
+    };
+
+
+    utf16unit unit, prevUnit = 0;
     while (stream.next(unit))
     {
-
+        if (unit == '\r')
+        {
+            flushLine();
+        }
+        if (unit == '\n')
+        {
+            if (prevUnit != '\r')
+            {
+                flushLine();
+            }
+        }
+        else
+        {
+            line.push_back(unit);
+        }
+        prevUnit = unit;
     }
+
+    flushLine();
 }
 
 utf16unit TextDocument::getCharacter(Position position)

@@ -4,11 +4,13 @@
 #include "Streams.h"
 #include "UnicodeStreams.h"
 #include "TextDocument.h"
+#include <fstream>
 
 void Test()
 {
-	FileInputStream<byte> fileStream("C:/Users/alpro/Desktop/efef.kuku");
-	unicode::Utf8To16Stream u16stream(fileStream);
+	std::basic_ifstream<byte> fileStream("C:/Users/alpro/Desktop/efef.kuku");
+	BasicInputStream basicStream(fileStream);
+	unicode::Utf8To16Stream u16stream(basicStream);
 
 	TextDocument document(u16stream);
 }

@@ -6,6 +6,7 @@
 #include "types.h"
 #include "Unicode.h"
 #include "TextDocument.h"
+#include <sstream>
 
 void Repl()
 {
@@ -18,9 +19,10 @@ void Repl()
         {
             break;
         }
-
-        TextDocument document;
-        document.lines.push_back(line);
+        
+        std::basic_istringstream stringStream{ line };
+        BasicInputStream basicStream{ stringStream };
+        TextDocument document{ basicStream };
 
         Lexer lexer{ document };
         lexer.process();

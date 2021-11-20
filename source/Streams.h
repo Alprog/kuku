@@ -13,27 +13,19 @@ public:
 };
 
 template <typename T>
-class FileInputStream : public InputStream<T>
+class BasicInputStream : public InputStream<T>
 {
 public:
-	std::basic_fstream<T> fs;
+	std::basic_istream<T>& stream;
 
-	FileInputStream(std::string filePath)
+	BasicInputStream(std::basic_istream<T>& stream)
+		: stream { stream }
 	{
-		fs.open(filePath);
-	}
-
-	~FileInputStream()
-	{
-		fs.close();
 	}
 
 	virtual bool next(T& outCharacter) override
 	{
-		if (fs.eof())
-			return false;
-
-		fs.get(outCharacter);
-		return true;
+		stream.get(outCharacter);
+		return !stream.fail();
 	}
 };
