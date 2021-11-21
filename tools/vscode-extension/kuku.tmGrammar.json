@@ -1,0 +1,78 @@
+{
+	"scopeName": "source.kuku",
+	"patterns": 
+	[
+		{
+			"name": "keyword.other.kuku",
+			"match": "\\b(var|function|if|while|for|return)\\b"
+		},
+		{
+			"name": "string.quoted.single.kuku",
+			"begin": "R'",
+			"end": "'"
+		},
+		{
+			"name": "string.quoted.double.kuku",
+			"begin": "R\"",
+			"end": "\""
+		},
+		{
+			"name": "string.quoted.other.kuku",
+			"begin": "R`",
+			"end": "`"
+		},
+		{
+			"name": "string.quoted.single.kuku",
+			"begin": "'",
+			"end": "'|\n",
+			"patterns": [
+				{
+					"name": "constant.character.escape.kuku",
+					"match": "\\\\."
+				}
+			]
+		},
+		{
+			"name": "string.quoted.double.kuku",
+			"begin": "\"",
+			"end": "\"|\n",
+			"patterns": [
+				{
+					"name": "constant.character.escape.kuku",
+					"match": "\\\\."
+				}
+			]
+		},
+		{
+			"name": "string.quoted.other.kuku",
+			"begin": "`",
+			"end": "`|\n",
+			"patterns": [
+				{
+					"name": "constant.character.escape.kuku",
+					"match": "\\\\."
+				}
+			]
+		},
+		{
+			"name": "comment.block.other.kuku",
+			"begin": "#\\[",
+			"end": "#\\]"
+		},
+		{
+			"name": "comment.line.other.kuku",
+			"begin": "#",
+			"end": "\n"
+		},
+		{
+			"name": "comment.block.other.kuku",
+			"begin": "\\*/",
+			"end": "/\\*"
+		},
+		{
+			"name": "comment.line.other.kuku",
+			"begin": "/\\*",
+			"end": "\n"
+		}
+	]
+  }
