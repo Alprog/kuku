@@ -5,6 +5,7 @@
 #include "UnicodeStreams.h"
 #include "TextDocument.h"
 #include <fstream>
+#include "Lexer.h"
 
 void Test()
 {
@@ -13,4 +14,7 @@ void Test()
 	unicode::Utf8To16Stream u16stream(basicStream);
 
 	TextDocument document(u16stream);
+
+	Lexer lexer(document);
+	lexer.process();
 }

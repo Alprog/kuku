@@ -27,6 +27,11 @@ bool isAlphaOrDigit(wchar_t c)
     return isDigit(c) || isAlpha(c);
 }
 
+bool isQuote(utf16unit c)
+{
+    return c == '"' || c == '\'' || c == '`';
+}
+
 void Lexer::process()
 {
     std::vector<Token> tokens;
@@ -55,15 +60,36 @@ Token Lexer::getNextToken()
         utf16unit c = *it;
         switch (c)
         {
-            case ' ':
-                ++it;
-                continue;
-
             case '\0':
                 return createToken(it++, TokenType::EndOfSource);
 
             case '\n':
                 return createToken(it++, TokenType::EndOfLine);
+
+            case ' ':
+                ++it;
+                continue;
+
+            case '#':
+            {
+                auto startIt = it++;
+                while (*it != '\n') ++it;
+                return createToken(startIt, TokenType::Comment);
+            }
+
+            case '*':
+            {
+                auto startIt = it++;
+                if (*it == '/')
+                {
+                    it++;
+                    return finishMultilineComment(startIt);
+                }
+                else
+                {
+                    return createToken(startIt, TokenType::Operator);
+                }
+            }
 
             case ';':
                 return createToken(it++, TokenType::Semicolon);
@@ -75,10 +101,15 @@ Token Lexer::getNextToken()
                 return createToken(it++, TokenType::Bracket);
 
             case '+':
-            case '*':
             case '/':
             case '=':
                 return createToken(it++, TokenType::Operator);
+        }
+
+        if (isQuote(c))
+        {
+            auto startIt = it++;
+            return finishString(startIt, c, true);
         }
 
         if (isDigit(c) || c == '-')
@@ -103,6 +134,69 @@ Token Lexer::getNextToken()
 
         ++it;
     }
+}
+
+Token Lexer::finishMultilineComment(SourceIterator startIt)
+{
+    while (true)
+    {
+        if (!moveTo('/') || *it++ == '*')
+        {
+            return createToken(startIt, TokenType::Comment);
+        }
+    }
+}
+
+Token Lexer::finishString(SourceIterator startIt, utf16unit endQuote, bool escaping)
+{
+    auto result = escaping ? moveToEscaped(endQuote) : moveTo(endQuote);
+    if (result)
+    {
+        return createToken(startIt, TokenType::StringLiteral);
+    }
+    else
+    {
+        return createToken(startIt, TokenType::UnclosedStringLiteral);
+    }
+}
+
+bool Lexer::moveTo(utf16unit endQuote)
+{
+    utf16unit cur = *it;
+    while (cur != '\0')
+    {
+        it++;
+        if (cur == endQuote)
+        {            
+            return true;
+        }
+        cur = *it;
+    }
+    return false;
+}
+
+bool Lexer::moveToEscaped(utf16unit endQuote)
+{
+    utf16unit cur = *it;
+    bool escaping = false;
+    while (cur != '\0' && cur != '\n')
+    {        
+        it++;
+        if (escaping)
+        {
+            escaping = false;
+        }
+        else if (cur == '\\')
+        {
+            escaping = true;
+        }
+        else if (cur == endQuote)
+        {            
+            return true;
+        }
+        cur = *it;
+    }
+    return false;
 }
 
 Token Lexer::createToken(SourceIterator startIt, TokenType type)

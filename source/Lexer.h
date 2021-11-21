@@ -17,6 +17,12 @@ public:
 private:
     Token getNextToken();
 
+    Token finishMultilineComment(SourceIterator startIt);
+    Token finishString(SourceIterator startIt, utf16unit endQuote, bool escaping);
+
+    bool moveTo(utf16unit endQuote);
+    bool moveToEscaped(utf16unit endQuote);
+
     Token createToken(SourceIterator start, TokenType type);
 
     TextDocument& textDocument;
