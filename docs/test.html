@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<title>test kuku</title>
+		<style>
+#editor {
+    position: absolute;
+    width: 500px;
+    height: 400px;
+}
+		</style>
+	</head>
+	<body>
+		<div id="editor">
+function a(b, v)
+    print("efefe");
+    
+    a/* efef */ a
+	efef
+	// efef 
+end
+</div>
+		<script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+		<script src="ace/mode-kuku.js" type="text/javascript" charset="utf-8"></script>
+		<script src="src/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			var editor = ace.edit("editor");
+			var Mode = ace.require("ace/mode/kuku").Mode;
+			editor.session.setMode(new Mode());
+			editor.setTheme("ace/theme/twilight");
+		</script>
+	</body>
+<html>

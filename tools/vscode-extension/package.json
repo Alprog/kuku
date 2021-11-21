@@ -31,7 +31,7 @@
 			{
 				"language": "kuku",
 				"scopeName": "source.kuku",
-				"path": "./kuku.tmGrammar.json"
+				"path": "./kuku.tmGrammar"
 			}
 		],
 		"configuration": {
