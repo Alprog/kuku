@@ -73,8 +73,15 @@ Token Lexer::getNextToken()
             case '#':
             {
                 auto startIt = it++;
-                while (*it != '\n') ++it;
-                return createToken(startIt, TokenType::Comment);
+                if (*it == '[')
+                {
+                    it++;
+                    return finishMultilineComment(startIt, '#', ']');
+                }
+                else
+                {
+                    return finishOneLineComment(startIt);
+                }
             }
 
             case '*':
@@ -83,13 +90,30 @@ Token Lexer::getNextToken()
                 if (*it == '/')
                 {
                     it++;
-                    return finishMultilineComment(startIt);
+                    return finishMultilineComment(startIt, '/', '*');
                 }
                 else
                 {
                     return createToken(startIt, TokenType::Operator);
                 }
             }
+
+            case '/':
+            {
+                auto startIt = it++;
+                if (*it == '*')
+                {
+                    return finishOneLineComment(startIt);
+                }
+                else
+                {
+                    return createToken(startIt, TokenType::Operator);
+                }
+            }
+
+            case '+':
+            case '=':
+                return createToken(it++, TokenType::Operator);
 
             case ';':
                 return createToken(it++, TokenType::Semicolon);
@@ -99,11 +123,6 @@ Token Lexer::getNextToken()
             case '(':
             case ')':
                 return createToken(it++, TokenType::Bracket);
-
-            case '+':
-            case '/':
-            case '=':
-                return createToken(it++, TokenType::Operator);
         }
 
         if (isQuote(c))
@@ -129,6 +148,17 @@ Token Lexer::getNextToken()
         {
             auto startIt = it++;
             while (isAlphaOrDigit(*it)) ++it;
+
+            std::u16string id = textDocument.getSubstring({ startIt.position, it.position });
+            if (id == u"R" && isQuote(*it))
+            {
+                return finishString(startIt, *it++, false);
+            }
+            if (id == u"true" || id == u"false")
+            {
+                return createToken(startIt, TokenType::BoolLiteral);
+            }
+
             return createToken(startIt, TokenType::UpperCaseIdentifier);
         }
 
@@ -136,11 +166,17 @@ Token Lexer::getNextToken()
     }
 }
 
-Token Lexer::finishMultilineComment(SourceIterator startIt)
+Token Lexer::finishOneLineComment(SourceIterator startIt)
+{
+    while (*it != '\n') ++it;
+    return createToken(startIt, TokenType::Comment);
+}
+
+Token Lexer::finishMultilineComment(SourceIterator startIt, utf16unit endSymbol1, utf16unit endSymbol2)
 {
     while (true)
     {
-        if (!moveTo('/') || *it++ == '*')
+        if (!moveTo(endSymbol1) || *it++ == endSymbol2)
         {
             return createToken(startIt, TokenType::Comment);
         }
@@ -160,13 +196,13 @@ Token Lexer::finishString(SourceIterator startIt, utf16unit endQuote, bool escap
     }
 }
 
-bool Lexer::moveTo(utf16unit endQuote)
+bool Lexer::moveTo(utf16unit endSymbol)
 {
     utf16unit cur = *it;
     while (cur != '\0')
     {
         it++;
-        if (cur == endQuote)
+        if (cur == endSymbol)
         {            
             return true;
         }
@@ -175,7 +211,7 @@ bool Lexer::moveTo(utf16unit endQuote)
     return false;
 }
 
-bool Lexer::moveToEscaped(utf16unit endQuote)
+bool Lexer::moveToEscaped(utf16unit endSymbol)
 {
     utf16unit cur = *it;
     bool escaping = false;
@@ -190,7 +226,7 @@ bool Lexer::moveToEscaped(utf16unit endQuote)
         {
             escaping = true;
         }
-        else if (cur == endQuote)
+        else if (cur == endSymbol)
         {            
             return true;
         }

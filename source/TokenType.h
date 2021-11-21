@@ -2,6 +2,7 @@
 
 enum class TokenType
 {
+    BoolLiteral,
     IntegerLiteral,
     NumberLiteral,
     StringLiteral,
