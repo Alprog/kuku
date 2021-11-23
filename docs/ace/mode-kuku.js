@@ -85,25 +85,10 @@ var KukuHighlightRules = function() {
                 defaultToken: "string.quoted.other.kuku"
             }]
         }, {
-            token: "comment.block.other.kuku",
-            regex: /#\[/,
-            push: [{
-                token: "comment.block.other.kuku",
-                regex: /#\]/,
-                next: "pop"
-            }, {
-                defaultToken: "comment.block.other.kuku"
-            }]
+            include: "#multicomment"
         }, {
             token: "comment.line.other.kuku",
-            regex: /#/,
-            push: [{
-                token: "comment.line.other.kuku",
-                regex: /$/,
-                next: "pop"
-            }, {
-                defaultToken: "comment.line.other.kuku"
-            }]
+            regex: /#.*$/
         }, {
             token: "comment.block.other.kuku",
             regex: /\*\//,
@@ -116,13 +101,19 @@ var KukuHighlightRules = function() {
             }]
         }, {
             token: "comment.line.other.kuku",
-            regex: /\/\*/,
+            regex: /\/\*.*$/
+        }],
+        "#multicomment": [{
+            token: "comment.block.other.kuku",
+            regex: /#\[/,
             push: [{
-                token: "comment.line.other.kuku",
-                regex: /$/,
+                token: "comment.block.other.kuku",
+                regex: /#\]/,
                 next: "pop"
             }, {
-                defaultToken: "comment.line.other.kuku"
+                include: "#multicomment"
+            }, {
+                defaultToken: "comment.block.other.kuku"
             }]
         }]
     };

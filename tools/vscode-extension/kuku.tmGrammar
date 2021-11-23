@@ -29,7 +29,7 @@
 			<dict>
 				<key>name</key><string>string.quoted.single.kuku</string>
 				<key>begin</key><string>'</string>
-				<key>end</key><string>'|\n</string>
+				<key>end</key><string>'|$</string>
 				<key>patterns</key><array><dict>
 					<key>name</key><string>constant.character.escape.kuku</string>
 					<key>match</key><string>\\.</string>
@@ -38,7 +38,7 @@
 			<dict>
 				<key>name</key><string>string.quoted.double.kuku</string>
 				<key>begin</key><string>"</string>
-				<key>end</key><string>"|\n</string>
+				<key>end</key><string>"|$</string>
 				<key>patterns</key><array><dict>
 					<key>name</key><string>constant.character.escape.kuku</string>
 					<key>match</key><string>\\.</string>
@@ -47,7 +47,7 @@
 			<dict>
 				<key>name</key><string>string.quoted.other.kuku</string>
 				<key>begin</key><string>`</string>
-				<key>end</key><string>`|\n</string>
+				<key>end</key><string>`|$</string>
 				<key>patterns</key><array><dict>
 					<key>name</key><string>constant.character.escape.kuku</string>
 					<key>match</key><string>\\.</string>
@@ -55,14 +55,11 @@
 			</dict>
 			<!--normal comments-->
 			<dict>
-				<key>name</key><string>comment.block.other.kuku</string>
-				<key>begin</key><string>#\[</string>
-				<key>end</key><string>#\]</string>
+				<key>include</key><string>#multicomment</string>
 			</dict>
 			<dict>
 				<key>name</key><string>comment.line.other.kuku</string>
-				<key>begin</key><string>#</string>
-				<key>end</key><string>\n</string>
+				<key>match</key><string>#.*$</string>
 			</dict>
 			<!--binding comments-->
 			<dict>
@@ -72,9 +69,20 @@
 			</dict>
 			<dict>
 				<key>name</key><string>comment.line.other.kuku</string>
-				<key>begin</key><string>/\*</string>
-				<key>end</key><string>\n</string>
+				<key>match</key><string>/\*.*$</string>
 			</dict>
 		</array>
+		<key>repository</key><dict>
+			<key>multicomment</key><dict>
+				<key>name</key><string>comment.block.other.kuku</string>
+				<key>begin</key><string>#\[</string>
+				<key>end</key><string>#\]</string>
+				<key>patterns</key><array>
+					<dict>
+						<key>include</key><string>#multicomment</string>
+					</dict>
+				</array>
+			</dict>
+		</dict>
 	</dict>
 </plist>

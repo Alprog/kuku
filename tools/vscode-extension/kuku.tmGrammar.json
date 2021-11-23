@@ -1,5 +1,5 @@
 {
-	"name": "kuku"
+	"name": "kuku",
 	"scopeName": "source.kuku",
 	"patterns": 
 	[
@@ -25,7 +25,7 @@
 		{
 			"name": "string.quoted.single.kuku",
 			"begin": "'",
-			"end": "'|\n",
+			"end": "'|$",
 			"patterns": [
 				{
 					"name": "constant.character.escape.kuku",
@@ -36,7 +36,7 @@
 		{
 			"name": "string.quoted.double.kuku",
 			"begin": "\"",
-			"end": "\"|\n",
+			"end": "\"|$",
 			"patterns": [
 				{
 					"name": "constant.character.escape.kuku",
@@ -47,7 +47,7 @@
 		{
 			"name": "string.quoted.other.kuku",
 			"begin": "`",
-			"end": "`|\n",
+			"end": "`|$",
 			"patterns": [
 				{
 					"name": "constant.character.escape.kuku",
@@ -56,14 +56,11 @@
 			]
 		},
 		{
-			"name": "comment.block.other.kuku",
-			"begin": "#\\[",
-			"end": "#\\]"
+			"include": "#multicomment"
 		},
 		{
 			"name": "comment.line.other.kuku",
-			"begin": "#",
-			"end": "\n"
+			"match": "#.*$"
 		},
 		{
 			"name": "comment.block.other.kuku",
@@ -72,8 +69,19 @@
 		},
 		{
 			"name": "comment.line.other.kuku",
-			"begin": "/\\*",
-			"end": "\n"
+			"match": "/\\*.*$"
 		}
-	]
+	],
+	"repository": {
+		"multicomment": {
+			"name": "comment.block.other.kuku",
+			"begin": "(#\\[)|(#=)",
+			"end": "#\\]",
+			"patterns": [
+				{
+					"include": "#multicomment"
+				}
+			]
+		}
+	}
   }
