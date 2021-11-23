@@ -13,10 +13,9 @@ class Lexer
 public:
     Lexer(TextDocument& textDocument);
     void process();
-
-private:
     Token getNextToken();
 
+public:
     Token finishLineComment(SourceIterator startIt);
     Token finishBlockComment(SourceIterator startIt);
     Token finishBindingBlockComment(SourceIterator startIt);

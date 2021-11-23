@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Console.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="SourceIterator.cpp" />
     <ClCompile Include="Field.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Class.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="DataType.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="SourceIterator.h" />
     <ClInclude Include="Encoding.h" />
     <ClInclude Include="Field.h" />

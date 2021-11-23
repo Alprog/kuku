@@ -5,7 +5,7 @@
 #include "UnicodeStreams.h"
 #include "TextDocument.h"
 #include <fstream>
-#include "Lexer.h"
+#include "Parser.h"
 
 void Test()
 {
@@ -16,5 +16,7 @@ void Test()
 	TextDocument document(u16stream);
 
 	Lexer lexer(document);
-	lexer.process();
+	Parser parser(lexer);
+
+	parser.process();
 }

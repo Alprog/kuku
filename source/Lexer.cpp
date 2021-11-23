@@ -2,6 +2,19 @@
 #include "Lexer.h"
 #include "Console.h"
 
+std::vector<std::u16string> keywords { 
+    u"function", 
+    u"end",
+    u"while",
+    u"else",
+    u"for",
+    u"and",
+    u"or",
+    u"then",
+    u"do",
+    u"var"
+};
+
 Lexer::Lexer(TextDocument& textDocument)
     : textDocument{textDocument}
     , it{textDocument}
@@ -151,8 +164,12 @@ Token Lexer::getNextToken()
             {
                 return createToken(startIt, TokenType::BoolLiteral);
             }
+            if (std::find(std::begin(keywords), std::end(keywords), id) != std::end(keywords))
+            {
+                return  createToken(startIt, TokenType::Keyword);
+            }
 
-            return createToken(startIt, TokenType::UpperCaseIdentifier);
+            return createToken(startIt, TokenType::Identifier);
         }
 
         ++it;

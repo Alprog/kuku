@@ -9,10 +9,10 @@ enum class TokenType
     UnclosedStringLiteral,
     Operator,
     Bracket,
-    UpperCaseIdentifier,
-    LowerCaseIdentifier,
+    Identifier,
     Semicolon,
     EndOfLine,
     EndOfSource,
-    Comment
+    Comment,
+    Keyword
 };
