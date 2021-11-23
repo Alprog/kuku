@@ -73,42 +73,35 @@ Token Lexer::getNextToken()
             case '#':
             {
                 auto startIt = it++;
-                if (*it == '[')
+                if (advance('['))
                 {
-                    it++;
-                    return finishMultilineComment(startIt, '#', ']');
+                    if (advance('#'))
+                        return createToken(startIt, TokenType::Comment); //:  #[#     disabled comment begin marker
+                    else
+                        return finishBlockComment(startIt);              //:  #[...   comment begin marker
                 }
+                else if (advance(']'))
+                    return createToken(startIt, TokenType::Comment);     //:  #]      comment end marker
                 else
-                {
-                    return finishOneLineComment(startIt);
-                }
+                    return finishLineComment(startIt);                   //:  #...    single line comment
             }
 
             case '*':
             {
                 auto startIt = it++;
-                if (*it == '/')
-                {
-                    it++;
-                    return finishMultilineComment(startIt, '/', '*');
-                }
+                if (advance('/'))
+                    return finishBindingBlockComment(startIt);         //:  */...    binding-comment begin marker
                 else
-                {
-                    return createToken(startIt, TokenType::Operator);
-                }
+                    return createToken(startIt, TokenType::Operator);  //:  *        multiply operator
             }
 
             case '/':
             {
                 auto startIt = it++;
-                if (*it == '*')
-                {
-                    return finishOneLineComment(startIt);
-                }
+                if (advance('*'))
+                    return finishLineComment(startIt);                 //:  /*...    single line binding-comment
                 else
-                {
-                    return createToken(startIt, TokenType::Operator);
-                }
+                    return createToken(startIt, TokenType::Operator);  //:  /        divide operator
             }
 
             case '+':
@@ -166,26 +159,45 @@ Token Lexer::getNextToken()
     }
 }
 
-Token Lexer::finishOneLineComment(SourceIterator startIt)
+Token Lexer::finishLineComment(SourceIterator startIt)
 {
     while (*it != '\n') ++it;
     return createToken(startIt, TokenType::Comment);
 }
 
-Token Lexer::finishMultilineComment(SourceIterator startIt, utf16unit endSymbol1, utf16unit endSymbol2)
+Token Lexer::finishBlockComment(SourceIterator startIt)
 {
-    while (true)
+    int level = 1;
+
+    while (moveAfter('#'))
     {
-        if (!moveTo(endSymbol1) || *it++ == endSymbol2)
+        if (advance('['))
         {
-            return createToken(startIt, TokenType::Comment);
+            level++;
+        }
+        else if (advance(']'))
+        {
+            if (--level == 0)
+                break;
         }
     }
+
+    return createToken(startIt, TokenType::Comment);
+}
+
+Token Lexer::finishBindingBlockComment(SourceIterator startIt)
+{
+    while (moveAfter('/'))
+    {
+        if (advance('*'))
+            break;
+    }
+    return createToken(startIt, TokenType::Comment);
 }
 
 Token Lexer::finishString(SourceIterator startIt, utf16unit endQuote, bool escaping)
 {
-    auto result = escaping ? moveToEscaped(endQuote) : moveTo(endQuote);
+    auto result = escaping ? moveAfterEscaped(endQuote) : moveAfter(endQuote);
     if (result)
     {
         return createToken(startIt, TokenType::StringLiteral);
@@ -196,7 +208,18 @@ Token Lexer::finishString(SourceIterator startIt, utf16unit endQuote, bool escap
     }
 }
 
-bool Lexer::moveTo(utf16unit endSymbol)
+// check current symbol and step forward if it match
+bool Lexer::advance(utf16unit symbol)
+{
+    if (*it == symbol)
+    {
+        ++it;
+        return true;
+    }
+    return false;
+}
+
+bool Lexer::moveAfter(utf16unit endSymbol)
 {
     utf16unit cur = *it;
     while (cur != '\0')
@@ -211,7 +234,7 @@ bool Lexer::moveTo(utf16unit endSymbol)
     return false;
 }
 
-bool Lexer::moveToEscaped(utf16unit endSymbol)
+bool Lexer::moveAfterEscaped(utf16unit endSymbol)
 {
     utf16unit cur = *it;
     bool escaping = false;

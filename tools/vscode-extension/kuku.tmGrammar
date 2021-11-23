@@ -7,7 +7,7 @@
 			<!--keywords-->
 			<dict>
 				<key>name</key><string>keyword.other.kuku</string>
-				<key>match</key><string>\b(var|function|if|while|for|return)\b</string>
+				<key>match</key><string>\b(var|function|if|while|for|return|and|or|then|end)\b</string>
 			</dict>
 			<!--raw strings-->
 			<dict>
@@ -55,26 +55,30 @@
 			</dict>
 			<!--normal comments-->
 			<dict>
+				<key>name</key><string>comment.marker.kuku</string>
+				<key>match</key><string>(#\])|(#\[#)</string>
+			</dict>
+			<dict>
 				<key>include</key><string>#multicomment</string>
 			</dict>
 			<dict>
-				<key>name</key><string>comment.line.other.kuku</string>
+				<key>name</key><string>comment.line.kuku</string>
 				<key>match</key><string>#.*$</string>
 			</dict>
 			<!--binding comments-->
 			<dict>
-				<key>name</key><string>comment.block.other.kuku</string>
+				<key>name</key><string>comment.block.kuku</string>
 				<key>begin</key><string>\*/</string>
 				<key>end</key><string>/\*</string>
 			</dict>
 			<dict>
-				<key>name</key><string>comment.line.other.kuku</string>
+				<key>name</key><string>comment.line.kuku</string>
 				<key>match</key><string>/\*.*$</string>
 			</dict>
 		</array>
 		<key>repository</key><dict>
 			<key>multicomment</key><dict>
-				<key>name</key><string>comment.block.other.kuku</string>
+				<key>name</key><string>comment.block.kuku</string>
 				<key>begin</key><string>#\[</string>
 				<key>end</key><string>#\]</string>
 				<key>patterns</key><array>

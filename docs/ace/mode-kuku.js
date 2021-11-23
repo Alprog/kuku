@@ -14,7 +14,7 @@ var KukuHighlightRules = function() {
     this.$rules = {
         start: [{
             token: "keyword.other.kuku",
-            regex: /\b(?:var|function|if|while|for|return)\b/
+            regex: /\b(?:var|function|if|while|for|return|and|or|then|end)\b/
         }, {
             token: "string.quoted.single.kuku",
             regex: /R'/,
@@ -85,35 +85,38 @@ var KukuHighlightRules = function() {
                 defaultToken: "string.quoted.other.kuku"
             }]
         }, {
+            token: "comment.marker.kuku",
+            regex: /#\]|#\[#/
+        }, {
             include: "#multicomment"
         }, {
-            token: "comment.line.other.kuku",
+            token: "comment.line.kuku",
             regex: /#.*$/
         }, {
-            token: "comment.block.other.kuku",
+            token: "comment.block.kuku",
             regex: /\*\//,
             push: [{
-                token: "comment.block.other.kuku",
+                token: "comment.block.kuku",
                 regex: /\/\*/,
                 next: "pop"
             }, {
-                defaultToken: "comment.block.other.kuku"
+                defaultToken: "comment.block.kuku"
             }]
         }, {
-            token: "comment.line.other.kuku",
+            token: "comment.line.kuku",
             regex: /\/\*.*$/
         }],
         "#multicomment": [{
-            token: "comment.block.other.kuku",
+            token: "comment.block.kuku",
             regex: /#\[/,
             push: [{
-                token: "comment.block.other.kuku",
+                token: "comment.block.kuku",
                 regex: /#\]/,
                 next: "pop"
             }, {
                 include: "#multicomment"
             }, {
-                defaultToken: "comment.block.other.kuku"
+                defaultToken: "comment.block.kuku"
             }]
         }]
     };

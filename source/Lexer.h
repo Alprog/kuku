@@ -17,12 +17,15 @@ public:
 private:
     Token getNextToken();
 
-    Token finishOneLineComment(SourceIterator startIt);
-    Token finishMultilineComment(SourceIterator startIt, utf16unit endSymbol1, utf16unit endSymbol2);
+    Token finishLineComment(SourceIterator startIt);
+    Token finishBlockComment(SourceIterator startIt);
+    Token finishBindingBlockComment(SourceIterator startIt);
     Token finishString(SourceIterator startIt, utf16unit endQuote, bool escaping);
 
-    bool moveTo(utf16unit endSymbol);
-    bool moveToEscaped(utf16unit endSymbol);
+    bool advance(utf16unit symbol);
+
+    bool moveAfter(utf16unit endSymbol);
+    bool moveAfterEscaped(utf16unit endSymbol);
 
     Token createToken(SourceIterator start, TokenType type);
 
