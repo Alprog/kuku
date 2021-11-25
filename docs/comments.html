@@ -1,0 +1,132 @@
+<html>
+	<head>
+		<title>Kuku comments</title>
+		<style>
+body {
+  background-color: black;
+}
+#editor {
+    width: 800;
+    height: 100%;
+}
+		</style>
+	</head>
+	<body>
+		<center><div id="editor">
+                            # Kuku comments
+                            
+                           # Normal comments
+
+#[ 
+   A short comment starts with a sharp sign (#) anywhere 
+   outside a string and it extends to the end of the line.
+#]
+
+var q = "c++, c#, lua" # this is comment
+
+
+
+#[ 
+    Block comment starts with #[ sequence and ends with #]
+    It allows to comment several lines or part of the line in the middle.
+#]
+
+var w = "w"
+#[
+this is
+a multiline
+comment
+#]
+var t #[ comment in the middle #] = "t"
+
+
+
+#[ 
+    Block comments support nesting as well.
+#]
+
+var i = "i"
+#[ this is a
+comment #[ this is nested comment #]
+this is also a comment
+ #] var d = "d" 
+
+
+
+#[ 
+    Line with comment-begin marker can be commented-out itself.
+    This makes it easy to enable or disable whole block of code.
+#]
+
+##[ this comment-begin marker is commented out
+var f = "f"
+var g = "g"
+#] var h = "h"
+
+
+
+#[ 
+    Commented out markers are still counted correctly when nested.     
+#]
+
+var j = "j"
+#[
+var k = "k" 
+##[ this comment-begin marker is commented out
+var f = "f"
+var g = "g"
+#] var h = "h"
+var x = "x" 
+#]
+var v = "v" 
+
+
+
+# 
+#    There is also special #[# syntax to 'backward-comment'
+#    begin marker. It is useful when needed temporary
+#    uncomment block in the middle of the line.
+#
+
+if a == b #[ and c == d #] then
+
+if a == b ##[ and c == d #] then
+
+if a == b #[# and c == d #] then
+
+
+                           # Binding comments
+
+#[ 
+    There are also alternative syntax of comments for binding purpose.
+    
+    It allows to mix C++ and kuku code in one source file.
+    Where kuku comments contains valid C++ and vice versa.
+    
+    Single line comment start by /* sequence
+    Multiline comments starts with */ and ends with /*
+    Nesting is not supported.
+#]
+
+
+/* single line comment
+var a = "valid ku-ku code"
+*/ #include <iostream>
+
+int main() { /* var b = "more ku-ku code" */
+    std::cout << "valid c++ code";
+    return 0;
+} /* 
+
+</div></center>
+		<script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+		<script src="ace/mode-kuku.js" type="text/javascript" charset="utf-8"></script>
+		<script src="src/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			var editor = ace.edit("editor");
+			var Mode = ace.require("ace/mode/kuku").Mode;
+			editor.session.setMode(new Mode());
+			editor.setTheme("ace/theme/twilight");
+		</script>
+	</body>
+<html>
