@@ -4,29 +4,55 @@
 
 Parser::Parser(Lexer& lexer)
 	: lexer{ lexer }
+    , current{ TokenType::EndOfLine, nullptr, { 0,0 }, { 0,0 } }
 {
-
 }
 
 void Parser::process()
 {
-    auto token = getNextToken();
-    if (token.type == TokenType::Keyword)
+    next(true);
+    while (current.type != TokenType::EndOfSource)
     {
-        Console::writeline(u"keyword");
-    }
-    else
-    {
-        Console::writeline(u"unexpected");
+        parseStatement();
     }
 }
 
-Token Parser::getNextToken()
+void Parser::next(bool skipNewLines)
 {
-    auto token = lexer.getNextToken();
-    if (token.type == TokenType::Comment)
+    current = lexer.getNextToken();
+    while (current.type == TokenType::Comment || (skipNewLines && current.type == TokenType::EndOfLine))
     {
-        return getNextToken();
+        current = lexer.getNextToken();
     }
-    return token;
 }
+
+void Parser::unexpected()
+{
+    Console::writeline(u"unexpected token " + current.getSourceText() + u" at " + current.range.start.toStr());
+    while (current.type != TokenType::EndOfLine) next(false); // panic mode
+    next(false);
+}
+
+void Parser::parseStatement()
+{
+    if (current.type == TokenType::Keyword)
+    {
+        if (current.getSourceText() == u"var")
+        {
+            next(false);
+            if (current.type == TokenType::Identifier)
+            {
+                next(false);
+                if (current.type == TokenType::EndOfLine)
+                {
+                    next(false);
+                    return;
+                }
+            }
+        }
+    }
+
+    unexpected();
+}
+
+

@@ -11,5 +11,9 @@ public:
 private:
 	Lexer& lexer;
 
-	Token getNextToken();
+	void parseStatement();
+
+	Token current;
+	void next(bool skipNewLines);
+	void unexpected();
 };

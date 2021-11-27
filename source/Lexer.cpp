@@ -277,5 +277,5 @@ bool Lexer::moveAfterEscaped(utf16unit endSymbol)
 
 Token Lexer::createToken(SourceIterator startIt, TokenType type)
 {
-    return { startIt.position, it.position, type };
+    return { type, &textDocument, startIt.position, it.position };
 }

@@ -5,6 +5,7 @@
 #include "JsonSerializable.h"
 #include "JsonField.h"
 #include "JsonScheme.h"
+#include <string>
 
 class Position : public JsonSerializable
 {
@@ -17,6 +18,12 @@ public:
 
     int line;
     int character;
+
+    std::u16string toStr()
+    {
+        auto asciiStr = "{" + std::to_string(line) + ":" + std::to_string(character) + "}";
+        return std::u16string(std::begin(asciiStr), std::end(asciiStr));
+    }
 
     JSCHEME(Position, JFIELD(line), JFIELD(character))
 };

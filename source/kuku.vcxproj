@@ -158,6 +158,7 @@
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="SourceFile.cpp" />
     <ClCompile Include="TextDocument.cpp" />
+    <ClCompile Include="Token.cpp" />
     <ClCompile Include="TypeRegistry.cpp" />
     <ClCompile Include="Unicode.cpp" />
     <ClCompile Include="UnicodeStreams.cpp" />
