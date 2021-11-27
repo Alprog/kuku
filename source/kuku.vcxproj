@@ -146,6 +146,8 @@
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="Routine.cpp" />
+    <ClCompile Include="String.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="SourceIterator.cpp" />
     <ClCompile Include="Field.cpp" />
@@ -163,19 +165,22 @@
     <ClCompile Include="Unicode.cpp" />
     <ClCompile Include="UnicodeStreams.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Class.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="DataType.h" />
+    <ClInclude Include="Instruction.h" />
+    <ClInclude Include="String.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="Routine.h" />
     <ClInclude Include="SourceIterator.h" />
     <ClInclude Include="Encoding.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="Function.h" />
     <ClInclude Include="Instance.h" />
-    <ClInclude Include="InstructionType.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="JsonField.h" />
     <ClInclude Include="JsonScheme.h" />

@@ -5,7 +5,7 @@ union Cell;
 struct Instance
 {
 public:
-    void Dump();
+    void dump();
 
     Cell* Cells;
 };

@@ -14,10 +14,10 @@ public:
 
     std::string Name;
 
-    Field& RegisterField(std::string name, DataType dataType);
-    Instance CreateInstance();
+    Field& registerField(std::string name, DataType dataType);
+    Instance createInstance();
 
-    void Dump(Instance instance);
+    void dump(Instance instance);
 
     int InstanceSize;
 

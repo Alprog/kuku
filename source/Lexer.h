@@ -21,7 +21,7 @@ public:
     Token finishBindingBlockComment(SourceIterator startIt);
     Token finishString(SourceIterator startIt, utf16unit endQuote, bool escaping);
 
-    bool advance(utf16unit symbol);
+    bool match(utf16unit symbol);
 
     bool moveAfter(utf16unit endSymbol);
     bool moveAfterEscaped(utf16unit endSymbol);

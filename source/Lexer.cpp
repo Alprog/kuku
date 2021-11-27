@@ -86,14 +86,14 @@ Token Lexer::getNextToken()
             case '#':
             {
                 auto startIt = it++;
-                if (advance('['))
+                if (match('['))
                 {
-                    if (advance('#'))
+                    if (match('#'))
                         return createToken(startIt, TokenType::Comment); //:  #[#     disabled comment begin marker
                     else
                         return finishBlockComment(startIt);              //:  #[...   comment begin marker
                 }
-                else if (advance(']'))
+                else if (match(']'))
                     return createToken(startIt, TokenType::Comment);     //:  #]      comment end marker
                 else
                     return finishLineComment(startIt);                   //:  #...    single line comment
@@ -102,7 +102,7 @@ Token Lexer::getNextToken()
             case '*':
             {
                 auto startIt = it++;
-                if (advance('/'))
+                if (match('/'))
                     return finishBindingBlockComment(startIt);         //:  */...    binding-comment begin marker
                 else
                     return createToken(startIt, TokenType::Operator);  //:  *        multiply operator
@@ -111,7 +111,7 @@ Token Lexer::getNextToken()
             case '/':
             {
                 auto startIt = it++;
-                if (advance('*'))
+                if (match('*'))
                     return finishLineComment(startIt);                 //:  /*...    single line binding-comment
                 else
                     return createToken(startIt, TokenType::Operator);  //:  /        divide operator
@@ -188,11 +188,11 @@ Token Lexer::finishBlockComment(SourceIterator startIt)
 
     while (moveAfter('#'))
     {
-        if (advance('['))
+        if (match('['))
         {
             level++;
         }
-        else if (advance(']'))
+        else if (match(']'))
         {
             if (--level == 0)
                 break;
@@ -206,7 +206,7 @@ Token Lexer::finishBindingBlockComment(SourceIterator startIt)
 {
     while (moveAfter('/'))
     {
-        if (advance('*'))
+        if (match('*'))
             break;
     }
     return createToken(startIt, TokenType::Comment);
@@ -226,7 +226,7 @@ Token Lexer::finishString(SourceIterator startIt, utf16unit endQuote, bool escap
 }
 
 // check current symbol and step forward if it match
-bool Lexer::advance(utf16unit symbol)
+bool Lexer::match(utf16unit symbol)
 {
     if (*it == symbol)
     {

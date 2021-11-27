@@ -12,29 +12,9 @@ public:
     TypeRegistry TypeRegistry;
     Stack Stack;
 
-    void test()
-    {
-        auto vectorClass = TypeRegistry.RegisterClass("Vector");
-        vectorClass.RegisterField("X", DataType::Number);
-        vectorClass.RegisterField("Y", DataType::Number);
-        vectorClass.RegisterField("Z", DataType::Number);
+    void test();
 
-        auto vectorInstance = vectorClass.CreateInstance();
+    void setLocal(int cellIndex, Cell cellValue);
 
-        Cell cell;
-        cell.number = 41;
-
-        SetField(vectorInstance, 2, cell);
-        vectorInstance.Dump();
-    }
-
-    void SetLocal(int cellIndex, Cell cellValue)
-    {
-        Stack.Cells[cellIndex] = cellValue;
-    }
-
-    void SetField(Instance instance, int cellIndex, Cell cellValue)
-    {
-        instance.Cells[cellIndex] = cellValue;
-    }
+    void setField(Instance instance, int cellIndex, Cell cellValue);
 };

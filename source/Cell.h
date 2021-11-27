@@ -3,6 +3,7 @@
 #include "types.h"
 #include "Instance.h"
 #include "Class.h"
+#include "String.h"
 
 union Cell
 {
@@ -10,5 +11,6 @@ union Cell
     integer integer;
     number number;
     Instance instance;
+    String* string;
     Class* classPointer;
 };

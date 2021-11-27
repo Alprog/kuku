@@ -34,6 +34,12 @@
     <Filter Include="Source Files\Parser">
       <UniqueIdentifier>{f62b845f-c3a9-48c7-8a6d-b70234511236}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\VirtualMachine">
+      <UniqueIdentifier>{39cc3e10-2c74-4bca-9b7c-05fde48207ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\String">
+      <UniqueIdentifier>{767b1658-60bf-4b4d-92eb-666327cd3d68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -96,11 +102,17 @@
     <ClCompile Include="Token.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VirtualMachine.cpp">
+      <Filter>Source Files\VirtualMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Routine.cpp">
+      <Filter>Source Files\VirtualMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="String.cpp">
+      <Filter>Source Files\String</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="InstructionType.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Class.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -108,9 +120,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="TokenType.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VirtualMachine.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Token.h">
@@ -123,9 +132,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Field.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Stack.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="types.h">
@@ -202,6 +208,21 @@
     </ClInclude>
     <ClInclude Include="Parser.h">
       <Filter>Source Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="VirtualMachine.h">
+      <Filter>Source Files\VirtualMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Stack.h">
+      <Filter>Source Files\VirtualMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Routine.h">
+      <Filter>Source Files\VirtualMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Instruction.h">
+      <Filter>Source Files\VirtualMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="String.h">
+      <Filter>Source Files\String</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

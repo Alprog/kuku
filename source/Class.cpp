@@ -8,12 +8,12 @@ Class::Class(std::string name)
 {
 }
 
-Field& Class::RegisterField(std::string name, DataType dataType)
+Field& Class::registerField(std::string name, DataType dataType)
 {
     return Fields.emplace_back(*this, name, dataType, InstanceSize++);
 }
 
-Instance Class::CreateInstance()
+Instance Class::createInstance()
 {
     Instance instance;
     instance.Cells = new Cell[InstanceSize];
@@ -21,7 +21,7 @@ Instance Class::CreateInstance()
     return instance;
 }
 
-void Class::Dump(Instance instance)
+void Class::dump(Instance instance)
 {
     std::cout << sizeof(instance) << std::endl;
 

@@ -2,7 +2,7 @@
 #include "Instance.h"
 #include "Cell.h"
 
-void Instance::Dump()
+void Instance::dump()
 {
-    Cells[0].classPointer->Dump(*this);
+    Cells[0].classPointer->dump(*this);
 }
