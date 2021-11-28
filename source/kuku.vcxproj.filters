@@ -69,9 +69,6 @@
     <ClCompile Include="Unicode.cpp">
       <Filter>Source Files\Encoder</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LanguageServer.cpp">
       <Filter>Source Files\LanguageServer</Filter>
     </ClCompile>
@@ -110,6 +107,9 @@
     </ClCompile>
     <ClCompile Include="String.cpp">
       <Filter>Source Files\String</Filter>
+    </ClCompile>
+    <ClCompile Include="Chunk.cpp">
+      <Filter>Source Files\VirtualMachine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="String.h">
       <Filter>Source Files\String</Filter>
+    </ClInclude>
+    <ClInclude Include="Chunk.h">
+      <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

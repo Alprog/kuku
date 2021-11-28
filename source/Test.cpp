@@ -9,9 +9,36 @@
 
 #include "VirtualMachine.h"
 #include "String.h"
+#include "Chunk.h"
+#include "Instruction.h"
+#include "Routine.h"
 
 void Test()
 {
+	Chunk chunk;
+	chunk.write(Instruction::int_set);
+	chunk.write((byte)0);
+	chunk.write((integer)111);
+
+	chunk.write(Instruction::int_set);
+	chunk.write((byte)1);
+	chunk.write((integer)222);
+
+	chunk.write(Instruction::int_add);
+	chunk.write((byte)0);
+	chunk.write((byte)1);
+	chunk.write((byte)2);
+
+	chunk.write(Instruction::print);
+	chunk.write((byte)2);
+
+	chunk.write(Instruction::end);
+
+	Routine routine(chunk.getStartPointer());	
+	routine.run();
+
+
+
 	String s1("abc");
 	String s2(u"abc");
 	String s3(U"abc");

@@ -10,4 +10,6 @@ enum class Instruction : byte
 	int_sub,
 	int_multiply,
 	int_divide,
+	print,
+	end
 };
