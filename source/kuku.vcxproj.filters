@@ -40,6 +40,9 @@
     <Filter Include="Source Files\String">
       <UniqueIdentifier>{767b1658-60bf-4b4d-92eb-666327cd3d68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\AST">
+      <UniqueIdentifier>{0b27fb67-8af7-460a-a7bd-d376d0818834}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -110,6 +113,18 @@
     </ClCompile>
     <ClCompile Include="Chunk.cpp">
       <Filter>Source Files\VirtualMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="VariableNode.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="Syntax.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="StringLiteralNode.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="IntegerLiteralNode.cpp">
+      <Filter>Source Files\AST</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +241,18 @@
     </ClInclude>
     <ClInclude Include="Chunk.h">
       <Filter>Source Files\VirtualMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableNode.h">
+      <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="SyntaxNode.h">
+      <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="StringLiteralNode.h">
+      <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="IntegerLiteralNode.h">
+      <Filter>Source Files\AST</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -14,6 +14,9 @@ private:
 	void parseStatement();
 
 	Token current;
+	
+	void match(TokenType type);
+
 	void next(bool skipNewLines);
 	void unexpected();
 };

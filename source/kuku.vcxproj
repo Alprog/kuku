@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -145,10 +145,13 @@
   <ItemGroup>
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Console.cpp" />
+    <ClCompile Include="IntegerLiteralNode.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Routine.cpp" />
     <ClCompile Include="Chunk.cpp" />
+    <ClCompile Include="StringLiteralNode.cpp" />
     <ClCompile Include="String.cpp" />
+    <ClCompile Include="Syntax.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="SourceIterator.cpp" />
     <ClCompile Include="Field.cpp" />
@@ -165,6 +168,7 @@
     <ClCompile Include="Unicode.cpp" />
     <ClCompile Include="UnicodeStreams.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="VariableNode.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +177,10 @@
     <ClInclude Include="Class.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="DataType.h" />
+    <ClInclude Include="IntegerLiteralNode.h" />
+    <ClInclude Include="StringLiteralNode.h" />
+    <ClInclude Include="SyntaxNode.h" />
+    <ClInclude Include="VariableNode.h" />
     <ClInclude Include="Instruction.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="Parser.h" />

@@ -55,4 +55,9 @@ void Parser::parseStatement()
     unexpected();
 }
 
+void Parser::match(TokenType type)
+{
+
+}
+
 
