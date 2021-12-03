@@ -149,6 +149,7 @@
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Routine.cpp" />
     <ClCompile Include="Chunk.cpp" />
+    <ClCompile Include="BinaryOperatorNode.cpp" />
     <ClCompile Include="StringLiteralNode.cpp" />
     <ClCompile Include="String.cpp" />
     <ClCompile Include="Syntax.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Class.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="DataType.h" />
+    <ClInclude Include="BinaryOperatorNode.h" />
     <ClInclude Include="IntegerLiteralNode.h" />
     <ClInclude Include="StringLiteralNode.h" />
     <ClInclude Include="SyntaxNode.h" />

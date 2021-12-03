@@ -8,7 +8,8 @@
 
 class VariableNode : SyntaxNode
 {
-	std::string name;
+public:
+	std::u16string name;
 	Class* type;
 
 	Token* declarationToken;

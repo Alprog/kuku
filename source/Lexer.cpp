@@ -118,8 +118,10 @@ Token Lexer::getNextToken()
             }
 
             case '+':
+                return createToken(it++, TokenType::PlusOperator);
+
             case '=':
-                return createToken(it++, TokenType::Operator);
+                return createToken(it++, TokenType::AssignOperator);
 
             case ';':
                 return createToken(it++, TokenType::Semicolon);

@@ -1,6 +1,8 @@
 
 #include "Parser.h"
 #include "Console.h"
+#include "VariableNode.h"
+#include "BinaryOperatorNode.h"
 
 Parser::Parser(Lexer& lexer)
 	: lexer{ lexer }
@@ -28,7 +30,7 @@ void Parser::next(bool skipNewLines)
 
 void Parser::unexpected()
 {
-    Console::writeline(u"unexpected token " + current.getSourceText() + u" at " + current.range.start.toStr());
+    Console::writeline(u"unexpected token '" + current.getSourceText() + u"' at " + current.range.start.toStr());
     while (current.type != TokenType::EndOfLine) next(false); // panic mode
     next(false);
 }
@@ -42,6 +44,10 @@ void Parser::parseStatement()
             next(false);
             if (current.type == TokenType::Identifier)
             {
+                auto node = new VariableNode();
+                node->name = current.getSourceText();
+
+
                 next(false);
                 if (current.type == TokenType::EndOfLine)
                 {
@@ -51,8 +57,36 @@ void Parser::parseStatement()
             }
         }
     }
+    else if (current.type == TokenType::Identifier)
+    {
+        auto id = current.getSourceText();
+        Console::writeline(id);
+
+        next(false);
+        if (current.type == TokenType::AssignOperator)
+        {
+            auto node = new BinaryOperatorNode(&current);
+            next(false);
+
+            if (current.type == TokenType::IntegerLiteral)
+            {
+                next(false);
+                if (current.type == TokenType::EndOfLine)
+                {
+                    next(false);
+                    return;
+                }
+            }
+
+        }
+    }
 
     unexpected();
+}
+
+void Parser::parseExpression()
+{
+
 }
 
 void Parser::match(TokenType type)

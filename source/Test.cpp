@@ -48,7 +48,7 @@ void Test()
 	auto a3 = s3.getCharacter(1);
 
 
-	std::basic_ifstream<byte> fileStream("C:/Users/alpro/Desktop/efef.kuku");
+	std::basic_ifstream<byte> fileStream("C:/kuku/data/main.kuku");
 	BasicInputStream basicStream(fileStream);
 	unicode::Utf8To16Stream u16stream(basicStream);
 

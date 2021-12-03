@@ -5,13 +5,15 @@
 #include "TextDocument.h"
 #include <string>
 
+class SyntaxNode;
+
 struct Token
 {
     TokenType type;
     TextDocument* document;
     Range range;
 
-    Token();
+    SyntaxNode* syntaxNode;
 
     Token& operator=(const Token& token);
     Token(TokenType type, TextDocument* document, Position start, Position end);

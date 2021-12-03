@@ -126,6 +126,9 @@
     <ClCompile Include="IntegerLiteralNode.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
+    <ClCompile Include="BinaryOperatorNode.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h">
@@ -252,6 +255,9 @@
       <Filter>Source Files\AST</Filter>
     </ClInclude>
     <ClInclude Include="IntegerLiteralNode.h">
+      <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryOperatorNode.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
   </ItemGroup>

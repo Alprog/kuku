@@ -12,6 +12,7 @@ private:
 	Lexer& lexer;
 
 	void parseStatement();
+	void parseExpression();
 
 	Token current;
 	

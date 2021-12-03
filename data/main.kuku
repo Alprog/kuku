@@ -1,6 +1,9 @@
 
-#[ efefefef#]
+#[efefefe
+efefefe
+#]
 
-do aefef while
-  efef
-end
+var a
+a = 55
+var b = 55
+var c = a + b
