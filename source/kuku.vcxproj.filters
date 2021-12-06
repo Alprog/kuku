@@ -129,6 +129,9 @@
     <ClCompile Include="BinaryOperatorNode.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
+    <ClCompile Include="InstructionSet.cpp">
+      <Filter>Source Files\VirtualMachine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h">
@@ -236,7 +239,7 @@
     <ClInclude Include="Routine.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Instruction.h">
+    <ClInclude Include="InstructionType.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
     <ClInclude Include="String.h">
@@ -259,6 +262,12 @@
     </ClInclude>
     <ClInclude Include="BinaryOperatorNode.h">
       <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="Instruction.h">
+      <Filter>Source Files\VirtualMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="InstructionArgument.h">
+      <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

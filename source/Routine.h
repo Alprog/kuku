@@ -16,9 +16,8 @@ public:
 
 	void performInstruction();
 
-private:
 	template<typename T>
-	T read()
+	inline T read()
 	{
 		auto result = *reinterpret_cast<T*>(ip);
 		ip += sizeof(T);

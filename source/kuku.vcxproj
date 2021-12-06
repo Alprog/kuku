@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Console.cpp" />
+    <ClCompile Include="InstructionSet.cpp" />
     <ClCompile Include="IntegerLiteralNode.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Routine.cpp" />
@@ -179,11 +180,13 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="DataType.h" />
     <ClInclude Include="BinaryOperatorNode.h" />
+    <ClInclude Include="Instruction.h" />
+    <ClInclude Include="InstructionArgument.h" />
     <ClInclude Include="IntegerLiteralNode.h" />
     <ClInclude Include="StringLiteralNode.h" />
     <ClInclude Include="SyntaxNode.h" />
     <ClInclude Include="VariableNode.h" />
-    <ClInclude Include="Instruction.h" />
+    <ClInclude Include="InstructionType.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Routine.h" />
