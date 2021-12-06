@@ -20,8 +20,7 @@ void Routine::performInstruction()
 {
 	while (true)
 	{
-		auto instructionType = read<InstructionType>();
-		InstructionSet::PerformFunctions[(byte)instructionType](*this);
+		reinterpret_cast<Instruction*>(ip)->execute(*this);
 	}
 }
 
