@@ -266,9 +266,6 @@
     <ClInclude Include="BaseInstruction.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
-    <ClInclude Include="InstructionArgument.h">
-      <Filter>Source Files\VirtualMachine</Filter>
-    </ClInclude>
     <ClInclude Include="Instructions.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>

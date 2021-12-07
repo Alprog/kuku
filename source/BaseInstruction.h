@@ -3,8 +3,6 @@
 
 #include "InstructionType.h"
 #include "types.h"
-#include "string.h"
-#include <vector>
 #include "Routine.h"
 #include "JumpTable.h"
 

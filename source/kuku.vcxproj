@@ -181,7 +181,6 @@
     <ClInclude Include="DataType.h" />
     <ClInclude Include="BinaryOperatorNode.h" />
     <ClInclude Include="BaseInstruction.h" />
-    <ClInclude Include="InstructionArgument.h" />
     <ClInclude Include="Instructions.h" />
     <ClInclude Include="IntegerLiteralNode.h" />
     <ClInclude Include="JumpTable.h" />

@@ -1,10 +1,5 @@
 
 #include "JumpTable.h"
-
-#include "BaseInstruction.h"
-#include "Routine.h"
-#include <iostream>
-
 #include "Instructions.h"
 
 ExecuteFunctionPtr JumpTable::ExecuteFunction[INSTRUCTION_COUNT];
