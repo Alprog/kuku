@@ -16,6 +16,16 @@ struct BaseInstruction
 	{
 		JumpTable::ExecuteFunction[(byte)Type](routine);
 	}
+
+	inline size_t getSize()
+	{
+		return JumpTable::GetSizeFunction[(byte)Type]();
+	}
+
+	inline size_t skip(Routine& routine)
+	{
+		routine.ip += getSize();
+	}
 };
 
 

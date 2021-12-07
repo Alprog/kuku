@@ -7,10 +7,11 @@
 
 #include "Instructions.h"
 
-ExecuteFunctionPtr JumpTable::ExecuteFunction[256];
+ExecuteFunctionPtr JumpTable::ExecuteFunction[INSTRUCTION_COUNT];
+GetSizeFunctionPtr JumpTable::GetSizeFunction[INSTRUCTION_COUNT];
 
 template <typename T>
-inline void read_and_execute_instruction(Routine& routine)
+inline void readAndExecuteInstruction(Routine& routine)
 {
 	auto instruction = reinterpret_cast<T*>(routine.ip);
 	instruction->execute(routine);
@@ -18,7 +19,7 @@ inline void read_and_execute_instruction(Routine& routine)
 }
 
 template <typename T>
-inline void get_size()
+inline size_t getSize()
 {
 	return sizeof(T);
 }
@@ -27,7 +28,8 @@ template <int I>
 void registerInstruction()
 {
 	using InstructionT = Instruction<(InstructionType)I>;
-	JumpTable::ExecuteFunction[I] = read_and_execute_instruction<InstructionT>;
+	JumpTable::ExecuteFunction[I] = readAndExecuteInstruction<InstructionT>;
+	JumpTable::GetSizeFunction[I] = getSize<InstructionT>;
 }
 
 template <int I>
