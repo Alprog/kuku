@@ -129,7 +129,7 @@
     <ClCompile Include="BinaryOperatorNode.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="InstructionSet.cpp">
+    <ClCompile Include="JumpTable.cpp">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -263,10 +263,16 @@
     <ClInclude Include="BinaryOperatorNode.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="Instruction.h">
+    <ClInclude Include="BaseInstruction.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
     <ClInclude Include="InstructionArgument.h">
+      <Filter>Source Files\VirtualMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Instructions.h">
+      <Filter>Source Files\VirtualMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpTable.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
   </ItemGroup>

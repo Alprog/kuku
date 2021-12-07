@@ -3,12 +3,12 @@
 
 #include "InstructionType.h"
 #include <iostream>
-#include "Instruction.h"
+#include "BaseInstruction.h"
 
 Routine::Routine(byte* ip)
 	: ip { ip }
 {
-	InstructionSet::Init();
+	JumpTable::Init();
 }
 
 void Routine::run()
@@ -20,7 +20,7 @@ void Routine::performInstruction()
 {
 	while (true)
 	{
-		reinterpret_cast<Instruction*>(ip)->execute(*this);
+		reinterpret_cast<BaseInstruction*>(ip)->execute(*this);
 	}
 }
 
