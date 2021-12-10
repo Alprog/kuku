@@ -117,7 +117,7 @@
     <ClCompile Include="VariableNode.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="Syntax.cpp">
+    <ClCompile Include="SyntaxNode.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
     <ClCompile Include="StringLiteralNode.cpp">
@@ -131,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="JumpTable.cpp">
       <Filter>Source Files\VirtualMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="StatementNode.cpp">
+      <Filter>Source Files\AST</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -271,6 +274,21 @@
     </ClInclude>
     <ClInclude Include="JumpTable.h">
       <Filter>Source Files\VirtualMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="StatementNode.h">
+      <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleTokenSyntaxNode.h">
+      <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="InvalidStatementNode.h">
+      <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableDeclarationNode.h">
+      <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="AssignStatementNode.h">
+      <Filter>Source Files\AST</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

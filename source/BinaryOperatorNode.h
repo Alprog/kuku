@@ -1,10 +1,9 @@
 
 #pragma once
 
-#include "SyntaxNode.h"
-#include "Token.h"
+#include "SingleTokenSyntaxNode.h"
 
-class BinaryOperatorNode : public SyntaxNode
+class BinaryOperatorNode : public SingleTokenSyntaxNode
 {
 public:
 	BinaryOperatorNode(Token* token);

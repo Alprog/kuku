@@ -35,7 +35,7 @@ void Test()
 	chunk.write(InstructionType::END);
 
 	Routine routine(chunk.getStartPointer());	
-	routine.run();
+	//routine.run();
 
 
 

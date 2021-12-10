@@ -1,6 +1,8 @@
 #pragma once
 
+#include <vector>
 #include "Lexer.h"
+#include "StatementNode.h"
 
 class Parser
 {
@@ -11,7 +13,7 @@ public:
 private:
 	Lexer& lexer;
 
-	void parseStatement();
+	StatementNode* parseStatement();
 	void parseExpression();
 
 	Token current;
@@ -19,5 +21,7 @@ private:
 	void match(TokenType type);
 
 	void next(bool skipNewLines);
-	void unexpected();
+	StatementNode* getInvalidToken();
+
+	std::vector<StatementNode*> statements;
 };

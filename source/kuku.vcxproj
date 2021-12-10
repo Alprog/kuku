@@ -151,9 +151,10 @@
     <ClCompile Include="Routine.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="BinaryOperatorNode.cpp" />
+    <ClCompile Include="StatementNode.cpp" />
     <ClCompile Include="StringLiteralNode.cpp" />
     <ClCompile Include="String.cpp" />
-    <ClCompile Include="Syntax.cpp" />
+    <ClCompile Include="SyntaxNode.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="SourceIterator.cpp" />
     <ClCompile Include="Field.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AssignStatementNode.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="Class.h" />
@@ -181,9 +183,13 @@
     <ClInclude Include="DataType.h" />
     <ClInclude Include="BinaryOperatorNode.h" />
     <ClInclude Include="BaseInstruction.h" />
+    <ClInclude Include="VariableDeclarationNode.h" />
     <ClInclude Include="Instructions.h" />
     <ClInclude Include="IntegerLiteralNode.h" />
+    <ClInclude Include="InvalidStatementNode.h" />
     <ClInclude Include="JumpTable.h" />
+    <ClInclude Include="SingleTokenSyntaxNode.h" />
+    <ClInclude Include="StatementNode.h" />
     <ClInclude Include="StringLiteralNode.h" />
     <ClInclude Include="SyntaxNode.h" />
     <ClInclude Include="VariableNode.h" />

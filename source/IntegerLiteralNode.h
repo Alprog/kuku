@@ -1,9 +1,9 @@
 
 #pragma once
 
-#include "SyntaxNode.h"
+#include "SingleTokenSyntaxNode.h"
 
-class IntegerLiteralNode : SyntaxNode
+class IntegerLiteralNode : SingleTokenSyntaxNode
 {
 public:
 	IntegerLiteralNode(Token* token);

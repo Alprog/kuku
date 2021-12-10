@@ -3,6 +3,9 @@
 #include "Console.h"
 #include "VariableNode.h"
 #include "BinaryOperatorNode.h"
+#include "VariableDeclarationNode.h"
+#include "AssignStatementNode.h"
+#include "InvalidStatementNode.h"
 
 Parser::Parser(Lexer& lexer)
 	: lexer{ lexer }
@@ -15,7 +18,7 @@ void Parser::process()
     next(true);
     while (current.type != TokenType::EndOfSource)
     {
-        parseStatement();
+        statements.push_back(parseStatement());
     }
 }
 
@@ -28,15 +31,26 @@ void Parser::next(bool skipNewLines)
     }
 }
 
-void Parser::unexpected()
+Token* startToken;
+
+bool IsEndStatementToken(Token& token)
 {
-    Console::writeline(u"unexpected token '" + current.getSourceText() + u"' at " + current.range.start.toStr());
-    while (current.type != TokenType::EndOfLine) next(false); // panic mode
-    next(false);
+    return token.type == TokenType::EndOfLine || token.type == TokenType::Semicolon;
 }
 
-void Parser::parseStatement()
+StatementNode* Parser::getInvalidToken()
 {
+    Console::writeline(u"unexpected token '" + current.getSourceText() + u"' at " + current.range.start.toStr());
+    while (!IsEndStatementToken(current)) next(false); // panic mode
+    next(false);
+
+    return new InvalidStatementNode();
+}
+
+StatementNode* Parser::parseStatement()
+{
+    startToken = &current;
+
     if (current.type == TokenType::Keyword)
     {
         if (current.getSourceText() == u"var")
@@ -49,10 +63,10 @@ void Parser::parseStatement()
 
 
                 next(false);
-                if (current.type == TokenType::EndOfLine)
+                if (IsEndStatementToken(current))
                 {
                     next(false);
-                    return;
+                    return new VariableDeclarationNode();
                 }
             }
         }
@@ -74,14 +88,14 @@ void Parser::parseStatement()
                 if (current.type == TokenType::EndOfLine)
                 {
                     next(false);
-                    return;
+                    return new AssignStatementNode();
                 }
             }
 
         }
     }
 
-    unexpected();
+    return getInvalidToken();
 }
 
 void Parser::parseExpression()
