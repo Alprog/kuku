@@ -7,6 +7,9 @@
 #include "AssignStatementNode.h"
 #include "InvalidStatementNode.h"
 #include "StatementNode.h"
+#include "EndStatementNode.h"
+#include "FunctionStatementNode.h"
+#include "ClassStatementNode.h"
 
 Parser::Parser(Lexer& lexer)
 	: lexer{ lexer }
@@ -34,6 +37,14 @@ void Parser::next(bool skipNewLines)
 
 Token* startToken;
 
+template <typename T>
+T* Parser::createNode()
+{
+    auto node = new T();
+    node->init(*this);
+    return node;
+}
+
 StatementNode* Parser::parseStatement()
 {
     startToken = &current;
@@ -42,7 +53,19 @@ StatementNode* Parser::parseStatement()
     {
         if (current.getSourceText() == u"var")
         {
-            return (new VariableDeclarationStatementNode())->init(*this);
+            return createNode<VariableDeclarationStatementNode>();
+        }
+        else if (current.getSourceText() == u"end")
+        {
+            return createNode<EndStatementNode>();
+        }
+        else if (current.getSourceText() == u"function")
+        {
+            return createNode<FunctionStatementNode>();
+        }
+        else if (current.getSourceText() == u"class")
+        {
+            return createNode<ClassStatementNode>();
         }
     }
     else if (current.type == TokenType::Identifier)
@@ -79,8 +102,12 @@ void Parser::parseExpression()
 
 bool Parser::match(TokenType type)
 {
-    next(false);
-    return true;
+    if (current.type == type)
+    {
+        next(false);
+        return true;
+    }
+    return false;
 }
 
 bool Parser::matchKeyword(std::u16string keyword)
@@ -90,5 +117,16 @@ bool Parser::matchKeyword(std::u16string keyword)
         next(false);
         return true;
     }
+    return false;
+}
+
+bool Parser::matchEndOfStatement()
+{
+    if (current.isEndStatementToken())
+    {
+        next(false);
+        return true;
+    }
+    return false;
 }
 

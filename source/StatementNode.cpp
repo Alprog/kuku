@@ -14,3 +14,8 @@ StatementNode* StatementNode::init(Parser& parser)
 
 	return this;
 }
+
+int StatementNode::getNestingLevel()
+{
+	return 0;
+}

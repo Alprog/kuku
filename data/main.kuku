@@ -1,9 +1,19 @@
 
+class A
+	function foo()
+		var a
+		a = 55
+	end
+	
+	function bar() : integer
+		return 4
+	end
+end
+
 #[efefefe
 efefefe
 #]
 
-var a
-a = 55
+
 var b = 55
 var c = a + b

@@ -16,6 +16,8 @@ public:
 
 	StatementNode* init(Parser& parser);
 
+	virtual int getNestingLevel();
+
 protected:
 	virtual bool parseInternal(Parser& parser) = 0;
 };

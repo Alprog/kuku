@@ -141,6 +141,18 @@
     <ClCompile Include="AssignStatementNode.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
+    <ClCompile Include="EndStatementNode.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionStatementNode.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassStatementNode.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockStatementNode.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h">
@@ -294,6 +306,18 @@
       <Filter>Source Files\AST</Filter>
     </ClInclude>
     <ClInclude Include="AssignStatementNode.h">
+      <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="EndStatementNode.h">
+      <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionStatementNode.h">
+      <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassStatementNode.h">
+      <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockStatementNode.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
   </ItemGroup>

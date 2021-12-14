@@ -12,7 +12,8 @@ std::vector<std::u16string> keywords {
     u"or",
     u"then",
     u"do",
-    u"var"
+    u"var",
+    u"class"
 };
 
 Lexer::Lexer(TextDocument& textDocument)
