@@ -8,7 +8,7 @@ enum class TokenType
     StringLiteral,
     UnclosedStringLiteral,
     AssignOperator,
-    PlusOperator,
+    PlusSign,
     Operator,
     Bracket,
     Identifier,

@@ -18,5 +18,7 @@ struct Token
     Token& operator=(const Token& token);
     Token(TokenType type, TextDocument* document, Position start, Position end);
 
+    bool isEndStatementToken();
+
     std::u16string getSourceText();
 };

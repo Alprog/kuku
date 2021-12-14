@@ -3,9 +3,10 @@
 #include "Console.h"
 #include "VariableNode.h"
 #include "BinaryOperatorNode.h"
-#include "VariableDeclarationNode.h"
+#include "VariableDeclarationStatementNode.h"
 #include "AssignStatementNode.h"
 #include "InvalidStatementNode.h"
+#include "StatementNode.h"
 
 Parser::Parser(Lexer& lexer)
 	: lexer{ lexer }
@@ -33,20 +34,6 @@ void Parser::next(bool skipNewLines)
 
 Token* startToken;
 
-bool IsEndStatementToken(Token& token)
-{
-    return token.type == TokenType::EndOfLine || token.type == TokenType::Semicolon;
-}
-
-StatementNode* Parser::getInvalidToken()
-{
-    Console::writeline(u"unexpected token '" + current.getSourceText() + u"' at " + current.range.start.toStr());
-    while (!IsEndStatementToken(current)) next(false); // panic mode
-    next(false);
-
-    return new InvalidStatementNode();
-}
-
 StatementNode* Parser::parseStatement()
 {
     startToken = &current;
@@ -55,20 +42,7 @@ StatementNode* Parser::parseStatement()
     {
         if (current.getSourceText() == u"var")
         {
-            next(false);
-            if (current.type == TokenType::Identifier)
-            {
-                auto node = new VariableNode();
-                node->name = current.getSourceText();
-
-
-                next(false);
-                if (IsEndStatementToken(current))
-                {
-                    next(false);
-                    return new VariableDeclarationNode();
-                }
-            }
+            return (new VariableDeclarationStatementNode())->init(*this);
         }
     }
     else if (current.type == TokenType::Identifier)
@@ -95,7 +69,7 @@ StatementNode* Parser::parseStatement()
         }
     }
 
-    return getInvalidToken();
+    return (new InvalidStatementNode())->init(*this);
 }
 
 void Parser::parseExpression()
@@ -103,9 +77,18 @@ void Parser::parseExpression()
 
 }
 
-void Parser::match(TokenType type)
+bool Parser::match(TokenType type)
 {
-
+    next(false);
+    return true;
 }
 
+bool Parser::matchKeyword(std::u16string keyword)
+{
+    if (current.type == TokenType::Keyword && current.getSourceText() == keyword)
+    {
+        next(false);
+        return true;
+    }
+}
 

@@ -5,5 +5,5 @@
 
 class InvalidStatementNode : public StatementNode
 {
-
+	virtual bool parseInternal(Parser& parser) override { return false; }
 };

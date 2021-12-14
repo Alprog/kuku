@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "Lexer.h"
-#include "StatementNode.h"
+class StatementNode;
 
 class Parser
 {
@@ -10,7 +10,6 @@ public:
 	Parser(Lexer& lexer);
 	void process();
 
-private:
 	Lexer& lexer;
 
 	StatementNode* parseStatement();
@@ -18,10 +17,9 @@ private:
 
 	Token current;
 	
-	void match(TokenType type);
+	bool match(TokenType type);
+	bool matchKeyword(std::u16string keyword);
 
 	void next(bool skipNewLines);
-	StatementNode* getInvalidToken();
-
 	std::vector<StatementNode*> statements;
 };

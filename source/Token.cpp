@@ -16,6 +16,11 @@ Token& Token::operator=(const Token& token)
     return *this;
 }
 
+bool Token::isEndStatementToken()
+{
+    return type == TokenType::EndOfLine || type == TokenType::Semicolon;
+}
+
 std::u16string Token::getSourceText()
 {
     return document->getSubstring(range);

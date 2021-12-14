@@ -135,6 +135,12 @@
     <ClCompile Include="StatementNode.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
+    <ClCompile Include="VariableDeclarationStatementNode.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="AssignStatementNode.cpp">
+      <Filter>Source Files\AST</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h">
@@ -284,7 +290,7 @@
     <ClInclude Include="InvalidStatementNode.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="VariableDeclarationNode.h">
+    <ClInclude Include="VariableDeclarationStatementNode.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
     <ClInclude Include="AssignStatementNode.h">

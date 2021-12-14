@@ -118,7 +118,7 @@ Token Lexer::getNextToken()
             }
 
             case '+':
-                return createToken(it++, TokenType::PlusOperator);
+                return createToken(it++, TokenType::PlusSign);
 
             case '=':
                 return createToken(it++, TokenType::AssignOperator);

@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AssignStatementNode.cpp" />
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="JumpTable.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Unicode.cpp" />
     <ClCompile Include="UnicodeStreams.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="VariableDeclarationStatementNode.cpp" />
     <ClCompile Include="VariableNode.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
@@ -183,7 +185,7 @@
     <ClInclude Include="DataType.h" />
     <ClInclude Include="BinaryOperatorNode.h" />
     <ClInclude Include="BaseInstruction.h" />
-    <ClInclude Include="VariableDeclarationNode.h" />
+    <ClInclude Include="VariableDeclarationStatementNode.h" />
     <ClInclude Include="Instructions.h" />
     <ClInclude Include="IntegerLiteralNode.h" />
     <ClInclude Include="InvalidStatementNode.h" />
