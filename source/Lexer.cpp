@@ -77,7 +77,7 @@ Token Lexer::getNextToken()
             case '\0':
                 return createToken(it++, TokenType::EndOfSource);
 
-            case '\n':
+            case '\n': 
                 return createToken(it++, TokenType::EndOfLine);
 
             case ' ':
@@ -111,31 +111,28 @@ Token Lexer::getNextToken()
 
             case '/':
             {
-                auto startIt = it++;
-                if (match('*'))
-                    return finishLineComment(startIt);                 //:  /*...    single line binding-comment
-                else
-                    return createToken(startIt, TokenType::Operator);  //:  /        divide operator
-            }
+				auto startIt = it++;
+				if (match('*'))
+					return finishLineComment(startIt);                 //:  /*...    single line binding-comment
+				else
+					return createToken(startIt, TokenType::Operator);  //:  /        divide operator
+			}
 
-            case '+':
-                return createToken(it++, TokenType::PlusSign);
+            case '+': return createToken(it++, TokenType::PlusSign);
+            case '=': return createToken(it++, TokenType::AssignOperator);
+            case ';': return createToken(it++, TokenType::Semicolon);
+            case '[': return createToken(it++, TokenType::OpenBracket);
+            case ']': return createToken(it++, TokenType::CloseBracket);
+            case '{': return createToken(it++, TokenType::OpenBrace);
+            case '}': return createToken(it++, TokenType::CloseBrace);
+            case '<': return createToken(it++, TokenType::OpenChevron);
+            case '>': return createToken(it++, TokenType::CloseChevron);
+            case '(': return createToken(it++, TokenType::OpenParenthesis);
+            case ')': return createToken(it++, TokenType::CloseParenthesis);
+		}
 
-            case '=':
-                return createToken(it++, TokenType::AssignOperator);
-
-            case ';':
-                return createToken(it++, TokenType::Semicolon);
-
-            case '{':
-            case '}':
-            case '(':
-            case ')':
-                return createToken(it++, TokenType::Bracket);
-        }
-
-        if (isQuote(c))
-        {
+		if (isQuote(c))
+		{
             auto startIt = it++;
             return finishString(startIt, c, true);
         }

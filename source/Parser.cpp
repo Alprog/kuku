@@ -10,6 +10,7 @@
 #include "EndStatementNode.h"
 #include "FunctionStatementNode.h"
 #include "ClassStatementNode.h"
+#include "UnexepectedError.h"
 
 Parser::Parser(Lexer& lexer)
 	: lexer{ lexer }
@@ -100,6 +101,14 @@ void Parser::parseExpression()
 
 }
 
+bool Parser::require(TokenType type)
+{
+    if (!match(type))
+    {
+        throw UnexpectedError();
+    }
+}
+
 bool Parser::match(TokenType type)
 {
     if (current.type == type)
@@ -108,6 +117,14 @@ bool Parser::match(TokenType type)
         return true;
     }
     return false;
+}
+
+bool Parser::requireKeyword(std::u16string keyword)
+{
+    if (!matchKeyword(keyword))
+    {
+        throw UnexpectedError();
+    }
 }
 
 bool Parser::matchKeyword(std::u16string keyword)
@@ -129,4 +146,3 @@ bool Parser::matchEndOfStatement()
     }
     return false;
 }
-

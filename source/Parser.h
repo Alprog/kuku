@@ -17,7 +17,9 @@ public:
 
 	Token current;
 	
+	bool require(TokenType type);
 	bool match(TokenType type);
+	bool requireKeyword(std::u16string keyword);
 	bool matchKeyword(std::u16string keyword);
 	bool matchEndOfStatement();
 

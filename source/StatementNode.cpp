@@ -4,9 +4,14 @@
 StatementNode* StatementNode::init(Parser& parser)
 {
 	this->startToken = &parser.current;
-	this->IsValid = parseInternal(parser);
-	if (!this->IsValid)
+
+	try
 	{
+		this->IsValid = parseInternal(parser);
+	}
+	catch (std::exception ex)
+	{
+		this->IsValid = false;
 		this->errorText = u"unexpected token '" + parser.current.getSourceText() + u"' at " + parser.current.range.start.toStr();
 		while (!parser.current.isEndStatementToken()) parser.next(false); // panic mode
 		parser.next(false);

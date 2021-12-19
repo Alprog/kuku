@@ -193,6 +193,7 @@
     <ClInclude Include="BaseInstruction.h" />
     <ClInclude Include="EndStatementNode.h" />
     <ClInclude Include="FunctionStatementNode.h" />
+    <ClInclude Include="UnexepectedError.h" />
     <ClInclude Include="VariableDeclarationStatementNode.h" />
     <ClInclude Include="Instructions.h" />
     <ClInclude Include="IntegerLiteralNode.h" />

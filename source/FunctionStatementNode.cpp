@@ -3,20 +3,20 @@
 
 bool FunctionStatementNode::parseInternal(Parser& parser)
 {
-	if (parser.matchKeyword(u"function"))
-	{
-		if (parser.match(TokenType::Identifier))
-		{
-			if (parser.match(TokenType::Bracket) && parser.match(TokenType::Bracket))
-			{
-				if (parser.matchEndOfStatement()) return true;
+	parser.requireKeyword(u"function");
 
-				if (parser.match(TokenType::Semicolon) && parser.match(TokenType::Identifier))
-				{
-					if (parser.matchEndOfStatement()) return true;
-				}
-			}
-		}
-	}
+	
+	parser.require(TokenType::Identifier);
+
+	parser.require(TokenType::OpenParenthesis);
+	parser.require(TokenType::CloseParenthesis);
+
+	if (parser.matchEndOfStatement()) return true;
+
+	parser.require(TokenType::Semicolon);
+	parser.require(TokenType::Identifier);
+
+	if (parser.matchEndOfStatement()) return true;
+	
 	return false;
 }

@@ -43,6 +43,9 @@
     <Filter Include="Source Files\AST">
       <UniqueIdentifier>{0b27fb67-8af7-460a-a7bd-d376d0818834}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Errors">
+      <UniqueIdentifier>{4d9056f5-4a61-4d9e-9eba-4451b2553159}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -319,6 +322,9 @@
     </ClInclude>
     <ClInclude Include="BlockStatementNode.h">
       <Filter>Source Files\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="UnexepectedError.h">
+      <Filter>Source Files\Errors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
