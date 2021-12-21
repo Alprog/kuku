@@ -2,10 +2,10 @@
 
 #include <string>
 #include <vector>
-#include "Function.h"
-#include "DataType.h"
-#include "Field.h"
-#include "Cell.h"
+#include "function.h"
+#include "data_type.h"
+#include "field.h"
+#include "cell.h"
 
 class Class
 {

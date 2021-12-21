@@ -1,11 +1,11 @@
 #pragma once
 
 #include <iostream>
-#include "Lexer.h";
-#include "Console.h"
+#include "lexer.h";
+#include "console.h"
 #include "types.h"
-#include "Unicode.h"
-#include "TextDocument.h"
+#include "unicode.h"
+#include "text_document.h"
 #include <sstream>
 
 void Repl()

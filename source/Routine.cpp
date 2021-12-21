@@ -1,6 +1,6 @@
 
-#include "Routine.h"
-#include "BaseInstruction.h"
+#include "routine.h"
+#include "base_instruction.h"
 
 Routine::Routine(byte* ip)
 	: ip { ip }

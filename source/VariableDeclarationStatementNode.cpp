@@ -1,6 +1,6 @@
 
-#include "VariableDeclarationStatementNode.h"
-#include "VariableNode.h"
+#include "variable_declaration_statement_node.h"
+#include "variable_node.h"
 
 bool VariableDeclarationStatementNode::parseInternal(Parser& parser)
 {

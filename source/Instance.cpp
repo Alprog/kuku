@@ -1,6 +1,6 @@
 
-#include "Instance.h"
-#include "Cell.h"
+#include "instance.h"
+#include "cell.h"
 
 void Instance::dump()
 {

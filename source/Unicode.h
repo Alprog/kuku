@@ -3,7 +3,7 @@
 #include "types.h"
 #include <vector>
 #include <queue>
-#include "Streams.h"
+#include "streams.h"
 
 namespace unicode
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "types.h"
-#include "Cell.h"
+#include "cell.h"
 
 class Stack
 {

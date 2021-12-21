@@ -1,8 +1,8 @@
 #pragma once
 
-#include "TokenType.h"
-#include "Range.h"
-#include "TextDocument.h"
+#include "token_type.h"
+#include "range.h"
+#include "text_document.h"
 #include <string>
 
 class SyntaxNode;

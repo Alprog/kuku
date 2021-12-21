@@ -2,11 +2,11 @@
 
 #include <string>
 #include <vector>
-#include "Token.h"
-#include "TokenType.h"
+#include "token.h"
+#include "token_type.h"
 #include "types.h"
-#include "TextDocument.h"
-#include "SourceIterator.h"
+#include "text_document.h"
+#include "source_iterator.h"
 
 class Lexer
 {

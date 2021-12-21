@@ -1,9 +1,9 @@
 #pragma once
 
 #include "types.h"
-#include "Instance.h"
-#include "Class.h"
-#include "String.h"
+#include "instance.h"
+#include "class.h"
+#include "string.h"
 
 union Cell
 {

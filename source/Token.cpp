@@ -1,5 +1,5 @@
 
-#include "Token.h"
+#include "token.h"
 
 Token::Token(TokenType type, TextDocument* document, Position start, Position end)
     : type{ type }

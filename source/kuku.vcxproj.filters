@@ -51,162 +51,162 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Console.cpp">
+    <ClCompile Include="console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TypeRegistry.cpp">
+    <ClCompile Include="type_registry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Class.cpp">
+    <ClCompile Include="class.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Field.cpp">
+    <ClCompile Include="field.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Instance.cpp">
+    <ClCompile Include="instance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Lexer.cpp">
+    <ClCompile Include="lexer.cpp">
       <Filter>Source Files\Lexer</Filter>
     </ClCompile>
-    <ClCompile Include="SourceIterator.cpp">
+    <ClCompile Include="source_iterator.cpp">
       <Filter>Source Files\Encoder</Filter>
     </ClCompile>
-    <ClCompile Include="Unicode.cpp">
+    <ClCompile Include="unicode.cpp">
       <Filter>Source Files\Encoder</Filter>
     </ClCompile>
-    <ClCompile Include="LanguageServer.cpp">
+    <ClCompile Include="language_server.cpp">
       <Filter>Source Files\LanguageServer</Filter>
     </ClCompile>
     <ClCompile Include="utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IDEConnection.cpp">
+    <ClCompile Include="ide_connection.cpp">
       <Filter>Source Files\LanguageServer</Filter>
     </ClCompile>
-    <ClCompile Include="JsonSerializable.cpp">
+    <ClCompile Include="json_serializable.cpp">
       <Filter>Source Files\JsonSchema</Filter>
     </ClCompile>
-    <ClCompile Include="JsonField.cpp">
+    <ClCompile Include="json_field.cpp">
       <Filter>Source Files\JsonSchema</Filter>
     </ClCompile>
-    <ClCompile Include="TextDocument.cpp">
+    <ClCompile Include="text_document.cpp">
       <Filter>Source Files\TextDocument</Filter>
     </ClCompile>
-    <ClCompile Include="UnicodeStreams.cpp">
+    <ClCompile Include="unicode_streams.cpp">
       <Filter>Source Files\Encoder</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp">
+    <ClCompile Include="test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Parser.cpp">
+    <ClCompile Include="parser.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
-    <ClCompile Include="Token.cpp">
+    <ClCompile Include="token.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VirtualMachine.cpp">
+    <ClCompile Include="virtual_machine.cpp">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Routine.cpp">
+    <ClCompile Include="routine.cpp">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClCompile>
-    <ClCompile Include="String.cpp">
+    <ClCompile Include="string.cpp">
       <Filter>Source Files\String</Filter>
     </ClCompile>
-    <ClCompile Include="Chunk.cpp">
+    <ClCompile Include="chunk.cpp">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClCompile>
-    <ClCompile Include="VariableNode.cpp">
+    <ClCompile Include="variable_node.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="SyntaxNode.cpp">
+    <ClCompile Include="syntax_node.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="StringLiteralNode.cpp">
+    <ClCompile Include="string_literal_node.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="IntegerLiteralNode.cpp">
+    <ClCompile Include="integer_literal_node.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="BinaryOperatorNode.cpp">
+    <ClCompile Include="binary_operator_node.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="JumpTable.cpp">
+    <ClCompile Include="jump_table.cpp">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClCompile>
-    <ClCompile Include="StatementNode.cpp">
+    <ClCompile Include="statement_node.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="VariableDeclarationStatementNode.cpp">
+    <ClCompile Include="variableDeclarationStatementNode.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="AssignStatementNode.cpp">
+    <ClCompile Include="assign_statement_node.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="EndStatementNode.cpp">
+    <ClCompile Include="end_statement_node.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="FunctionStatementNode.cpp">
+    <ClCompile Include="function_statement_node.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="ClassStatementNode.cpp">
+    <ClCompile Include="class_statement_node.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="BlockStatementNode.cpp">
+    <ClCompile Include="block_statement_node.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Class.h">
+    <ClInclude Include="class.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Instance.h">
+    <ClInclude Include="instance.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="TokenType.h">
+    <ClInclude Include="token_type.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Token.h">
+    <ClInclude Include="token.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Console.h">
+    <ClInclude Include="console.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Function.h">
+    <ClInclude Include="function.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Field.h">
+    <ClInclude Include="field.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="types.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataType.h">
+    <ClInclude Include="data_type.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cell.h">
+    <ClInclude Include="cell.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="TypeRegistry.h">
+    <ClInclude Include="type_registry.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Lexer.h">
+    <ClInclude Include="lexer.h">
       <Filter>Source Files\Lexer</Filter>
     </ClInclude>
-    <ClInclude Include="Repl.h">
+    <ClInclude Include="repl.h">
       <Filter>Source Files\Repl</Filter>
     </ClInclude>
-    <ClInclude Include="SourceIterator.h">
+    <ClInclude Include="source_iterator.h">
       <Filter>Source Files\Encoder</Filter>
     </ClInclude>
-    <ClInclude Include="Unicode.h">
+    <ClInclude Include="unicode.h">
       <Filter>Source Files\Encoder</Filter>
     </ClInclude>
-    <ClInclude Include="Encoding.h">
+    <ClInclude Include="encoding.h">
       <Filter>Source Files\Encoder</Filter>
     </ClInclude>
-    <ClInclude Include="LanguageServer.h">
+    <ClInclude Include="language_server.h">
       <Filter>Source Files\LanguageServer</Filter>
     </ClInclude>
     <ClInclude Include="json.h">
@@ -215,115 +215,115 @@
     <ClInclude Include="utils.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="IDEConnection.h">
+    <ClInclude Include="ide_connection.h">
       <Filter>Source Files\LanguageServer</Filter>
     </ClInclude>
-    <ClInclude Include="LSPEnums.h">
+    <ClInclude Include="lsp_enums.h">
       <Filter>Source Files\LanguageServer</Filter>
     </ClInclude>
-    <ClInclude Include="TextDocument.h">
+    <ClInclude Include="text_document.h">
       <Filter>Source Files\TextDocument</Filter>
     </ClInclude>
-    <ClInclude Include="Position.h">
+    <ClInclude Include="position.h">
       <Filter>Source Files\TextDocument</Filter>
     </ClInclude>
-    <ClInclude Include="Range.h">
+    <ClInclude Include="range.h">
       <Filter>Source Files\TextDocument</Filter>
     </ClInclude>
-    <ClInclude Include="JsonScheme.h">
+    <ClInclude Include="json_scheme.h">
       <Filter>Source Files\JsonSchema</Filter>
     </ClInclude>
-    <ClInclude Include="JsonField.h">
+    <ClInclude Include="json_field.h">
       <Filter>Source Files\JsonSchema</Filter>
     </ClInclude>
-    <ClInclude Include="JsonSerializable.h">
+    <ClInclude Include="json_serializable.h">
       <Filter>Source Files\JsonSchema</Filter>
     </ClInclude>
-    <ClInclude Include="OpenedTextDocument.h">
+    <ClInclude Include="opened_text_document.h">
       <Filter>Source Files\TextDocument</Filter>
     </ClInclude>
-    <ClInclude Include="Streams.h">
+    <ClInclude Include="streams.h">
       <Filter>Source Files\Encoder</Filter>
     </ClInclude>
-    <ClInclude Include="UnicodeStreams.h">
+    <ClInclude Include="unicode_streams.h">
       <Filter>Source Files\Encoder</Filter>
     </ClInclude>
-    <ClInclude Include="Test.h">
+    <ClInclude Include="test.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Parser.h">
+    <ClInclude Include="parser.h">
       <Filter>Source Files\Parser</Filter>
     </ClInclude>
-    <ClInclude Include="VirtualMachine.h">
+    <ClInclude Include="virtual_machine.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Stack.h">
+    <ClInclude Include="stack.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Routine.h">
+    <ClInclude Include="routine.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
-    <ClInclude Include="InstructionType.h">
+    <ClInclude Include="instruction_type.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
-    <ClInclude Include="String.h">
+    <ClInclude Include="string.h">
       <Filter>Source Files\String</Filter>
     </ClInclude>
-    <ClInclude Include="Chunk.h">
+    <ClInclude Include="chunk.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
-    <ClInclude Include="VariableNode.h">
+    <ClInclude Include="variable_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="SyntaxNode.h">
+    <ClInclude Include="syntax_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="StringLiteralNode.h">
+    <ClInclude Include="string_literal_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="IntegerLiteralNode.h">
+    <ClInclude Include="integer_literal_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="BinaryOperatorNode.h">
+    <ClInclude Include="binary_operator_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="BaseInstruction.h">
+    <ClInclude Include="base_instruction.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Instructions.h">
+    <ClInclude Include="instructions.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
-    <ClInclude Include="JumpTable.h">
+    <ClInclude Include="jump_table.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
-    <ClInclude Include="StatementNode.h">
+    <ClInclude Include="statement_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="SingleTokenSyntaxNode.h">
+    <ClInclude Include="single_token_syntax_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="InvalidStatementNode.h">
+    <ClInclude Include="invalid_statement_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="VariableDeclarationStatementNode.h">
+    <ClInclude Include="variable_declaration_statement_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="AssignStatementNode.h">
+    <ClInclude Include="assign_statement_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="EndStatementNode.h">
+    <ClInclude Include="end_statement_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="FunctionStatementNode.h">
+    <ClInclude Include="function_statement_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="ClassStatementNode.h">
+    <ClInclude Include="class_statement_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="BlockStatementNode.h">
+    <ClInclude Include="block_statement_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="UnexepectedError.h">
+    <ClInclude Include="unexepected_error.h">
       <Filter>Source Files\Errors</Filter>
     </ClInclude>
   </ItemGroup>

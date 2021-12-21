@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include "BaseInstruction.h"
-#include "Routine.h"
+#include "base_instruction.h"
+#include "routine.h"
 #include <iostream>
 
 template <InstructionType Type>

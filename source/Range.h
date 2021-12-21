@@ -1,7 +1,7 @@
 #pragma once
 
-#include "JsonSerializable.h"
-#include "Position.h"
+#include "json_serializable.h"
+#include "position.h"
 
 class Range : public JsonSerializable
 {

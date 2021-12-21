@@ -2,9 +2,9 @@
 
 #include "json.h"
 
-#include "JsonSerializable.h"
-#include "JsonField.h"
-#include "JsonScheme.h"
+#include "json_serializable.h"
+#include "json_field.h"
+#include "json_scheme.h"
 #include <string>
 
 class Position : public JsonSerializable

@@ -1,7 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "Lexer.h"
+#include "lexer.h"
+
 class StatementNode;
 
 class Parser

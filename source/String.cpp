@@ -1,5 +1,5 @@
 
-#include "String.h"
+#include "string.h"
 
 String::String(int32_t characterCount, byte characterSize, void* srcBytes)
 	: characterCount{ characterCount }

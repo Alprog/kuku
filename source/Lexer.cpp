@@ -1,6 +1,6 @@
 
-#include "Lexer.h"
-#include "Console.h"
+#include "lexer.h"
+#include "console.h"
 
 std::vector<std::u16string> keywords { 
     u"function", 

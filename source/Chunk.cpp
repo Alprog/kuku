@@ -1,5 +1,5 @@
 
-#include "Chunk.h"
+#include "chunk.h"
 
 byte* Chunk::getStartPointer()
 {

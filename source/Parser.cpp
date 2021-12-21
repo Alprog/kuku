@@ -1,16 +1,16 @@
 
-#include "Parser.h"
-#include "Console.h"
-#include "VariableNode.h"
-#include "BinaryOperatorNode.h"
-#include "VariableDeclarationStatementNode.h"
-#include "AssignStatementNode.h"
-#include "InvalidStatementNode.h"
-#include "StatementNode.h"
-#include "EndStatementNode.h"
-#include "FunctionStatementNode.h"
-#include "ClassStatementNode.h"
-#include "UnexepectedError.h"
+#include "parser.h"
+#include "console.h"
+#include "variable_node.h"
+#include "binary_operator_node.h"
+#include "variable_declaration_statement_node.h"
+#include "assign_statement_node.h"
+#include "invalid_statement_node.h"
+#include "statement_node.h"
+#include "end_statement_node.h"
+#include "function_statement_node.h"
+#include "class_statement_node.h"
+#include "unexepected_error.h"
 
 Parser::Parser(Lexer& lexer)
 	: lexer{ lexer }

@@ -1,9 +1,9 @@
 ﻿
 #include <iostream>
 #include <string>
-#include "Repl.h"
-#include "LanguageServer.h"
-#include "Test.h"
+#include "repl.h"
+#include "language_server.h"
+#include "test.h"
 
 #include "Windows.h"
 #include "debugapi.h"
@@ -33,8 +33,8 @@ void printHelp()
 
 #include "json.h"
 
-#include "Position.h"
-#include "Range.h"
+#include "position.h"
+#include "range.h"
 
 int main(int argc, const char* argv[])
 {

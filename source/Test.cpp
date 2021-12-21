@@ -1,17 +1,17 @@
 
-#include "Test.h"
+#include "test.h"
 
-#include "Streams.h"
-#include "UnicodeStreams.h"
-#include "TextDocument.h"
+#include "streams.h"
+#include "unicode_streams.h"
+#include "text_document.h"
 #include <fstream>
-#include "Parser.h"
+#include "parser.h"
 
-#include "VirtualMachine.h"
-#include "String.h"
-#include "Chunk.h"
-#include "InstructionType.h"
-#include "Routine.h"
+#include "virtual_machine.h"
+#include "string.h"
+#include "chunk.h"
+#include "instruction_type.h"
+#include "routine.h"
 
 void Test()
 {

@@ -1,5 +1,5 @@
 
-#include "Class.h"
+#include "class.h"
 #include <iostream>
 
 Class::Class(std::string name)

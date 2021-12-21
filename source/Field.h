@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "DataType.h"
+#include "data_type.h"
 
 class Class;
 
