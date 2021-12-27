@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "lexer.h"
+#include "scope.h"
 
 class StatementNode;
 
@@ -29,4 +30,6 @@ public:
 
 	template <typename T>
 	T* createNode();
+
+
 };

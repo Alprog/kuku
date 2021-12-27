@@ -326,5 +326,14 @@
     <ClInclude Include="unexepected_error.h">
       <Filter>Source Files\Errors</Filter>
     </ClInclude>
+    <ClInclude Include="scope.h">
+      <Filter>Source Files\VirtualMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="symbol.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="symbol_type.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

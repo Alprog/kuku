@@ -193,6 +193,9 @@
     <ClInclude Include="base_instruction.h" />
     <ClInclude Include="end_statement_node.h" />
     <ClInclude Include="function_statement_node.h" />
+    <ClInclude Include="scope.h" />
+    <ClInclude Include="symbol.h" />
+    <ClInclude Include="symbol_type.h" />
     <ClInclude Include="unexepected_error.h" />
     <ClInclude Include="variable_declaration_statement_node.h" />
     <ClInclude Include="instructions.h" />
