@@ -6,14 +6,14 @@
 
 namespace unicode
 {
-    class Utf8To16Stream : public InputStream<utf16unit>
+    class Utf8to16_stream : public Input_stream<utf16unit>
     {
     public:
-        InputStream<byte>& utf8stream;
+        Input_stream<byte>& utf8_stream;
         std::queue<utf16unit> queue;
 
-        Utf8To16Stream(InputStream<byte>& utf8stream);
+        Utf8to16_stream(Input_stream<byte>& utf8_stream);
 
-        virtual bool next(utf16unit& outCharacter) override;
+        virtual bool next(utf16unit& out_character) override;
     };
 }

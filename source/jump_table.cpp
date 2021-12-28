@@ -2,11 +2,11 @@
 #include "jump_table.h"
 #include "instructions.h"
 
-ExecuteFunctionPtr JumpTable::ExecuteFunction[INSTRUCTION_COUNT];
-GetSizeFunctionPtr JumpTable::GetSizeFunction[INSTRUCTION_COUNT];
+Execute_function_ptr Jump_table::execute_function[INSTRUCTION_COUNT];
+Get_size_function_ptr Jump_table::get_size_function[INSTRUCTION_COUNT];
 
 template <typename T>
-inline void readAndExecuteInstruction(Routine& routine)
+inline void read_and_execute_instruction(Routine& routine)
 {
 	auto instruction = reinterpret_cast<T*>(routine.ip);
 	instruction->execute(routine);
@@ -14,33 +14,33 @@ inline void readAndExecuteInstruction(Routine& routine)
 }
 
 template <typename T>
-inline size_t getSize()
+inline size_t get_size()
 {
 	return sizeof(T);
 }
 
 template <int I>
-void registerInstruction()
+void register_instruction()
 {
-	using InstructionT = Instruction<(InstructionType)I>;
-	JumpTable::ExecuteFunction[I] = readAndExecuteInstruction<InstructionT>;
-	JumpTable::GetSizeFunction[I] = getSize<InstructionT>;
+	using InstructionT = Instruction<(Instruction_type)I>;
+	Jump_table::execute_function[I] = read_and_execute_instruction<InstructionT>;
+	Jump_table::get_size_function[I] = get_size<InstructionT>;
 }
 
 template <int I>
-void registerInstructionRecursive()
+void register_instruction_recursive()
 {
-	registerInstruction<I>();
-	registerInstructionRecursive<I - 1>();
+	register_instruction<I>();
+	register_instruction_recursive<I - 1>();
 }
 
 template <>
-void registerInstructionRecursive<0>()
+void register_instruction_recursive<0>()
 {
-	registerInstruction<0>();
+	register_instruction<0>();
 }
 
-void JumpTable::Init()
+void Jump_table::init()
 {
-	registerInstructionRecursive<255>();
+	register_instruction_recursive<255>();
 }

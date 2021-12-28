@@ -16,32 +16,32 @@ std::vector<std::u16string> keywords {
     u"class"
 };
 
-Lexer::Lexer(TextDocument& textDocument)
-    : textDocument{textDocument}
-    , it{textDocument}
-    , captureStart{0, 0}
-    , captureEnd{0, 0}
+Lexer::Lexer(Text_document& text_document)
+    : text_document{ text_document }
+    , it{ text_document }
+    , capture_start{0, 0}
+    , capture_end{0, 0}
 {
 }
 
-bool isDigit(utf16unit c)
+bool is_digit(utf16unit c)
 {
     return c >= '0' && c <= '9';
 }
 
-bool isAlpha(utf16unit c)
+bool is_alpha(utf16unit c)
 {
     return (c >= 'a' && c <= 'z') ||
            (c >= 'A' && c <= 'Z') ||
             c == '_';
 }
 
-bool isAlphaOrDigit(wchar_t c)
+bool is_alpha_or_digit(wchar_t c)
 {
-    return isDigit(c) || isAlpha(c);
+    return is_digit(c) || is_alpha(c);
 }
 
-bool isQuote(utf16unit c)
+bool is_quote(utf16unit c)
 {
     return c == '"' || c == '\'' || c == '`';
 }
@@ -52,8 +52,8 @@ void Lexer::process()
 
     while (true)
     {
-        auto token = getNextToken();
-        if (token.type == TokenType::EndOfSource)
+        auto token = get_next_token();
+        if (token.type == Token_type::End_of_source)
         {
             break;
         }
@@ -62,12 +62,12 @@ void Lexer::process()
 
     for (auto& token : tokens)
     {
-        auto substring = textDocument.getSubstring(token.range);
-        Console::writeline(substring);
+        auto substring = text_document.get_substring(token.range);
+        Console::write_line(substring);
     }    
 }
 
-Token Lexer::getNextToken()
+Token Lexer::get_next_token()
 {
     while (true)
     {
@@ -75,10 +75,10 @@ Token Lexer::getNextToken()
         switch (c)
         {
             case '\0':
-                return createToken(it++, TokenType::EndOfSource);
+                return create_token(it++, Token_type::End_of_source);
 
             case '\n': 
-                return createToken(it++, TokenType::EndOfLine);
+                return create_token(it++, Token_type::End_of_line);
 
             case ' ':
                 ++it;
@@ -90,103 +90,103 @@ Token Lexer::getNextToken()
                 if (match('['))
                 {
                     if (match('#'))
-                        return createToken(startIt, TokenType::Comment); //:  #[#     disabled comment begin marker
+                        return create_token(startIt, Token_type::Comment); //:  #[#     disabled comment begin marker
                     else
-                        return finishBlockComment(startIt);              //:  #[...   comment begin marker
+                        return finish_block_comment(startIt);              //:  #[...   comment begin marker
                 }
                 else if (match(']'))
-                    return createToken(startIt, TokenType::Comment);     //:  #]      comment end marker
+                    return create_token(startIt, Token_type::Comment);     //:  #]      comment end marker
                 else
-                    return finishLineComment(startIt);                   //:  #...    single line comment
+                    return finish_line_comment(startIt);                   //:  #...    single line comment
             }
 
             case '*':
             {
                 auto startIt = it++;
                 if (match('/'))
-                    return finishBindingBlockComment(startIt);         //:  */...    binding-comment begin marker
+                    return finish_binding_block_comment(startIt);        //:  */...    binding-comment begin marker
                 else
-                    return createToken(startIt, TokenType::Operator);  //:  *        multiply operator
+                    return create_token(startIt, Token_type::Operator);  //:  *        multiply operator
             }
 
             case '/':
             {
 				auto startIt = it++;
 				if (match('*'))
-					return finishLineComment(startIt);                 //:  /*...    single line binding-comment
+					return finish_line_comment(startIt);                 //:  /*...    single line binding-comment
 				else
-					return createToken(startIt, TokenType::Operator);  //:  /        divide operator
+					return create_token(startIt, Token_type::Operator);  //:  /        divide operator
 			}
 
-            case '+': return createToken(it++, TokenType::PlusSign);
-            case '=': return createToken(it++, TokenType::AssignOperator);
-            case ';': return createToken(it++, TokenType::Semicolon);
-            case '[': return createToken(it++, TokenType::OpenBracket);
-            case ']': return createToken(it++, TokenType::CloseBracket);
-            case '{': return createToken(it++, TokenType::OpenBrace);
-            case '}': return createToken(it++, TokenType::CloseBrace);
-            case '<': return createToken(it++, TokenType::OpenChevron);
-            case '>': return createToken(it++, TokenType::CloseChevron);
-            case '(': return createToken(it++, TokenType::OpenParenthesis);
-            case ')': return createToken(it++, TokenType::CloseParenthesis);
+            case '+': return create_token(it++, Token_type::Plus_sign);
+            case '=': return create_token(it++, Token_type::Assign_operator);
+            case ';': return create_token(it++, Token_type::Semicolon);
+            case '[': return create_token(it++, Token_type::Open_bracket);
+            case ']': return create_token(it++, Token_type::Close_bracket);
+            case '{': return create_token(it++, Token_type::Open_brace);
+            case '}': return create_token(it++, Token_type::Close_brace);
+            case '<': return create_token(it++, Token_type::Open_chevron);
+            case '>': return create_token(it++, Token_type::Close_chevron);
+            case '(': return create_token(it++, Token_type::Open_parenthesis);
+            case ')': return create_token(it++, Token_type::Close_parenthesis);
 		}
 
-		if (isQuote(c))
+		if (is_quote(c))
 		{
-            auto startIt = it++;
-            return finishString(startIt, c, true);
+            auto start_i = it++;
+            return finish_string(start_i, c, true);
         }
 
-        if (isDigit(c) || c == '-')
+        if (is_digit(c) || c == '-')
         {
             auto startIt = it++;
-            while (isDigit(*it)) ++it;
+            while (is_digit(*it)) ++it;
             if (*it == '.')
             {
                 ++it;
-                while (isDigit(*it)) ++it;
-                return createToken(startIt, TokenType::NumberLiteral);
+                while (is_digit(*it)) ++it;
+                return create_token(startIt, Token_type::Number_literal);
             }
-            return createToken(startIt, TokenType::IntegerLiteral);
+            return create_token(startIt, Token_type::Integer_literal);
         }
 
-        if (isAlpha(c))
+        if (is_alpha(c))
         {
             auto startIt = it++;
-            while (isAlphaOrDigit(*it)) ++it;
+            while (is_alpha_or_digit(*it)) ++it;
 
-            std::u16string id = textDocument.getSubstring({ startIt.position, it.position });
-            if (id == u"R" && isQuote(*it))
+            std::u16string id = text_document.get_substring({ startIt.position, it.position });
+            if (id == u"R" && is_quote(*it))
             {
-                return finishString(startIt, *it++, false);
+                return finish_string(startIt, *it++, false);
             }
             if (id == u"true" || id == u"false")
             {
-                return createToken(startIt, TokenType::BoolLiteral);
+                return create_token(startIt, Token_type::Bool_literal);
             }
             if (std::find(std::begin(keywords), std::end(keywords), id) != std::end(keywords))
             {
-                return  createToken(startIt, TokenType::Keyword);
+                return  create_token(startIt, Token_type::Keyword);
             }
 
-            return createToken(startIt, TokenType::Identifier);
+            return create_token(startIt, Token_type::Identifier);
         }
 
         ++it;
     }
 }
 
-Token Lexer::finishLineComment(SourceIterator startIt)
+Token Lexer::finish_line_comment(Source_iterator start_it)
 {
     while (*it != '\n') ++it;
-    return createToken(startIt, TokenType::Comment);
+    return create_token(start_it, Token_type::Comment);
 }
 
-Token Lexer::finishBlockComment(SourceIterator startIt)
+Token Lexer::finish_block_comment(Source_iterator start_it)
 {
     int level = 1;
 
-    while (moveAfter('#'))
+    while (move_after('#'))
     {
         if (match('['))
         {
@@ -199,29 +199,29 @@ Token Lexer::finishBlockComment(SourceIterator startIt)
         }
     }
 
-    return createToken(startIt, TokenType::Comment);
+    return create_token(start_it, Token_type::Comment);
 }
 
-Token Lexer::finishBindingBlockComment(SourceIterator startIt)
+Token Lexer::finish_binding_block_comment(Source_iterator start_it)
 {
-    while (moveAfter('/'))
+    while (move_after('/'))
     {
         if (match('*'))
             break;
     }
-    return createToken(startIt, TokenType::Comment);
+    return create_token(start_it, Token_type::Comment);
 }
 
-Token Lexer::finishString(SourceIterator startIt, utf16unit endQuote, bool escaping)
+Token Lexer::finish_string(Source_iterator start_it, utf16unit end_quote, bool escaping)
 {
-    auto result = escaping ? moveAfterEscaped(endQuote) : moveAfter(endQuote);
+    auto result = escaping ? move_after_escaped(end_quote) : move_after(end_quote);
     if (result)
     {
-        return createToken(startIt, TokenType::StringLiteral);
+        return create_token(start_it, Token_type::String_literal);
     }
     else
     {
-        return createToken(startIt, TokenType::UnclosedStringLiteral);
+        return create_token(start_it, Token_type::Unclosed_string_literal);
     }
 }
 
@@ -236,13 +236,13 @@ bool Lexer::match(utf16unit symbol)
     return false;
 }
 
-bool Lexer::moveAfter(utf16unit endSymbol)
+bool Lexer::move_after(utf16unit end_symbol)
 {
     utf16unit cur = *it;
     while (cur != '\0')
     {
         it++;
-        if (cur == endSymbol)
+        if (cur == end_symbol)
         {            
             return true;
         }
@@ -251,7 +251,7 @@ bool Lexer::moveAfter(utf16unit endSymbol)
     return false;
 }
 
-bool Lexer::moveAfterEscaped(utf16unit endSymbol)
+bool Lexer::move_after_escaped(utf16unit end_symbol)
 {
     utf16unit cur = *it;
     bool escaping = false;
@@ -266,7 +266,7 @@ bool Lexer::moveAfterEscaped(utf16unit endSymbol)
         {
             escaping = true;
         }
-        else if (cur == endSymbol)
+        else if (cur == end_symbol)
         {            
             return true;
         }
@@ -275,7 +275,7 @@ bool Lexer::moveAfterEscaped(utf16unit endSymbol)
     return false;
 }
 
-Token Lexer::createToken(SourceIterator startIt, TokenType type)
+Token Lexer::create_token(Source_iterator start_it, Token_type type)
 {
-    return { type, &textDocument, startIt.position, it.position };
+    return { type, &text_document, start_it.position, it.position };
 }

@@ -3,11 +3,11 @@
 
 #include "statement_node.h"
 
-class BlockStatementNode : public StatementNode
+class Block_statement_node : public Statement_node
 {
 public:
-	virtual int getNestingLevel() override { return 1; }
+	virtual int get_nesting_level() override { return 1; }
 
-	std::vector<StatementNode*> nestedStatements;
-	StatementNode* endStatement;
+	std::vector<Statement_node*> nested_statements;
+	Statement_node* end_statement;
 };

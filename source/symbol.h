@@ -8,10 +8,9 @@
 
 class Symbol
 {
-	Scope& parentScope;
+	Scope& parent_scope;
 	std::u16string name;
 
 	//Token definitionToken;
-	std::vector<Token> usageTokens;
-
+	std::vector<Token> usage_tokens;
 };

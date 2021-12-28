@@ -7,5 +7,5 @@ struct Instance
 public:
     void dump();
 
-    Cell* Cells;
+    Cell* cells;
 };

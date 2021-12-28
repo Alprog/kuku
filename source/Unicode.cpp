@@ -11,7 +11,7 @@ constexpr byte HAS_3_OCTETS = 0b11100000;
 constexpr byte HAS_4_OCTETS = 0b11110000;
 constexpr byte CONTINUATION = 0b10000000;
 
-void unicode::writeUTF8(character character, std::vector<byte>& bytes)
+void unicode::write_utf8(character character, std::vector<byte>& bytes)
 {
     if (character < COUNT_7_BIT)
     {
@@ -37,7 +37,7 @@ void unicode::writeUTF8(character character, std::vector<byte>& bytes)
     }
 }
 
-character unicode::readUTF8(InputStream<byte>& stream)
+character unicode::read_utf8(Input_stream<byte>& stream)
 {
     byte byte;
     stream.next(byte);
@@ -91,7 +91,7 @@ constexpr utf16unit SURROGATES_START = 0xD800;
 constexpr utf16unit SURROGATES_HALF = 0xDC00;
 constexpr utf16unit SURROGATES_END = 0xE000;
 
-void unicode::writeUTF16(character character, std::queue<utf16unit>& units)
+void unicode::write_utf16(character character, std::queue<utf16unit>& units)
 {
     if (character < COUNT_16_BIT)
     {
@@ -114,20 +114,20 @@ void unicode::writeUTF16(character character, std::queue<utf16unit>& units)
     }
 }
 
-character unicode::readUTF16(InputStream<utf16unit>& stream)
+character unicode::read_utf16(Input_stream<utf16unit>& stream)
 {
-    utf16unit firstUnit;
-    stream.next(firstUnit);
+    utf16unit first_unit;
+    stream.next(first_unit);
 
-    if (firstUnit < SURROGATES_START || firstUnit >= SURROGATES_END)
+    if (first_unit < SURROGATES_START || first_unit >= SURROGATES_END)
     {
-        return firstUnit;
+        return first_unit;
     }
 
-    utf16unit secondUnit;
-    stream.next(secondUnit);
+    utf16unit second_unit;
+    stream.next(second_unit);
 
-    auto highBits = (character)(firstUnit - SURROGATES_START) << 10;
-    auto lowBits = (character)(secondUnit - SURROGATES_END);
-    return highBits + lowBits + COUNT_16_BIT;    
+    auto high_bits = (character)(first_unit - SURROGATES_START) << 10;
+    auto low_bits = (character)(second_unit - SURROGATES_END);
+    return high_bits + low_bits + COUNT_16_BIT;
 }

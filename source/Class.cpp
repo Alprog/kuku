@@ -3,21 +3,21 @@
 #include <iostream>
 
 Class::Class(std::string name)
-    : Name{name}
-    , InstanceSize{1}
+    : name{name}
+    , instance_size{1}
 {
 }
 
-Field& Class::registerField(std::string name, DataType dataType)
+Field& Class::register_field(std::string name, Data_type data_type)
 {
-    return Fields.emplace_back(*this, name, dataType, InstanceSize++);
+    return fields.emplace_back(*this, name, data_type, instance_size++);
 }
 
-Instance Class::createInstance()
+Instance Class::create_instance()
 {
     Instance instance;
-    instance.Cells = new Cell[InstanceSize];
-    instance.Cells[0].classPointer = this;
+    instance.cells = new Cell[instance_size];
+    instance.cells[0].class_pointer = this;
     return instance;
 }
 
@@ -25,10 +25,10 @@ void Class::dump(Instance instance)
 {
     std::cout << sizeof(instance) << std::endl;
 
-    std::cout << instance.Cells[0].classPointer->Name << std::endl;
-    for (auto& field : Fields)
+    std::cout << instance.cells[0].class_pointer->name << std::endl;
+    for (auto& field : fields)
     {
-        auto value = instance.Cells[field.InstanceOffset].number;
-        std::cout << field.Name << " " << value << std::endl;
+        auto value = instance.cells[field.instance_offset].number;
+        std::cout << field.name << " " << value << std::endl;
     }
 }

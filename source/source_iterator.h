@@ -5,18 +5,18 @@
 #include "encoding.h"
 #include "position.h"
 
-class TextDocument;
+class Text_document;
 
-class SourceIterator
+class Source_iterator
 {
 public:
-    SourceIterator& operator++();
-    SourceIterator operator++(int);
+    Source_iterator& operator++();
+    Source_iterator operator++(int);
 
-    SourceIterator(TextDocument& textDocument);
+    Source_iterator(Text_document& text_document);
 
     utf16unit operator*();
 
     Position position;
-    TextDocument& textDocument;
+    Text_document& text_document;
 };

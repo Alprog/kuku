@@ -1,7 +1,7 @@
 
 #include "assign_statement_node.h"
 
-bool AssignStatementNode::parseInternal(Parser& parser)
+bool Assign_statement_node::parse_internal(Parser& parser)
 {
 	return true;
 }

@@ -5,7 +5,7 @@
 
 namespace Console
 {
-    std::u16string readline();
+    std::u16string read_line();
 
-    void writeline(std::u16string line);
+    void write_line(std::u16string line);
 }

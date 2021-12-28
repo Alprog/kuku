@@ -1,13 +1,13 @@
 
 #include "string.h"
 
-String::String(int32_t characterCount, byte characterSize, void* srcBytes)
-	: characterCount{ characterCount }
-	, characterSize{ characterSize }
+String::String(int32_t character_count, byte character_size, void* src_bytes)
+	: character_count{ character_count }
+	, character_size{ character_size }
 {
-	auto size = characterCount * characterSize;
+	auto size = character_count * character_size;
 	bytes = new byte[size];
-	memcpy(bytes, srcBytes, size);
+	memcpy(bytes, src_bytes, size);
 }
 
 String::String(std::string u8string)
@@ -25,9 +25,9 @@ String::String(std::u32string u32string)
 {
 }
 
-character String::getCharacter(integer index)
+character String::get_character(integer index)
 {
-	switch (characterSize)
+	switch (character_size)
 	{
 		default:
 		case 1:

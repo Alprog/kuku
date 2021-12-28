@@ -1,26 +1,26 @@
 
 #include "statement_node.h"
 
-StatementNode* StatementNode::init(Parser& parser)
+Statement_node* Statement_node::init(Parser& parser)
 {
-	this->startToken = &parser.current;
+	this->start_token = &parser.current;
 
 	try
 	{
-		this->IsValid = parseInternal(parser);
+		this->is_valid = parse_internal(parser);
 	}
 	catch (std::exception ex)
 	{
-		this->IsValid = false;
-		this->errorText = u"unexpected token '" + parser.current.getSourceText() + u"' at " + parser.current.range.start.toStr();
-		while (!parser.current.isEndStatementToken()) parser.next(false); // panic mode
+		this->is_valid = false;
+		this->error_text = u"unexpected token '" + parser.current.get_source_text() + u"' at " + parser.current.range.start.to_str();
+		while (!parser.current.is_end_statement_token()) parser.next(false); // panic mode
 		parser.next(false);
 	}
 
 	return this;
 }
 
-int StatementNode::getNestingLevel()
+int Statement_node::get_nesting_level()
 {
 	return 0;
 }

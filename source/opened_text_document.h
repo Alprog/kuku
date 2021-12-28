@@ -4,13 +4,13 @@
 #include "json_serializable.h"
 #include "json_scheme.h"
 
-class OpenedTextDocument : public JsonSerializable
+class Opened_text_document : public Json_serializable
 {
 public:
     std::string uri;
-    std::string languageId;
+    std::string language_id;
     int version;
     std::string text;
 
-    JSCHEME(OpenedTextDocument, JFIELD(uri), JFIELD(languageId), JFIELD(version), JFIELD(text))
+    JSCHEME(Opened_text_document, JFIELD(uri), JFIELD(language_id), JFIELD(version), JFIELD(text))
 };

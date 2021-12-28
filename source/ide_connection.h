@@ -3,9 +3,9 @@
 #include <string>
 #include "json.h"
 
-class IDEConnection
+class Ide_connection
 {
 public:
-    friend IDEConnection& operator<<(IDEConnection& ide, nlohmann::json& message);
-    friend IDEConnection& operator>>(IDEConnection& ide, nlohmann::json& message);
+    friend Ide_connection& operator<<(Ide_connection& ide, nlohmann::json& message);
+    friend Ide_connection& operator>>(Ide_connection& ide, nlohmann::json& message);
 };

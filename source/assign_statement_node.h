@@ -3,7 +3,7 @@
 
 #include "statement_node.h"
 
-class AssignStatementNode : public StatementNode
+class Assign_statement_node : public Statement_node
 {
-	virtual bool parseInternal(Parser& parser) override;
+	virtual bool parse_internal(Parser& parser) override;
 };

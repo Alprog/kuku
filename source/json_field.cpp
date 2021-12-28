@@ -2,9 +2,9 @@
 #include "json_field.h"
 #include "json_serializable.h"
 
-nlohmann::json serialize(JsonSerializable& serializable)
+nlohmann::json serialize(Json_serializable& serializable)
 {
-    return serializable.toJson();
+    return serializable.to_json();
 }
 
 int serialize(int value) { return value; }

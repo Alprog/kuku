@@ -2,8 +2,8 @@
 #include "syntax_node.h"
 #include "token.h"
 
-class SingleTokenSyntaxNode : SyntaxNode
+class Single_token_syntax_node : Syntax_node
 {
 public:
-	Token* nodeToken;
+	Token* node_token;
 };

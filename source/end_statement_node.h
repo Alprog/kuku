@@ -3,11 +3,11 @@
 
 #include "statement_node.h"
 
-class EndStatementNode : public StatementNode
+class End_statement_node : public Statement_node
 {
 public:
-	virtual int getNestingLevel() override { return -1; }
+	virtual int get_nesting_level() override { return -1; }
 
 protected:
-	virtual bool parseInternal(Parser& parser) override;
+	virtual bool parse_internal(Parser& parser) override;
 };

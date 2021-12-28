@@ -9,7 +9,7 @@ class Chunk
 public:
 	std::vector<byte> bytes;
 
-	byte* getStartPointer();
+	byte* get_start_pointer();
 
 	template<typename T>
 	void write(T value)

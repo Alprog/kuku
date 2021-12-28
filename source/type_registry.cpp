@@ -1,7 +1,7 @@
 
 #include "type_registry.h"
 
-Class& TypeRegistry::RegisterClass(std::string name)
+Class& Type_registry::register_class(std::string name)
 {
     return Classes.emplace_back(name);
 }

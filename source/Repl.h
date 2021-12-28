@@ -21,15 +21,15 @@ void Repl()
     while (true)
     {
         std::cout << "> ";
-        std::u16string line = Console::readline();
+        std::u16string line = Console::read_line();
         if (line == u"exit")
         {
             break;
         }
         
-        std::basic_istringstream stringStream{ line };
-        BasicInputStream basicStream{ stringStream };
-        TextDocument document{ basicStream };
+        std::basic_istringstream string_stream{ line };
+        Basic_input_stream basic_stream{ string_stream };
+        Text_document document{ basic_stream };
 
         Lexer lexer{ document };
         lexer.process();

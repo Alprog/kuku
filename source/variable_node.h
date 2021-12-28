@@ -6,11 +6,11 @@
 #include "token.h"
 #include <vector>
 
-class VariableNode : SyntaxNode
+class Variable_node : Syntax_node
 {
 public:
 	std::u16string name;
 	Class* type;
 
-	Token* declarationToken;
+	Token* declaration_token;
 };

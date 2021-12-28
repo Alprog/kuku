@@ -1,9 +1,9 @@
 
 #include "string_literal_node.h"
 
-StringLiteralNode::StringLiteralNode(Token* token)
+String_literal_node::String_literal_node(Token* token)
 {
-	this->nodeToken = token;
+	this->node_token = token;
 
-	token->getSourceText();
+	token->get_source_text();
 }

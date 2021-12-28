@@ -3,10 +3,10 @@
 #include <vector>
 #include "class.h"
 
-class TypeRegistry
+class Type_registry
 {
 public:
-    Class& RegisterClass(std::string name);
+    Class& register_class(std::string name);
 
     std::vector<Class> Classes;
 };

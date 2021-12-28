@@ -6,26 +6,26 @@
 #include <fstream>
 
 template <typename T>
-class InputStream
+class Input_stream
 {
 public:
-	virtual bool next(T& outCharacter) = 0;
+	virtual bool next(T& out_character) = 0;
 };
 
 template <typename T>
-class BasicInputStream : public InputStream<T>
+class Basic_input_stream : public Input_stream<T>
 {
 public:
 	std::basic_istream<T>& stream;
 
-	BasicInputStream(std::basic_istream<T>& stream)
+	Basic_input_stream(std::basic_istream<T>& stream)
 		: stream { stream }
 	{
 	}
 
-	virtual bool next(T& outCharacter) override
+	virtual bool next(T& out_character) override
 	{
-		stream.get(outCharacter);
+		stream.get(out_character);
 		return !stream.fail();
 	}
 };

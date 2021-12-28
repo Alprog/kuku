@@ -3,8 +3,8 @@
 
 #include "block_statement_node.h"
 
-class ClassStatementNode : public BlockStatementNode
+class Class_statement_node : public Block_statement_node
 {
 protected:
-	virtual bool parseInternal(Parser& parser) override;
+	virtual bool parse_internal(Parser& parser) override;
 };

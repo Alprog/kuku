@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-enum class InstructionType : byte
+enum class Instruction_type : byte
 {
 	INT_SET,
 	INT_ADD,

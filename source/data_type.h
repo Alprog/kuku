@@ -1,6 +1,6 @@
 #pragma once
 
-enum class DataType
+enum class Data_type
 {
     Boolean,
     Byte,

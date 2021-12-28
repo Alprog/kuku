@@ -1,22 +1,22 @@
 
 #include "function_statement_node.h"
 
-bool FunctionStatementNode::parseInternal(Parser& parser)
+bool Function_statement_node::parse_internal(Parser& parser)
 {
-	parser.requireKeyword(u"function");
+	parser.require_keyword(u"function");
 
 	
-	parser.require(TokenType::Identifier);
+	parser.require(Token_type::Identifier);
 
-	parser.require(TokenType::OpenParenthesis);
-	parser.require(TokenType::CloseParenthesis);
+	parser.require(Token_type::Open_parenthesis);
+	parser.require(Token_type::Close_parenthesis);
 
-	if (parser.matchEndOfStatement()) return true;
+	if (parser.match_end_of_statement()) return true;
 
-	parser.require(TokenType::Semicolon);
-	parser.require(TokenType::Identifier);
+	parser.require(Token_type::Semicolon);
+	parser.require(Token_type::Identifier);
 
-	if (parser.matchEndOfStatement()) return true;
+	if (parser.match_end_of_statement()) return true;
 	
 	return false;
 }

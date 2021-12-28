@@ -8,10 +8,10 @@ class Stack
 public:
     Stack()
     {
-        Cells = new Cell[1024 * 1024 / sizeof(Cell)]; // 1 MB
-        Pointer = nullptr;
+        cells = new Cell[1024 * 1024 / sizeof(Cell)]; // 1 MB
+        pointer = nullptr;
     }
 
-    Cell* Cells;
-    Cell* Pointer;
+    Cell* cells;
+    Cell* pointer;
 };

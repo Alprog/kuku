@@ -12,15 +12,15 @@ class Class
 public:
     Class(std::string name);
 
-    std::string Name;
+    std::string name;
 
-    Field& registerField(std::string name, DataType dataType);
-    Instance createInstance();
+    Field& register_field(std::string name, Data_type data_type);
+    Instance create_instance();
 
     void dump(Instance instance);
 
-    int InstanceSize;
+    int instance_size;
 
-    std::vector<Field> Fields;
-    std::vector<Function> Functions;
+    std::vector<Field> fields;
+    std::vector<Function> functions;
 };

@@ -4,8 +4,8 @@
 #include "single_token_syntax_node.h"
 #include "string.h"
 
-class StringLiteralNode : public SingleTokenSyntaxNode
+class String_literal_node : public Single_token_syntax_node
 {
 public:
-	StringLiteralNode(Token* token);
+	String_literal_node(Token* token);
 };

@@ -3,7 +3,7 @@
 #include "json_serializable.h"
 #include "position.h"
 
-class Range : public JsonSerializable
+class Range : public Json_serializable
 {
 public:
     Range(Position start, Position end)

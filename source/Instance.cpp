@@ -4,5 +4,5 @@
 
 void Instance::dump()
 {
-    Cells[0].classPointer->dump(*this);
+    cells[0].class_pointer->dump(*this);
 }

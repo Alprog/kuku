@@ -3,26 +3,26 @@
 
 void Virtual_machine::test()
 {
-    auto vectorClass = TypeRegistry.RegisterClass("Vector");
-    vectorClass.registerField("X", DataType::Number);
-    vectorClass.registerField("Y", DataType::Number);
-    vectorClass.registerField("Z", DataType::Number);
+    auto vector_class = Type_registry.register_class("Vector");
+    vector_class.register_field("X", Data_type::Number);
+    vector_class.register_field("Y", Data_type::Number);
+    vector_class.register_field("Z", Data_type::Number);
 
-    auto vectorInstance = vectorClass.createInstance();
+    auto vector_instance = vector_class.create_instance();
 
     Cell cell;
     cell.number = 41;
 
-    setField(vectorInstance, 2, cell);
-    vectorInstance.dump();
+    set_field(vector_instance, 2, cell);
+    vector_instance.dump();
 }
 
-void Virtual_machine::setLocal(int cellIndex, Cell cellValue)
+void Virtual_machine::set_local(int cellIndex, Cell cellValue)
 {
-    Stack.Cells[cellIndex] = cellValue;
+    stack.cells[cellIndex] = cellValue;
 }
 
-void Virtual_machine::setField(Instance instance, int cellIndex, Cell cellValue)
+void Virtual_machine::set_field(Instance instance, int cellIndex, Cell cellValue)
 {
-    instance.Cells[cellIndex] = cellValue;
+    instance.cells[cellIndex] = cellValue;
 }

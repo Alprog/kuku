@@ -5,10 +5,10 @@
 #include "routine.h"
 #include <iostream>
 
-template <InstructionType Type>
-struct Instruction : BaseInstruction
+template <Instruction_type Type>
+struct Instruction : Base_instruction
 {
-	char const* getName() { return "unknown"; }
+	char const* get_name() { return "unknown"; }
 
 	void execute(Routine& routine)
 	{
@@ -18,26 +18,26 @@ struct Instruction : BaseInstruction
 
 #define Ins(NAME, ARGS) \
 	template<> \
-	struct Instruction<InstructionType::NAME> : BaseInstruction \
+	struct Instruction<Instruction_type::NAME> : Base_instruction \
 	{ \
 		ARGS; \
-		std::string getName() { return #NAME; } \
-		std::string getArgsLine() { return #ARGS; } \
+		std::string get_name() { return #NAME; } \
+		std::string get_argsLine() { return #ARGS; } \
 		inline void execute(Routine& routine)
 
 #pragma pack(1)
 
 Ins(INT_SET, byte cellIndex; integer value)
 {
-	routine.stack.Cells[cellIndex].integer = value;
+	routine.stack.cells[cellIndex].integer = value;
 }};
 
 Ins(INT_ADD, byte arg1; byte arg2; byte out)
 {
-	routine.stack.Cells[out].integer = routine.stack.Cells[arg1].integer + routine.stack.Cells[arg2].integer;
+	routine.stack.cells[out].integer = routine.stack.cells[arg1].integer + routine.stack.cells[arg2].integer;
 }};
 
 Ins(PRINT, byte arg)
 {
-	std::cout << routine.stack.Cells[arg].integer << std::endl;
+	std::cout << routine.stack.cells[arg].integer << std::endl;
 }};

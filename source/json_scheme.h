@@ -3,13 +3,13 @@
 #include "json_field.h"
 #include <vector>
 
-class JsonScheme
+class Json_scheme
 {
 public:
-    JsonScheme(std::vector<BaseJsonField*> fields)
+    Json_scheme(std::vector<Base_json_field*> fields)
         : fields{ fields }
     {
     }
 
-    std::vector<BaseJsonField*> fields;
+    std::vector<Base_json_field*> fields;
 };

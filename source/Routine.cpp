@@ -5,19 +5,19 @@
 Routine::Routine(byte* ip)
 	: ip { ip }
 {
-	JumpTable::Init();
+	Jump_table::init();
 }
 
 void Routine::run()
 {
-	performInstruction();
+	perform_instruction();
 }
 
-void Routine::performInstruction()
+void Routine::perform_instruction()
 {
 	while (true)
 	{
-		reinterpret_cast<BaseInstruction*>(ip)->execute(*this);
+		reinterpret_cast<Base_instruction*>(ip)->execute(*this);
 	}
 }
 

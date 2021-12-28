@@ -1,7 +1,7 @@
 
 #include "token.h"
 
-Token::Token(TokenType type, TextDocument* document, Position start, Position end)
+Token::Token(Token_type type, Text_document* document, Position start, Position end)
     : type{ type }
     , document{ document }
     , range{ start, end }
@@ -16,12 +16,12 @@ Token& Token::operator=(const Token& token)
     return *this;
 }
 
-bool Token::isEndStatementToken()
+bool Token::is_end_statement_token()
 {
-    return type == TokenType::EndOfLine || type == TokenType::Semicolon;
+    return type == Token_type::End_of_line || type == Token_type::Semicolon;
 }
 
-std::u16string Token::getSourceText()
+std::u16string Token::get_source_text()
 {
-    return document->getSubstring(range);
+    return document->get_substring(range);
 }

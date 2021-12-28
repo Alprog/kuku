@@ -5,5 +5,5 @@
 class Function
 {
 public:
-    std::string Name;
+    std::string name;
 };

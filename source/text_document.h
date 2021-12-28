@@ -6,14 +6,14 @@
 #include "range.h"
 #include "streams.h"
 
-class TextDocument
+class Text_document
 {
 public:
-    TextDocument();
-    TextDocument(InputStream<utf16unit>& stream);
+    Text_document();
+    Text_document(Input_stream<utf16unit>& stream);
 
     std::vector<std::u16string> lines;
 
-    utf16unit getCharacter(Position position);
-    std::u16string getSubstring(Range range);
+    utf16unit get_character(Position position);
+    std::u16string get_substring(Range range);
 };

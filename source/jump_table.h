@@ -5,13 +5,13 @@ class Routine;
 
 constexpr size_t INSTRUCTION_COUNT = 256;
 
-using ExecuteFunctionPtr = void(*)(Routine&);
-using GetSizeFunctionPtr = size_t(*)();
+using Execute_function_ptr = void(*)(Routine&);
+using Get_size_function_ptr = size_t(*)();
 
-struct JumpTable
+struct Jump_table
 {
-	static ExecuteFunctionPtr ExecuteFunction[INSTRUCTION_COUNT];
-	static GetSizeFunctionPtr GetSizeFunction[INSTRUCTION_COUNT];
+	static Execute_function_ptr execute_function[INSTRUCTION_COUNT];
+	static Get_size_function_ptr get_size_function[INSTRUCTION_COUNT];
 
-	static void Init();
+	static void init();
 };

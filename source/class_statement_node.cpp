@@ -1,13 +1,13 @@
 
 #include "class_statement_node.h"
 
-bool ClassStatementNode::parseInternal(Parser& parser)
+bool Class_statement_node::parse_internal(Parser& parser)
 {
-	if (parser.matchKeyword(u"class"))
+	if (parser.match_keyword(u"class"))
 	{
-		if (parser.match(TokenType::Identifier))
+		if (parser.match(Token_type::Identifier))
 		{
-			if (parser.matchEndOfStatement()) return true;
+			if (parser.match_end_of_statement()) return true;
 		}
 	}
 	return false;

@@ -2,17 +2,17 @@
 #include "variable_declaration_statement_node.h"
 #include "variable_node.h"
 
-bool VariableDeclarationStatementNode::parseInternal(Parser& parser)
+bool Variable_declaration_statement_node::parse_internal(Parser& parser)
 {
-    if (parser.matchKeyword(u"var"))
+    if (parser.match_keyword(u"var"))
     {
-        if (parser.current.type == TokenType::Identifier)
+        if (parser.current.type == Token_type::Identifier)
         {
-            auto node = new VariableNode();
-            node->name = parser.current.getSourceText();
+            auto node = new Variable_node();
+            node->name = parser.current.get_source_text();
             parser.next(false);
 
-            if (parser.current.isEndStatementToken())
+            if (parser.current.is_end_statement_token())
             {
                 parser.next(false);
                 return true;

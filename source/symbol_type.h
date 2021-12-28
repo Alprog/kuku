@@ -1,9 +1,7 @@
 
 #pragma once
 
-
-
-enum class SymbolType
+enum class Symbol_type
 {
 	
 };

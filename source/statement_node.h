@@ -5,19 +5,19 @@
 #include "token.h"
 #include "parser.h"
 
-class StatementNode : SyntaxNode
+class Statement_node : Syntax_node
 {
 public:
-	Token* startToken;
-	Token* endToken;
+	Token* start_token;
+	Token* end_token;
 
-	bool IsValid;
-	std::u16string errorText;
+	bool is_valid;
+	std::u16string error_text;
 
-	StatementNode* init(Parser& parser);
+	Statement_node* init(Parser& parser);
 
-	virtual int getNestingLevel();
+	virtual int get_nesting_level();
 
 protected:
-	virtual bool parseInternal(Parser& parser) = 0;
+	virtual bool parse_internal(Parser& parser) = 0;
 };

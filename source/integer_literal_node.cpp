@@ -1,9 +1,9 @@
 
 #include "integer_literal_node.h"
 
-IntegerLiteralNode::IntegerLiteralNode(Token* token)
+Integer_literal_node::Integer_literal_node(Token* token)
 {
-	auto u16string = token->getSourceText();
+	auto u16string = token->get_source_text();
 	const std::string u8string(std::begin(u16string), std::end(u16string));
 
 	size_t size;

@@ -7,9 +7,9 @@
 
 namespace unicode
 {
-    void writeUTF8(character character, std::vector<byte>& bytes);
-    character readUTF8(InputStream<byte>& stream);
+    void write_utf8(character character, std::vector<byte>& bytes);
+    character read_utf8(Input_stream<byte>& stream);
 
-    void writeUTF16(character character, std::queue<utf16unit>& units);
-    character readUTF16(InputStream<utf16unit>& stream);
+    void write_utf16(character character, std::queue<utf16unit>& units);
+    character read_utf16(Input_stream<utf16unit>& stream);
 }

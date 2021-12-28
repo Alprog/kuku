@@ -9,12 +9,12 @@
 class Virtual_machine
 {
 public:
-    TypeRegistry TypeRegistry;
-    Stack Stack;
+    Type_registry Type_registry;
+    Stack stack;
 
     void test();
 
-    void setLocal(int cellIndex, Cell cellValue);
+    void set_local(int cell_index, Cell cell_value);
 
-    void setField(Instance instance, int cellIndex, Cell cellValue);
+    void set_field(Instance instance, int cell_index, Cell cell_value);
 };

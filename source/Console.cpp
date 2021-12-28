@@ -3,16 +3,16 @@
 
 namespace Console
 {
-    std::u16string readline()
+    std::u16string read_line()
     {
         wchar_t buffer[0x1000];
-        std::size_t numRead = 0;
-        _cgetws_s(buffer, &numRead);
-        std::wstring line(buffer, numRead);
+        std::size_t num_read = 0;
+        _cgetws_s(buffer, &num_read);
+        std::wstring line(buffer, num_read);
         return std::u16string(std::begin(line), std::end(line));
     }
 
-    void writeline(std::u16string line)
+    void write_line(std::u16string line)
     {
         _cputws(std::wstring(std::begin(line), std::end(line)).c_str());
         _cputws(L"\n");

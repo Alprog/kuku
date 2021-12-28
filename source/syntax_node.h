@@ -1,6 +1,6 @@
 
 #pragma once
 
-class SyntaxNode
+class Syntax_node
 {
 };

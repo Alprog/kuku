@@ -14,102 +14,102 @@
 
 Parser::Parser(Lexer& lexer)
 	: lexer{ lexer }
-    , current{ TokenType::EndOfLine, nullptr, { 0,0 }, { 0,0 } }
+    , current{ Token_type::End_of_line, nullptr, { 0,0 }, { 0,0 } }
 {
 }
 
 void Parser::process()
 {
     next(true);
-    while (current.type != TokenType::EndOfSource)
+    while (current.type != Token_type::End_of_source)
     {
-        statements.push_back(parseStatement());
+        statements.push_back(parse_statement());
     }
 }
 
-void Parser::next(bool skipNewLines)
+void Parser::next(bool skip_new_lines)
 {
-    current = lexer.getNextToken();
-    while (current.type == TokenType::Comment || (skipNewLines && current.type == TokenType::EndOfLine))
+    current = lexer.get_next_token();
+    while (current.type == Token_type::Comment || (skip_new_lines && current.type == Token_type::End_of_line))
     {
-        current = lexer.getNextToken();
+        current = lexer.get_next_token();
     }
 }
 
 Token* startToken;
 
 template <typename T>
-T* Parser::createNode()
+T* Parser::create_node()
 {
     auto node = new T();
     node->init(*this);
     return node;
 }
 
-StatementNode* Parser::parseStatement()
+Statement_node* Parser::parse_statement()
 {
     startToken = &current;
 
-    if (current.type == TokenType::Keyword)
+    if (current.type == Token_type::Keyword)
     {
-        if (current.getSourceText() == u"var")
+        if (current.get_source_text() == u"var")
         {
-            return createNode<VariableDeclarationStatementNode>();
+            return create_node<Variable_declaration_statement_node>();
         }
-        else if (current.getSourceText() == u"end")
+        else if (current.get_source_text() == u"end")
         {
-            return createNode<EndStatementNode>();
+            return create_node<End_statement_node>();
         }
-        else if (current.getSourceText() == u"function")
+        else if (current.get_source_text() == u"function")
         {
-            return createNode<FunctionStatementNode>();
+            return create_node<Function_statement_node>();
         }
-        else if (current.getSourceText() == u"class")
+        else if (current.get_source_text() == u"class")
         {
-            return createNode<ClassStatementNode>();
+            return create_node<Class_statement_node>();
         }
     }
-    else if (current.type == TokenType::Identifier)
+    else if (current.type == Token_type::Identifier)
     {
-        auto id = current.getSourceText();
-        Console::writeline(id);
+        auto id = current.get_source_text();
+        Console::write_line(id);
 
         next(false);
-        if (current.type == TokenType::AssignOperator)
+        if (current.type == Token_type::Assign_operator)
         {
-            auto node = new BinaryOperatorNode(&current);
+            auto node = new Binary_operator_node(&current);
             next(false);
 
-            if (current.type == TokenType::IntegerLiteral)
+            if (current.type == Token_type::Integer_literal)
             {
                 next(false);
-                if (current.type == TokenType::EndOfLine)
+                if (current.type == Token_type::End_of_line)
                 {
                     next(false);
-                    return new AssignStatementNode();
+                    return new Assign_statement_node();
                 }
             }
 
         }
     }
 
-    return (new InvalidStatementNode())->init(*this);
+    return (new Invalid_statement_node())->init(*this);
 }
 
-void Parser::parseExpression()
+void Parser::parse_expression()
 {
 
 }
 
-bool Parser::require(TokenType type)
+bool Parser::require(Token_type type)
 {
     if (!match(type))
     {
-        throw UnexpectedError();
+        throw Unexpected_error();
     }
 }
 
-bool Parser::match(TokenType type)
+bool Parser::match(Token_type type)
 {
     if (current.type == type)
     {
@@ -119,17 +119,17 @@ bool Parser::match(TokenType type)
     return false;
 }
 
-bool Parser::requireKeyword(std::u16string keyword)
+bool Parser::require_keyword(std::u16string keyword)
 {
-    if (!matchKeyword(keyword))
+    if (!match_keyword(keyword))
     {
-        throw UnexpectedError();
+        throw Unexpected_error();
     }
 }
 
-bool Parser::matchKeyword(std::u16string keyword)
+bool Parser::match_keyword(std::u16string keyword)
 {
-    if (current.type == TokenType::Keyword && current.getSourceText() == keyword)
+    if (current.type == Token_type::Keyword && current.get_source_text() == keyword)
     {
         next(false);
         return true;
@@ -137,9 +137,9 @@ bool Parser::matchKeyword(std::u16string keyword)
     return false;
 }
 
-bool Parser::matchEndOfStatement()
+bool Parser::match_end_of_statement()
 {
-    if (current.isEndStatementToken())
+    if (current.is_end_statement_token())
     {
         next(false);
         return true;

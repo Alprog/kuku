@@ -12,5 +12,5 @@ union Cell
     number number;
     Instance instance;
     String* string;
-    Class* classPointer;
+    Class* class_pointer;
 };

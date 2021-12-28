@@ -1,7 +1,7 @@
 
 #include "binary_operator_node.h"
 
-BinaryOperatorNode::BinaryOperatorNode(Token* token)
+Binary_operator_node::Binary_operator_node(Token* token)
 {
-	this->nodeToken = token;
+	this->node_token = token;
 }

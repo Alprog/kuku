@@ -13,28 +13,28 @@
 #include "instruction_type.h"
 #include "routine.h"
 
-void Test()
+void test()
 {
 	Chunk chunk;
-	chunk.write(InstructionType::INT_SET);
+	chunk.write(Instruction_type::INT_SET);
 	chunk.write((byte)0);
 	chunk.write((integer)111);
 
-	chunk.write(InstructionType::INT_SET);
+	chunk.write(Instruction_type::INT_SET);
 	chunk.write((byte)1);
 	chunk.write((integer)222);
 
-	chunk.write(InstructionType::INT_ADD);
+	chunk.write(Instruction_type::INT_ADD);
 	chunk.write((byte)0);
 	chunk.write((byte)1);
 	chunk.write((byte)2);
 
-	chunk.write(InstructionType::PRINT);
+	chunk.write(Instruction_type::PRINT);
 	chunk.write((byte)2);
 
-	chunk.write(InstructionType::END);
+	chunk.write(Instruction_type::END);
 
-	Routine routine(chunk.getStartPointer());	
+	Routine routine(chunk.get_start_pointer());	
 	//routine.run();
 
 
@@ -43,16 +43,16 @@ void Test()
 	String s2(u"abc");
 	String s3(U"abc");
 
-	auto a1 = s1.getCharacter(1);
-	auto a2 = s2.getCharacter(1);
-	auto a3 = s3.getCharacter(1);
+	auto a1 = s1.get_character(1);
+	auto a2 = s2.get_character(1);
+	auto a3 = s3.get_character(1);
 
 
-	std::basic_ifstream<byte> fileStream("C:/kuku/data/main.kuku");
-	BasicInputStream basicStream(fileStream);
-	unicode::Utf8To16Stream u16stream(basicStream);
+	std::basic_ifstream<byte> file_stream("C:/kuku/data/main.kuku");
+	Basic_input_stream basic_stream(file_stream);
+	unicode::Utf8to16_stream u16stream(basic_stream);
 
-	TextDocument document(u16stream);
+	Text_document document(u16stream);
 
 	Lexer lexer(document);
 	Parser parser(lexer);

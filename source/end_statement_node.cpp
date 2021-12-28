@@ -1,11 +1,11 @@
 
 #include "end_statement_node.h"
 
-bool EndStatementNode::parseInternal(Parser& parser)
+bool End_statement_node::parse_internal(Parser& parser)
 {
-	if (parser.matchKeyword(u"end"))
+	if (parser.match_keyword(u"end"))
 	{
-		if (parser.matchEndOfStatement()) return true;
+		if (parser.match_end_of_statement()) return true;
 	}
 	return false;
 }

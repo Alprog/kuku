@@ -1,47 +1,47 @@
 
 #include "text_document.h"
 
-TextDocument::TextDocument()
+Text_document::Text_document()
 {
 
 }
 
-TextDocument::TextDocument(InputStream<utf16unit>& stream)
+Text_document::Text_document(Input_stream<utf16unit>& stream)
 {
     std::vector<utf16unit> line;
 
-    auto flushLine = [this, &line]()
+    auto flush_line = [this, &line]()
     {
         lines.push_back({ std::begin(line), std::end(line) });
         line.clear();
     };
 
 
-    utf16unit unit, prevUnit = 0;
+    utf16unit unit, prev_unit = 0;
     while (stream.next(unit))
     {
         if (unit == '\r')
         {
-            flushLine();
+            flush_line();
         }
         if (unit == '\n')
         {
-            if (prevUnit != '\r')
+            if (prev_unit != '\r')
             {
-                flushLine();
+                flush_line();
             }
         }
         else
         {
             line.push_back(unit);
         }
-        prevUnit = unit;
+        prev_unit = unit;
     }
 
-    flushLine();
+    flush_line();
 }
 
-utf16unit TextDocument::getCharacter(Position position)
+utf16unit Text_document::get_character(Position position)
 {
     if (position.line < lines.size())
     {
@@ -61,7 +61,7 @@ utf16unit TextDocument::getCharacter(Position position)
     }
 }
 
-std::u16string TextDocument::getSubstring(Range range)
+std::u16string Text_document::get_substring(Range range)
 {
     auto l1 = range.start.line;
     auto l2 = range.start.line;

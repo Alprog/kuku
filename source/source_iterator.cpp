@@ -3,24 +3,24 @@
 #include "unicode.h"
 #include "text_document.h"
 
-SourceIterator::SourceIterator(TextDocument& textDocument)
-    : textDocument{ textDocument }
+Source_iterator::Source_iterator(Text_document& text_document)
+    : text_document{ text_document }
     , position{ 0, 0 }
 {
 }
 
-utf16unit SourceIterator::operator*()
+utf16unit Source_iterator::operator*()
 {
-    return textDocument.getCharacter(position);
+    return text_document.get_character(position);
 }
 
-SourceIterator& SourceIterator::operator++()
+Source_iterator& Source_iterator::operator++()
 {
     position.character++;
 
-    if (position.line < textDocument.lines.size())
+    if (position.line < text_document.lines.size())
     {
-        auto& line = textDocument.lines[position.line];
+        auto& line = text_document.lines[position.line];
         if (position.character > line.size())
         {
             position.line++;
@@ -31,7 +31,7 @@ SourceIterator& SourceIterator::operator++()
     return *this;
 }
 
-SourceIterator SourceIterator::operator++(int)
+Source_iterator Source_iterator::operator++(int)
 {
     auto old = *this;
     operator++();

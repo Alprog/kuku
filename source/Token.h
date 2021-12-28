@@ -9,16 +9,16 @@ class SyntaxNode;
 
 struct Token
 {
-    TokenType type;
-    TextDocument* document;
+    Token_type type;
+    Text_document* document;
     Range range;
 
-    SyntaxNode* syntaxNode;
+    SyntaxNode* syntax_node;
 
     Token& operator=(const Token& token);
-    Token(TokenType type, TextDocument* document, Position start, Position end);
+    Token(Token_type type, Text_document* document, Position start, Position end);
 
-    bool isEndStatementToken();
+    bool is_end_statement_token();
 
-    std::u16string getSourceText();
+    std::u16string get_source_text();
 };

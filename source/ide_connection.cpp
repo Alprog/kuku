@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-IDEConnection& operator>>(IDEConnection& ide, nlohmann::json& message)
+Ide_connection& operator>>(Ide_connection& ide, nlohmann::json& message)
 {
     std::string line;
 
@@ -13,32 +13,32 @@ IDEConnection& operator>>(IDEConnection& ide, nlohmann::json& message)
 
     getline(std::cin, line);
 
-    std::string contentText;
-    contentText.resize(count, 'x');
-    std::cin.read(&contentText[0], count);
+    std::string content_text;
+    content_text.resize(count, 'x');
+    std::cin.read(&content_text[0], count);
 
-    message = nlohmann::json::parse(contentText);
+    message = nlohmann::json::parse(content_text);
 
     return ide;
 }
 
-IDEConnection& operator<<(IDEConnection& ide, nlohmann::json& message)
+Ide_connection& operator<<(Ide_connection& ide, nlohmann::json& message)
 {
-    auto contentText = message.dump();
+    auto content_text = message.dump();
 
-    const auto contentLength = contentText.size();
-    constexpr auto contentType = "utf-8";
+    const auto content_length = content_text.size();
+    constexpr auto content_type = "utf-8";
 
-    static std::string lineEnding = "\n";
+    static std::string line_ending = "\n";
 
     // header
-    std::cout << "Content-Length: " << std::to_string(contentLength) << lineEnding;
-    std::cout << "Content-Type: " << contentType << lineEnding;
+    std::cout << "Content-Length: " << std::to_string(content_length) << line_ending;
+    std::cout << "Content-Type: " << content_type << line_ending;
 
-    std::cout << lineEnding; // separator
+    std::cout << line_ending; // separator
 
     // content
-    std::cout << contentText;
+    std::cout << content_text;
 
     std::cout.flush();
 

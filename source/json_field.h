@@ -4,44 +4,44 @@
 #include <string>
 #include "json_serializable.h"
 
-class BaseJsonField
+class Base_json_field
 {
 public:
-    BaseJsonField(std::string fieldName)
-        : fieldName{ fieldName }
+    Base_json_field(std::string field_name)
+        : field_name{ field_name }
     {
     }
 
     virtual void serialize(void* instance, nlohmann::json& json) = 0;
     virtual void deserialize(nlohmann::json& json, void* instance) = 0;
 
-    std::string fieldName;
+    std::string field_name;
 };
 
-nlohmann::json serialize(JsonSerializable& serializable);
+nlohmann::json serialize(Json_serializable& serializable);
 int serialize(int value);
 float serialize(float value);
 std::string serialize(std::string value);
 
-template <typename ClassType, typename FieldType>
-class JsonField : public BaseJsonField
+template <typename Class_type, typename Field_type>
+class Json_field : public Base_json_field
 {
 public:
-    FieldType ClassType::* member;
+    Field_type Class_type::* member;
     
-    JsonField(std::string fieldName, FieldType ClassType::* member)
-        : BaseJsonField{ fieldName }
+    Json_field(std::string field_name, Field_type Class_type::* member)
+        : Base_json_field{ field_name }
         , member{ member }
     {
     }
 
     virtual void serialize(void* instance, nlohmann::json& json) override
     {
-        json[fieldName] = ::serialize( static_cast<ClassType*>(instance)->*member );
+        json[field_name] = ::serialize( static_cast<Class_type*>(instance)->*member );
     }
 
     virtual void deserialize(nlohmann::json& json, void* instance) override
     {
-        static_cast<ClassType*>(instance)->*member = fromJson<FieldType>(json[fieldName]);
+        static_cast<Class_type*>(instance)->*member = from_json<Field_type>(json[field_name]);
     }
 };

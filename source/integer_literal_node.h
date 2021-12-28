@@ -3,10 +3,10 @@
 
 #include "single_token_syntax_node.h"
 
-class IntegerLiteralNode : SingleTokenSyntaxNode
+class Integer_literal_node : Single_token_syntax_node
 {
 public:
-	IntegerLiteralNode(Token* token);
+	Integer_literal_node(Token* token);
 
 	int value;
 };

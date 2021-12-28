@@ -7,37 +7,37 @@
 #include "lsp_enums.h"
 #include "opened_text_document.h"
 
-language_server::language_server()
+Language_server::Language_server()
 {
     while (true)
     { 
         nlohmann::json message;
-        ideConnection >> message;
-        processMessage(message);           
+        ide_connection >> message;
+        process_message(message);           
     }
 }
 
-void language_server::processMessage(nlohmann::json& message)
+void Language_server::process_message(nlohmann::json& message)
 {
     auto method = message["method"].get<std::string>();
 
     if (method == "initialize")
-        onInitialize(message);
+        on_initialize(message);
     else if (method == "initialized")
         {} // nothing to do
     else if (method == "textDocument/didOpen")
-        onDidOpen(message);
+        on_did_open(message);
     else if (method == "textDocument/didChange")
-        onDidChange(message);
+        on_did_change(message);
     else if (method == "textDocument/completion")
-        onCompletion(message);
+        on_completion(message);
     else if (method == "$/cancelRequest")
         {} // nothing to do
     else
         throw new std::exception("unknown method");
 }
 
-void language_server::onInitialize(nlohmann::json& message)
+void Language_server::on_initialize(nlohmann::json& message)
 {
     auto name = message["params"]["clientInfo"]["name"].get<std::string>();
 
@@ -45,7 +45,7 @@ void language_server::onInitialize(nlohmann::json& message)
 
     nlohmann::json result = {
         { "capabilities", {
-            { "textDocumentSync", TextDocumentSyncKind::Incremental },
+            { "textDocumentSync", Text_document_sync_kind::Incremental },
             { "completionProvider", {
                 { "resolveProvider", true }
             }},
@@ -63,19 +63,19 @@ void language_server::onInitialize(nlohmann::json& message)
         { "result", result }
     };
 
-    ideConnection << response;
+    ide_connection << response;
 }
 
-void language_server::onDidOpen(nlohmann::json& message)
+void Language_server::on_did_open(nlohmann::json& message)
 {
     auto json = message["params"]["textDocument"];
-    auto document = fromJson<OpenedTextDocument>(json);
+    auto document = from_json<Opened_text_document>(json);
     auto t = document.text;
 
     auto b = t.size();
 }
 
-void language_server::onDidChange(nlohmann::json& message)
+void Language_server::on_did_change(nlohmann::json& message)
 {
     /*
         "textDocument": {
@@ -91,7 +91,7 @@ void language_server::onDidChange(nlohmann::json& message)
     */
 }
 
-void language_server::onCompletion(nlohmann::json& message)
+void Language_server::on_completion(nlohmann::json& message)
 {
      /*
         "textDocument": {

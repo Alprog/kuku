@@ -14,7 +14,7 @@ public:
 
 	void run();
 
-	void performInstruction();
+	void perform_instruction();
 
 	template<typename T>
 	inline T read()

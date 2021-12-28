@@ -8,10 +8,10 @@ class Class;
 class Field
 {
 public:
-    Field(Class& ownerClass, std::string name, DataType type, int instanceOffset);
+    Field(Class& owner_class, std::string name, Data_type type, int instance_offset);
 
-    Class& OwnerClass;
-    DataType Type;
-    std::string Name;
-    int InstanceOffset;
+    Class& owner_class;
+    Data_type type;
+    std::string name;
+    int instance_offset;
 };

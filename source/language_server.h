@@ -4,17 +4,17 @@
 #include "json.h"
 #include "ide_connection.h"
 
-class language_server
+class Language_server
 {
 public:
-    language_server();
+    Language_server();
 
 private:
-    void processMessage(nlohmann::json& message);
-    void onInitialize(nlohmann::json& message);
-    void onDidOpen(nlohmann::json& message);
-    void onDidChange(nlohmann::json& message);
-    void onCompletion(nlohmann::json& message);
+    void process_message(nlohmann::json& message);
+    void on_initialize(nlohmann::json& message);
+    void on_did_open(nlohmann::json& message);
+    void on_did_change(nlohmann::json& message);
+    void on_completion(nlohmann::json& message);
 
-    IDEConnection ideConnection;
+    Ide_connection ide_connection;
 };

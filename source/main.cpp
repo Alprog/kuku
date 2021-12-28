@@ -14,7 +14,7 @@ struct
     bool debug;
 } options = {};
 
-void printHelp()
+void print_help()
 {
     std::cout << 
         "usage: kuku [mode] [options]\n"
@@ -64,7 +64,7 @@ int main(int argc, const char* argv[])
 
     if (options.help)
     {
-        printHelp();
+        print_help();
     }
 
     std::string command{ argc > 1 ? argv[1] : "repl" };
@@ -75,18 +75,18 @@ int main(int argc, const char* argv[])
     }
     else if (mode == "test")
     {
-        Test();
+        test();
     }
     else if (mode == "lang-server")
     {
-        language_server{};
+        Language_server{};
     }
     else
     {
         std::cout << "unknown mode: " << mode << std::endl;
         if (!options.help)
         {
-            printHelp();
+            print_help();
         }
     }
 

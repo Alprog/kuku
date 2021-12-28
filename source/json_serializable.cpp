@@ -3,11 +3,11 @@
 #include "json_scheme.h"
 #include "json_field.h"
 
-nlohmann::json JsonSerializable::toJson()
+nlohmann::json Json_serializable::to_json()
 {
     auto json = nlohmann::json::object();
 
-    for (auto field : this->GetJsonScheme().fields)
+    for (auto field : this->get_json_scheme().fields)
     {
         field->serialize(this, json);
     }
@@ -15,16 +15,16 @@ nlohmann::json JsonSerializable::toJson()
     return json;
 }
 
-void JsonSerializable::readFields(nlohmann::json& json)
+void Json_serializable::read_fields(nlohmann::json& json)
 {
-    for (auto field : this->GetJsonScheme().fields)
+    for (auto field : this->get_json_scheme().fields)
     {
         field->deserialize(json, this);
     }
 }
 
 template<>
-int fromJson<int>(nlohmann::json& json)
+int from_json<int>(nlohmann::json& json)
 {
     if (json.is_number_integer())
     {
@@ -34,7 +34,7 @@ int fromJson<int>(nlohmann::json& json)
 }
 
 template<>
-float fromJson<float>(nlohmann::json& json)
+float from_json<float>(nlohmann::json& json)
 {
     if (json.is_number_float())
     {
@@ -44,7 +44,7 @@ float fromJson<float>(nlohmann::json& json)
 }
 
 template<>
-std::string fromJson<std::string>(nlohmann::json& json)
+std::string from_json<std::string>(nlohmann::json& json)
 {
     if (json.is_string())
     {

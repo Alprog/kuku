@@ -4,8 +4,8 @@
 #include "statement_node.h"
 #include "parser.h"
 
-class VariableDeclarationStatementNode : public StatementNode
+class Variable_declaration_statement_node : public Statement_node
 {
 public:
-	virtual bool parseInternal(Parser& parser) override;
+	virtual bool parse_internal(Parser& parser) override;
 };

@@ -4,7 +4,7 @@
 #include "lexer.h"
 #include "scope.h"
 
-class StatementNode;
+class Statement_node;
 
 class Parser
 {
@@ -14,22 +14,22 @@ public:
 
 	Lexer& lexer;
 
-	StatementNode* parseStatement();
-	void parseExpression();
+	Statement_node* parse_statement();
+	void parse_expression();
 
 	Token current;
 	
-	bool require(TokenType type);
-	bool match(TokenType type);
-	bool requireKeyword(std::u16string keyword);
-	bool matchKeyword(std::u16string keyword);
-	bool matchEndOfStatement();
+	bool require(Token_type type);
+	bool match(Token_type type);
+	bool require_keyword(std::u16string keyword);
+	bool match_keyword(std::u16string keyword);
+	bool match_end_of_statement();
 
-	void next(bool skipNewLines);
-	std::vector<StatementNode*> statements;
+	void next(bool skip_new_lines);
+	std::vector<Statement_node*> statements;
 
 	template <typename T>
-	T* createNode();
+	T* create_node();
 
 
 };

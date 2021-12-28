@@ -3,8 +3,8 @@
 
 #include "single_token_syntax_node.h"
 
-class BinaryOperatorNode : public SingleTokenSyntaxNode
+class Binary_operator_node : public Single_token_syntax_node
 {
 public:
-	BinaryOperatorNode(Token* token);
+	Binary_operator_node(Token* token);
 };
