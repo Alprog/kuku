@@ -152,7 +152,9 @@
     <ClCompile Include="function_statement_node.cpp" />
     <ClCompile Include="jump_table.cpp" />
     <ClCompile Include="integer_literal_node.cpp" />
+    <ClCompile Include="translation_module.cpp" />
     <ClCompile Include="parser.cpp" />
+    <ClCompile Include="source_project.cpp" />
     <ClCompile Include="routine.cpp" />
     <ClCompile Include="chunk.cpp" />
     <ClCompile Include="binary_operator_node.cpp" />
@@ -193,6 +195,8 @@
     <ClInclude Include="base_instruction.h" />
     <ClInclude Include="end_statement_node.h" />
     <ClInclude Include="function_statement_node.h" />
+    <ClInclude Include="translation_module.h" />
+    <ClInclude Include="source_project.h" />
     <ClInclude Include="scope.h" />
     <ClInclude Include="symbol.h" />
     <ClInclude Include="symbol_type.h" />

@@ -6,7 +6,7 @@
 #include "data_type.h"
 #include "instance.h"
 
-class VirtualMachine
+class Virtual_machine
 {
 public:
     TypeRegistry TypeRegistry;

@@ -46,6 +46,9 @@
     <Filter Include="Source Files\Errors">
       <UniqueIdentifier>{4d9056f5-4a61-4d9e-9eba-4451b2553159}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ProjectServer">
+      <UniqueIdentifier>{5e2029ae-c6bd-412b-be38-98024ed71df1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -155,6 +158,12 @@
     </ClCompile>
     <ClCompile Include="block_statement_node.cpp">
       <Filter>Source Files\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="source_project.cpp">
+      <Filter>Source Files\ProjectServer</Filter>
+    </ClCompile>
+    <ClCompile Include="translation_module.cpp">
+      <Filter>Source Files\ProjectServer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +343,12 @@
     </ClInclude>
     <ClInclude Include="symbol_type.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source_project.h">
+      <Filter>Source Files\ProjectServer</Filter>
+    </ClInclude>
+    <ClInclude Include="translation_module.h">
+      <Filter>Source Files\ProjectServer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

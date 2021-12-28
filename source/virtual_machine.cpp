@@ -1,7 +1,7 @@
 
 #include "virtual_machine.h"
 
-void VirtualMachine::test()
+void Virtual_machine::test()
 {
     auto vectorClass = TypeRegistry.RegisterClass("Vector");
     vectorClass.registerField("X", DataType::Number);
@@ -17,12 +17,12 @@ void VirtualMachine::test()
     vectorInstance.dump();
 }
 
-void VirtualMachine::setLocal(int cellIndex, Cell cellValue)
+void Virtual_machine::setLocal(int cellIndex, Cell cellValue)
 {
     Stack.Cells[cellIndex] = cellValue;
 }
 
-void VirtualMachine::setField(Instance instance, int cellIndex, Cell cellValue)
+void Virtual_machine::setField(Instance instance, int cellIndex, Cell cellValue)
 {
     instance.Cells[cellIndex] = cellValue;
 }

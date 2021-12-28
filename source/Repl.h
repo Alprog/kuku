@@ -8,9 +8,16 @@
 #include "text_document.h"
 #include <sstream>
 
+#include "source_project.h"
+#include "virtual_machine.h"
+
 void Repl()
 {
     std::cout << "kuku language 0.1" << std::endl;
+    
+    Source_project project;
+    Virtual_machine machine;
+
     while (true)
     {
         std::cout << "> ";
