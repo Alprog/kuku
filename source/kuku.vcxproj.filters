@@ -135,25 +135,25 @@
     <ClCompile Include="jump_table.cpp">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClCompile>
-    <ClCompile Include="statement_node.cpp">
+    <ClCompile Include="statement.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="variable_declaration_statement_node.cpp">
+    <ClCompile Include="variable_declaration_statement.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="assign_statement_node.cpp">
+    <ClCompile Include="assign_statement.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="end_statement_node.cpp">
+    <ClCompile Include="end_statement.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="function_statement_node.cpp">
+    <ClCompile Include="function_statement.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="class_statement_node.cpp">
+    <ClCompile Include="class_statement.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="block_statement_node.cpp">
+    <ClCompile Include="block_statement.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
     <ClCompile Include="source_project.cpp">
@@ -299,31 +299,31 @@
     <ClInclude Include="jump_table.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
-    <ClInclude Include="statement_node.h">
+    <ClInclude Include="statement.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
     <ClInclude Include="single_token_syntax_node.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="invalid_statement_node.h">
+    <ClInclude Include="unknown_statement.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="variable_declaration_statement_node.h">
+    <ClInclude Include="variable_declaration_statement.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="assign_statement_node.h">
+    <ClInclude Include="assign_statement.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="end_statement_node.h">
+    <ClInclude Include="end_statement.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="function_statement_node.h">
+    <ClInclude Include="function_statement.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="class_statement_node.h">
+    <ClInclude Include="class_statement.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
-    <ClInclude Include="block_statement_node.h">
+    <ClInclude Include="block_statement.h">
       <Filter>Source Files\AST</Filter>
     </ClInclude>
     <ClInclude Include="unexepected_error.h">

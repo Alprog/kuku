@@ -1,8 +1,8 @@
 
-#include "statement_node.h"
+#include "statement.h"
 #include "unexepected_error.h"
 
-Statement_node* Statement_node::init(Parser& parser)
+Statement* Statement::init(Parser& parser)
 {
 	this->start_token = parser.current;
 
@@ -23,7 +23,7 @@ Statement_node* Statement_node::init(Parser& parser)
 	return this;
 }
 
-int Statement_node::get_nesting_level()
+int Statement::get_nesting_level()
 {
 	return 0;
 }

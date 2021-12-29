@@ -1,7 +1,8 @@
 
 #include "translation_module.h"
 
-#include "Source_project.h"
+#include "source_project.h"
+#include "console.h"
 
 Translation_module::Translation_module(Source_project& project, Input_stream<utf16unit>& stream)
 	: project{ project }
@@ -41,6 +42,6 @@ void Translation_module::syntax_analyze()
 
     for (auto statement : statements)
     {
-        std::cout << statement->is_valid << std::endl;
+        Console::write_line(statement->get_node_type());
     }
 }

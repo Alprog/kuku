@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <vector>
 #include "token.h"
 #include "token_type.h"
 #include "types.h"

@@ -143,13 +143,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="assign_statement_node.cpp" />
-    <ClCompile Include="block_statement_node.cpp" />
+    <ClCompile Include="assign_statement.cpp" />
+    <ClCompile Include="block_statement.cpp" />
     <ClCompile Include="class.cpp" />
-    <ClCompile Include="class_statement_node.cpp" />
+    <ClCompile Include="class_statement.cpp" />
     <ClCompile Include="console.cpp" />
-    <ClCompile Include="end_statement_node.cpp" />
-    <ClCompile Include="function_statement_node.cpp" />
+    <ClCompile Include="end_statement.cpp" />
+    <ClCompile Include="function_statement.cpp" />
     <ClCompile Include="jump_table.cpp" />
     <ClCompile Include="integer_literal_node.cpp" />
     <ClCompile Include="translation_module.cpp" />
@@ -158,7 +158,7 @@
     <ClCompile Include="routine.cpp" />
     <ClCompile Include="chunk.cpp" />
     <ClCompile Include="binary_operator_node.cpp" />
-    <ClCompile Include="statement_node.cpp" />
+    <ClCompile Include="statement.cpp" />
     <ClCompile Include="string_literal_node.cpp" />
     <ClCompile Include="string.cpp" />
     <ClCompile Include="syntax_node.cpp" />
@@ -178,23 +178,23 @@
     <ClCompile Include="unicode.cpp" />
     <ClCompile Include="unicode_streams.cpp" />
     <ClCompile Include="utils.cpp" />
-    <ClCompile Include="variable_declaration_statement_node.cpp" />
+    <ClCompile Include="variable_declaration_statement.cpp" />
     <ClCompile Include="variable_node.cpp" />
     <ClCompile Include="virtual_machine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="assign_statement_node.h" />
-    <ClInclude Include="block_statement_node.h" />
+    <ClInclude Include="assign_statement.h" />
+    <ClInclude Include="block_statement.h" />
     <ClInclude Include="cell.h" />
     <ClInclude Include="chunk.h" />
     <ClInclude Include="class.h" />
-    <ClInclude Include="class_statement_node.h" />
+    <ClInclude Include="class_statement.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="data_type.h" />
     <ClInclude Include="binary_operator_node.h" />
     <ClInclude Include="base_instruction.h" />
-    <ClInclude Include="end_statement_node.h" />
-    <ClInclude Include="function_statement_node.h" />
+    <ClInclude Include="end_statement.h" />
+    <ClInclude Include="function_statement.h" />
     <ClInclude Include="symbol_table.h" />
     <ClInclude Include="translation_module.h" />
     <ClInclude Include="source_project.h" />
@@ -202,13 +202,13 @@
     <ClInclude Include="symbol.h" />
     <ClInclude Include="symbol_type.h" />
     <ClInclude Include="unexepected_error.h" />
-    <ClInclude Include="variable_declaration_statement_node.h" />
+    <ClInclude Include="variable_declaration_statement.h" />
     <ClInclude Include="instructions.h" />
     <ClInclude Include="integer_literal_node.h" />
-    <ClInclude Include="invalid_statement_node.h" />
+    <ClInclude Include="unknown_statement.h" />
     <ClInclude Include="jump_table.h" />
     <ClInclude Include="single_token_syntax_node.h" />
-    <ClInclude Include="statement_node.h" />
+    <ClInclude Include="statement.h" />
     <ClInclude Include="string_literal_node.h" />
     <ClInclude Include="syntax_node.h" />
     <ClInclude Include="variable_node.h" />

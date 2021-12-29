@@ -1,19 +1,21 @@
 
 #include "lexer.h"
+
+#include <map>
 #include "console.h"
 
-std::vector<std::u16string> keywords { 
-    u"function", 
-    u"end",
-    u"while",
-    u"else",
-    u"for",
-    u"and",
-    u"or",
-    u"then",
-    u"do",
-    u"var",
-    u"class"
+std::map<std::u16string, Token_type> keywords { 
+    { u"and", Token_type::Keyword_and },
+    { u"class", Token_type::Keyword_class },
+    { u"do", Token_type::Keyword_do },
+    { u"else", Token_type::Keyword_else },
+    { u"end", Token_type::Keyword_end },
+    { u"for", Token_type::Keyword_for },
+    { u"function", Token_type::Keyword_function },
+    { u"or", Token_type::Keyword_or },
+    { u"then", Token_type::Keyword_then },
+    { u"var", Token_type::Keyword_var },
+    { u"while", Token_type::Keyword_while }
 };
 
 Lexer::Lexer(Text_document& text_document)
@@ -144,9 +146,11 @@ Token* Lexer::get_next_token()
             {
                 return create_token(startIt, Token_type::Bool_literal);
             }
-            if (std::find(std::begin(keywords), std::end(keywords), id) != std::end(keywords))
+
+            auto it = keywords.find(id);
+            if (it != std::end(keywords))
             {
-                return  create_token(startIt, Token_type::Keyword);
+                return create_token(startIt, it->second);
             }
 
             return create_token(startIt, Token_type::Identifier);

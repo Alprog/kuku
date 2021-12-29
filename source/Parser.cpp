@@ -3,13 +3,13 @@
 #include "console.h"
 #include "variable_node.h"
 #include "binary_operator_node.h"
-#include "variable_declaration_statement_node.h"
-#include "assign_statement_node.h"
-#include "invalid_statement_node.h"
-#include "statement_node.h"
-#include "end_statement_node.h"
-#include "function_statement_node.h"
-#include "class_statement_node.h"
+#include "variable_declaration_statement.h"
+#include "assign_statement.h"
+#include "unknown_statement.h"
+#include "statement.h"
+#include "end_statement.h"
+#include "function_statement.h"
+#include "class_statement.h"
 #include "unexepected_error.h"
 
 Parser::Parser(Token** it)
@@ -45,7 +45,7 @@ T* Parser::create_node()
     return node;
 }
 
-Statement_node* Parser::parse_next_statement()
+Statement* Parser::parse_next_statement()
 {
     skip_empty_tokens();
     if (current->type == Token_type::End_of_source)
@@ -55,24 +55,21 @@ Statement_node* Parser::parse_next_statement()
 
     startToken = current;
 
-    if (current->type == Token_type::Keyword)
+    if (current->type == Token_type::Keyword_var)
     {
-        if (current->get_source_text() == u"var")
-        {
-            return create_node<Variable_declaration_statement_node>();
-        }
-        else if (current->get_source_text() == u"end")
-        {
-            return create_node<End_statement_node>();
-        }
-        else if (current->get_source_text() == u"function")
-        {
-            return create_node<Function_statement_node>();
-        }
-        else if (current->get_source_text() == u"class")
-        {
-            return create_node<Class_statement_node>();
-        }
+        return create_node<Variable_declaration_statement>();
+    }
+    else if (current->type == Token_type::Keyword_end)
+    {
+        return create_node<End_statement>();
+    }
+    else if (current->type == Token_type::Keyword_function)
+    {
+        return create_node<Function_statement>();
+    }
+    else if (current->type == Token_type::Keyword_class)
+    {
+        return create_node<Class_statement>();
     }
     else if (current->type == Token_type::Identifier)
     {
@@ -89,14 +86,14 @@ Statement_node* Parser::parse_next_statement()
                 if (current->type == Token_type::End_of_line)
                 {
                     next();
-                    return new Assign_statement_node();
+                    return new Assign_statement();
                 }
             }
 
         }
     }
 
-    return (new Invalid_statement_node())->init(*this);
+    return (new Unknown_statement())->init(*this);
 }
 
 void Parser::parse_expression()
@@ -139,16 +136,6 @@ bool Parser::match(Token_type type)
     return false;
 }
 
-bool Parser::match_keyword(std::u16string keyword)
-{
-    if (current->type == Token_type::Keyword && current->get_source_text() == keyword)
-    {
-        next();
-        return true;
-    }
-    return false;
-}
-
 bool Parser::match_end_of_statement()
 {
     if (current->is_end_statement_token())
@@ -162,14 +149,6 @@ bool Parser::match_end_of_statement()
 void Parser::require(Token_type type)
 {
     if (!match(type))
-    {
-        throw Unexpected_error();
-    }
-}
-
-void Parser::require_keyword(std::u16string keyword)
-{
-    if (!match_keyword(keyword))
     {
         throw Unexpected_error();
     }

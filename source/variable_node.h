@@ -6,7 +6,7 @@
 #include "token.h"
 #include <vector>
 
-class Variable_node : Syntax_node
+class Variable_node : public Syntax_node
 {
 public:
 	std::u16string name;

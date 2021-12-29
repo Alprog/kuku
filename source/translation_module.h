@@ -4,7 +4,7 @@
 #include <vector>
 #include "text_document.h"
 #include "token.h"
-#include "statement_node.h"
+#include "statement.h"
 
 class Source_project;
 
@@ -22,5 +22,5 @@ public:
 
 	Text_document document;
 	std::vector<Token*> tokens;
-	std::vector<Statement_node*> statements;
+	std::vector<Statement*> statements;
 };

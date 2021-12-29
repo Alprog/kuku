@@ -1,9 +1,9 @@
 
-#include "function_statement_node.h"
+#include "function_statement.h"
 
-void Function_statement_node::parse_internal(Parser& parser)
+void Function_statement::parse_internal(Parser& parser)
 {
-	parser.require_keyword(u"function");
+	parser.require(Token_type::Keyword_function);
 	parser.require(Token_type::Identifier);
 	parser.require(Token_type::Open_parenthesis);
 	// arguments

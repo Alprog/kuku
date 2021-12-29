@@ -26,5 +26,16 @@ enum class Token_type
     End_of_line,
     End_of_source,
     Comment,
-    Keyword
+
+    Keyword_and,
+    Keyword_class,
+    Keyword_do,
+    Keyword_else,
+    Keyword_end,
+    Keyword_for,
+    Keyword_function,
+    Keyword_or,
+    Keyword_then,
+    Keyword_var,
+    Keyword_while  
 };
