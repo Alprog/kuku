@@ -19,8 +19,6 @@ std::vector<std::u16string> keywords {
 Lexer::Lexer(Text_document& text_document)
     : text_document{ text_document }
     , it{ text_document }
-    , capture_start{0, 0}
-    , capture_end{0, 0}
 {
 }
 
@@ -46,28 +44,7 @@ bool is_quote(utf16unit c)
     return c == '"' || c == '\'' || c == '`';
 }
 
-void Lexer::process()
-{
-    std::vector<Token> tokens;
-
-    while (true)
-    {
-        auto token = get_next_token();
-        if (token.type == Token_type::End_of_source)
-        {
-            break;
-        }
-        tokens.push_back(token);
-    }
-
-    for (auto& token : tokens)
-    {
-        auto substring = text_document.get_substring(token.range);
-        Console::write_line(substring);
-    }    
-}
-
-Token Lexer::get_next_token()
+Token* Lexer::get_next_token()
 {
     while (true)
     {
@@ -176,13 +153,13 @@ Token Lexer::get_next_token()
     }
 }
 
-Token Lexer::finish_line_comment(Source_iterator start_it)
+Token* Lexer::finish_line_comment(Source_iterator start_it)
 {
     while (*it != '\n') ++it;
     return create_token(start_it, Token_type::Comment);
 }
 
-Token Lexer::finish_block_comment(Source_iterator start_it)
+Token* Lexer::finish_block_comment(Source_iterator start_it)
 {
     int level = 1;
 
@@ -202,7 +179,7 @@ Token Lexer::finish_block_comment(Source_iterator start_it)
     return create_token(start_it, Token_type::Comment);
 }
 
-Token Lexer::finish_binding_block_comment(Source_iterator start_it)
+Token* Lexer::finish_binding_block_comment(Source_iterator start_it)
 {
     while (move_after('/'))
     {
@@ -212,7 +189,7 @@ Token Lexer::finish_binding_block_comment(Source_iterator start_it)
     return create_token(start_it, Token_type::Comment);
 }
 
-Token Lexer::finish_string(Source_iterator start_it, utf16unit end_quote, bool escaping)
+Token* Lexer::finish_string(Source_iterator start_it, utf16unit end_quote, bool escaping)
 {
     auto result = escaping ? move_after_escaped(end_quote) : move_after(end_quote);
     if (result)
@@ -275,7 +252,7 @@ bool Lexer::move_after_escaped(utf16unit end_symbol)
     return false;
 }
 
-Token Lexer::create_token(Source_iterator start_it, Token_type type)
+Token* Lexer::create_token(Source_iterator start_it, Token_type type)
 {
-    return { type, &text_document, start_it.position, it.position };
+    return new Token { type, &text_document, start_it.position, it.position };
 }

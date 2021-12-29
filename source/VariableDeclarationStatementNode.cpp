@@ -6,13 +6,13 @@ bool Variable_declaration_statement_node::parse_internal(Parser& parser)
 {
     if (parser.match_keyword(u"var"))
     {
-        if (parser.current.type == Token_type::Identifier)
+        if (parser.current->type == Token_type::Identifier)
         {
             auto node = new Variable_node();
-            node->name = parser.current.get_source_text();
+            node->name = parser.current->get_source_text();
             parser.next(false);
 
-            if (parser.current.is_end_statement_token())
+            if (parser.current->is_end_statement_token())
             {
                 parser.next(false);
                 return true;

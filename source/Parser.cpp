@@ -14,14 +14,14 @@
 
 Parser::Parser(Lexer& lexer)
 	: lexer{ lexer }
-    , current{ Token_type::End_of_line, nullptr, { 0,0 }, { 0,0 } }
+    , current{ nullptr }
 {
 }
 
 void Parser::process()
 {
     next(true);
-    while (current.type != Token_type::End_of_source)
+    while (current->type != Token_type::End_of_source)
     {
         statements.push_back(parse_statement());
     }
@@ -30,7 +30,7 @@ void Parser::process()
 void Parser::next(bool skip_new_lines)
 {
     current = lexer.get_next_token();
-    while (current.type == Token_type::Comment || (skip_new_lines && current.type == Token_type::End_of_line))
+    while (current->type == Token_type::Comment || (skip_new_lines && current->type == Token_type::End_of_line))
     {
         current = lexer.get_next_token();
     }
@@ -48,42 +48,42 @@ T* Parser::create_node()
 
 Statement_node* Parser::parse_statement()
 {
-    startToken = &current;
+    startToken = current;
 
-    if (current.type == Token_type::Keyword)
+    if (current->type == Token_type::Keyword)
     {
-        if (current.get_source_text() == u"var")
+        if (current->get_source_text() == u"var")
         {
             return create_node<Variable_declaration_statement_node>();
         }
-        else if (current.get_source_text() == u"end")
+        else if (current->get_source_text() == u"end")
         {
             return create_node<End_statement_node>();
         }
-        else if (current.get_source_text() == u"function")
+        else if (current->get_source_text() == u"function")
         {
             return create_node<Function_statement_node>();
         }
-        else if (current.get_source_text() == u"class")
+        else if (current->get_source_text() == u"class")
         {
             return create_node<Class_statement_node>();
         }
     }
-    else if (current.type == Token_type::Identifier)
+    else if (current->type == Token_type::Identifier)
     {
-        auto id = current.get_source_text();
+        auto id = current->get_source_text();
         Console::write_line(id);
 
         next(false);
-        if (current.type == Token_type::Assign_operator)
+        if (current->type == Token_type::Assign_operator)
         {
-            auto node = new Binary_operator_node(&current);
+            auto node = new Binary_operator_node(current);
             next(false);
 
-            if (current.type == Token_type::Integer_literal)
+            if (current->type == Token_type::Integer_literal)
             {
                 next(false);
-                if (current.type == Token_type::End_of_line)
+                if (current->type == Token_type::End_of_line)
                 {
                     next(false);
                     return new Assign_statement_node();
@@ -111,7 +111,7 @@ bool Parser::require(Token_type type)
 
 bool Parser::match(Token_type type)
 {
-    if (current.type == type)
+    if (current->type == type)
     {
         next(false);
         return true;
@@ -129,7 +129,7 @@ bool Parser::require_keyword(std::u16string keyword)
 
 bool Parser::match_keyword(std::u16string keyword)
 {
-    if (current.type == Token_type::Keyword && current.get_source_text() == keyword)
+    if (current->type == Token_type::Keyword && current->get_source_text() == keyword)
     {
         next(false);
         return true;
@@ -139,7 +139,7 @@ bool Parser::match_keyword(std::u16string keyword)
 
 bool Parser::match_end_of_statement()
 {
-    if (current.is_end_statement_token())
+    if (current->is_end_statement_token())
     {
         next(false);
         return true;

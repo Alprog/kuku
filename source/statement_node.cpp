@@ -3,7 +3,7 @@
 
 Statement_node* Statement_node::init(Parser& parser)
 {
-	this->start_token = &parser.current;
+	this->start_token = parser.current;
 
 	try
 	{
@@ -12,8 +12,8 @@ Statement_node* Statement_node::init(Parser& parser)
 	catch (std::exception ex)
 	{
 		this->is_valid = false;
-		this->error_text = u"unexpected token '" + parser.current.get_source_text() + u"' at " + parser.current.range.start.to_str();
-		while (!parser.current.is_end_statement_token()) parser.next(false); // panic mode
+		this->error_text = u"unexpected token '" + parser.current->get_source_text() + u"' at " + parser.current->range.start.to_str();
+		while (!parser.current->is_end_statement_token()) parser.next(false); // panic mode
 		parser.next(false);
 	}
 

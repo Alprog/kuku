@@ -15,6 +15,9 @@ public:
 
 	void process();
 
+	void lexical_analyze();
+	void syntax_analyze();
+
 	Source_project& project;
 
 	Text_document document;

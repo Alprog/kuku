@@ -14,6 +14,7 @@ utf16unit Source_iterator::operator*()
     return text_document.get_character(position);
 }
 
+// pre-increment
 Source_iterator& Source_iterator::operator++()
 {
     position.character++;
@@ -31,6 +32,7 @@ Source_iterator& Source_iterator::operator++()
     return *this;
 }
 
+// post-increment
 Source_iterator Source_iterator::operator++(int)
 {
     auto old = *this;

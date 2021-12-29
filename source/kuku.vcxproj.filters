@@ -105,9 +105,6 @@
     <ClCompile Include="parser.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
-    <ClCompile Include="token.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="virtual_machine.cpp">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClCompile>
@@ -165,18 +162,15 @@
     <ClCompile Include="translation_module.cpp">
       <Filter>Source Files\SourceProject</Filter>
     </ClCompile>
+    <ClCompile Include="token.cpp">
+      <Filter>Source Files\Lexer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="class.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="instance.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="token_type.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="token.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="console.h">
@@ -352,6 +346,12 @@
     </ClInclude>
     <ClInclude Include="symbol_table.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="token.h">
+      <Filter>Source Files\Lexer</Filter>
+    </ClInclude>
+    <ClInclude Include="token_type.h">
+      <Filter>Source Files\Lexer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

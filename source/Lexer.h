@@ -12,25 +12,21 @@ class Lexer
 {
 public:
     Lexer(Text_document& text_document);
-    void process();
-    Token get_next_token();
+    Token* get_next_token();
 
 public:
-    Token finish_line_comment(Source_iterator start_it);
-    Token finish_block_comment(Source_iterator start_it);
-    Token finish_binding_block_comment(Source_iterator start_it);
-    Token finish_string(Source_iterator start_it, utf16unit end_quote, bool escaping);
+    Token* finish_line_comment(Source_iterator start_it);
+    Token* finish_block_comment(Source_iterator start_it);
+    Token* finish_binding_block_comment(Source_iterator start_it);
+    Token* finish_string(Source_iterator start_it, utf16unit end_quote, bool escaping);
 
     bool match(utf16unit symbol);
 
     bool move_after(utf16unit end_symbol);
     bool move_after_escaped(utf16unit end_symbol);
 
-    Token create_token(Source_iterator start, Token_type type);
+    Token* create_token(Source_iterator start, Token_type type);
 
     Text_document& text_document;
     Source_iterator it;
-
-    Position capture_start;
-    Position capture_end;
 };

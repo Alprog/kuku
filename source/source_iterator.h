@@ -10,8 +10,8 @@ class Text_document;
 class Source_iterator
 {
 public:
-    Source_iterator& operator++();
-    Source_iterator operator++(int);
+    Source_iterator& operator++();   // pre
+    Source_iterator operator++(int); // post
 
     Source_iterator(Text_document& text_document);
 

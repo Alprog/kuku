@@ -11,7 +11,25 @@ Translation_module::Translation_module(Source_project& project, Input_stream<utf
 
 void Translation_module::process()
 {
+    lexical_analyze();
+    syntax_analyze();
+}
+
+void Translation_module::lexical_analyze()
+{
 	Lexer lexer(document);
-	Parser parser(lexer);
-	parser.process();
+    while (true)
+    {
+        auto token = lexer.get_next_token();
+        if (token->type == Token_type::End_of_source)
+        {
+            break;
+        }
+        tokens.push_back(token);
+    }
+}
+
+void Translation_module::syntax_analyze()
+{
+
 }

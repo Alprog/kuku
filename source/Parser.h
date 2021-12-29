@@ -17,7 +17,7 @@ public:
 	Statement_node* parse_statement();
 	void parse_expression();
 
-	Token current;
+	Token* current;
 	
 	bool require(Token_type type);
 	bool match(Token_type type);
