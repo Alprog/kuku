@@ -42,6 +42,7 @@ void Translation_module::syntax_analyze()
 
     for (auto statement : statements)
     {
-        Console::write_line(statement->get_node_type());
+        auto line = statement->get_node_type() + u" " + (statement->is_valid ? u"1" : u"0");
+        Console::write_line(line);
     }
 }
