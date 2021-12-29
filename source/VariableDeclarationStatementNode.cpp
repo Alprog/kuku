@@ -10,11 +10,11 @@ bool Variable_declaration_statement_node::parse_internal(Parser& parser)
         {
             auto node = new Variable_node();
             node->name = parser.current->get_source_text();
-            parser.next(false);
+            parser.next();
 
             if (parser.current->is_end_statement_token())
             {
-                parser.next(false);
+                parser.next();
                 return true;
             }
         }

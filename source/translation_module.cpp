@@ -21,15 +21,26 @@ void Translation_module::lexical_analyze()
     while (true)
     {
         auto token = lexer.get_next_token();
+        tokens.push_back(token);
         if (token->type == Token_type::End_of_source)
         {
             break;
         }
-        tokens.push_back(token);
     }
 }
 
 void Translation_module::syntax_analyze()
 {
+    Parser parser(&tokens[0]);
+    while (true)
+    {
+        auto statement = parser.parse_next_statement();
+        if (statement == nullptr) break;
+        statements.push_back(statement);
+    } 
 
+    for (auto statement : statements)
+    {
+        std::cout << statement->is_valid << std::endl;
+    }
 }

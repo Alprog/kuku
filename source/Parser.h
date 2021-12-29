@@ -9,14 +9,13 @@ class Statement_node;
 class Parser
 {
 public:
-	Parser(Lexer& lexer);
-	void process();
+	Parser(Token** it);
+	void skip_empty_tokens();
 
-	Lexer& lexer;
-
-	Statement_node* parse_statement();
+	Statement_node* parse_next_statement();
 	void parse_expression();
 
+	Token** it;
 	Token* current;
 	
 	bool require(Token_type type);
@@ -25,7 +24,7 @@ public:
 	bool match_keyword(std::u16string keyword);
 	bool match_end_of_statement();
 
-	void next(bool skip_new_lines);
+	void next();
 	std::vector<Statement_node*> statements;
 
 	template <typename T>

@@ -12,27 +12,26 @@
 #include "class_statement_node.h"
 #include "unexepected_error.h"
 
-Parser::Parser(Lexer& lexer)
-	: lexer{ lexer }
-    , current{ nullptr }
+Parser::Parser(Token** it)
+	: it{ it }
+    , current{ *it }
 {
 }
 
-void Parser::process()
+void Parser::skip_empty_tokens()
 {
-    next(true);
-    while (current->type != Token_type::End_of_source)
+    while (current->type == Token_type::Comment || current->type == Token_type::End_of_line)
     {
-        statements.push_back(parse_statement());
+        current = *(++it);
     }
 }
 
-void Parser::next(bool skip_new_lines)
+void Parser::next()
 {
-    current = lexer.get_next_token();
-    while (current->type == Token_type::Comment || (skip_new_lines && current->type == Token_type::End_of_line))
+    current = *(++it);
+    while (current->type == Token_type::Comment)
     {
-        current = lexer.get_next_token();
+        current = *(++it);
     }
 }
 
@@ -46,8 +45,14 @@ T* Parser::create_node()
     return node;
 }
 
-Statement_node* Parser::parse_statement()
+Statement_node* Parser::parse_next_statement()
 {
+    skip_empty_tokens();
+    if (current->type == Token_type::End_of_source)
+    {
+        return nullptr;
+    }
+
     startToken = current;
 
     if (current->type == Token_type::Keyword)
@@ -74,18 +79,18 @@ Statement_node* Parser::parse_statement()
         auto id = current->get_source_text();
         Console::write_line(id);
 
-        next(false);
+        next();
         if (current->type == Token_type::Assign_operator)
         {
             auto node = new Binary_operator_node(current);
-            next(false);
+            next();
 
             if (current->type == Token_type::Integer_literal)
             {
-                next(false);
+                next();
                 if (current->type == Token_type::End_of_line)
                 {
-                    next(false);
+                    next();
                     return new Assign_statement_node();
                 }
             }
@@ -113,7 +118,7 @@ bool Parser::match(Token_type type)
 {
     if (current->type == type)
     {
-        next(false);
+        next();
         return true;
     }
     return false;
@@ -131,7 +136,7 @@ bool Parser::match_keyword(std::u16string keyword)
 {
     if (current->type == Token_type::Keyword && current->get_source_text() == keyword)
     {
-        next(false);
+        next();
         return true;
     }
     return false;
@@ -141,7 +146,7 @@ bool Parser::match_end_of_statement()
 {
     if (current->is_end_statement_token())
     {
-        next(false);
+        next();
         return true;
     }
     return false;

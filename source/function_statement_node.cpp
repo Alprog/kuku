@@ -13,7 +13,7 @@ bool Function_statement_node::parse_internal(Parser& parser)
 
 	if (parser.match_end_of_statement()) return true;
 
-	parser.require(Token_type::Semicolon);
+	parser.require(Token_type::Colon);
 	parser.require(Token_type::Identifier);
 
 	if (parser.match_end_of_statement()) return true;

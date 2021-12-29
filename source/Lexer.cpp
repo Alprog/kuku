@@ -97,6 +97,7 @@ Token* Lexer::get_next_token()
 
             case '+': return create_token(it++, Token_type::Plus_sign);
             case '=': return create_token(it++, Token_type::Assign_operator);
+            case ':': return create_token(it++, Token_type::Colon);
             case ';': return create_token(it++, Token_type::Semicolon);
             case '[': return create_token(it++, Token_type::Open_bracket);
             case ']': return create_token(it++, Token_type::Close_bracket);

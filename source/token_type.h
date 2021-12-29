@@ -19,6 +19,7 @@ enum class Token_type
     Open_parenthesis,
     Close_parenthesis,
     Identifier,
+    Colon,
     Semicolon,
     End_of_line,
     End_of_source,
