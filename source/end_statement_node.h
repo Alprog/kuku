@@ -9,5 +9,5 @@ public:
 	virtual int get_nesting_level() override { return -1; }
 
 protected:
-	virtual bool parse_internal(Parser& parser) override;
+	virtual void parse_internal(Parser& parser) override;
 };

@@ -138,7 +138,7 @@
     <ClCompile Include="statement_node.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
-    <ClCompile Include="variableDeclarationStatementNode.cpp">
+    <ClCompile Include="variable_declaration_statement_node.cpp">
       <Filter>Source Files\AST</Filter>
     </ClCompile>
     <ClCompile Include="assign_statement_node.cpp">

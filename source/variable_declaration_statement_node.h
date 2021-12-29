@@ -7,5 +7,5 @@
 class Variable_declaration_statement_node : public Statement_node
 {
 public:
-	virtual bool parse_internal(Parser& parser) override;
+	virtual void parse_internal(Parser& parser) override;
 };

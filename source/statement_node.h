@@ -5,6 +5,8 @@
 #include "token.h"
 #include "parser.h"
 
+#define CHECK_END_OF_STATEMENT if (parser.current->is_end_statement_token()) return;
+
 class Statement_node : Syntax_node
 {
 public:
@@ -19,5 +21,5 @@ public:
 	virtual int get_nesting_level();
 
 protected:
-	virtual bool parse_internal(Parser& parser) = 0;
+	virtual void parse_internal(Parser& parser) = 0;
 };

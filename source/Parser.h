@@ -18,17 +18,18 @@ public:
 	Token** it;
 	Token* current;
 	
-	bool require(Token_type type);
+	
 	bool match(Token_type type);
-	bool require_keyword(std::u16string keyword);
 	bool match_keyword(std::u16string keyword);
 	bool match_end_of_statement();
+
+	void require(Token_type type);
+	void require_keyword(std::u16string keyword);
+	void require_end_of_statement();
 
 	void next();
 	std::vector<Statement_node*> statements;
 
 	template <typename T>
 	T* create_node();
-
-
 };

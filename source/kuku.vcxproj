@@ -178,7 +178,7 @@
     <ClCompile Include="unicode.cpp" />
     <ClCompile Include="unicode_streams.cpp" />
     <ClCompile Include="utils.cpp" />
-    <ClCompile Include="variableDeclarationStatementNode.cpp" />
+    <ClCompile Include="variable_declaration_statement_node.cpp" />
     <ClCompile Include="variable_node.cpp" />
     <ClCompile Include="virtual_machine.cpp" />
   </ItemGroup>

@@ -21,6 +21,8 @@ enum class Token_type
     Identifier,
     Colon,
     Semicolon,
+    Dot,
+    Comma,
     End_of_line,
     End_of_source,
     Comment,

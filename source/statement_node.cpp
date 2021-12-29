@@ -8,7 +8,9 @@ Statement_node* Statement_node::init(Parser& parser)
 
 	try
 	{
-		this->is_valid = parse_internal(parser);
+		parse_internal(parser);
+		parser.require_end_of_statement();
+		this->is_valid = true;
 	}
 	catch (Unexpected_error ex)
 	{

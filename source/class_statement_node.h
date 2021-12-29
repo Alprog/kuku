@@ -6,5 +6,5 @@
 class Class_statement_node : public Block_statement_node
 {
 protected:
-	virtual bool parse_internal(Parser& parser) override;
+	virtual void parse_internal(Parser& parser) override;
 };

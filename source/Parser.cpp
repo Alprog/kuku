@@ -77,8 +77,6 @@ Statement_node* Parser::parse_next_statement()
     else if (current->type == Token_type::Identifier)
     {
         auto id = current->get_source_text();
-        Console::write_line(id);
-
         next();
         if (current->type == Token_type::Assign_operator)
         {
@@ -103,14 +101,31 @@ Statement_node* Parser::parse_next_statement()
 
 void Parser::parse_expression()
 {
-
-}
-
-bool Parser::require(Token_type type)
-{
-    if (!match(type))
+    if (current->type == Token_type::Identifier)
     {
-        throw Unexpected_error();
+        next();
+
+        while (true)
+        {
+            if (current->type == Token_type::Dot)
+            {
+                next();
+                require(Token_type::Identifier);
+            }
+            else if (current->type == Token_type::Plus_sign)
+            {
+                next();
+                parse_expression();
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    else if (current->type == Token_type::Integer_literal)
+    {
+        next();
     }
 }
 
@@ -122,14 +137,6 @@ bool Parser::match(Token_type type)
         return true;
     }
     return false;
-}
-
-bool Parser::require_keyword(std::u16string keyword)
-{
-    if (!match_keyword(keyword))
-    {
-        throw Unexpected_error();
-    }
 }
 
 bool Parser::match_keyword(std::u16string keyword)
@@ -150,4 +157,28 @@ bool Parser::match_end_of_statement()
         return true;
     }
     return false;
+}
+
+void Parser::require(Token_type type)
+{
+    if (!match(type))
+    {
+        throw Unexpected_error();
+    }
+}
+
+void Parser::require_keyword(std::u16string keyword)
+{
+    if (!match_keyword(keyword))
+    {
+        throw Unexpected_error();
+    }
+}
+
+void Parser::require_end_of_statement()
+{
+    if (!match_end_of_statement())
+    {
+        throw Unexpected_error();
+    }
 }
