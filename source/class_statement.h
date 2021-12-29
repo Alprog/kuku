@@ -2,6 +2,7 @@
 #pragma once
 
 #include "block_statement.h"
+#include "symbol.h"
 
 class Class_statement : public Block_statement
 {
@@ -9,4 +10,6 @@ class Class_statement : public Block_statement
 
 protected:
 	virtual void parse_internal(Parser& parser) override;
+
+	Symbol* symbol;
 };

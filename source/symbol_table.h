@@ -8,5 +8,10 @@
 
 class Symbol_table
 {
-	std::map<Symbol_name, Symbol> symbols;
+public:
+	Symbol* get_symbol(Symbol_name name);
+
+
+private:
+	std::map<Symbol_name, Symbol*> symbols;
 };

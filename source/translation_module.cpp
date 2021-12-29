@@ -12,11 +12,11 @@ Translation_module::Translation_module(Source_project& project, Input_stream<utf
 
 void Translation_module::process()
 {
-    lexical_analyze();
-    syntax_analyze();
+    tokenize();
+    parse_statements();
 }
 
-void Translation_module::lexical_analyze()
+void Translation_module::tokenize()
 {
 	Lexer lexer(document);
     while (true)
@@ -30,9 +30,9 @@ void Translation_module::lexical_analyze()
     }
 }
 
-void Translation_module::syntax_analyze()
+void Translation_module::parse_statements()
 {
-    Parser parser(&tokens[0]);
+    Parser parser(project, &tokens[0]);
     while (true)
     {
         auto statement = parser.parse_next_statement();
@@ -44,5 +44,10 @@ void Translation_module::syntax_analyze()
     {
         auto line = statement->get_node_type() + u" " + (statement->is_valid ? u"1" : u"0");
         Console::write_line(line);
+
+        if (!statement->is_valid)
+        {
+            Console::write_line(statement->error_text);
+        }
     }
 }

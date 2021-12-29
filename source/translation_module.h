@@ -15,8 +15,8 @@ public:
 
 	void process();
 
-	void lexical_analyze();
-	void syntax_analyze();
+	void tokenize();
+	void parse_statements();
 
 	Source_project& project;
 

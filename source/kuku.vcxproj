@@ -152,6 +152,8 @@
     <ClCompile Include="function_statement.cpp" />
     <ClCompile Include="jump_table.cpp" />
     <ClCompile Include="integer_literal_node.cpp" />
+    <ClCompile Include="symbol.cpp" />
+    <ClCompile Include="symbol_table.cpp" />
     <ClCompile Include="translation_module.cpp" />
     <ClCompile Include="parser.cpp" />
     <ClCompile Include="source_project.cpp" />
@@ -200,7 +202,6 @@
     <ClInclude Include="source_project.h" />
     <ClInclude Include="scope.h" />
     <ClInclude Include="symbol.h" />
-    <ClInclude Include="symbol_type.h" />
     <ClInclude Include="unexepected_error.h" />
     <ClInclude Include="variable_declaration_statement.h" />
     <ClInclude Include="instructions.h" />

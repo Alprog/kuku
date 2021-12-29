@@ -5,7 +5,7 @@
 #include "text_document.h"
 #include <string>
 
-class SyntaxNode;
+class Symbol;
 
 struct Token
 {
@@ -13,7 +13,7 @@ struct Token
     Text_document* document;
     Range range;
 
-    SyntaxNode* syntax_node;
+    Symbol* symbol;
 
     Token& operator=(const Token& token);
     Token(Token_type type, Text_document* document, Position start, Position end);

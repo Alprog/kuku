@@ -4,7 +4,7 @@
 void Function_statement::parse_internal(Parser& parser)
 {
 	parser.require(Token_type::Keyword_function);
-	parser.require(Token_type::Identifier);
+	symbol = parser.read_symbol();
 	parser.require(Token_type::Open_parenthesis);
 	// arguments
 	parser.require(Token_type::Close_parenthesis);

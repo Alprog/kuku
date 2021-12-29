@@ -10,4 +10,6 @@ class Variable_declaration_statement : public Statement
 
 public:
 	virtual void parse_internal(Parser& parser) override;
+
+	Symbol* symbol;
 };

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "translation_module.h"
+#include "symbol_table.h"
 
 class Source_project
 {
@@ -13,6 +14,7 @@ public:
 	void process_all();
 	void clear_all();
 
+	Symbol_table symbol_table;
 private:
 	std::vector<Translation_module*> modules;
 };  

@@ -11,9 +11,11 @@
 #include "function_statement.h"
 #include "class_statement.h"
 #include "unexepected_error.h"
+#include "source_project.h"
 
-Parser::Parser(Token** it)
-	: it{ it }
+Parser::Parser(Source_project& project, Token** it)
+    : project{project}
+    , it{ it }
     , current{ *it }
 {
 }
@@ -86,7 +88,9 @@ Statement* Parser::parse_next_statement()
                 if (current->type == Token_type::End_of_line)
                 {
                     next();
-                    return new Assign_statement();
+                    auto statement = new Assign_statement();
+                    statement->is_valid = true;
+                    return statement;
                 }
             }
 
@@ -157,6 +161,23 @@ void Parser::require(Token_type type)
 void Parser::require_end_of_statement()
 {
     if (!match_end_of_statement())
+    {
+        throw Unexpected_error();
+    }
+}
+
+Symbol* Parser::read_symbol()
+{
+    if (current->type == Token_type::Identifier)
+    {   
+        auto name = current->get_source_text();
+        auto symbol = project.symbol_table.get_symbol(name);
+        symbol->usage_tokens.push_back(current);
+        current->symbol = symbol;
+        next();
+        return symbol;
+    }
+    else
     {
         throw Unexpected_error();
     }

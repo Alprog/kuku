@@ -9,4 +9,6 @@ class Function_statement : public Block_statement
 
 protected:
 	virtual void parse_internal(Parser& parser) override;
+
+	Symbol* symbol;
 };

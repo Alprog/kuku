@@ -49,6 +49,9 @@
     <Filter Include="Source Files\SourceProject">
       <UniqueIdentifier>{5e2029ae-c6bd-412b-be38-98024ed71df1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\SymbolTable">
+      <UniqueIdentifier>{52309bca-c346-4ea9-a63d-e61bd6dfc212}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -164,6 +167,12 @@
     </ClCompile>
     <ClCompile Include="token.cpp">
       <Filter>Source Files\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="symbol.cpp">
+      <Filter>Source Files\SymbolTable</Filter>
+    </ClCompile>
+    <ClCompile Include="symbol_table.cpp">
+      <Filter>Source Files\SymbolTable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -332,26 +341,23 @@
     <ClInclude Include="scope.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
-    <ClInclude Include="symbol.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="symbol_type.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="source_project.h">
       <Filter>Source Files\SourceProject</Filter>
     </ClInclude>
     <ClInclude Include="translation_module.h">
       <Filter>Source Files\SourceProject</Filter>
     </ClInclude>
-    <ClInclude Include="symbol_table.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="token.h">
       <Filter>Source Files\Lexer</Filter>
     </ClInclude>
     <ClInclude Include="token_type.h">
       <Filter>Source Files\Lexer</Filter>
+    </ClInclude>
+    <ClInclude Include="symbol.h">
+      <Filter>Source Files\SymbolTable</Filter>
+    </ClInclude>
+    <ClInclude Include="symbol_table.h">
+      <Filter>Source Files\SymbolTable</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
 void Variable_declaration_statement::parse_internal(Parser& parser)
 {
     parser.require(Token_type::Keyword_var);
-    parser.require(Token_type::Identifier);
+    symbol = parser.read_symbol();
 
     CHECK_END_OF_STATEMENT
 
