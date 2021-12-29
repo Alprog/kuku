@@ -6,11 +6,15 @@
 #include "scope.h"
 #include "token.h"
 
+using Symbol_name = std::u16string;
+
 class Symbol
 {
-	Scope& parent_scope;
-	std::u16string name;
+public:
+	Symbol_name name;
 
-	//Token definitionToken;
-	std::vector<Token> usage_tokens;
+	Scope& parent_scope;
+	
+	Token* definition_token;
+	std::vector<Token*> usage_tokens;
 };

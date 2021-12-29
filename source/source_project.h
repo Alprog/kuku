@@ -6,5 +6,9 @@
 
 class Source_project
 {
-	std::vector<Translation_module> modules;
-}; 
+public:
+	void add_file(std::string uri);
+
+private:
+	std::vector<Translation_module*> modules;
+};  

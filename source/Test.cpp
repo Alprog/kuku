@@ -13,6 +13,8 @@
 #include "instruction_type.h"
 #include "routine.h"
 
+#include "source_project.h"
+
 void test()
 {
 	Chunk chunk;
@@ -46,6 +48,9 @@ void test()
 	auto a1 = s1.get_character(1);
 	auto a2 = s2.get_character(1);
 	auto a3 = s3.get_character(1);
+
+	Source_project project;
+	project.add_file("C:/kuku/data/main.kuku");
 
 
 	std::basic_ifstream<byte> file_stream("C:/kuku/data/main.kuku");

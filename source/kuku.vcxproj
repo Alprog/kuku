@@ -195,6 +195,7 @@
     <ClInclude Include="base_instruction.h" />
     <ClInclude Include="end_statement_node.h" />
     <ClInclude Include="function_statement_node.h" />
+    <ClInclude Include="symbol_table.h" />
     <ClInclude Include="translation_module.h" />
     <ClInclude Include="source_project.h" />
     <ClInclude Include="scope.h" />
