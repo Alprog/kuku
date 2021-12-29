@@ -17,6 +17,7 @@ public:
 
 	void tokenize();
 	void parse_statements();
+	void print_statements();
 
 	Source_project& project;
 

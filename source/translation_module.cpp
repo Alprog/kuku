@@ -38,8 +38,11 @@ void Translation_module::parse_statements()
         auto statement = parser.parse_next_statement();
         if (statement == nullptr) break;
         statements.push_back(statement);
-    } 
+    }
+}
 
+void Translation_module::print_statements()
+{
     for (auto statement : statements)
     {
         auto line = statement->get_node_type() + u" " + (statement->is_valid ? u"1" : u"0");

@@ -14,6 +14,8 @@ public:
 	void process_all();
 	void clear_all();
 
+	void print_info();
+
 	Symbol_table symbol_table;
 private:
 	std::vector<Translation_module*> modules;

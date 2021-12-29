@@ -37,3 +37,11 @@ void Source_project::clear_all()
 	}
 	modules.clear();
 }
+
+void Source_project::print_info()
+{
+	for (auto& module : modules)
+	{
+		module->print_statements();
+	}
+}

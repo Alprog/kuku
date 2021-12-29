@@ -52,4 +52,5 @@ void test()
 	Source_project project;
 	project.add_file("C:/kuku/data/main.kuku");
 	project.process_all();
+	project.print_info();
 }
