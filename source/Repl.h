@@ -15,7 +15,6 @@ void Repl()
 {
     std::cout << "kuku language 0.1" << std::endl;
     
-    Source_project project;
     Virtual_machine machine;
 
     while (true)
@@ -27,11 +26,12 @@ void Repl()
             break;
         }
         
-        std::basic_istringstream string_stream{ line };
-        Basic_input_stream basic_stream{ string_stream };
-        Text_document document{ basic_stream };
+        Source_project project;
+        project.add_memory_snippet(line);
+        project.process_all();
 
-        Lexer lexer{ document };
-        lexer.process();
+        //machine.perform();
+
+        project.clear_all();
     }
 }

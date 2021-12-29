@@ -51,16 +51,5 @@ void test()
 
 	Source_project project;
 	project.add_file("C:/kuku/data/main.kuku");
-
-
-	std::basic_ifstream<byte> file_stream("C:/kuku/data/main.kuku");
-	Basic_input_stream basic_stream(file_stream);
-	unicode::Utf8to16_stream u16stream(basic_stream);
-
-	Text_document document(u16stream);
-
-	Lexer lexer(document);
-	Parser parser(lexer);
-
-	parser.process();
+	project.process_all();
 }

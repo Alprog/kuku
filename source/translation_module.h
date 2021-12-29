@@ -11,7 +11,9 @@ class Source_project;
 class Translation_module
 {
 public:
-	Translation_module(Source_project& project);
+	Translation_module(Source_project& project, Input_stream<utf16unit>& stream);
+
+	void process();
 
 	Source_project& project;
 
