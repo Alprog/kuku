@@ -3,6 +3,7 @@
 #include <string>
 #include "json.h"
 #include "ide_connection.h"
+#include "source_project.h"
 
 class Language_server
 {
@@ -14,7 +15,9 @@ private:
     void on_initialize(nlohmann::json& message);
     void on_did_open(nlohmann::json& message);
     void on_did_change(nlohmann::json& message);
+    void on_hover(nlohmann::json& message);
     void on_completion(nlohmann::json& message);
-
+    
+    Source_project source_project;
     Ide_connection ide_connection;
 };

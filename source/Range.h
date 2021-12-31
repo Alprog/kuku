@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "json_serializable.h"
@@ -6,11 +7,9 @@
 class Range : public Json_serializable
 {
 public:
-    Range(Position start, Position end)
-        : start{ start }
-        , end{ end }
-    {
-    }
+    Range(Position start, Position end);
+
+    bool contains(Position position);
 
     Position start;
     Position end;

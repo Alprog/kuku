@@ -29,6 +29,8 @@ void Language_server::process_message(nlohmann::json& message)
         on_did_open(message);
     else if (method == "textDocument/didChange")
         on_did_change(message);
+    else if (method == "textDocument/hover")
+        on_hover(message);
     else if (method == "textDocument/completion")
         on_completion(message);
     else if (method == "$/cancelRequest")
@@ -53,7 +55,8 @@ void Language_server::on_initialize(nlohmann::json& message)
                 { "workspaceFolders", {
                     { "supported", true }
                 }}
-            }}
+            }},
+            { "hoverProvider", true }
         }}
     };
 
@@ -70,9 +73,10 @@ void Language_server::on_did_open(nlohmann::json& message)
 {
     auto json = message["params"]["textDocument"];
     auto document = from_json<Opened_text_document>(json);
-    auto t = document.text;
 
-    auto b = t.size();
+    std::basic_string<byte> byte_string(std::begin(document.text), std::end(document.text));
+    source_project.add_file(document.uri, byte_string);
+    source_project.process_all();
 }
 
 void Language_server::on_did_change(nlohmann::json& message)
@@ -89,6 +93,40 @@ void Language_server::on_did_change(nlohmann::json& message)
             "triggerKind": 1
         }
     */
+}
+
+void Language_server::on_hover(nlohmann::json& message)
+{
+    auto id = message["id"].get<int>();
+    auto uri = message["params"]["textDocument"]["uri"].get<std::string>();
+
+    auto line = message["params"]["position"]["line"].get<int>();
+    auto character = message["params"]["position"]["character"].get<int>();
+    auto position = Position(line, character);
+
+    nlohmann::json result = nullptr;
+
+    auto module = source_project.get_module(uri);
+    if (module != nullptr)
+    {
+        Token* token = module->get_token(position);
+        if (token != nullptr)
+        {
+            result = {
+                { "contents", token->type }
+            };
+        }
+    }
+
+
+
+    nlohmann::json response = {
+        { "jsonrpc", "2.0" },
+        { "id", id },
+        { "result", result }
+    };
+
+    ide_connection << response;
 }
 
 void Language_server::on_completion(nlohmann::json& message)

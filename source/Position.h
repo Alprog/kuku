@@ -10,20 +10,14 @@
 class Position : public Json_serializable
 {
 public:
-    Position(int line = 0, int character = 0)
-        : line{ line }
-        , character{ character }
-    {
-    }
+    Position(int line = 0, int character = 0);
 
     int line;
     int character;
 
-    std::u16string to_str()
-    {
-        auto asciiStr = "{" + std::to_string(line) + ":" + std::to_string(character) + "}";
-        return std::u16string(std::begin(asciiStr), std::end(asciiStr));
-    }
+    std::u16string to_str();
 
+    std::strong_ordering operator<=>(const Position& other) const;
+    
     JSCHEME(Position, JFIELD(line), JFIELD(character))
 };

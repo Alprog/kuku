@@ -54,3 +54,15 @@ void Translation_module::print_statements()
         }
     }
 }
+
+Token* Translation_module::get_token(Position position)
+{
+    for (auto token : tokens)
+    {
+        if (token->range.contains(position))
+        {
+            return token;
+        }
+    }
+    return nullptr;
+}

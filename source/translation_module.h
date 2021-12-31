@@ -19,6 +19,8 @@ public:
 	void parse_statements();
 	void print_statements();
 
+	Token* get_token(Position position);
+
 	Source_project& project;
 
 	Text_document document;

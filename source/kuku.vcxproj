@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,6 +152,8 @@
     <ClCompile Include="function_statement.cpp" />
     <ClCompile Include="jump_table.cpp" />
     <ClCompile Include="integer_literal_node.cpp" />
+    <ClCompile Include="position.cpp" />
+    <ClCompile Include="range.cpp" />
     <ClCompile Include="symbol.cpp" />
     <ClCompile Include="symbol_table.cpp" />
     <ClCompile Include="translation_module.cpp" />
