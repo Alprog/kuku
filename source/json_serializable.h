@@ -23,6 +23,7 @@ ResultType from_json(nlohmann::json& json)
 template<> int from_json<int>(nlohmann::json& json);
 template<> float from_json<float>(nlohmann::json& json);
 template<> std::string from_json<std::string>(nlohmann::json& json);
+template<> std::u8string from_json<std::u8string>(nlohmann::json& json);
 
 #define JFIELD(memberName) new Json_field{ #memberName, &Self::memberName }
 

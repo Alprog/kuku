@@ -52,6 +52,12 @@
     <Filter Include="Source Files\SymbolTable">
       <UniqueIdentifier>{52309bca-c346-4ea9-a63d-e61bd6dfc212}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\unicode">
+      <UniqueIdentifier>{d4ba4ce6-c0dd-4c16-9f18-68ca5f1ea097}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\nlohmann">
+      <UniqueIdentifier>{acbb7c16-9cba-4799-a038-2948b2b7b0a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -78,9 +84,6 @@
     <ClCompile Include="source_iterator.cpp">
       <Filter>Source Files\Encoder</Filter>
     </ClCompile>
-    <ClCompile Include="unicode.cpp">
-      <Filter>Source Files\Encoder</Filter>
-    </ClCompile>
     <ClCompile Include="language_server.cpp">
       <Filter>Source Files\LanguageServer</Filter>
     </ClCompile>
@@ -98,9 +101,6 @@
     </ClCompile>
     <ClCompile Include="text_document.cpp">
       <Filter>Source Files\TextDocument</Filter>
-    </ClCompile>
-    <ClCompile Include="unicode_streams.cpp">
-      <Filter>Source Files\Encoder</Filter>
     </ClCompile>
     <ClCompile Include="test.cpp">
       <Filter>Source Files</Filter>
@@ -180,6 +180,12 @@
     <ClCompile Include="position.cpp">
       <Filter>Source Files\TextDocument</Filter>
     </ClCompile>
+    <ClCompile Include="unicode.cpp">
+      <Filter>Source Files\unicode</Filter>
+    </ClCompile>
+    <ClCompile Include="unicode_streams.cpp">
+      <Filter>Source Files\unicode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="class.h">
@@ -218,17 +224,11 @@
     <ClInclude Include="source_iterator.h">
       <Filter>Source Files\Encoder</Filter>
     </ClInclude>
-    <ClInclude Include="unicode.h">
-      <Filter>Source Files\Encoder</Filter>
-    </ClInclude>
     <ClInclude Include="encoding.h">
       <Filter>Source Files\Encoder</Filter>
     </ClInclude>
     <ClInclude Include="language_server.h">
       <Filter>Source Files\LanguageServer</Filter>
-    </ClInclude>
-    <ClInclude Include="json.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="utils.h">
       <Filter>Source Files</Filter>
@@ -261,9 +261,6 @@
       <Filter>Source Files\TextDocument</Filter>
     </ClInclude>
     <ClInclude Include="streams.h">
-      <Filter>Source Files\Encoder</Filter>
-    </ClInclude>
-    <ClInclude Include="unicode_streams.h">
       <Filter>Source Files\Encoder</Filter>
     </ClInclude>
     <ClInclude Include="test.h">
@@ -364,6 +361,18 @@
     </ClInclude>
     <ClInclude Include="symbol_table.h">
       <Filter>Source Files\SymbolTable</Filter>
+    </ClInclude>
+    <ClInclude Include="unicode.h">
+      <Filter>Source Files\unicode</Filter>
+    </ClInclude>
+    <ClInclude Include="unicode_streams.h">
+      <Filter>Source Files\unicode</Filter>
+    </ClInclude>
+    <ClInclude Include="json.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\json.h">
+      <Filter>Source Files\nlohmann</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,7 +9,7 @@ class Source_project
 {
 public:
 	void add_file(std::string uri);
-	void add_file(std::string uri, std::basic_string<byte> content);
+	void add_file(std::string uri, std::u8string content);
 	void add_memory_snippet(std::u16string snippet);
 
 	void process_all();

@@ -22,6 +22,7 @@ nlohmann::json serialize(Json_serializable& serializable);
 int serialize(int value);
 float serialize(float value);
 std::string serialize(std::string value);
+std::u8string serialize(std::u8string value);
 
 template <typename Class_type, typename Field_type>
 class Json_field : public Base_json_field

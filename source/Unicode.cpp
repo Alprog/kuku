@@ -6,12 +6,12 @@ constexpr int COUNT_7_BIT = 128;
 constexpr int COUNT_11_BIT = 2048;
 constexpr int COUNT_16_BIT = 65536;
 
-constexpr byte HAS_2_OCTETS = 0b11000000;
-constexpr byte HAS_3_OCTETS = 0b11100000;
-constexpr byte HAS_4_OCTETS = 0b11110000;
-constexpr byte CONTINUATION = 0b10000000;
+constexpr utf8unit HAS_2_OCTETS = 0b11000000;
+constexpr utf8unit HAS_3_OCTETS = 0b11100000;
+constexpr utf8unit HAS_4_OCTETS = 0b11110000;
+constexpr utf8unit CONTINUATION = 0b10000000;
 
-void unicode::write_utf8(character character, std::vector<byte>& bytes)
+void unicode::write_utf8(character character, std::vector<utf8unit>& bytes)
 {
     if (character < COUNT_7_BIT)
     {
@@ -37,9 +37,9 @@ void unicode::write_utf8(character character, std::vector<byte>& bytes)
     }
 }
 
-character unicode::read_utf8(Input_stream<byte>& stream)
+character unicode::read_utf8(Input_stream<utf8unit>& stream)
 {
-    byte byte;
+    utf8unit byte;
     stream.next(byte);
     if (byte < 128)
     {

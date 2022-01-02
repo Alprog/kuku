@@ -6,6 +6,7 @@
 #include "types.h"
 #include "lsp_enums.h"
 #include "opened_text_document.h"
+#include "unicode.h"
 
 Language_server::Language_server()
 {
@@ -74,8 +75,7 @@ void Language_server::on_did_open(nlohmann::json& message)
     auto json = message["params"]["textDocument"];
     auto document = from_json<Opened_text_document>(json);
 
-    std::basic_string<byte> byte_string(std::begin(document.text), std::end(document.text));
-    source_project.add_file(document.uri, byte_string);
+    source_project.add_file(document.uri, document.text);
     source_project.process_all();
 }
 
@@ -99,7 +99,12 @@ void Language_server::on_hover(nlohmann::json& message)
 {
     auto id = message["id"].get<int>();
     auto uri = message["params"]["textDocument"]["uri"].get<std::string>();
+   
+    std::u8string a = u8"efef";
 
+    std::u16string b = std::u16string();
+
+    
     auto line = message["params"]["position"]["line"].get<int>();
     auto character = message["params"]["position"]["character"].get<int>();
     auto position = Position(line, character);
@@ -112,8 +117,9 @@ void Language_server::on_hover(nlohmann::json& message)
         Token* token = module->get_token(position);
         if (token != nullptr)
         {
+            std::u8string zzzz = u8"QQZÉÖÉß";
             result = {
-                { "contents", token->type }
+                { "contents", zzzz }
             };
         }
     }

@@ -52,3 +52,13 @@ std::string from_json<std::string>(nlohmann::json& json)
     }
     throw new std::exception("not string");
 }
+
+template<>
+std::u8string from_json<std::u8string>(nlohmann::json& json)
+{
+    if (json.is_string())
+    {
+        return json.get<std::u8string>();
+    }
+    throw new std::exception("not string");
+}

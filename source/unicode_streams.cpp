@@ -3,7 +3,7 @@
 
 namespace unicode {
 
-Utf8to16_stream::Utf8to16_stream(Input_stream<byte>& utf8_stream)
+Utf8to16_stream::Utf8to16_stream(Input_stream<utf8unit>& utf8_stream)
     : utf8_stream{ utf8_stream }
 {
 }

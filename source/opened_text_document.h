@@ -10,7 +10,7 @@ public:
     std::string uri;
     std::string languageId;
     int version;
-    std::string text;
+    std::u8string text;
 
     JSCHEME(Opened_text_document, JFIELD(uri), JFIELD(languageId), JFIELD(version), JFIELD(text))
 };
