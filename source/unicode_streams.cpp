@@ -3,29 +3,29 @@
 
 namespace unicode {
 
-Utf8to16_stream::Utf8to16_stream(Input_stream<utf8unit>& utf8_stream)
-    : utf8_stream{ utf8_stream }
+Utf8to16_stream::Utf8to16_stream(Input_stream<utf8unit>& input_stream)
+    : input_stream{ input_stream }
 {
 }
 
-bool Utf8to16_stream::next(utf16unit& out_character)
+bool Utf8to16_stream::read(utf16unit& out_unit)
 {
-    if (queue.size() == 0)
+    if (queue_stream.read(out_unit))
     {
-        character character = read_utf8(utf8_stream);
-        if (character != 0)
-        {
-            write_utf16(character, queue);
-        }
-        else
-        {
-            return false;
-        }
+        return true;
     }
 
-    out_character = queue.front();
-    queue.pop();
-    return true;
+    character character;
+    if (read_character(input_stream, character))
+    {
+        write_character(queue_stream, character);
+        if (queue_stream.read(out_unit))
+        {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 }

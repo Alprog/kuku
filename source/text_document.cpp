@@ -18,7 +18,7 @@ Text_document::Text_document(Input_stream<utf16unit>& stream)
 
 
     utf16unit unit, prev_unit = 0;
-    while (stream.next(unit))
+    while (stream.read(unit))
     {
         if (unit == '\r')
         {

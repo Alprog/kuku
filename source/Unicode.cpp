@@ -11,42 +11,16 @@ constexpr utf8unit HAS_3_OCTETS = 0b11100000;
 constexpr utf8unit HAS_4_OCTETS = 0b11110000;
 constexpr utf8unit CONTINUATION = 0b10000000;
 
-void unicode::write_utf8(character character, std::vector<utf8unit>& bytes)
-{
-    if (character < COUNT_7_BIT)
-    {
-        bytes.push_back(character);
-    }
-    else if (character < COUNT_11_BIT)
-    {
-        bytes.push_back((character >> 6) & 0b00011111 | HAS_2_OCTETS); // 5
-        bytes.push_back((character >> 0) & 0b00111111 | CONTINUATION); // 6
-    }
-    else if (character < COUNT_16_BIT)
-    {
-        bytes.push_back((character >> 12) & 0b00001111 | HAS_3_OCTETS); // 4
-        bytes.push_back((character >> 06) & 0b00111111 | CONTINUATION); // 6
-        bytes.push_back((character >> 00) & 0b00111111 | CONTINUATION); // 6
-    }
-    else // 21 bit
-    {
-        bytes.push_back((character >> 18) & 0b00000111 | HAS_4_OCTETS); // 3
-        bytes.push_back((character >> 12) & 0b00111111 | CONTINUATION); // 6
-        bytes.push_back((character >> 06) & 0b00111111 | CONTINUATION); // 6
-        bytes.push_back((character >> 00) & 0b00111111 | CONTINUATION); // 6
-    }
-}
-
-character unicode::read_utf8(Input_stream<utf8unit>& stream)
+bool unicode::read_character(Input_stream<utf8unit>& stream, character& character)
 {
     utf8unit byte;
-    stream.next(byte);
+    if (!stream.read(byte)) return false;
     if (byte < 128)
     {
-        return byte;
+        character = byte;
+        return true;
     }
 
-    character character;
     int continuation_count;
     if (byte >= HAS_4_OCTETS)
     {
@@ -65,33 +39,84 @@ character unicode::read_utf8(Input_stream<utf8unit>& stream)
     }
     else
     {
-        return 0; // error
+        return false;
     }
 
     while (continuation_count > 0)
     {
-        stream.next(byte);
+        if (!stream.read(byte)) return false;
 
         if ((byte & 0b11000000) == CONTINUATION)
         {
             character = (character << 6) + (byte & 0b00111111);
             continuation_count--;
-            //stream.get();
         }
         else
         {
-            return 0; // error
+            return false;
         }
     }
 
-    return character;
+    return true;
+}
+
+void unicode::write_character(Output_stream<utf8unit>& stream, character character)
+{
+    if (character < COUNT_7_BIT)
+    {
+        stream.write(character);
+    }
+    else if (character < COUNT_11_BIT)
+    {
+        stream.write((character >> 6) & 0b00011111 | HAS_2_OCTETS); // 5
+        stream.write((character >> 0) & 0b00111111 | CONTINUATION); // 6
+    }
+    else if (character < COUNT_16_BIT)
+    {
+        stream.write((character >> 12) & 0b00001111 | HAS_3_OCTETS); // 4
+        stream.write((character >> 06) & 0b00111111 | CONTINUATION); // 6
+        stream.write((character >> 00) & 0b00111111 | CONTINUATION); // 6
+    }
+    else // 21 bit
+    {
+        stream.write((character >> 18) & 0b00000111 | HAS_4_OCTETS); // 3
+        stream.write((character >> 12) & 0b00111111 | CONTINUATION); // 6
+        stream.write((character >> 06) & 0b00111111 | CONTINUATION); // 6
+        stream.write((character >> 00) & 0b00111111 | CONTINUATION); // 6
+    }
 }
 
 constexpr utf16unit SURROGATES_START = 0xD800;
 constexpr utf16unit SURROGATES_HALF = 0xDC00;
 constexpr utf16unit SURROGATES_END = 0xE000;
 
-void unicode::write_utf16(character character, std::queue<utf16unit>& units)
+bool unicode::read_character(Input_stream<utf16unit>& stream, character& result)
+{
+    utf16unit first_unit;
+    if (!stream.read(first_unit))
+    {
+        return false;
+    }
+
+    if (first_unit < SURROGATES_START || first_unit >= SURROGATES_END)
+    {
+        result = first_unit;
+        return true;
+    }
+
+    utf16unit second_unit;
+    if (stream.read(second_unit))
+    {
+        return false;
+    }
+
+    auto high_bits = (character)(first_unit - SURROGATES_START) << 10;
+    auto low_bits = (character)(second_unit - SURROGATES_END);
+    result = high_bits + low_bits + COUNT_16_BIT;
+    return true;
+}
+
+void unicode::write_character(Output_stream<utf16unit>& stream, character character)
 {
     if (character < COUNT_16_BIT)
     {
@@ -101,7 +126,7 @@ void unicode::write_utf16(character character, std::queue<utf16unit>& units)
         }
         else
         {
-            units.push(character);
+            stream.write(character);
         }
     }
     else
@@ -109,52 +134,33 @@ void unicode::write_utf16(character character, std::queue<utf16unit>& units)
         auto remainder = character - COUNT_16_BIT; // 20-bit remainder
         auto w1 = SURROGATES_START + (remainder >> 10);         // high 10 bits
         auto w2 = SURROGATES_HALF + (remainder & 0b1111111111); // low 10 bits
-        units.push(w1);
-        units.push(w2);
+        stream.write(w1);
+        stream.write(w2);
     }
 }
 
-character unicode::read_utf16(Input_stream<utf16unit>& stream)
+template <typename InT, typename OutT>
+void convert(Input_stream<InT>& input_stream, Output_stream<OutT>& output_stream)
 {
-    utf16unit first_unit;
-    stream.next(first_unit);
-
-    if (first_unit < SURROGATES_START || first_unit >= SURROGATES_END)
+    character character;
+    while (unicode::read_character(input_stream, character))
     {
-        return first_unit;
+        unicode::write_character(output_stream, character);
     }
-
-    utf16unit second_unit;
-    stream.next(second_unit);
-
-    auto high_bits = (character)(first_unit - SURROGATES_START) << 10;
-    auto low_bits = (character)(second_unit - SURROGATES_END);
-    return high_bits + low_bits + COUNT_16_BIT;
 }
 
-std::u8string unicode::to_utf8(std::u16string input_string)
+std::u8string unicode::to_utf8(const std::u16string& input_string)
 {
-    std::vector<utf8unit> output_bytes;
-    //Basic_input_stream input_stream{ input_string };
-    Basic_input_stream input_stream{ std::basic_istringstream { input_string } };
-    while (true)
-    {
-        auto character = read_utf16(input_stream);
-        if (character == 0) break;
-        write_utf8(character, output_bytes);
-    }
-    return std::u8string(std::begin(output_bytes), std::end(output_bytes));
+    Basic_input_stream input_stream{ new std::basic_istringstream { input_string } };
+    String_output_stream<utf8unit> output_stream;
+    convert(input_stream, output_stream);
+    return output_stream.string_stream.str();
 }
 
-std::u16string unicode::to_utf16(std::u8string input_string)
+std::u16string unicode::to_utf16(const std::u8string& input_string)
 {
-    std::queue<utf16unit> output_bytes;
-    Basic_input_stream input_stream{ std::basic_istringstream { input_string } };
-    while (true)
-    {
-        auto character = read_utf8(input_stream);
-        if (character == 0) break;
-        write_utf16(character, output_bytes);
-    }
-    return u"QQZ"; // std::u16string(std::begin(output_bytes), std::end(output_bytes));
+    Basic_input_stream input_stream{ new std::basic_istringstream { input_string } };
+    String_output_stream<utf16unit> output_stream;
+    convert(input_stream, output_stream);
+    return output_stream.string_stream.str();
 }

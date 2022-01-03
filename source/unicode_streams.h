@@ -2,18 +2,18 @@
 
 #include "unicode.h"
 #include "streams.h"
-#include <queue>
+#include <deque>
 
 namespace unicode
 {
     class Utf8to16_stream : public Input_stream<utf16unit>
     {
     public:
-        Input_stream<utf8unit>& utf8_stream;
-        std::queue<utf16unit> queue;
+        Input_stream<utf8unit>& input_stream;
+        Queue_stream<utf16unit> queue_stream;
 
         Utf8to16_stream(Input_stream<utf8unit>& utf8_stream);
 
-        virtual bool next(utf16unit& out_character) override;
+        virtual bool read(utf16unit& out_unit) override;
     };
 }

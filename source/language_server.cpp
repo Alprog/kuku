@@ -124,8 +124,6 @@ void Language_server::on_hover(nlohmann::json& message)
         }
     }
 
-
-
     nlohmann::json response = {
         { "jsonrpc", "2.0" },
         { "id", id },
