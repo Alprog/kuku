@@ -131,3 +131,30 @@ character unicode::read_utf16(Input_stream<utf16unit>& stream)
     auto low_bits = (character)(second_unit - SURROGATES_END);
     return high_bits + low_bits + COUNT_16_BIT;
 }
+
+std::u8string unicode::to_utf8(std::u16string input_string)
+{
+    std::vector<utf8unit> output_bytes;
+    //Basic_input_stream input_stream{ input_string };
+    Basic_input_stream input_stream{ std::basic_istringstream { input_string } };
+    while (true)
+    {
+        auto character = read_utf16(input_stream);
+        if (character == 0) break;
+        write_utf8(character, output_bytes);
+    }
+    return std::u8string(std::begin(output_bytes), std::end(output_bytes));
+}
+
+std::u16string unicode::to_utf16(std::u8string input_string)
+{
+    std::queue<utf16unit> output_bytes;
+    Basic_input_stream input_stream{ std::basic_istringstream { input_string } };
+    while (true)
+    {
+        auto character = read_utf8(input_stream);
+        if (character == 0) break;
+        write_utf16(character, output_bytes);
+    }
+    return u"QQZ"; // std::u16string(std::begin(output_bytes), std::end(output_bytes));
+}

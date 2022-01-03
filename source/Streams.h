@@ -4,6 +4,7 @@
 #include "types.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 template <typename T>
 class Input_stream
@@ -18,8 +19,18 @@ class Basic_input_stream : public Input_stream<T>
 public:
 	std::basic_istream<T>& stream;
 
+	/*Basic_input_stream(std::basic_string<T>& string)
+		: stream{ std::basic_istream<T>{string} }
+	{
+	}*/
+
 	Basic_input_stream(std::basic_istream<T>& stream)
 		: stream { stream }
+	{
+	}
+
+	Basic_input_stream(std::basic_istream<T>&& stream)
+		: stream{ stream }
 	{
 	}
 

@@ -10,6 +10,8 @@ namespace nlohmann
     template <>
     struct adl_serializer<std::u8string>
     {
+        static_assert(sizeof(std::u8string::value_type) == sizeof(std::string::value_type));
+
         static void to_json(json& j, const std::u8string& value)
         { 
             nlohmann::to_json(j, reinterpret_cast<const std::string&>(value));
@@ -24,21 +26,16 @@ namespace nlohmann
     template <>
     struct adl_serializer<std::u16string>
     {
-        static void to_json(json& j, const std::u16string& value)
+        static void to_json(json& j, const std::u16string& u16string)
         {
-            std::u8string u8string;
-
-            std::basic_istringstream bs(u8string);
-            Basic_input_stream s(bs);
-            unicode::Utf8to16_stream us(s);
-
-            nlohmann::to_json(j, u8string);
+            nlohmann::to_json(j, unicode::to_utf8(u16string));
         }
 
-        static void from_json(const json& j, std::u16string& value)
+        static void from_json(const json& j, std::u16string& u16string)
         {
             std::u8string u8string;
             nlohmann::from_json(j, u8string);
+            u16string = unicode::to_utf16(u8string);
         }
     };
 }
