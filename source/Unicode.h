@@ -17,3 +17,6 @@ namespace unicode
     std::u8string to_utf8(const std::u16string&);
     std::u16string to_utf16(const std::u8string&);
 }
+
+std::u8string operator ""_s(const char8_t* pointer, size_t size);
+std::u16string operator ""_s(const char16_t* pointer, size_t size);

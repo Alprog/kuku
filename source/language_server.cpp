@@ -117,9 +117,8 @@ void Language_server::on_hover(nlohmann::json& message)
         Token* token = module->get_token(position);
         if (token != nullptr)
         {
-            std::u8string zzzz = u8"QQZ…÷…ﬂ";
             result = {
-                { "contents", zzzz }
+                { "contents", u8"QQZ…÷…ﬂ"_s }
             };
         }
     }

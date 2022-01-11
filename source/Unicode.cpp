@@ -164,3 +164,13 @@ std::u16string unicode::to_utf16(const std::u8string& input_string)
     convert(input_stream, output_stream);
     return output_stream.string_stream.str();
 }
+
+std::u8string operator ""_s(const char8_t* pointer, size_t size)
+{
+    return std::u8string(pointer);
+}
+
+std::u16string operator ""_s(const char16_t* pointer, size_t size)
+{
+    return std::u16string(pointer);
+}
