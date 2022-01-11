@@ -201,6 +201,7 @@
     <ClInclude Include="function_statement.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="nlohmann\json.h" />
+    <ClInclude Include="reflectable_enum.h" />
     <ClInclude Include="symbol_table.h" />
     <ClInclude Include="translation_module.h" />
     <ClInclude Include="source_project.h" />

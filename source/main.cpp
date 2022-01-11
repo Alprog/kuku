@@ -38,6 +38,8 @@ void print_help()
 
 #include "json.h"
 
+#include "token_type.h"
+
 int main(int argc, const char* argv[])
 {
     std::string mode{ "repl" }; // default mode

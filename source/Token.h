@@ -20,5 +20,7 @@ struct Token
 
     bool is_end_statement_token();
 
+    std::u8string get_hover_text();
+
     std::u16string get_source_text();
 };

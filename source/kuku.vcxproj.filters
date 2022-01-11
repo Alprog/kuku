@@ -374,5 +374,8 @@
     <ClInclude Include="nlohmann\json.h">
       <Filter>Source Files\nlohmann</Filter>
     </ClInclude>
+    <ClInclude Include="reflectable_enum.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

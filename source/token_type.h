@@ -1,7 +1,8 @@
 #pragma once
 
-enum class Token_type
-{
+#include "reflectable_enum.h"
+
+Reflectable_enum(Token_type,
     Bool_literal,
     Integer_literal,
     Number_literal,
@@ -37,5 +38,5 @@ enum class Token_type
     Keyword_or,
     Keyword_then,
     Keyword_var,
-    Keyword_while  
-};
+    Keyword_while
+);

@@ -14,7 +14,7 @@ std::vector<std::string> split(std::string line, std::string delimeter)
             result.push_back(line.substr(start, index - start));
         }
         start = index + delimeter.size();
-        index = line.find(' ', start);
+        index = line.find(delimeter, start);
     }
     if (start < line.size())
     {

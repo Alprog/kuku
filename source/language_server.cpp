@@ -118,7 +118,7 @@ void Language_server::on_hover(nlohmann::json& message)
         if (token != nullptr)
         {
             result = {
-                { "contents", u8"QQZÉÖÉß"_s }
+                { "contents", token->get_hover_text() }
             };
         }
     }
