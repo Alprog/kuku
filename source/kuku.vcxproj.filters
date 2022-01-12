@@ -377,5 +377,8 @@
     <ClInclude Include="reflectable_enum.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="is_vector.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

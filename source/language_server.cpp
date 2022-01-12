@@ -81,6 +81,19 @@ void Language_server::on_did_open(nlohmann::json& message)
 
 void Language_server::on_did_change(nlohmann::json& message)
 {
+    auto id = message["id"].get<int>();
+    auto uri = message["params"]["textDocument"]["uri"].get<std::string>();
+    auto module = source_project.get_module(uri);
+    
+    auto line = message["params"]["position"]["line"].get<int>();
+    auto character = message["params"]["position"]["character"].get<int>();
+    auto position = Position(line, character);
+    
+    if (module != nullptr)
+    {
+
+    }
+
     /*
         "textDocument": {
             "uri": "file:///c%3A/Users/alpro/Desktop/2.txt"
@@ -100,10 +113,6 @@ void Language_server::on_hover(nlohmann::json& message)
     auto id = message["id"].get<int>();
     auto uri = message["params"]["textDocument"]["uri"].get<std::string>();
    
-    std::u8string a = u8"efef";
-
-    std::u16string b = std::u16string();
-
     
     auto line = message["params"]["position"]["line"].get<int>();
     auto character = message["params"]["position"]["character"].get<int>();

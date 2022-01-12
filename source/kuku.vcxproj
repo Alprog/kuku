@@ -207,6 +207,7 @@
     <ClInclude Include="source_project.h" />
     <ClInclude Include="scope.h" />
     <ClInclude Include="symbol.h" />
+    <ClInclude Include="is_vector.h" />
     <ClInclude Include="unexepected_error.h" />
     <ClInclude Include="variable_declaration_statement.h" />
     <ClInclude Include="instructions.h" />
