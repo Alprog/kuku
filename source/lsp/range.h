@@ -8,7 +8,7 @@ namespace lsp
 {
     struct range : public json::serializable
     {
-        range(position start, position end);
+        range(position start = {}, position end = {});
 
         bool contains(position position);
 

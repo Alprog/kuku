@@ -26,6 +26,17 @@ namespace json
     std::string serialize(std::string value);
     std::u8string serialize(std::u8string value);
 
+    template <typename T>
+    json::object serialize(std::vector<T> vector)
+    {
+        auto result = json::object::array();
+        for (int i = 0; i < vector.size(); i++)
+        {
+            result[i] = json::serialize(vector[i]);
+        }
+        return json::object();
+    }
+
     template <typename Class_type, typename Field_type>
     class field : public base_field
     {

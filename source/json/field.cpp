@@ -1,4 +1,5 @@
 
+#include <vector>
 #include "json/field.h"
 #include "json/serializable.h"
 

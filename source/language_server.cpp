@@ -7,15 +7,16 @@
 #include "lsp_enums.h"
 #include "lsp/text_document_item.h"
 #include "unicode.h"
+#include "lsp/did_change_text_document_params.h"
 
 Language_server::Language_server()
 {
-    while (true)
-    { 
-        json::object message;
-        ide_connection >> message;
-        process_message(message);           
-    }
+	while (true)
+	{
+		json::object message;
+		ide_connection >> message;
+		process_message(message);
+	}
 }
 
 void Language_server::process_message(json::object& message)
@@ -81,31 +82,8 @@ void Language_server::on_did_open(json::object& message)
 
 void Language_server::on_did_change(json::object& message)
 {
-    auto id = message["id"].get<int>();
-    auto uri = message["params"]["textDocument"]["uri"].get<std::string>();
-    auto module = source_project.get_module(uri);
-    
-    auto line = message["params"]["position"]["line"].get<int>();
-    auto character = message["params"]["position"]["character"].get<int>();
-    auto position = lsp::position(line, character);
-    
-    if (module != nullptr)
-    {
+    auto params = from_json<lsp::did_change_text_document_params>(message["params"]);
 
-    }
-
-    /*
-        "textDocument": {
-            "uri": "file:///c%3A/Users/alpro/Desktop/2.txt"
-        },
-        "position": {
-            "line": 5,
-            "character": 1
-        },
-        "context": {
-            "triggerKind": 1
-        }
-    */
 }
 
 void Language_server::on_hover(json::object& message)
