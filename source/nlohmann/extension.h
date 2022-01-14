@@ -28,8 +28,8 @@ namespace nlohmann
     {
         static void to_json(json& j, const std::u16string& u16string)
         {
-            auto a = unicode::to_utf8(u16string);
-            nlohmann::to_json(j, a);
+            auto utf8string = unicode::to_utf8(u16string);
+            nlohmann::to_json(j, utf8string);
         }
 
         static void from_json(const json& j, std::u16string& u16string)

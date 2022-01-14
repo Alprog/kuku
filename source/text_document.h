@@ -3,8 +3,8 @@
 #include <vector>
 #include <string>
 
-#include "range.h"
 #include "streams.h"
+#include "lsp/range.h"
 
 class Text_document
 {
@@ -14,6 +14,6 @@ public:
 
     std::vector<std::u16string> lines;
 
-    utf16unit get_character(Position position);
-    std::u16string get_substring(Range range);
+    utf16unit get_character(lsp::position position);
+    std::u16string get_substring(lsp::range range);
 };

@@ -19,7 +19,7 @@ public:
 	void parse_statements();
 	void print_statements();
 
-	Token* get_token(Position position);
+	Token* get_token(lsp::position position);
 
 	Source_project& project;
 

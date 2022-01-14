@@ -55,7 +55,7 @@ void Translation_module::print_statements()
     }
 }
 
-Token* Translation_module::get_token(Position position)
+Token* Translation_module::get_token(lsp::position position)
 {
     for (auto token : tokens)
     {

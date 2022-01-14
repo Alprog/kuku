@@ -1,7 +1,7 @@
 
 #include "token.h"
 
-Token::Token(Token_type type, Text_document* document, Position start, Position end)
+Token::Token(Token_type type, Text_document* document, lsp::position start, lsp::position end)
     : type{ type }
     , document{ document }
     , range{ start, end }

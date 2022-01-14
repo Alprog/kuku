@@ -1,7 +1,7 @@
 #pragma once
 
 #include "token_type.h"
-#include "range.h"
+#include "lsp/range.h"
 #include "text_document.h"
 #include <string>
 
@@ -11,12 +11,12 @@ struct Token
 {
     Token_type type;
     Text_document* document;
-    Range range;
+    lsp::range range;
 
     Symbol* symbol;
 
     Token& operator=(const Token& token);
-    Token(Token_type type, Text_document* document, Position start, Position end);
+    Token(Token_type type, Text_document* document, lsp::position start, lsp::position end);
 
     bool is_end_statement_token();
 

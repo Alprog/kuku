@@ -1,11 +1,11 @@
 #pragma once
 
 #include <string>
-#include "json.h"
+#include "json/object.h"
 
 class Ide_connection
 {
 public:
-    friend Ide_connection& operator<<(Ide_connection& ide, nlohmann::json& message);
-    friend Ide_connection& operator>>(Ide_connection& ide, nlohmann::json& message);
+    friend Ide_connection& operator<<(Ide_connection& ide, json::object& message);
+    friend Ide_connection& operator>>(Ide_connection& ide, json::object& message);
 };

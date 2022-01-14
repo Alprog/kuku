@@ -41,7 +41,7 @@ Text_document::Text_document(Input_stream<utf16unit>& stream)
     flush_line();
 }
 
-utf16unit Text_document::get_character(Position position)
+utf16unit Text_document::get_character(lsp::position position)
 {
     if (position.line < lines.size())
     {
@@ -61,7 +61,7 @@ utf16unit Text_document::get_character(Position position)
     }
 }
 
-std::u16string Text_document::get_substring(Range range)
+std::u16string Text_document::get_substring(lsp::range range)
 {
     auto l1 = range.start.line;
     auto l2 = range.start.line;

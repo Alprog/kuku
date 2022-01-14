@@ -3,7 +3,7 @@
 #include <vector>
 #include "types.h"
 #include "encoding.h"
-#include "position.h"
+#include "lsp/position.h"
 
 class Text_document;
 
@@ -17,6 +17,6 @@ public:
 
     utf16unit operator*();
 
-    Position position;
+    lsp::position position;
     Text_document& text_document;
 };

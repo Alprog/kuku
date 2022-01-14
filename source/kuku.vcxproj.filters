@@ -58,6 +58,12 @@
     <Filter Include="Source Files\nlohmann">
       <UniqueIdentifier>{acbb7c16-9cba-4799-a038-2948b2b7b0a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\lsp">
+      <UniqueIdentifier>{b41bb79b-c46c-43c2-aa80-435c9a84458c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\json">
+      <UniqueIdentifier>{6093a2fb-2143-4469-b014-6f2f0954b10b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -93,12 +99,6 @@
     <ClCompile Include="ide_connection.cpp">
       <Filter>Source Files\LanguageServer</Filter>
     </ClCompile>
-    <ClCompile Include="json_serializable.cpp">
-      <Filter>Source Files\JsonSchema</Filter>
-    </ClCompile>
-    <ClCompile Include="json_field.cpp">
-      <Filter>Source Files\JsonSchema</Filter>
-    </ClCompile>
     <ClCompile Include="text_document.cpp">
       <Filter>Source Files\TextDocument</Filter>
     </ClCompile>
@@ -114,7 +114,7 @@
     <ClCompile Include="routine.cpp">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClCompile>
-    <ClCompile Include="string.cpp">
+    <ClCompile Include="kuku_string.cpp">
       <Filter>Source Files\String</Filter>
     </ClCompile>
     <ClCompile Include="chunk.cpp">
@@ -174,17 +174,23 @@
     <ClCompile Include="symbol_table.cpp">
       <Filter>Source Files\SymbolTable</Filter>
     </ClCompile>
-    <ClCompile Include="range.cpp">
-      <Filter>Source Files\TextDocument</Filter>
-    </ClCompile>
-    <ClCompile Include="position.cpp">
-      <Filter>Source Files\TextDocument</Filter>
-    </ClCompile>
     <ClCompile Include="unicode.cpp">
       <Filter>Source Files\unicode</Filter>
     </ClCompile>
     <ClCompile Include="unicode_streams.cpp">
       <Filter>Source Files\unicode</Filter>
+    </ClCompile>
+    <ClCompile Include="lsp\position.cpp">
+      <Filter>Source Files\lsp</Filter>
+    </ClCompile>
+    <ClCompile Include="lsp\range.cpp">
+      <Filter>Source Files\lsp</Filter>
+    </ClCompile>
+    <ClCompile Include="json\field.cpp">
+      <Filter>Source Files\json</Filter>
+    </ClCompile>
+    <ClCompile Include="json\serializable.cpp">
+      <Filter>Source Files\json</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,12 +248,6 @@
     <ClInclude Include="text_document.h">
       <Filter>Source Files\TextDocument</Filter>
     </ClInclude>
-    <ClInclude Include="position.h">
-      <Filter>Source Files\TextDocument</Filter>
-    </ClInclude>
-    <ClInclude Include="range.h">
-      <Filter>Source Files\TextDocument</Filter>
-    </ClInclude>
     <ClInclude Include="json_scheme.h">
       <Filter>Source Files\JsonSchema</Filter>
     </ClInclude>
@@ -256,9 +256,6 @@
     </ClInclude>
     <ClInclude Include="json_serializable.h">
       <Filter>Source Files\JsonSchema</Filter>
-    </ClInclude>
-    <ClInclude Include="opened_text_document.h">
-      <Filter>Source Files\TextDocument</Filter>
     </ClInclude>
     <ClInclude Include="streams.h">
       <Filter>Source Files\Encoder</Filter>
@@ -281,7 +278,7 @@
     <ClInclude Include="instruction_type.h">
       <Filter>Source Files\VirtualMachine</Filter>
     </ClInclude>
-    <ClInclude Include="string.h">
+    <ClInclude Include="kuku_string.h">
       <Filter>Source Files\String</Filter>
     </ClInclude>
     <ClInclude Include="chunk.h">
@@ -368,9 +365,6 @@
     <ClInclude Include="unicode_streams.h">
       <Filter>Source Files\unicode</Filter>
     </ClInclude>
-    <ClInclude Include="json.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="nlohmann\json.h">
       <Filter>Source Files\nlohmann</Filter>
     </ClInclude>
@@ -379,6 +373,39 @@
     </ClInclude>
     <ClInclude Include="is_vector.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lsp\text_document_content_change_event.h">
+      <Filter>Source Files\lsp</Filter>
+    </ClInclude>
+    <ClInclude Include="lsp\versioned_text_document_identifier.h">
+      <Filter>Source Files\lsp</Filter>
+    </ClInclude>
+    <ClInclude Include="lsp\position.h">
+      <Filter>Source Files\lsp</Filter>
+    </ClInclude>
+    <ClInclude Include="lsp\range.h">
+      <Filter>Source Files\lsp</Filter>
+    </ClInclude>
+    <ClInclude Include="lsp\text_document_item.h">
+      <Filter>Source Files\lsp</Filter>
+    </ClInclude>
+    <ClInclude Include="lsp\text_document_identifier.h">
+      <Filter>Source Files\lsp</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\extension.h">
+      <Filter>Source Files\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="json\field.h">
+      <Filter>Source Files\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\scheme.h">
+      <Filter>Source Files\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\serializable.h">
+      <Filter>Source Files\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\object.h">
+      <Filter>Source Files\json</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

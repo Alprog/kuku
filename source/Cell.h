@@ -3,7 +3,7 @@
 #include "types.h"
 #include "instance.h"
 #include "class.h"
-#include "string.h"
+#include "kuku_string.h"
 
 union Cell
 {

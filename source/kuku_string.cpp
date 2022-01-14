@@ -1,5 +1,5 @@
 
-#include "string.h"
+#include "kuku_string.h"
 
 String::String(int32_t character_count, byte character_size, void* src_bytes)
 	: character_count{ character_count }

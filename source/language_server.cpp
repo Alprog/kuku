@@ -5,20 +5,20 @@
 #include <fstream>
 #include "types.h"
 #include "lsp_enums.h"
-#include "opened_text_document.h"
+#include "lsp/text_document_item.h"
 #include "unicode.h"
 
 Language_server::Language_server()
 {
     while (true)
     { 
-        nlohmann::json message;
+        json::object message;
         ide_connection >> message;
         process_message(message);           
     }
 }
 
-void Language_server::process_message(nlohmann::json& message)
+void Language_server::process_message(json::object& message)
 {
     auto method = message["method"].get<std::string>();
 
@@ -40,13 +40,13 @@ void Language_server::process_message(nlohmann::json& message)
         throw new std::exception("unknown method");
 }
 
-void Language_server::on_initialize(nlohmann::json& message)
+void Language_server::on_initialize(json::object& message)
 {
     auto name = message["params"]["clientInfo"]["name"].get<std::string>();
 
     auto id = message["id"].get<int>();
 
-    nlohmann::json result = {
+    json::object result = {
         { "capabilities", {
             { "textDocumentSync", Text_document_sync_kind::Incremental },
             { "completionProvider", {
@@ -61,7 +61,7 @@ void Language_server::on_initialize(nlohmann::json& message)
         }}
     };
 
-    nlohmann::json response = {
+    json::object response = {
         { "jsonrpc", "2.0" },
         { "id", id },
         { "result", result }
@@ -70,16 +70,16 @@ void Language_server::on_initialize(nlohmann::json& message)
     ide_connection << response;
 }
 
-void Language_server::on_did_open(nlohmann::json& message)
+void Language_server::on_did_open(json::object& message)
 {
     auto json = message["params"]["textDocument"];
-    auto document = from_json<Opened_text_document>(json);
+    auto document = from_json<lsp::text_document_item>(json);
 
     source_project.add_file(document.uri, document.text);
     source_project.process_all();
 }
 
-void Language_server::on_did_change(nlohmann::json& message)
+void Language_server::on_did_change(json::object& message)
 {
     auto id = message["id"].get<int>();
     auto uri = message["params"]["textDocument"]["uri"].get<std::string>();
@@ -87,7 +87,7 @@ void Language_server::on_did_change(nlohmann::json& message)
     
     auto line = message["params"]["position"]["line"].get<int>();
     auto character = message["params"]["position"]["character"].get<int>();
-    auto position = Position(line, character);
+    auto position = lsp::position(line, character);
     
     if (module != nullptr)
     {
@@ -108,7 +108,7 @@ void Language_server::on_did_change(nlohmann::json& message)
     */
 }
 
-void Language_server::on_hover(nlohmann::json& message)
+void Language_server::on_hover(json::object& message)
 {
     auto id = message["id"].get<int>();
     auto uri = message["params"]["textDocument"]["uri"].get<std::string>();
@@ -116,9 +116,9 @@ void Language_server::on_hover(nlohmann::json& message)
     
     auto line = message["params"]["position"]["line"].get<int>();
     auto character = message["params"]["position"]["character"].get<int>();
-    auto position = Position(line, character);
+    auto position = lsp::position(line, character);
 
-    nlohmann::json result = nullptr;
+    json::object result = nullptr;
 
     auto module = source_project.get_module(uri);
     if (module != nullptr)
@@ -132,7 +132,7 @@ void Language_server::on_hover(nlohmann::json& message)
         }
     }
 
-    nlohmann::json response = {
+    json::object response = {
         { "jsonrpc", "2.0" },
         { "id", id },
         { "result", result }
@@ -141,7 +141,7 @@ void Language_server::on_hover(nlohmann::json& message)
     ide_connection << response;
 }
 
-void Language_server::on_completion(nlohmann::json& message)
+void Language_server::on_completion(json::object& message)
 {
      /*
         "textDocument": {

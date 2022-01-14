@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-Ide_connection& operator>>(Ide_connection& ide, nlohmann::json& message)
+Ide_connection& operator>>(Ide_connection& ide, json::object& message)
 {
     std::string line;
 
@@ -17,12 +17,12 @@ Ide_connection& operator>>(Ide_connection& ide, nlohmann::json& message)
     content_text.resize(count, 'x');
     std::cin.read(&content_text[0], count);
 
-    message = nlohmann::json::parse(content_text);
+    message = json::object::parse(content_text);
 
     return ide;
 }
 
-Ide_connection& operator<<(Ide_connection& ide, nlohmann::json& message)
+Ide_connection& operator<<(Ide_connection& ide, json::object& message)
 {
     auto content_text = message.dump();
 
