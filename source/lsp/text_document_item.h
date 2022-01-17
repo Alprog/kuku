@@ -11,10 +11,10 @@ namespace lsp
     {
     public:
         std::string uri;
-        std::string languageId;
+        std::string language_id;
         int version;
         std::u8string text;
 
-        JSCHEME(text_document_item, JFIELD(uri), JFIELD(languageId), JFIELD(version), JFIELD(text))
+        JSCHEME(text_document_item, JFIELD(uri), JFIELD(language_id), JFIELD(version), JFIELD(text))
     };
 }

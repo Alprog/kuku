@@ -10,12 +10,14 @@ namespace json
     {
     public:
         base_field(std::string field_name)
-            : field_name{ field_name }
+            : field_name{ snake_case_to_camel_case(field_name) }
         {
         }
 
         virtual void serialize(void* instance, json::object& object) = 0;
         virtual void deserialize(json::object& object, void* instance) = 0;
+
+        std::string snake_case_to_camel_case(std::string name);
 
         std::string field_name;
     };

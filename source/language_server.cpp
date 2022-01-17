@@ -83,11 +83,11 @@ void Language_server::on_did_open(json::object& message)
 void Language_server::on_did_change(json::object& message)
 {
     auto params = from_json<lsp::did_change_text_document_params>(message["params"]);
-    auto uri = params.textDocument.uri;
+    auto uri = params.text_document.uri;
     auto module = source_project.get_module(uri);
     if (module != nullptr)
     {
-        for (auto& change : params.contentChanges)
+        for (auto& change : params.content_changes)
         {
             module->document.change_content(change);
         }
