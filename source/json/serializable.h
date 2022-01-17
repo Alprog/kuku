@@ -34,6 +34,7 @@ template<> int from_json<int>(json::object& object);
 template<> float from_json<float>(json::object& object);
 template<> std::string from_json<std::string>(json::object& object);
 template<> std::u8string from_json<std::u8string>(json::object& object);
+template<> std::u16string from_json<std::u16string>(json::object& object);
 
 template <vector_type VectorType>
 VectorType from_json(json::object& object)

@@ -62,3 +62,13 @@ std::u8string from_json<std::u8string>(json::object& object)
     }
     throw new std::exception("not string");
 }
+
+template<>
+std::u16string from_json<std::u16string>(json::object& object)
+{
+    if (object.is_string())
+    {
+        return object.get<std::u16string>();
+    }
+    throw new std::exception("not string");
+}

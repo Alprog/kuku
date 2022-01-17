@@ -35,7 +35,7 @@ namespace nlohmann
         static void from_json(const json& j, std::u16string& u16string)
         {
             std::u8string u8string;
-            nlohmann::from_json(j, u8string);
+            nlohmann::from_json(j, reinterpret_cast<std::string&>(u8string));
             u16string = unicode::to_utf16(u8string);
         }
     };

@@ -25,6 +25,7 @@ namespace json
     float serialize(float value);
     std::string serialize(std::string value);
     std::u8string serialize(std::u8string value);
+    std::u16string serialize(std::u16string value);
 
     template <typename T>
     json::object serialize(std::vector<T> vector)

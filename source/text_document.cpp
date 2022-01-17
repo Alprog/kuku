@@ -77,3 +77,23 @@ std::u16string Text_document::get_substring(lsp::range range)
 
     throw std::exception("not implemented");
 }
+
+void Text_document::change_content(lsp::text_document_content_change_event& event)
+{
+    auto start = event.range.start;
+    auto end = event.range.end;
+    if (start.line == end.line)
+    {
+        auto offset = start.character;
+        auto size = end.character - start.character;
+        lines[start.line].replace(offset, size, event.text.c_str());
+    }
+    else
+    {
+        auto deleted_lines_count = end.line - start.line - 1;
+        auto line_begin = lines[start.line].substr(0, start.character);
+        auto line_end = lines[end.line].substr(start.character);
+
+        lines[start.line] = line_begin + event.text + line_end;
+    }
+}

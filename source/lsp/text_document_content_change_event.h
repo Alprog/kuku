@@ -12,7 +12,7 @@ namespace lsp
     {
     public:
         range range;
-        std::u8string text;
+        std::u16string text;
 
         JSCHEME(text_document_content_change_event, JFIELD(range), JFIELD(text))
     };
