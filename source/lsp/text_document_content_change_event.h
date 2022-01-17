@@ -8,9 +8,8 @@
 
 namespace lsp
 {
-    class text_document_content_change_event : public json::serializable
+    struct text_document_content_change_event : public json::serializable
     {
-    public:
         range range;
         std::u16string text;
 

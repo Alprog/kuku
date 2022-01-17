@@ -7,9 +7,8 @@
 
 namespace lsp
 {
-    class position : public json::serializable
+    struct position : public json::serializable
     {
-    public:
         position(int line = 0, int character = 0);
 
         int line;

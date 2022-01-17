@@ -7,9 +7,8 @@
 
 namespace lsp
 {
-    class text_document_item : public json::serializable
+    struct text_document_item : public json::serializable
     {
-    public:
         std::string uri;
         std::string language_id;
         int version;
