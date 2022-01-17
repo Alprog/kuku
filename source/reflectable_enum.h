@@ -17,7 +17,7 @@ struct Enum_reflector
 	{ \
 		static std::string get_enum_name(EnumName value) \
 		{ \
-			static auto vector = split(#__VA_ARGS__, ", "); \
+			static auto vector = split<std::string>(#__VA_ARGS__, ", "); \
 			return vector[(int)value]; \
 		}; \
 	};
