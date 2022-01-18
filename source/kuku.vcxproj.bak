@@ -147,8 +147,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup Label="Label">
-    <ClInclude Include="**/*.h" />
-    <ClCompile Include="**/*.cpp" />
+    <ClInclude Include="**.*.h" />
+    <ClCompile Include="**.*.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

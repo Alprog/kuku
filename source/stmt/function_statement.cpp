@@ -1,7 +1,7 @@
 
 #include "function_statement.h"
 
-void Function_statement::parse_internal(Parser& parser)
+void stmt::function_statement::parse_internal(Parser& parser)
 {
 	parser.require(Token_type::Keyword_function);
 	symbol = parser.read_symbol();

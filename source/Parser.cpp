@@ -3,13 +3,13 @@
 #include "console.h"
 #include "variable_node.h"
 #include "binary_operator_node.h"
-#include "variable_declaration_statement.h"
-#include "assign_statement.h"
+#include "stmt/variable_declaration_statement.h"
+#include "stmt/assign_statement.h"
 #include "unknown_statement.h"
-#include "statement.h"
-#include "end_statement.h"
-#include "function_statement.h"
-#include "class_statement.h"
+#include "stmt/statement.h"
+#include "stmt/end_statement.h"
+#include "stmt/function_statement.h"
+#include "stmt/class_statement.h"
 #include "unexepected_error.h"
 #include "source_project.h"
 
@@ -45,7 +45,7 @@ T* Parser::create_node()
     return node;
 }
 
-Statement* Parser::parse_next_statement()
+stmt::statement* Parser::parse_next_statement()
 {
     skip_empty_tokens();
     if (current->type == Token_type::End_of_source)
@@ -55,19 +55,19 @@ Statement* Parser::parse_next_statement()
 
     if (current->type == Token_type::Keyword_var)
     {
-        return create_node<Variable_declaration_statement>();
+        return create_node<stmt::variable_declaration_statement>();
     }
     else if (current->type == Token_type::Keyword_end)
     {
-        return create_node<End_statement>();
+        return create_node<stmt::end_statement>();
     }
     else if (current->type == Token_type::Keyword_function)
     {
-        return create_node<Function_statement>();
+        return create_node<stmt::function_statement>();
     }
     else if (current->type == Token_type::Keyword_class)
     {
-        return create_node<Class_statement>();
+        return create_node<stmt::class_statement>();
     }
     else if (current->type == Token_type::Identifier)
     {
@@ -84,7 +84,7 @@ Statement* Parser::parse_next_statement()
                 if (current->type == Token_type::End_of_line)
                 {
                     next();
-                    auto statement = new Assign_statement();
+                    auto statement = new stmt::assign_statement();
                     statement->is_valid = true;
                     return statement;
                 }
@@ -93,7 +93,7 @@ Statement* Parser::parse_next_statement()
         }
     }
 
-    return (new Unknown_statement())->init(*this);
+    return (new unknown_statement())->init(*this);
 }
 
 void Parser::parse_expression()
@@ -150,7 +150,7 @@ void Parser::require(Token_type type)
 {
     if (!match(type))
     {
-        throw Unexpected_error();
+        throw unexpected_error();
     }
 }
 
@@ -158,7 +158,7 @@ void Parser::require_end_of_statement()
 {
     if (!match_end_of_statement())
     {
-        throw Unexpected_error();
+        throw unexpected_error();
     }
 }
 
@@ -175,6 +175,6 @@ Symbol* Parser::read_symbol()
     }
     else
     {
-        throw Unexpected_error();
+        throw unexpected_error();
     }
 }

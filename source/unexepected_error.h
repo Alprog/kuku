@@ -1,7 +1,7 @@
 
 #pragma once
 
-struct Unexpected_error
+struct unexpected_error
 {
 
 };
