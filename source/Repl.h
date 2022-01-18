@@ -26,7 +26,7 @@ void Repl()
             break;
         }
         
-        Source_project project;
+        source_project project;
         project.add_memory_snippet(line);
         project.process_all();
 

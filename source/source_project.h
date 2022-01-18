@@ -5,7 +5,7 @@
 #include "translation_module.h"
 #include "symbol_table.h"
 
-class Source_project
+class source_project
 {
 public:
 	void add_file(std::string uri);
@@ -17,9 +17,9 @@ public:
 
 	void print_info();
 
-	Translation_module* get_module(std::string uri);
+	translation_module* get_module(std::string uri);
 
 	Symbol_table symbol_table;
 private:
-	std::map<std::string, Translation_module*> modules;
+	std::map<std::string, translation_module*> modules;
 };  

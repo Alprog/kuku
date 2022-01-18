@@ -1,31 +1,31 @@
 
-#include "Source_project.h"
+#include "source_project.h"
 #include "unicode_streams.h"
 
-void Source_project::add_file(std::string uri)
+void source_project::add_file(std::string uri)
 {
 	Basic_input_stream basic_stream{ new std::basic_ifstream<utf8unit> { uri } };
 	unicode::Utf8to16_stream u16stream(basic_stream);
 
-	modules[uri] = new Translation_module(*this, u16stream);
+	modules[uri] = new translation_module(*this, u16stream);
 }
 
-void Source_project::add_file(std::string uri, std::u8string content)
+void source_project::add_file(std::string uri, std::u8string content)
 {
 	Basic_input_stream basic_stream{ new std::basic_istringstream{ content} };
 	unicode::Utf8to16_stream u16stream{ basic_stream };
 
-	modules[uri] = new Translation_module(*this, u16stream);
+	modules[uri] = new translation_module(*this, u16stream);
 }
 
-void Source_project::add_memory_snippet(std::u16string line)
+void source_project::add_memory_snippet(std::u16string line)
 {
 	Basic_input_stream basic_stream{ new std::basic_istringstream{ line } };
 	
-	modules["memory"] = new Translation_module(*this, basic_stream);
+	modules["memory"] = new translation_module(*this, basic_stream);
 }
 
-void Source_project::process_all()
+void source_project::process_all()
 {
 	for (auto& pair : modules)
 	{
@@ -33,7 +33,7 @@ void Source_project::process_all()
 	}
 }
 
-void Source_project::clear_all()
+void source_project::clear_all()
 {
 	for (auto& pair : modules)
 	{
@@ -42,7 +42,7 @@ void Source_project::clear_all()
 	modules.clear();
 }
 
-void Source_project::print_info()
+void source_project::print_info()
 {
 	for (auto& pair : modules)
 	{
@@ -50,7 +50,7 @@ void Source_project::print_info()
 	}
 }
 
-Translation_module* Source_project::get_module(std::string uri)
+translation_module* source_project::get_module(std::string uri)
 {
 	auto it = modules.find(uri);
 	if (it != std::end(modules))

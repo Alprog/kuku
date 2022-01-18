@@ -9,7 +9,7 @@
 #include "unicode.h"
 #include "lsp/did_change_text_document_params.h"
 
-Language_server::Language_server()
+language_server::language_server()
 {
 	while (true)
 	{
@@ -19,7 +19,7 @@ Language_server::Language_server()
 	}
 }
 
-void Language_server::process_message(json::object& message)
+void language_server::process_message(json::object& message)
 {
     auto method = message["method"].get<std::string>();
 
@@ -41,7 +41,7 @@ void Language_server::process_message(json::object& message)
         throw new std::exception("unknown method");
 }
 
-void Language_server::on_initialize(json::object& message)
+void language_server::on_initialize(json::object& message)
 {
     auto name = message["params"]["clientInfo"]["name"].get<std::string>();
 
@@ -71,7 +71,7 @@ void Language_server::on_initialize(json::object& message)
     ide_connection << response;
 }
 
-void Language_server::on_did_open(json::object& message)
+void language_server::on_did_open(json::object& message)
 {
     auto json = message["params"]["textDocument"];
     auto document = from_json<lsp::text_document_item>(json);
@@ -80,7 +80,7 @@ void Language_server::on_did_open(json::object& message)
     source_project.process_all();
 }
 
-void Language_server::on_did_change(json::object& message)
+void language_server::on_did_change(json::object& message)
 {
     auto params = from_json<lsp::did_change_text_document_params>(message["params"]);
     auto uri = params.text_document.uri;
@@ -96,7 +96,7 @@ void Language_server::on_did_change(json::object& message)
     }
 }
 
-void Language_server::on_hover(json::object& message)
+void language_server::on_hover(json::object& message)
 {
     auto id = message["id"].get<int>();
     auto uri = message["params"]["textDocument"]["uri"].get<std::string>();
@@ -129,7 +129,7 @@ void Language_server::on_hover(json::object& message)
     ide_connection << response;
 }
 
-void Language_server::on_completion(json::object& message)
+void language_server::on_completion(json::object& message)
 {
      /*
         "textDocument": {

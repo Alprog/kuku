@@ -6,12 +6,12 @@
 #include "token.h"
 #include "statement.h"
 
-class Source_project;
+class source_project;
 
-class Translation_module
+class translation_module
 {
 public:
-	Translation_module(Source_project& project, Input_stream<utf16unit>& stream);
+	translation_module(source_project& project, Input_stream<utf16unit>& stream);
 
 	void process();
 
@@ -21,7 +21,7 @@ public:
 
 	Token* get_token(lsp::position position);
 
-	Source_project& project;
+	source_project& project;
 
 	Text_document document;
 	std::vector<Token*> tokens;

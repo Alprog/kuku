@@ -4,19 +4,19 @@
 #include "source_project.h"
 #include "console.h"
 
-Translation_module::Translation_module(Source_project& project, Input_stream<utf16unit>& stream)
+translation_module::translation_module(source_project& project, Input_stream<utf16unit>& stream)
 	: project{ project }
 	, document{ stream }
 {
 }
 
-void Translation_module::process()
+void translation_module::process()
 {
     tokenize();
     parse_statements();
 }
 
-void Translation_module::tokenize()
+void translation_module::tokenize()
 {
 	Lexer lexer(document);
     while (true)
@@ -30,7 +30,7 @@ void Translation_module::tokenize()
     }
 }
 
-void Translation_module::parse_statements()
+void translation_module::parse_statements()
 {
     Parser parser(project, &tokens[0]);
     while (true)
@@ -41,7 +41,7 @@ void Translation_module::parse_statements()
     }
 }
 
-void Translation_module::print_statements()
+void translation_module::print_statements()
 {
     for (auto statement : statements)
     {
@@ -55,7 +55,7 @@ void Translation_module::print_statements()
     }
 }
 
-Token* Translation_module::get_token(lsp::position position)
+Token* translation_module::get_token(lsp::position position)
 {
     for (auto token : tokens)
     {

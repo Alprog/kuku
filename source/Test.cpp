@@ -49,7 +49,7 @@ void test()
 	auto a2 = s2.get_character(1);
 	auto a3 = s3.get_character(1);
 
-	Source_project project;
+	source_project project;
 	project.add_file("C:/kuku/data/main.kuku");
 	project.process_all();
 	project.print_info();

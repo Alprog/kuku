@@ -13,7 +13,7 @@
 #include "unexepected_error.h"
 #include "source_project.h"
 
-Parser::Parser(Source_project& project, Token** it)
+Parser::Parser(source_project& project, Token** it)
     : project{project}
     , it{ it }
     , current{ *it }
@@ -37,8 +37,6 @@ void Parser::next()
     }
 }
 
-Token* startToken;
-
 template <typename T>
 T* Parser::create_node()
 {
@@ -54,8 +52,6 @@ Statement* Parser::parse_next_statement()
     {
         return nullptr;
     }
-
-    startToken = current;
 
     if (current->type == Token_type::Keyword_var)
     {
@@ -82,7 +78,7 @@ Statement* Parser::parse_next_statement()
             auto node = new Binary_operator_node(current);
             next();
 
-            if (current->type == Token_type::Integer_literal)
+            if (current->type == Token_type::Integer_literal || current->type == Token_type::String_literal)
             {
                 next();
                 if (current->type == Token_type::End_of_line)

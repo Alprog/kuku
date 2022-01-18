@@ -74,7 +74,7 @@ int main(int argc, const char* argv[])
     }
     else if (mode == "lang-server")
     {
-        Language_server{};
+        language_server{};
     }
     else
     {

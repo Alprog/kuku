@@ -5,10 +5,10 @@
 #include "ide_connection.h"
 #include "source_project.h"
 
-class Language_server
+class language_server
 {
 public:
-    Language_server();
+    language_server();
 
 private:
     void process_message(json::object& message);
@@ -18,6 +18,6 @@ private:
     void on_hover(json::object& message);
     void on_completion(json::object& message);
     
-    Source_project source_project;
+    source_project source_project;
     Ide_connection ide_connection;
 };

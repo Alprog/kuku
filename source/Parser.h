@@ -6,18 +6,18 @@
 
 class Statement;
 class Symbol;
-class Source_project;
+class source_project;
 
 class Parser
 {
 public:
-	Parser(Source_project& project, Token** it);
+	Parser(source_project& project, Token** it);
 	void skip_empty_tokens();
 
 	Statement* parse_next_statement();
 	void parse_expression();
 
-	Source_project& project;
+	source_project& project;
 	Token** it;
 	Token* current;
 	
