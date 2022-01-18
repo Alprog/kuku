@@ -20,7 +20,7 @@ namespace stmt
 		statement* init(Parser& parser);
 
 		virtual int get_nesting_level();
-		virtual std::u16string get_node_type() { return u"<unknown>"; }
+		virtual std::u16string get_statement_type() { return u"<unknown>"; }
 
 	protected:
 		virtual void parse_internal(Parser& parser) = 0;

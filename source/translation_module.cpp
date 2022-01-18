@@ -45,7 +45,7 @@ void translation_module::print_statements()
 {
     for (auto statement : statements)
     {
-        auto line = statement->get_node_type() + u" " + (statement->is_valid ? u"1" : u"0");
+        auto line = statement->get_statement_type() + u" " + (statement->is_valid ? u"1" : u"0");
         Console::write_line(line);
 
         if (!statement->is_valid)
