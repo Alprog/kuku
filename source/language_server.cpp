@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include "types.h"
-#include "lsp_enums.h"
+#include "lsp/enums.h"
 #include "lsp/text_document_item.h"
 #include "unicode.h"
 #include "lsp/did_change_text_document_params.h"
@@ -49,7 +49,7 @@ void language_server::on_initialize(json::object& message)
 
     json::object result = {
         { "capabilities", {
-            { "textDocumentSync", Text_document_sync_kind::Incremental },
+            { "textDocumentSync", lsp::text_document_sync_kind::Incremental },
             { "completionProvider", {
                 { "resolveProvider", true }
             }},
