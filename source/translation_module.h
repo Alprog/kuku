@@ -5,6 +5,7 @@
 #include "text_document.h"
 #include "token.h"
 #include "stmt/statement.h"
+#include "typesystem/storage.h"
 
 class source_project;
 
@@ -26,4 +27,6 @@ public:
 	Text_document document;
 	std::vector<Token*> tokens;
 	std::vector<stmt::statement*> statements;
+
+	typesystem::storage udt_storage;
 };

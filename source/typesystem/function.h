@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace udt
+namespace typesystem
 {
 	class function
 	{
