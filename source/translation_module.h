@@ -17,7 +17,9 @@ public:
 	void process();
 
 	void tokenize();
-	void parse_statements();
+	void parse();
+	void build_types();
+	
 	void print_statements();
 
 	Token* get_token(lsp::position position);

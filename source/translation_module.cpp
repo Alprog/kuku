@@ -3,6 +3,7 @@
 
 #include "source_project.h"
 #include "console.h"
+#include "typesystem/builder.h"
 
 translation_module::translation_module(source_project& project, Input_stream<utf16unit>& stream)
 	: project{ project }
@@ -13,7 +14,8 @@ translation_module::translation_module(source_project& project, Input_stream<utf
 void translation_module::process()
 {
     tokenize();
-    parse_statements();
+    parse();
+    build_types();
 }
 
 void translation_module::tokenize()
@@ -30,7 +32,7 @@ void translation_module::tokenize()
     }
 }
 
-void translation_module::parse_statements()
+void translation_module::parse()
 {
     Parser parser(project, &tokens[0]);
     while (true)
@@ -39,6 +41,11 @@ void translation_module::parse_statements()
         if (statement == nullptr) break;
         statements.push_back(statement);
     }
+}
+
+void translation_module::build_types()
+{
+    typesystem::builder().build(statements);
 }
 
 void translation_module::print_statements()
