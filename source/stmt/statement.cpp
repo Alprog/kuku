@@ -27,3 +27,13 @@ int stmt::statement::get_nesting_level()
 {
 	return 0;
 }
+
+stmt::scope stmt::statement::get_scope()
+{
+	return scope;
+}
+
+void stmt::statement::set_scope(stmt::scope scope)
+{
+	this->scope = scope;
+}

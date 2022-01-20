@@ -11,6 +11,8 @@ namespace stmt
 
 	public:
 		virtual int get_nesting_level() override { return -1; }
+		virtual scope_type get_allowed_scopes() const override { return scope_type::end_scopes; }
+		virtual scope_type get_inner_scope_type() const override { return scope_type::none; }
 
 	protected:
 		virtual void parse_internal(Parser& parser) override;

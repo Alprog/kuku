@@ -3,7 +3,7 @@
 
 #include "source_project.h"
 #include "console.h"
-#include "typesystem/builder.h"
+#include "scope_analyzer.h"
 
 translation_module::translation_module(source_project& project, Input_stream<utf16unit>& stream)
 	: project{ project }
@@ -14,8 +14,9 @@ translation_module::translation_module(source_project& project, Input_stream<utf
 void translation_module::process()
 {
     tokenize();
-    parse();
-    build_types();
+    parse_statements();
+    analyze_scope();
+    analyze_semantic();
 }
 
 void translation_module::tokenize()
@@ -32,7 +33,7 @@ void translation_module::tokenize()
     }
 }
 
-void translation_module::parse()
+void translation_module::parse_statements()
 {
     Parser parser(project, &tokens[0]);
     while (true)
@@ -43,9 +44,15 @@ void translation_module::parse()
     }
 }
 
-void translation_module::build_types()
+void translation_module::analyze_scope()
 {
-    typesystem::builder().build(statements);
+    scope_analyzer analyzer(statements);
+    analyzer.analyze();
+}
+
+void translation_module::analyze_semantic()
+{
+
 }
 
 void translation_module::print_statements()
