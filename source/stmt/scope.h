@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include "stmt/scope_type.h"
+
 namespace stmt
 {
 	class statement;
@@ -11,7 +13,8 @@ namespace stmt
 		scope(stmt::statement* statement);
 
 		bool is_root();
-		scope get_parent();
+		stmt::scope get_parent();
+		stmt::scope_type get_type();
 
 		stmt::statement* statement;
 	};

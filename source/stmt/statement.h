@@ -23,7 +23,6 @@ namespace stmt
 
 		statement* init(Parser& parser);
 
-		virtual int get_nesting_level();
 		virtual scope_type get_allowed_scopes() const = 0;
 		virtual scope_type get_inner_scope_type() const = 0;
 

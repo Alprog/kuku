@@ -1,12 +1,12 @@
 
 #pragma once
 
-#include "block_statement.h"
+#include "statement.h"
 #include "symbol.h"
 
 namespace stmt
 {
-	class class_statement : public block_statement
+	class class_statement : public statement
 	{
 	public:
 		virtual std::u16string get_statement_type() override { return u"class_statement"; }

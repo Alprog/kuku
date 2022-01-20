@@ -19,4 +19,5 @@ namespace stmt
 	};
 
 	scope_type operator|(scope_type lhs, scope_type rhs);
+	scope_type operator&(scope_type lhs, scope_type rhs);
 }

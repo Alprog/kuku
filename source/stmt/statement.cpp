@@ -23,11 +23,6 @@ stmt::statement* stmt::statement::init(Parser& parser)
 	return this;
 }
 
-int stmt::statement::get_nesting_level()
-{
-	return 0;
-}
-
 stmt::scope stmt::statement::get_scope()
 {
 	return scope;

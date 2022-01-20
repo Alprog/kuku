@@ -28,3 +28,8 @@ stmt::scope stmt::scope::get_parent()
 		return statement->get_scope();
 	}
 }
+
+stmt::scope_type stmt::scope::get_type()
+{
+	return is_root() ? stmt::scope_type::module_root : statement->get_inner_scope_type();
+}
