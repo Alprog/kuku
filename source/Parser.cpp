@@ -12,11 +12,12 @@
 #include "stmt/class_statement.h"
 #include "unexepected_error.h"
 #include "source_project.h"
+#include "symbol_reference.h"
 
 Parser::Parser(source_project& project, token** it)
-    : project{project}
-    , it{ it }
-    , current{ *it }
+	: project{ project }
+	, it{ it }
+	, current{ *it }
 {
 }
 
@@ -162,16 +163,16 @@ void Parser::require_end_of_statement()
     }
 }
 
-symbol* Parser::read_symbol()
+symbol_reference* Parser::read_symbol_reference()
 {
     if (current->type == Token_type::Identifier)
     {   
         auto name = current->get_source_text();
-        auto symbol = project.symbol_table.get_symbol(name);
-        symbol->usage_tokens.push_back(current);
-        current->symbol = symbol;
+        auto reference = new symbol_reference();
+        reference->token = current;
+        current->symbol_reference = reference;
         next();
-        return symbol;
+        return reference;
     }
     else
     {

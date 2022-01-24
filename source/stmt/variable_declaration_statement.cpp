@@ -5,7 +5,7 @@
 void stmt::variable_declaration_statement::parse_internal(Parser& parser)
 {
     parser.require(Token_type::Keyword_var);
-    symbol = parser.read_symbol();
+    reference = parser.read_symbol_reference();
 
     CHECK_END_OF_STATEMENT
 

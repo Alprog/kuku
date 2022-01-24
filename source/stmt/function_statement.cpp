@@ -4,7 +4,7 @@
 void stmt::function_statement::parse_internal(Parser& parser)
 {
 	parser.require(Token_type::Keyword_function);
-	symbol = parser.read_symbol();
+	reference = parser.read_symbol_reference();
 	parser.require(Token_type::Open_parenthesis);
 	// arguments
 	parser.require(Token_type::Close_parenthesis);

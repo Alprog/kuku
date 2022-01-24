@@ -15,6 +15,6 @@ namespace stmt
 		
 		virtual void parse_internal(Parser& parser) override;
 
-		symbol* symbol;
+		symbol_reference* reference;
 	};
 }

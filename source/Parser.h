@@ -4,7 +4,7 @@
 #include "lexer.h"
 #include "scope.h"
 
-class symbol;
+class symbol_reference;
 class source_project;
 namespace stmt
 {
@@ -30,7 +30,7 @@ public:
 	void require(Token_type type);
 	void require_end_of_statement();
 
-	symbol* read_symbol();
+	symbol_reference* read_symbol_reference();
 
 	void next();
 	std::vector<stmt::statement*> statements;
