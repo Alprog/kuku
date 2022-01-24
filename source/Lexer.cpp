@@ -46,7 +46,7 @@ bool is_quote(utf16unit c)
     return c == '"' || c == '\'' || c == '`';
 }
 
-Token* Lexer::get_next_token()
+token* Lexer::get_next_token()
 {
     while (true)
     {
@@ -160,13 +160,13 @@ Token* Lexer::get_next_token()
     }
 }
 
-Token* Lexer::finish_line_comment(Source_iterator start_it)
+token* Lexer::finish_line_comment(Source_iterator start_it)
 {
     while (*it != '\n') ++it;
     return create_token(start_it, Token_type::Comment);
 }
 
-Token* Lexer::finish_block_comment(Source_iterator start_it)
+token* Lexer::finish_block_comment(Source_iterator start_it)
 {
     int level = 1;
 
@@ -186,7 +186,7 @@ Token* Lexer::finish_block_comment(Source_iterator start_it)
     return create_token(start_it, Token_type::Comment);
 }
 
-Token* Lexer::finish_binding_block_comment(Source_iterator start_it)
+token* Lexer::finish_binding_block_comment(Source_iterator start_it)
 {
     while (move_after('/'))
     {
@@ -196,7 +196,7 @@ Token* Lexer::finish_binding_block_comment(Source_iterator start_it)
     return create_token(start_it, Token_type::Comment);
 }
 
-Token* Lexer::finish_string(Source_iterator start_it, utf16unit end_quote, bool escaping)
+token* Lexer::finish_string(Source_iterator start_it, utf16unit end_quote, bool escaping)
 {
     auto result = escaping ? move_after_escaped(end_quote) : move_after(end_quote);
     if (result)
@@ -259,7 +259,7 @@ bool Lexer::move_after_escaped(utf16unit end_symbol)
     return false;
 }
 
-Token* Lexer::create_token(Source_iterator start_it, Token_type type)
+token* Lexer::create_token(Source_iterator start_it, Token_type type)
 {
-    return new Token { type, &text_document, start_it.position, it.position };
+    return new token { type, &text_document, start_it.position, it.position };
 }

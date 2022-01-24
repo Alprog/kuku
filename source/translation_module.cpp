@@ -69,7 +69,7 @@ void translation_module::print_statements()
     }
 }
 
-Token* translation_module::get_token(lsp::position position)
+token* translation_module::get_token(lsp::position position)
 {
     for (auto token : tokens)
     {

@@ -10,16 +10,16 @@ class Symbol_table;
 
 using Symbol_name = std::u16string;
 
-class Symbol
+class symbol
 {
 public:
-	Symbol(Symbol_table& symbol_table, Symbol_name name);
+	symbol(Symbol_table& symbol_table, Symbol_name name);
 
 	Symbol_table& symbol_table;
 	Symbol_name name;
 
 	//Scope& parent_scope;
 	
-	Token* definition_token;
-	std::vector<Token*> usage_tokens;
+	token* definition_token;
+	std::vector<token*> usage_tokens;
 };

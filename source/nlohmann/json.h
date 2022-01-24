@@ -25528,7 +25528,7 @@ namespace nlohmann
         Regular Expr.   | 0x0B             | still unsupported
         DB Pointer      | 0x0C             | still unsupported
         JavaScript Code | 0x0D             | still unsupported
-        Symbol          | 0x0E             | still unsupported
+        symbol          | 0x0E             | still unsupported
         JavaScript Code | 0x0F             | still unsupported
         int32           | 0x10             | number_integer
         Timestamp       | 0x11             | still unsupported

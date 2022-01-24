@@ -13,8 +13,8 @@ namespace stmt
 	class statement
 	{
 	public:
-		Token* start_token;
-		Token* end_token;
+		token* start_token;
+		token* end_token;
 
 		int sequence_number;
 

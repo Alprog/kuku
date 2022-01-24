@@ -6,7 +6,7 @@
 class Integer_literal_node : Single_token_syntax_node
 {
 public:
-	Integer_literal_node(Token* token);
+	Integer_literal_node(token* token);
 
 	int value;
 };

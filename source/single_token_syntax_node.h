@@ -5,5 +5,5 @@
 class Single_token_syntax_node : public Syntax_node
 {
 public:
-	Token* node_token;
+	token* node_token;
 };

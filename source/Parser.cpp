@@ -13,7 +13,7 @@
 #include "unexepected_error.h"
 #include "source_project.h"
 
-Parser::Parser(source_project& project, Token** it)
+Parser::Parser(source_project& project, token** it)
     : project{project}
     , it{ it }
     , current{ *it }
@@ -162,7 +162,7 @@ void Parser::require_end_of_statement()
     }
 }
 
-Symbol* Parser::read_symbol()
+symbol* Parser::read_symbol()
 {
     if (current->type == Token_type::Identifier)
     {   

@@ -4,7 +4,7 @@
 #include "lexer.h"
 #include "scope.h"
 
-class Symbol;
+class symbol;
 class source_project;
 namespace stmt
 {
@@ -14,15 +14,15 @@ namespace stmt
 class Parser
 {
 public:
-	Parser(source_project& project, Token** it);
+	Parser(source_project& project, token** it);
 	void skip_empty_tokens();
 
 	stmt::statement* parse_next_statement();
 	void parse_expression();
 
 	source_project& project;
-	Token** it;
-	Token* current;
+	token** it;
+	token* current;
 	
 	bool match(Token_type type);
 	bool match_end_of_statement();
@@ -30,7 +30,7 @@ public:
 	void require(Token_type type);
 	void require_end_of_statement();
 
-	Symbol* read_symbol();
+	symbol* read_symbol();
 
 	void next();
 	std::vector<stmt::statement*> statements;

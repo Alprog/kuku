@@ -6,5 +6,5 @@
 class Binary_operator_node : public Single_token_syntax_node
 {
 public:
-	Binary_operator_node(Token* token);
+	Binary_operator_node(token* token);
 };

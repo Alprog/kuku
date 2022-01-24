@@ -5,18 +5,18 @@
 #include "text_document.h"
 #include <string>
 
-class Symbol;
+class symbol;
 
-struct Token
+struct token
 {
     Token_type type;
     Text_document* document;
     lsp::range range;
 
-    Symbol* symbol;
+    symbol* symbol;
 
-    Token& operator=(const Token& token);
-    Token(Token_type type, Text_document* document, lsp::position start, lsp::position end);
+    token& operator=(const token& token);
+    token(Token_type type, Text_document* document, lsp::position start, lsp::position end);
 
     bool is_end_statement_token();
 

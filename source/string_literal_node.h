@@ -7,5 +7,5 @@
 class String_literal_node : public Single_token_syntax_node
 {
 public:
-	String_literal_node(Token* token);
+	String_literal_node(token* token);
 };

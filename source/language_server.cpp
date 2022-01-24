@@ -111,7 +111,7 @@ void language_server::on_hover(json::object& message)
     auto module = source_project.get_module(uri);
     if (module != nullptr)
     {
-        Token* token = module->get_token(position);
+        token* token = module->get_token(position);
         if (token != nullptr)
         {
             result = {

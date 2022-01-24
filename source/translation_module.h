@@ -23,12 +23,12 @@ public:
 	
 	void print_statements();
 
-	Token* get_token(lsp::position position);
+	token* get_token(lsp::position position);
 
 	source_project& project;
 
 	Text_document document;
-	std::vector<Token*> tokens;
+	std::vector<token*> tokens;
 	std::vector<stmt::statement*> statements;
 
 	typesystem::storage udt_storage;

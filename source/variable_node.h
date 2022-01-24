@@ -12,5 +12,5 @@ public:
 	std::u16string name;
 	Class* type;
 
-	Token* declaration_token;
+	token* declaration_token;
 };
