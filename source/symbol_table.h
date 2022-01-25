@@ -9,9 +9,9 @@
 class Symbol_table
 {
 public:
-	symbol* get_symbol(Symbol_name name);
+	symbol* get_symbol(symbol_name name);
 
 
 private:
-	std::map<Symbol_name, symbol*> symbols;
+	std::map<symbol_name, symbol*> symbols;
 };

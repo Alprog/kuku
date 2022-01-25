@@ -1,6 +1,6 @@
 
 #include "scope_analyzer.h"
-#include "stmt/scope.h"
+#include "scope.h"
 #include "stmt/end_statement.h"
 
 scope_analyzer::scope_analyzer(std::vector<stmt::statement*>& statements)
@@ -10,7 +10,7 @@ scope_analyzer::scope_analyzer(std::vector<stmt::statement*>& statements)
 
 void scope_analyzer::analyze()
 {
-	stmt::scope scope;
+	scope scope;
 
 	for (int i = 0; i < statements.size(); i++)
 	{
@@ -20,7 +20,7 @@ void scope_analyzer::analyze()
 		statement->set_scope(scope);
 
 		auto allowed_scope_types = statement->get_allowed_scopes();
-		if ((allowed_scope_types & scope.get_type()) == stmt::scope_type::none)
+		if ((allowed_scope_types & scope.get_type()) == scope_type::none)
 		{
 			statement->is_valid = false;
 			statement->error_text = u"not valid scope";
@@ -28,9 +28,9 @@ void scope_analyzer::analyze()
 		}
 
 		auto inner_scope_type = statement->get_inner_scope_type();
-		if (inner_scope_type != stmt::scope_type::none)
+		if (inner_scope_type != scope_type::none)
 		{
-			scope = stmt::scope(statement);	
+			scope = ::scope(statement);	
 		}
 		else if (dynamic_cast<stmt::end_statement*>(statement))
 		{

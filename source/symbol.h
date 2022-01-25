@@ -4,22 +4,20 @@
 #include <string>
 #include <vector>
 #include "scope.h"
-#include "token.h"
 
-class Symbol_table;
+class symbol_reference;
 
-using Symbol_name = std::u16string;
+using symbol_name = std::u16string;
 
 class symbol
 {
 public:
-	symbol(Symbol_table& symbol_table, Symbol_name name);
+	symbol(symbol_name name);
 
-	Symbol_table& symbol_table;
-	Symbol_name name;
+	symbol_name name;
 
 	//Scope& parent_scope;
 	
-	token* definition_token;
-	std::vector<token*> usage_tokens;
+	symbol_reference* definition;
+	std::vector<symbol_reference*> usages;
 };

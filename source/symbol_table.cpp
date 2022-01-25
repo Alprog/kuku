@@ -1,7 +1,7 @@
 
 #include "symbol_table.h"
 
-symbol* Symbol_table::get_symbol(Symbol_name name)
+symbol* Symbol_table::get_symbol(symbol_name name)
 {
 	auto it = symbols.find(name);
 	if (it != std::end(symbols))
@@ -10,7 +10,7 @@ symbol* Symbol_table::get_symbol(Symbol_name name)
 	}
 	else
 	{
-		auto new_symbol = new symbol(*this, name);
+		auto new_symbol = new symbol(name);
 		symbols[name] = new_symbol;
 		return new_symbol;
 	}
