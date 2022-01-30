@@ -28,12 +28,12 @@ namespace stmt
 
 		virtual std::u16string get_statement_type() { return u"<unknown>"; }
 
-		scope get_scope();
-		virtual void set_scope(scope scope);
+		scope* get_scope();
+		virtual void set_scope(scope* scope);
 
 	protected:
 		virtual void parse_internal(Parser& parser) = 0;
 
-		scope scope;
+		scope* scope;
 	};
 }

@@ -17,11 +17,11 @@ bool scope::is_root()
 	return statement == nullptr;
 }
 
-scope scope::get_parent()
+scope* scope::get_parent()
 {
 	if (is_root())
 	{
-		return *this;
+		return this;
 	}
 	else
 	{

@@ -23,12 +23,12 @@ stmt::statement* stmt::statement::init(Parser& parser)
 	return this;
 }
 
-scope stmt::statement::get_scope()
+scope* stmt::statement::get_scope()
 {
 	return scope;
 }
 
-void stmt::statement::set_scope(::scope scope)
+void stmt::statement::set_scope(::scope* scope)
 {
 	this->scope = scope;
 }
