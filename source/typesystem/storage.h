@@ -8,6 +8,6 @@ namespace typesystem
 {
 	struct storage
 	{
-		std::vector<typesystem::type> types;
+		std::vector<typesystem::type*> types;
 	};
 };

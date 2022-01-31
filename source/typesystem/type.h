@@ -2,14 +2,19 @@
 #pragma once
 
 #include <vector>
+#include "typesystem/info.h"
 #include "typesystem/field.h"
 #include "typesystem/function.h"
 
 namespace typesystem
 {
-	struct type
+	struct type : public typesystem::info
 	{
-		std::vector<typesystem::field> fields;
-		std::vector<typesystem::function> functions;
+	public:
+		std::u8string name;
+		typesystem::type* parent_type;
+
+		std::vector<typesystem::field*> fields;
+		std::vector<typesystem::function*> functions;
 	};
 };
