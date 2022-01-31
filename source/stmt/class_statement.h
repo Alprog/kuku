@@ -23,6 +23,6 @@ namespace stmt
 		symbol_reference* definition;
 
 		typesystem::type* type_info;
-		statement_scope scope;
+		statement_scope inner_scope;
 	};
 }
