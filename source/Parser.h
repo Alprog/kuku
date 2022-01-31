@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "lexer.h"
-#include "scope.h"
+#include "statement_scope.h"
 
 class symbol_reference;
 class source_project;

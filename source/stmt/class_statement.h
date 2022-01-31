@@ -3,6 +3,7 @@
 
 #include "statement.h"
 #include "symbol.h"
+#include "typesystem/type.h"
 
 namespace stmt
 {
@@ -15,7 +16,9 @@ namespace stmt
 
 	protected:
 		virtual void parse_internal(Parser& parser) override;
+		virtual void define_symbols() override;
 
+		typesystem::type* type_info;
 		symbol_reference* reference;
 	};
 }

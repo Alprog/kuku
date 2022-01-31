@@ -23,12 +23,17 @@ stmt::statement* stmt::statement::init(Parser& parser)
 	return this;
 }
 
-scope* stmt::statement::get_scope()
+statement_scope* stmt::statement::get_scope()
 {
 	return scope;
 }
 
-void stmt::statement::set_scope(::scope* scope)
+void stmt::statement::set_scope(statement_scope* scope)
 {
 	this->scope = scope;
+}
+
+void stmt::statement::define_symbols()
+{
+
 }

@@ -1,6 +1,6 @@
 
 #include "scope_analyzer.h"
-#include "scope.h"
+#include "statement_scope.h"
 #include "stmt/end_statement.h"
 
 scope_analyzer::scope_analyzer(std::vector<stmt::statement*>& statements)
@@ -10,7 +10,7 @@ scope_analyzer::scope_analyzer(std::vector<stmt::statement*>& statements)
 
 void scope_analyzer::analyze()
 {
-	auto current_scope = new ::scope();
+	auto current_scope = new statement_scope();
 	
 	for (int i = 0; i < statements.size(); i++)
 	{
@@ -30,7 +30,7 @@ void scope_analyzer::analyze()
 		auto inner_scope_type = statement->get_inner_scope_type();
 		if (inner_scope_type != scope_type::none)
 		{
-			current_scope = new scope(statement);
+			current_scope = new statement_scope(statement);
 		}
 		else if (dynamic_cast<stmt::end_statement*>(statement))
 		{

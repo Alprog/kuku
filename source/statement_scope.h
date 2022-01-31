@@ -11,14 +11,14 @@ namespace stmt
 	class statement;
 }
 
-class scope
+class statement_scope
 {
 public:
-	scope();
-	scope(stmt::statement* statement);
+	statement_scope();
+	statement_scope(stmt::statement* statement);
 
 	bool is_root();
-	scope* get_parent();
+	statement_scope* get_parent();
 	scope_type get_type();
 
 	std::vector<symbol*> symbols;

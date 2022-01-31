@@ -3,7 +3,7 @@
 
 #include "token.h"
 #include "parser.h"
-#include "scope.h"
+#include "statement_scope.h"
 #include "scope_type.h"
 
 #define CHECK_END_OF_STATEMENT if (parser.current->is_end_statement_token()) return;
@@ -28,12 +28,14 @@ namespace stmt
 
 		virtual std::u16string get_statement_type() { return u"<unknown>"; }
 
-		scope* get_scope();
-		virtual void set_scope(scope* scope);
+		statement_scope* get_scope();
+		virtual void set_scope(statement_scope* scope);
+
+		virtual void define_symbols();
 
 	protected:
 		virtual void parse_internal(Parser& parser) = 0;
 
-		scope* scope;
+		statement_scope* scope;
 	};
 }
