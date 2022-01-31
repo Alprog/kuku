@@ -31,7 +31,7 @@ namespace stmt
 		statement_scope* get_scope();
 		virtual void set_scope(statement_scope* scope);
 
-		virtual void define_symbols();
+		virtual void define_symbols(statement_scope*& scope);
 
 	protected:
 		virtual void parse_internal(Parser& parser) = 0;

@@ -27,6 +27,8 @@ void scope_analyzer::analyze()
 			continue;
 		}
 
+		statement->define_symbols(current_scope);
+
 		auto inner_scope_type = statement->get_inner_scope_type();
 		if (inner_scope_type != scope_type::none)
 		{

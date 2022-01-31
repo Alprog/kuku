@@ -16,9 +16,9 @@ namespace stmt
 
 	protected:
 		virtual void parse_internal(Parser& parser) override;
-		virtual void define_symbols() override;
+		virtual void define_symbols(statement_scope*& scope) override;
 
 		typesystem::type* type_info;
-		symbol_reference* reference;
+		symbol_reference* definition;
 	};
 }

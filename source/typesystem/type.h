@@ -11,7 +11,7 @@ namespace typesystem
 	struct type : public typesystem::info
 	{
 	public:
-		std::u8string name;
+		std::u16string name;
 		typesystem::type* parent_type;
 
 		std::vector<typesystem::field*> fields;
