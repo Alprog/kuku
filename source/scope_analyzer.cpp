@@ -10,7 +10,7 @@ scope_analyzer::scope_analyzer(std::vector<stmt::statement*>& statements)
 
 void scope_analyzer::analyze()
 {
-	auto current_scope = new statement_scope();
+	auto current_scope = new statement_scope(nullptr);
 	
 	for (int i = 0; i < statements.size(); i++)
 	{

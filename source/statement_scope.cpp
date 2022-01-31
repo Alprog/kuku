@@ -2,11 +2,6 @@
 #include "statement_scope.h"
 #include "stmt/statement.h"
 
-statement_scope::statement_scope()
-	: statement{ nullptr }
-{
-}
-
 statement_scope::statement_scope(stmt::statement* statement)
 	: statement{ statement }
 {

@@ -14,7 +14,6 @@ namespace stmt
 class statement_scope
 {
 public:
-	statement_scope();
 	statement_scope(stmt::statement* statement);
 
 	bool is_root();
