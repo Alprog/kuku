@@ -1,11 +1,11 @@
 
 #pragma once
 
-#include "statement.h"
+#include "scoped_statement.h"
 
 namespace stmt
 {
-	class block_statement : public statement
+	class block_statement : public scoped_statement
 	{
 		virtual std::u16string get_statement_type() override { return u"block_statement"; }
 		

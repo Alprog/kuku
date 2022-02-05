@@ -28,3 +28,8 @@ scope_type statement_scope::get_type()
 {
 	return is_root() ? scope_type::module_root : statement->get_inner_scope_type();
 }
+
+void statement_scope::define_symbol(symbol* symbol)
+{
+	symbols.push_back(symbol);
+}

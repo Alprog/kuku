@@ -3,24 +3,22 @@
 #include "symbol_reference.h"
 
 stmt::class_statement::class_statement()
-	: inner_scope{ this }
-	, definition{ nullptr }
-	, type_info{ nullptr }
+	: symboled_statement{ &type_info }
 {
 }
 
 void stmt::class_statement::parse_internal(Parser& parser)
 {
 	parser.require(Token_type::Keyword_class);
-	definition = parser.read_symbol_reference();
+	definition_reference = *parser.read_symbol_reference();
+	definition_symbol.name = definition_reference.token->get_source_text();
+	type_info.name = definition_reference.token->get_source_text();
 }
 
 void stmt::class_statement::define_symbols(statement_scope*& scope)
 {
-	type_info = new typesystem::type();
-	type_info->name = this->definition->token->get_source_text();
+	scope->define_symbol(&definition_symbol);
 
-	auto definition_symbol = new symbol(type_info, definition);
-	definition_symbol->inner_scope = &this->inner_scope;
+	
 	scope = &inner_scope;
 } 

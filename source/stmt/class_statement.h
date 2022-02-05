@@ -1,13 +1,13 @@
 
 #pragma once
 
-#include "statement.h"
+#include "symboled_statement.h"
 #include "symbol.h"
 #include "typesystem/type.h"
 
 namespace stmt
 {
-	class class_statement : public statement
+	class class_statement : public symboled_statement
 	{
 	public:
 		class_statement();
@@ -20,9 +20,6 @@ namespace stmt
 		virtual void parse_internal(Parser& parser) override;
 		virtual void define_symbols(statement_scope*& scope) override;
 
-		symbol_reference* definition;
-
-		typesystem::type* type_info;
-		statement_scope inner_scope;
+		typesystem::type type_info;
 	};
 }

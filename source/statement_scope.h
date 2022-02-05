@@ -20,6 +20,8 @@ public:
 	statement_scope* get_parent();
 	scope_type get_type();
 
+	void define_symbol(symbol* symbol);
+
 	std::vector<symbol*> symbols;
 
 	stmt::statement* statement;
