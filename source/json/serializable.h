@@ -2,6 +2,7 @@
 #pragma once
 
 #include "json/object.h"
+#include <type_traits>
 
 namespace json
 {
@@ -53,10 +54,10 @@ VectorType from_json(json::object& object)
 
 #define JFIELD(memberName) new json::field{ #memberName, &Self::memberName }
 
-#define JSCHEME(Class, ...) \
+#define JSCHEME(...) \
 virtual json::scheme& get_json_scheme() override \
 { \
-    using Self = Class; \
+    using Self = std::remove_pointer_t<decltype(this)>; \
     static auto scheme = json::scheme( { __VA_ARGS__ } ); \
     return scheme; \
 }

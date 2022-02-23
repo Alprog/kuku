@@ -13,6 +13,6 @@ namespace lsp
         range range;
         std::u16string text;
 
-        JSCHEME(text_document_content_change_event, JFIELD(range), JFIELD(text))
+        JSCHEME(JFIELD(range), JFIELD(text))
     };
 }

@@ -14,6 +14,6 @@ namespace lsp
         int version;
         std::u8string text;
 
-        JSCHEME(text_document_item, JFIELD(uri), JFIELD(language_id), JFIELD(version), JFIELD(text))
+        JSCHEME(JFIELD(uri), JFIELD(language_id), JFIELD(version), JFIELD(text))
     };
 }

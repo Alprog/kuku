@@ -5,6 +5,8 @@
 #include "json/field.h"
 #include "json/scheme.h"
 
+#include <type_traits>
+
 namespace lsp
 {
     struct position : public json::serializable
@@ -18,6 +20,6 @@ namespace lsp
 
         std::strong_ordering operator<=>(const position& other) const;
 
-        JSCHEME(position, JFIELD(line), JFIELD(character))
+        JSCHEME(JFIELD(line), JFIELD(character))
     };
 }

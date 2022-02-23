@@ -15,6 +15,6 @@ namespace lsp
         position start;
         position end;
 
-        JSCHEME(range, JFIELD(start), JFIELD(end))
+        JSCHEME(JFIELD(start), JFIELD(end))
     };
 }

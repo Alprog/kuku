@@ -11,6 +11,6 @@ namespace lsp
     {
         std::string uri;
 
-        JSCHEME(text_document_identifier, JFIELD(uri))
+        JSCHEME(JFIELD(uri))
     };
 }

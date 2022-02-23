@@ -12,6 +12,6 @@ namespace lsp
         std::string uri;
         int version;
 
-        JSCHEME(versioned_text_document_identifier, JFIELD(uri), JFIELD(version))
+        JSCHEME(JFIELD(uri), JFIELD(version))
     };
 }
