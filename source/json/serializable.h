@@ -1,8 +1,9 @@
 
 #pragma once
 
-#include "json/object.h"
 #include <type_traits>
+#include "for_each.h"
+#include "json/object.h"
 
 namespace json
 {
@@ -58,6 +59,6 @@ VectorType from_json(json::object& object)
 virtual json::scheme& get_json_scheme() override \
 { \
     using Self = std::remove_pointer_t<decltype(this)>; \
-    static auto scheme = json::scheme( { __VA_ARGS__ } ); \
+    static auto scheme = json::scheme( { FOR_EACH(JFIELD, __VA_ARGS__) } ); \
     return scheme; \
 }

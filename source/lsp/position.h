@@ -20,6 +20,6 @@ namespace lsp
 
         std::strong_ordering operator<=>(const position& other) const;
 
-        JSCHEME(JFIELD(line), JFIELD(character))
+        JSCHEME(line, character)
     };
 }

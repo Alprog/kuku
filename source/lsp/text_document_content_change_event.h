@@ -13,6 +13,6 @@ namespace lsp
         range range;
         std::u16string text;
 
-        JSCHEME(JFIELD(range), JFIELD(text))
+        JSCHEME(range, text)
     };
 }

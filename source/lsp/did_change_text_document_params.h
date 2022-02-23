@@ -14,6 +14,6 @@ namespace lsp
         lsp::versioned_text_document_identifier text_document;
         std::vector<lsp::text_document_content_change_event> content_changes;
 
-        JSCHEME(JFIELD(text_document), JFIELD(content_changes))
+        JSCHEME(text_document, content_changes)
     };
 }

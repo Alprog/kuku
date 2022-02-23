@@ -12,6 +12,6 @@ namespace lsp
         std::string uri;
         int version;
 
-        JSCHEME(JFIELD(uri), JFIELD(version))
+        JSCHEME(uri, version)
     };
 }
