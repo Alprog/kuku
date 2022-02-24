@@ -6,15 +6,24 @@
 
 namespace stmt
 {
-	class scoped_statement : public statement
+	class scoped_statement_base : public virtual stmt::statement
 	{
 	public:
-		scoped_statement()
-			: inner_scope(this)
+		scoped_statement_base(scope_type scope_type)
+			: inner_scope(this, scope_type)
 		{
 		}
 
-	protected:
 		statement_scope inner_scope;
+	};
+
+	template <scope_type ScopeType>
+	class scoped_statement : public stmt::scoped_statement_base
+	{
+	public:
+		scoped_statement()
+			: scoped_statement_base(ScopeType)
+		{
+		}
 	};
 }

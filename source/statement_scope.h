@@ -14,11 +14,11 @@ namespace stmt
 class statement_scope
 {
 public:
-	statement_scope(stmt::statement* statement);
+	statement_scope(stmt::statement* statement, scope_type type);
 
 	bool is_root();
 	statement_scope* get_parent();
-	scope_type get_type();
+	scope_type type;
 
 	void define_symbol(symbol* symbol);
 

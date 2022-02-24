@@ -24,14 +24,13 @@ namespace stmt
 		statement* init(Parser& parser);
 
 		virtual scope_type get_allowed_scopes() const = 0;
-		virtual scope_type get_inner_scope_type() const = 0;
 
 		virtual std::u16string get_statement_type() { return u"<unknown>"; }
 
 		statement_scope* get_scope();
 		virtual void set_scope(statement_scope* scope);
 
-		virtual void define_symbols(statement_scope*& scope);
+		virtual void define_symbols(statement_scope* scope);
 
 	protected:
 		virtual void parse_internal(Parser& parser) = 0;

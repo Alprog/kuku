@@ -1,6 +1,7 @@
 
 #include "scope_analyzer.h"
 #include "statement_scope.h"
+#include "stmt/scoped_statement.h"
 #include "stmt/end_statement.h"
 
 scope_analyzer::scope_analyzer(std::vector<stmt::statement*>& statements)
@@ -10,7 +11,7 @@ scope_analyzer::scope_analyzer(std::vector<stmt::statement*>& statements)
 
 void scope_analyzer::analyze()
 {
-	auto current_scope = new statement_scope(nullptr);
+	auto current_scope = new statement_scope(nullptr, scope_type::module_root);
 	
 	for (int i = 0; i < statements.size(); i++)
 	{
@@ -20,7 +21,7 @@ void scope_analyzer::analyze()
 		statement->set_scope(current_scope);
 
 		auto allowed_scope_types = statement->get_allowed_scopes();
-		if ((allowed_scope_types & current_scope->get_type()) == scope_type::none)
+		if ((allowed_scope_types & current_scope->type) == scope_type::none)
 		{
 			statement->is_valid = false;
 			statement->error_text = u"not valid scope";
@@ -29,7 +30,12 @@ void scope_analyzer::analyze()
 
 		statement->define_symbols(current_scope);
 
-		if (dynamic_cast<stmt::end_statement*>(statement))
+		auto scoped_statement = dynamic_cast<stmt::scoped_statement_base*>(statement);
+		if (scoped_statement)
+		{
+			current_scope = &scoped_statement->inner_scope;
+		}
+		else if (dynamic_cast<stmt::end_statement*>(statement))
 		{
 			current_scope = current_scope->get_parent();
 		}

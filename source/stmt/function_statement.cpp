@@ -1,11 +1,6 @@
 
 #include "function_statement.h"
 
-stmt::function_statement::function_statement()
-	: scoped_symboled_statement{ &function_info }
-{
-}
-
 void stmt::function_statement::parse_internal(Parser& parser)
 {
 	parser.require(Token_type::Keyword_function);
@@ -21,10 +16,7 @@ void stmt::function_statement::parse_internal(Parser& parser)
 	parser.require(Token_type::Identifier);
 }
 
-void stmt::function_statement::define_symbols(statement_scope*& scope)
+void stmt::function_statement::define_symbols(statement_scope* scope)
 {
 	scope->define_symbol(&definition_symbol);
-
-
-	scope = &inner_scope;
 }

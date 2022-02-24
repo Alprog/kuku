@@ -1,17 +1,17 @@
 
 #pragma once
 
-#include "stmt/scoped_statement.h"
+#include "stmt/statement.h"
 #include "symbol.h"
 #include "symbol_reference.h"
 #include "typesystem/info.h"
 
 namespace stmt
 {
-	class symboled
+	class symboled_statement_base : public virtual stmt::statement
 	{
 	public:
-		symboled(typesystem::info* info)
+		symboled_statement_base(typesystem::info* info)
 			: definition_symbol{ info, &definition_reference }
 		{
 		}
@@ -20,17 +20,15 @@ namespace stmt
 		symbol_reference definition_reference;
 	};
 
-	class symboled_statement : public stmt::statement, public symboled
-	{
-	};
-
-	class scoped_symboled_statement : public stmt::scoped_statement, public symboled
+	template <typename InfoT>
+	class symboled_statement : public symboled_statement_base
 	{
 	public:
-		scoped_symboled_statement(typesystem::info* info )
-			: symboled{ info }
+		symboled_statement()
+			: symboled_statement_base{ &info }
 		{
-			definition_symbol.inner_scope = &inner_scope;
 		}
+
+		InfoT info;
 	};
 }

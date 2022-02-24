@@ -44,6 +44,7 @@ T* Parser::create_node()
     auto node = new T();
     node->init(*this);
     return node;
+    return nullptr;
 }
 
 stmt::statement* Parser::parse_next_statement()
@@ -178,4 +179,5 @@ symbol_reference* Parser::read_symbol_reference()
     {
         throw unexpected_error();
     }
+    return nullptr;
 }

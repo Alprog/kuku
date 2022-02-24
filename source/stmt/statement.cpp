@@ -33,7 +33,7 @@ void stmt::statement::set_scope(statement_scope* scope)
 	this->scope = scope;
 }
 
-void stmt::statement::define_symbols(statement_scope*& scope)
+void stmt::statement::define_symbols(statement_scope* scope)
 {
 
 }

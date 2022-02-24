@@ -2,8 +2,9 @@
 #include "statement_scope.h"
 #include "stmt/statement.h"
 
-statement_scope::statement_scope(stmt::statement* statement)
+statement_scope::statement_scope(stmt::statement* statement, scope_type type)
 	: statement{ statement }
+	, type{ type }
 {
 }
 
@@ -22,11 +23,6 @@ statement_scope* statement_scope::get_parent()
 	{
 		return statement->get_scope();
 	}
-}
-
-scope_type statement_scope::get_type()
-{
-	return is_root() ? scope_type::module_root : statement->get_inner_scope_type();
 }
 
 void statement_scope::define_symbol(symbol* symbol)
