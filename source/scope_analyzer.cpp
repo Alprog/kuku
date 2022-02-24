@@ -2,6 +2,7 @@
 #include "scope_analyzer.h"
 #include "statement_scope.h"
 #include "stmt/scoped_statement.h"
+#include "stmt/symboled_statement.h"
 #include "stmt/end_statement.h"
 
 scope_analyzer::scope_analyzer(std::vector<stmt::statement*>& statements)
@@ -28,8 +29,12 @@ void scope_analyzer::analyze()
 			continue;
 		}
 
-		statement->define_symbols(current_scope);
-
+		auto symboled_statement = dynamic_cast<stmt::symboled_statement_base*>(statement);
+		if (symboled_statement)
+		{
+			current_scope->define_symbol(&symboled_statement->definition_symbol);
+		}
+		
 		auto scoped_statement = dynamic_cast<stmt::scoped_statement_base*>(statement);
 		if (scoped_statement)
 		{
