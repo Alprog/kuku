@@ -7,6 +7,8 @@
 
 namespace typesystem
 {
+	class type;
+
 	class variable : public typesystem::info
 	{
 	public:

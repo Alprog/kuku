@@ -7,7 +7,7 @@
 
 namespace stmt
 {
-	class class_statement : public symboled_statement
+	class class_statement : public scoped_symboled_statement
 	{
 	public:
 		class_statement();

@@ -29,12 +29,7 @@ void scope_analyzer::analyze()
 
 		statement->define_symbols(current_scope);
 
-		auto inner_scope_type = statement->get_inner_scope_type();
-		if (inner_scope_type != scope_type::none)
-		{
-			current_scope = new statement_scope(statement);
-		}
-		else if (dynamic_cast<stmt::end_statement*>(statement))
+		if (dynamic_cast<stmt::end_statement*>(statement))
 		{
 			current_scope = current_scope->get_parent();
 		}

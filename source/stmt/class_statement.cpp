@@ -3,7 +3,7 @@
 #include "symbol_reference.h"
 
 stmt::class_statement::class_statement()
-	: symboled_statement{ &type_info }
+	: scoped_symboled_statement{ &type_info }
 {
 }
 
@@ -21,4 +21,4 @@ void stmt::class_statement::define_symbols(statement_scope*& scope)
 
 	
 	scope = &inner_scope;
-} 
+}
