@@ -28,7 +28,7 @@ namespace stmt
 		virtual std::u16string get_statement_type() { return u"<unknown>"; }
 
 		statement_scope* get_scope();
-		virtual void set_scope(statement_scope* scope);
+		void set_scope(statement_scope* scope);
 
 		virtual void define_symbols(statement_scope* scope);
 
