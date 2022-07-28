@@ -46,7 +46,7 @@ VectorType from_json(json::object& object)
         VectorType vector;
         for (int i = 0; i < object.size(); i++)
         {
-            vector.push_back(from_json<VectorType::value_type>(object[i]));
+            vector.push_back(from_json<typename VectorType::value_type>(object[i]));
         }
         return vector;
     }
