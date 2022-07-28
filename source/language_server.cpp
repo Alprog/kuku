@@ -33,6 +33,10 @@ void language_server::process_message(json::object& message)
         on_did_change(message);
     else if (method == "textDocument/hover")
         on_hover(message);
+    else if (method == "textDocument/codeAction")
+        on_code_action(message);
+    else if (method == "workspace/executeCommand")
+        on_execute_command(message);
     else if (method == "textDocument/completion")
         on_completion(message);
     else if (method == "$/cancelRequest")
@@ -58,7 +62,18 @@ void language_server::on_initialize(json::object& message)
                     { "supported", true }
                 }}
             }},
-            { "hoverProvider", true }
+            { "hoverProvider", true },
+            { "executeCommandProvider", {
+                { "commands", { "a", "b" } }
+            }},
+            { "codeActionProvider", {
+                { "codeActionKinds", { 
+                    "refactor.extract.function",
+                    "refactor.extract.line",
+                    "source.fixAll"
+                }},
+                { "resolveProvider", false }
+            }}
         }}
     };
 
@@ -127,6 +142,88 @@ void language_server::on_hover(json::object& message)
     };
 
     ide_connection << response;
+}
+
+void language_server::on_code_action(json::object& message)
+{
+    /*
+        "textDocument": {
+            "uri": "file:///c%3A/kuku/data/main.kuku"
+        },
+        "range" : {
+            "start": {
+                "line": 17,
+                "character" : 16
+            },
+            "end" : {
+                "line": 17,
+                "character" : 16
+            }
+        },
+        "context": {
+            "diagnostics": []
+        }
+    */
+
+    auto id = message["id"].get<int>();
+
+    json::object result = {
+        {
+            { "title", "extract function" },
+            { "kind", "refactor.extract.function" },
+            { "command", {
+                { "title", "CommandA" },
+                { "command", "a" }
+            }},
+            { "diagnostics", {
+                {
+                    { "severity", 4 },
+
+                    { "tags", { 1 } },
+
+                    { "message", "bla-bla" },
+
+                    { "range", {
+                        { "start", {
+                            { "line", 1 },
+                            { "character", 1 },
+                        }},
+                        { "end", {
+                            { "line", 1 },
+                            { "character", 1 },
+                        }}
+                    }}
+                }
+            }}
+        },
+        /*{
+            { "title", "extract line" },
+            { "kind", "refactor.extract.line" },
+            { "command", {
+                { "title", "CommandB" },
+                { "command", "b" },
+            }},
+            { "disabled", {{ "reason", "just because" }}}
+        }*/
+    };
+
+    if (!message["params"]["context"].contains("only"))
+    {
+        result = {};
+    }
+
+    json::object response = {
+        { "jsonrpc", "2.0" },
+        { "id", id },
+        { "result", result }
+    };
+
+    ide_connection << response;
+}
+
+void language_server::on_execute_command(json::object& message)
+{
+
 }
 
 void language_server::on_completion(json::object& message)
