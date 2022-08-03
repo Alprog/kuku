@@ -4,9 +4,12 @@
 #include "stmt/scoped_statement.h"
 #include "stmt/symboled_statement.h"
 #include "stmt/end_statement.h"
+#include "translation_module.h"
+#include "source_project.h"
 
-scope_analyzer::scope_analyzer(std::vector<stmt::statement*>& statements)
-	: statements{ statements }
+scope_analyzer::scope_analyzer(translation_module& module, std::vector<stmt::statement*>& statements)
+	: module{ module }
+	, statements{ statements }
 {
 }
 
@@ -33,6 +36,7 @@ void scope_analyzer::analyze()
 		if (symboled_statement)
 		{
 			current_scope->define_symbol(&symboled_statement->definition_symbol);
+			module.project.symbol_table.register_symbol(symboled_statement->definition_symbol);
 		}
 		
 		auto scoped_statement = dynamic_cast<stmt::scoped_statement_base*>(statement);

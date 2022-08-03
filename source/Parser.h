@@ -5,7 +5,7 @@
 #include "statement_scope.h"
 
 class symbol_reference;
-class source_project;
+class translation_module;
 namespace stmt
 {
 	class statement;
@@ -14,13 +14,13 @@ namespace stmt
 class Parser
 {
 public:
-	Parser(source_project& project, token** it);
+	Parser(translation_module& module, token** it);
 	void skip_empty_tokens();
 
 	stmt::statement* parse_next_statement();
 	void parse_expression();
 
-	source_project& project;
+	translation_module& module;
 	token** it;
 	token* current;
 	

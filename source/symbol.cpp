@@ -10,3 +10,8 @@ symbol::symbol(typesystem::info* info, symbol_reference* definition)
 {
 
 }
+
+symbol::~symbol()
+{
+
+}

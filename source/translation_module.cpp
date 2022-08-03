@@ -35,7 +35,7 @@ void translation_module::tokenize()
 
 void translation_module::parse_statements()
 {
-    Parser parser(project, &tokens[0]);
+    Parser parser(*this, &tokens[0]);
     while (true)
     {
         auto statement = parser.parse_next_statement();
@@ -46,7 +46,7 @@ void translation_module::parse_statements()
 
 void translation_module::analyze_scope()
 {
-    scope_analyzer analyzer(statements);
+    scope_analyzer analyzer(*this, statements);
     analyzer.analyze();
 }
 

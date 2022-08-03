@@ -15,13 +15,10 @@ class symbol
 {
 public:
 	symbol(typesystem::info* info, symbol_reference* definition);
-
-	typesystem::info* info;
-
-	symbol_name name;
-
-	//Scope& parent_scope;
+	~symbol();
 	
+	symbol_name name;
+	typesystem::info* info;
 	symbol_reference* definition;
 	std::vector<symbol_reference*> usages;
 	statement_scope* inner_scope;

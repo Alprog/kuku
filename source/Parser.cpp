@@ -14,8 +14,8 @@
 #include "source_project.h"
 #include "symbol_reference.h"
 
-Parser::Parser(source_project& project, token** it)
-	: project{ project }
+Parser::Parser(translation_module& module, token** it)
+	: module{ module }
 	, it{ it }
 	, current{ *it }
 {

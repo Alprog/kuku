@@ -19,7 +19,7 @@ public:
 
 	translation_module* get_module(std::string uri);
 
-	Symbol_table symbol_table;
+	symbol_table symbol_table;
 private:
 	std::map<std::string, translation_module*> modules;
 };  

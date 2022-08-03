@@ -6,11 +6,13 @@
 
 #include "symbol.h"
 
-class Symbol_table
+class symbol_table
 {
 public:
-	symbol* get_symbol(symbol_name name);
+	void register_symbol(symbol& symbol);
+	void remove_symbol(symbol& symbol);
 
+	symbol* get_symbol(symbol_name name);
 
 private:
 	std::map<symbol_name, symbol*> symbols;
