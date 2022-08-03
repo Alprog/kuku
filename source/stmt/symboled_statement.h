@@ -11,8 +11,8 @@ namespace stmt
 	class symboled_statement_base : public virtual stmt::statement
 	{
 	public:
-		symboled_statement_base(typesystem::info* info)
-			: definition_symbol{ info, &definition_reference }
+		symboled_statement_base(typesystem::info& info)
+			: definition_symbol{ info, definition_reference }
 		{
 		}
 
@@ -25,7 +25,7 @@ namespace stmt
 	{
 	public:
 		symboled_statement()
-			: symboled_statement_base{ &info }
+			: symboled_statement_base{ info }
 		{
 		}
 

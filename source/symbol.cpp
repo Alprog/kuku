@@ -3,7 +3,7 @@
 
 #include "symbol_table.h"
 
-symbol::symbol(typesystem::info* info, symbol_reference* definition)
+symbol::symbol(typesystem::info& info, symbol_reference& definition)
 	: info { info }
 	, definition { definition }
 	, inner_scope { nullptr }
