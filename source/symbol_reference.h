@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "symbol.h"
+#include "symbol/symbol.h"
 #include "token.h"
 
 class symbol_reference

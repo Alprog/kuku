@@ -2,33 +2,38 @@
 #pragma once
 
 #include "stmt/statement.h"
-#include "symbol.h"
+#include "symbol/symbol.h"
 #include "symbol_reference.h"
 #include "typesystem/info.h"
+#include <type_traits>
+#include "parser.h"
 
 namespace stmt
 {
 	class symboled_statement_base : public virtual stmt::statement
 	{
 	public:
-		symboled_statement_base(typesystem::info& info)
-			: definition_symbol{ info, definition_reference }
-		{
-		}
+		virtual symbol* get_symbol() = 0;
 
-		symbol definition_symbol;
-		symbol_reference definition_reference;
+		symbol_reference symbol_definition_reference;
 	};
 
-	template <typename InfoT>
+	template <typename T>
+	concept symbol_type = std::is_base_of<symbol, T>::value;
+
+	template <symbol_type SymbolT>
 	class symboled_statement : public symboled_statement_base
 	{
 	public:
-		symboled_statement()
-			: symboled_statement_base{ info }
+		virtual symbol* get_symbol() override { return symbol; }
+
+		void parse_symbol(Parser& parser)
 		{
+			symbol_definition_reference = *parser.read_symbol_reference();
+			symbol = new SymbolT(symbol_definition_reference);
+			symbol_definition_reference.symbol = symbol;
 		}
 
-		InfoT info;
+		SymbolT* symbol;
 	};
 }

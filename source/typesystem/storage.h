@@ -2,12 +2,12 @@
 #pragma once
 
 #include <vector>
-#include "typesystem/type.h"
+#include "symbol/type_symbol.h"
 
 namespace typesystem
 {
 	struct storage
 	{
-		std::vector<typesystem::type*> types;
+		std::vector<type_symbol*> types;
 	};
 };

@@ -14,12 +14,12 @@ using symbol_name = std::u16string;
 class symbol
 {
 public:
-	symbol(typesystem::info& info, symbol_reference& definition);
+	symbol(symbol_reference& definition);
 	~symbol();
-	
+
 	symbol_name name;
-	typesystem::info& info;
-	symbol_reference& definition;
+
+	symbol_reference* definition;
 	std::vector<symbol_reference*> usages;
-	statement_scope* inner_scope;
 };
+

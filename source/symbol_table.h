@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 
-#include "symbol.h"
+#include "symbol/symbol.h"
 
 class symbol_table
 {

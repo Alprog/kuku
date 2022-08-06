@@ -6,13 +6,13 @@
 
 namespace stmt
 {
-	template <scope_type ScopeType, typename InfoT>
-	class scoped_symboled_statement : public stmt::scoped_statement<ScopeType>, public stmt::symboled_statement<InfoT>
+	template <scope_type ScopeT, typename SymbolT>
+	class scoped_symboled_statement : public stmt::scoped_statement<ScopeT>, public stmt::symboled_statement<SymbolT>
 	{
 	public:
 		scoped_symboled_statement()
 		{
-			symboled_statement<InfoT>::definition_symbol.inner_scope = &(scoped_statement<ScopeType>::inner_scope);
+			//symboled_statement<InfoT>::definition_symbol.inner_scope = &(scoped_statement<ScopeType>::inner_scope);
 		}
 	};
 }

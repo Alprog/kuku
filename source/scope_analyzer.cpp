@@ -35,8 +35,7 @@ void scope_analyzer::analyze()
 		auto symboled_statement = dynamic_cast<stmt::symboled_statement_base*>(statement);
 		if (symboled_statement)
 		{
-			current_scope->define_symbol(&symboled_statement->definition_symbol);
-			module.project.symbol_table.register_symbol(symboled_statement->definition_symbol);
+			current_scope->define_symbol(symboled_statement->get_symbol());
 		}
 		
 		auto scoped_statement = dynamic_cast<stmt::scoped_statement_base*>(statement);
