@@ -7,6 +7,8 @@
 #include "typesystem/info.h"
 #include <type_traits>
 #include "parser.h"
+#include "symbol/function_symbol.h"
+#include "castable_unique_ptr.h"
 
 namespace stmt
 {
@@ -25,15 +27,15 @@ namespace stmt
 	class symboled_statement : public symboled_statement_base
 	{
 	public:
-		virtual symbol* get_symbol() override { return symbol; }
+		virtual symbol* get_symbol() override { return symbol.get(); }
 
 		void parse_symbol(Parser& parser)
 		{
 			symbol_definition_reference = *parser.read_symbol_reference();
-			symbol = new SymbolT(symbol_definition_reference);
+			symbol = std::make_unique<SymbolT>(symbol_definition_reference);
 			symbol_definition_reference.symbol = symbol;
 		}
 
-		SymbolT* symbol;
+		castable_unique_ptr<SymbolT> symbol;
 	};
 }
