@@ -2,6 +2,10 @@
 #include "statement.h"
 #include "unexepected_error.h"
 
+stmt::statement::~statement()
+{
+}
+
 stmt::statement* stmt::statement::init(Parser& parser)
 {
 	this->start_token = parser.current;

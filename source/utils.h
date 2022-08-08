@@ -12,14 +12,11 @@ std::vector<StringT> split(StringT line, StringT delimeter)
     size_t index = line.find(delimeter);
     while (index != StringT::npos)
     {
-        if (start != index)
-        {
-            result.push_back(line.substr(start, index - start));
-        }
+        result.push_back(line.substr(start, index - start));
         start = index + delimeter.size();
         index = line.find(delimeter, start);
     }
-    if (start < line.size())
+    if (start <= line.size())
     {
         result.push_back(line.substr(start));
     }

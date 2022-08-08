@@ -13,6 +13,8 @@ namespace stmt
 	class statement
 	{
 	public:
+		virtual ~statement();
+
 		token* start_token;
 		token* end_token;
 

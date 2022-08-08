@@ -11,6 +11,11 @@ translation_module::translation_module(source_project& project, Input_stream<utf
 {
 }
 
+translation_module::~translation_module()
+{
+    clear();
+}
+
 void translation_module::process()
 {
     tokenize();
@@ -53,6 +58,20 @@ void translation_module::analyze_scope()
 void translation_module::analyze_semantic()
 {
 
+}
+
+void translation_module::clear()
+{
+    for (auto& token : tokens)
+    {
+        delete token;
+    }
+    tokens.clear();
+    for (auto& statement : statements)
+    {
+        delete statement;
+    }
+    statements.clear();
 }
 
 void translation_module::print_statements()

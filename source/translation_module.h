@@ -13,6 +13,7 @@ class translation_module
 {
 public:
 	translation_module(source_project& project, Input_stream<utf16unit>& stream);
+	~translation_module();
 
 	void process();
 
@@ -21,6 +22,8 @@ public:
 	void analyze_scope();
 	void analyze_semantic();
 	
+	void clear();
+
 	void print_statements();
 
 	token* get_token(lsp::position position);

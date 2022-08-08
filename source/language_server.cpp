@@ -106,8 +106,8 @@ void language_server::on_did_change(json::object& message)
         {
             module->document.change_content(change);
         }
-        module->tokens.clear();
-        module->tokenize();
+        module->clear();
+        module->process();
     }
 }
 

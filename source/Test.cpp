@@ -53,4 +53,6 @@ void test()
 	project.add_file("C:/kuku/data/main.kuku");
 	project.process_all();
 	project.print_info();
+
+	project.clear_all();
 }

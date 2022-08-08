@@ -85,10 +85,6 @@ void Text_document::change_content(lsp::text_document_content_change_event& even
     auto end = event.range.end;
 
     auto new_lines = split(event.text, u"\r\n"_s);
-    if (new_lines.empty())
-    {
-        new_lines.push_back(u"");
-    }
     auto last_index = new_lines.size() - 1;
     new_lines[0] = lines[start.line].substr(0, start.character) + new_lines[0];
     new_lines[last_index] = new_lines[last_index] + lines[end.line].substr(end.character);
