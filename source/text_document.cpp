@@ -65,16 +65,29 @@ utf16unit Text_document::get_character(lsp::position position)
 std::u16string Text_document::get_substring(lsp::range range)
 {
     auto l1 = range.start.line;
-    auto l2 = range.start.line;
-    if (l1 == l2)
-    {
-        if (l1 < lines.size())
-        {
-            auto c1 = range.start.character;
-            auto c2 = range.end.character;
-            return lines[l1].substr(c1, c2 - c1);
+    auto l2 = range.end.line;
+    if (l1 < lines.size())
+	{
+		if (l1 == l2)
+		{
+			auto c1 = range.start.character;
+			auto c2 = range.end.character;
+			return lines[l1].substr(c1, c2 - c1);
+		}
+		else
+		{
+			auto result = lines[l1].substr(range.start.character);
+            for (int i = l1 + 1; i < l2; i++)
+            {
+                result += u"\r\n"_s + lines[i];
+            }
+            if (l2 < lines.size())
+            {
+                result += u"\r\n"_s + lines[l2].substr(0, range.end.character);
+            }
+            return result;
         }
-    }
+	}
 
     throw std::exception("not implemented");
 }

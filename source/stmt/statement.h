@@ -29,6 +29,7 @@ namespace stmt
 		virtual std::u16string get_statement_type() const { return u"<unknown>"; }
 
 		statement_scope* get_scope() const;
+		std::u16string get_source_text() const;
 		std::u8string get_hover_text() const;
 		lsp::range get_full_range() const;
 		void set_scope(statement_scope* scope);

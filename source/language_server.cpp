@@ -134,7 +134,7 @@ void language_server::on_hover(json::object& message)
 			stmt::statement* statement = module->get_statement(position);
             if (statement != nullptr)
             {
-                hover_text += u8"\r\n" + statement->get_hover_text();;
+                hover_text += u8"  \r\n" + statement->get_hover_text();;
             }
 
             result = {
