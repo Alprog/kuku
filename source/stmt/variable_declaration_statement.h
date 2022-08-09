@@ -11,7 +11,7 @@ namespace stmt
 	class variable_declaration_statement : public symboled_statement<variable_symbol>
 	{
 	public:
-		virtual std::u16string get_statement_type() override { return u"variable_declaration_statement"; }
+		virtual std::u16string get_statement_type() const override { return u"variable_declaration_statement"; }
 		
 		virtual scope_type get_allowed_scopes() const override { return scope_type::imperative_scopes; }
 

@@ -26,10 +26,11 @@ namespace stmt
 		statement* init(Parser& parser);
 
 		virtual scope_type get_allowed_scopes() const = 0;
+		virtual std::u16string get_statement_type() const { return u"<unknown>"; }
 
-		virtual std::u16string get_statement_type() { return u"<unknown>"; }
-
-		statement_scope* get_scope();
+		statement_scope* get_scope() const;
+		std::u8string get_hover_text() const;
+		lsp::range get_full_range() const;
 		void set_scope(statement_scope* scope);
 
 		virtual void define_symbols(statement_scope* scope);

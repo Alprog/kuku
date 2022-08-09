@@ -8,7 +8,7 @@ namespace stmt
 {
 	class unknown_statement : public stmt::statement
 	{
-		virtual std::u16string get_statement_type() override { return u"unknown_statement"; }
+		virtual std::u16string get_statement_type() const override { return u"unknown_statement"; }
 
 		virtual scope_type get_allowed_scopes() const override { return scope_type::any; }
 

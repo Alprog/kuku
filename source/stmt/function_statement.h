@@ -9,7 +9,7 @@ namespace stmt
 	class function_statement : public scoped_symboled_statement<scope_type::function_body, function_symbol>
 	{
 	public:
-		virtual std::u16string get_statement_type() override { return u"function_statement"; }
+		virtual std::u16string get_statement_type() const override { return u"function_statement"; }
 		virtual scope_type get_allowed_scopes() const override { return scope_type::class_body; }
 		
 		virtual void define_symbols(statement_scope* scope) override;

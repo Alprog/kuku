@@ -23,7 +23,7 @@ bool token::is_end_statement_token()
 
 std::u8string token::get_hover_text()
 {
-    return u8"**token:** "_s + get_u8name(type) + u8"  \r\n" +
+    return u8"**token:** "_s + get_u8name(type) + u8"\r\n" +
            u8"**Content:** " + unicode::to_utf8(get_source_text());
 }
 

@@ -27,6 +27,7 @@ public:
 	void print_statements();
 
 	token* get_token(lsp::position position);
+	stmt::statement* get_statement(lsp::position position);
 
 	source_project& project;
 

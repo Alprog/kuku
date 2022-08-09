@@ -127,12 +127,20 @@ void language_server::on_hover(json::object& message)
     if (module != nullptr)
     {
         token* token = module->get_token(position);
-        if (token != nullptr)
-        {
+		if (token != nullptr)
+		{
+            auto hover_text = token->get_hover_text();
+
+			stmt::statement* statement = module->get_statement(position);
+            if (statement != nullptr)
+            {
+                hover_text += u8"\r\n" + statement->get_hover_text();;
+            }
+
             result = {
-                { "contents", token->get_hover_text() }
+                { "contents", hover_text }
             };
-        }
+		}
     }
 
     json::object response = {

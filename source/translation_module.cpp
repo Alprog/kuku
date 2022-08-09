@@ -99,3 +99,15 @@ token* translation_module::get_token(lsp::position position)
     }
     return nullptr;
 }
+
+stmt::statement* translation_module::get_statement(lsp::position position)
+{
+    for (auto statement : statements)
+    {
+        if (statement->get_full_range().contains(position))
+        {
+            return statement;
+        }
+    }
+    return nullptr;
+}

@@ -73,6 +73,7 @@ stmt::statement* Parser::parse_next_statement()
     }
     else if (current->type == Token_type::Identifier)
     {
+        auto start_token = current;
         auto id = current->get_source_text();
         next();
         if (current->type == Token_type::Assign_operator)
@@ -85,9 +86,11 @@ stmt::statement* Parser::parse_next_statement()
                 next();
                 if (current->type == Token_type::End_of_line)
                 {
-                    next();
                     auto statement = new stmt::assign_statement();
+                    statement->start_token = start_token;
+                    statement->end_token = current;
                     statement->is_valid = true;
+                    next();
                     return statement;
                 }
             }
