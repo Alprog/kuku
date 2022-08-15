@@ -44,7 +44,6 @@ T* Parser::create_node()
     auto node = new T();
     node->init(*this);
     return node;
-    return nullptr;
 }
 
 stmt::statement* Parser::parse_next_statement()
@@ -73,6 +72,7 @@ stmt::statement* Parser::parse_next_statement()
     }
     else if (current->type == Token_type::Identifier)
     {
+        auto start_it = it;
         auto start_token = current;
         auto id = current->get_source_text();
         next();
@@ -96,6 +96,8 @@ stmt::statement* Parser::parse_next_statement()
             }
 
         }
+        current = start_token;
+        it = start_it;
     }
 
     return (new stmt::unknown_statement())->init(*this);
