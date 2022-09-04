@@ -30,7 +30,7 @@ int from_json<int>(json::object& object)
     {
         return object.get<int>();
     }
-    throw new std::exception("not integer");
+    throw std::exception("not integer");
 }
 
 template<>
@@ -40,7 +40,7 @@ float from_json<float>(json::object& object)
     {
         return object.get<float>();
     }
-    throw new std::exception("not float");
+    throw std::exception("not float");
 }
 
 template<>
@@ -50,7 +50,7 @@ std::string from_json<std::string>(json::object& object)
     {
         return object.get<std::string>();
     }
-    throw new std::exception("not string");
+    throw std::exception("not string");
 }
 
 template<>
@@ -60,7 +60,7 @@ std::u8string from_json<std::u8string>(json::object& object)
     {
         return object.get<std::u8string>();
     }
-    throw new std::exception("not string");
+    throw std::exception("not string");
 }
 
 template<>
@@ -70,5 +70,5 @@ std::u16string from_json<std::u16string>(json::object& object)
     {
         return object.get<std::u16string>();
     }
-    throw new std::exception("not string");
+    throw std::exception("not string");
 }
