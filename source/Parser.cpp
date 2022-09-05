@@ -78,7 +78,6 @@ stmt::statement* Parser::parse_next_statement()
         next();
         if (current->type == Token_type::Assign_operator)
         {
-            auto node = new Binary_operator_node(current);
             next();
 
             if (current->type == Token_type::Integer_literal || current->type == Token_type::String_literal)
@@ -169,13 +168,13 @@ void Parser::require_end_of_statement()
     }
 }
 
-symbol_reference* Parser::read_symbol_reference()
+symbol_reference Parser::read_symbol_reference()
 {
     if (current->type == Token_type::Identifier)
     {   
         auto name = current->get_source_text();
-        auto reference = new symbol_reference();
-        reference->token = current;
+        auto reference = symbol_reference();
+        reference.token = current;
         current->symbol_reference = reference;
         next();
         return reference;
@@ -184,5 +183,5 @@ symbol_reference* Parser::read_symbol_reference()
     {
         throw unexpected_error();
     }
-    return nullptr;
+    return {};
 }

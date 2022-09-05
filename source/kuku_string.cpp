@@ -25,6 +25,11 @@ String::String(std::u32string u32string)
 {
 }
 
+String::~String()
+{
+	delete[] bytes;
+}
+
 character String::get_character(integer index)
 {
 	switch (character_size)

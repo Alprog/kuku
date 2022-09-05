@@ -4,19 +4,24 @@
 #include <map>
 #include "console.h"
 
-std::map<std::u16string, Token_type> keywords { 
-    { u"and", Token_type::Keyword_and },
-    { u"class", Token_type::Keyword_class },
-    { u"do", Token_type::Keyword_do },
-    { u"else", Token_type::Keyword_else },
-    { u"end", Token_type::Keyword_end },
-    { u"for", Token_type::Keyword_for },
-    { u"function", Token_type::Keyword_function },
-    { u"or", Token_type::Keyword_or },
-    { u"then", Token_type::Keyword_then },
-    { u"var", Token_type::Keyword_var },
-    { u"while", Token_type::Keyword_while }
-};
+auto& get_keywords()
+{
+    static std::map<std::u16string, Token_type> keywords {
+        { u"and", Token_type::Keyword_and },
+        { u"class", Token_type::Keyword_class },
+        { u"do", Token_type::Keyword_do },
+        { u"else", Token_type::Keyword_else },
+        { u"end", Token_type::Keyword_end },
+        { u"for", Token_type::Keyword_for },
+        { u"function", Token_type::Keyword_function },
+        { u"or", Token_type::Keyword_or },
+        { u"then", Token_type::Keyword_then },
+        { u"var", Token_type::Keyword_var },
+        { u"while", Token_type::Keyword_while }
+    };
+
+    return keywords;
+}
 
 Lexer::Lexer(Text_document& text_document)
     : text_document{ text_document }
@@ -147,8 +152,8 @@ token* Lexer::get_next_token()
                 return create_token(startIt, Token_type::Bool_literal);
             }
 
-            auto it = keywords.find(id);
-            if (it != std::end(keywords))
+            auto it = get_keywords().find(id);
+            if (it != std::end(get_keywords()))
             {
                 return create_token(startIt, it->second);
             }

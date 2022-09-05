@@ -15,6 +15,8 @@
 
 #include "source_project.h"
 
+#include "mem/tracker.h"
+
 void test()
 {
 	Chunk chunk;

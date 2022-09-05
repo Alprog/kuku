@@ -3,6 +3,7 @@
 
 #include "symbol_table.h"
 #include "symbol_reference.h"
+#include "token.h"
 
 symbol::symbol(symbol_reference& definition)
 	: definition { &definition }

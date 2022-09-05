@@ -31,7 +31,7 @@ namespace stmt
 
 		void parse_symbol(Parser& parser)
 		{
-			symbol_definition_reference = *parser.read_symbol_reference();
+			symbol_definition_reference = parser.read_symbol_reference();
 			symbol = std::make_unique<SymbolT>(symbol_definition_reference);
 			symbol_definition_reference.symbol = symbol;
 		}

@@ -15,7 +15,7 @@ scope_analyzer::scope_analyzer(translation_module& module, std::vector<stmt::sta
 
 void scope_analyzer::analyze()
 {
-	auto current_scope = new statement_scope(nullptr, scope_type::module_root);
+	auto current_scope = &module.root_scope;
 	
 	for (int i = 0; i < statements.size(); i++)
 	{

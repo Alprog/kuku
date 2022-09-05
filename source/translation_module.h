@@ -35,5 +35,7 @@ public:
 	std::vector<token*> tokens;
 	std::vector<stmt::statement*> statements;
 
+	statement_scope root_scope;
+
 	typesystem::storage udt_storage;
 };

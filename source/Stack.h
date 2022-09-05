@@ -12,6 +12,14 @@ public:
         pointer = nullptr;
     }
 
+    ~Stack()
+    {
+        if (cells != nullptr)
+        {
+            delete[] cells;
+        }
+    }
+
     Cell* cells;
     Cell* pointer;
 };

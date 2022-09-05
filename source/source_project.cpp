@@ -2,6 +2,11 @@
 #include "source_project.h"
 #include "unicode_streams.h"
 
+source_project::~source_project()
+{
+	clear_all();
+}
+
 void source_project::add_file(std::string uri)
 {
 	Basic_input_stream basic_stream{ new std::basic_ifstream<utf8unit> { uri } };

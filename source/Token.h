@@ -4,8 +4,7 @@
 #include "lsp/range.h"
 #include "text_document.h"
 #include <string>
-
-class symbol_reference;
+#include "symbol_reference.h"
 
 struct token
 {
@@ -13,7 +12,7 @@ struct token
     Text_document* document;
     lsp::range range;
 
-    symbol_reference* symbol_reference;
+    symbol_reference symbol_reference;
 
     token& operator=(const token& token);
     token(Token_type type, Text_document* document, lsp::position start, lsp::position end);

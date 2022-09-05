@@ -30,7 +30,7 @@ public:
 	void require(Token_type type);
 	void require_end_of_statement();
 
-	symbol_reference* read_symbol_reference();
+	symbol_reference read_symbol_reference();
 
 	void next();
 	std::vector<stmt::statement*> statements;

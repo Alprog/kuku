@@ -12,6 +12,7 @@ public:
 	String(std::string u8string);
 	String(std::u16string u16string);
 	String(std::u32string u32string);
+	~String();
 
 	character get_character(integer index);
 

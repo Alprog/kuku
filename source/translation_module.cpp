@@ -8,6 +8,7 @@
 translation_module::translation_module(source_project& project, Input_stream<utf16unit>& stream)
 	: project{ project }
 	, document{ stream }
+    , root_scope{ nullptr, scope_type::module_root }
 {
 }
 
