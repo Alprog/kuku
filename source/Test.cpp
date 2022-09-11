@@ -39,7 +39,7 @@ void test()
 	chunk.write(Instruction_type::END);
 
 	Routine routine(chunk.get_start_pointer());	
-	//routine.run();
+	routine.run();
 
 
 

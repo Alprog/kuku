@@ -16,6 +16,8 @@ struct Instruction : Base_instruction
 	}
 };
 
+#define EMPTY
+
 #define Ins(NAME, ARGS) \
 	template<> \
 	struct Instruction<Instruction_type::NAME> : Base_instruction \
@@ -40,4 +42,9 @@ Ins(INT_ADD, byte arg1; byte arg2; byte out)
 Ins(PRINT, byte arg)
 {
 	std::cout << routine.stack.cells[arg].integer << std::endl;
+}};
+
+Ins(END, EMPTY)
+{
+	routine.stop();
 }};

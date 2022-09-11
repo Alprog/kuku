@@ -11,8 +11,10 @@ public:
 	Stack stack;
 
 	byte* ip; // instruction pointer
+	bool running;
 
 	void run();
+	void stop();
 
 	void perform_instruction();
 

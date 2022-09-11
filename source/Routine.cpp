@@ -10,12 +10,18 @@ Routine::Routine(byte* ip)
 
 void Routine::run()
 {
+	running = true;
 	perform_instruction();
+}
+
+void Routine::stop()
+{
+	running = false;
 }
 
 void Routine::perform_instruction()
 {
-	while (true)
+	while (running)
 	{
 		reinterpret_cast<Base_instruction*>(ip)->execute(*this);
 	}
