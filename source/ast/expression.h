@@ -3,13 +3,13 @@
 
 #include <vector>
 #include "operand.h"
-#include "binary_operator_node.h"
+#include "binary_operator.h"
 
-namespace expr
+namespace ast
 {
 	class expression
 	{
 		std::vector<operand> operands;
-		std::vector<Binary_operator_node> operators;
+		std::vector<binary_operator> operators;
 	};
 }

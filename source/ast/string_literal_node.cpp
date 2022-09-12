@@ -1,7 +1,7 @@
 
 #include "string_literal_node.h"
 
-String_literal_node::String_literal_node(token* token)
+ast::string_literal::string_literal(token* token)
 {
 	this->node_token = token;
 

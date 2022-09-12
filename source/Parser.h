@@ -18,6 +18,7 @@ public:
 	void skip_empty_tokens();
 
 	stmt::statement* parse_next_statement();
+	void parse_operand();
 	void parse_expression();
 
 	translation_module& module;

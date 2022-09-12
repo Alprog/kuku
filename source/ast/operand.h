@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace expr
+namespace ast
 {
 	class operand
 	{
