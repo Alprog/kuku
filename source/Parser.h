@@ -3,6 +3,7 @@
 #include <vector>
 #include "lexer.h"
 #include "statement_scope.h"
+#include "ast/operand.h"
 
 class symbol_reference;
 class translation_module;
@@ -18,7 +19,7 @@ public:
 	void skip_empty_tokens();
 
 	stmt::statement* parse_next_statement();
-	void parse_operand();
+	ast::operand* parse_operand();
 	void parse_expression();
 
 	translation_module& module;

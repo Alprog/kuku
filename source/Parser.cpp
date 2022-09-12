@@ -2,6 +2,7 @@
 #include "parser.h"
 #include "console.h"
 #include "ast/binary_operator.h"
+#include "ast/integer_literal.h"
 #include "stmt/variable_declaration_statement.h"
 #include "stmt/assign_statement.h"
 #include "stmt/unknown_statement.h"
@@ -101,12 +102,15 @@ stmt::statement* Parser::parse_next_statement()
     return (new stmt::unknown_statement())->init(*this);
 }
 
-void Parser::parse_operand()
+ast::operand* Parser::parse_operand()
 {
     if (current->type == Token_type::Integer_literal)
     {
+        auto literal = new ast::integer_literal(current);
         next();
+        return literal;
     }
+    return nullptr;
 }
 
 void Parser::parse_expression()
