@@ -175,7 +175,7 @@ symbol_reference Parser::read_symbol_reference()
         auto name = current->get_source_text();
         auto reference = symbol_reference();
         reference.token = current;
-        current->symbol_reference = reference;
+        //current->symbol_reference = reference;
         next();
         return reference;
     }

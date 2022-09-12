@@ -1,7 +1,7 @@
 
 #include "token.h"
 
-token::token(Token_type type, Text_document* document, lsp::position start, lsp::position end)
+token::token(Token_type type, Text_document& document, lsp::position start, lsp::position end)
     : type{ type }
     , document{ document }
     , range{ start, end }
@@ -29,5 +29,5 @@ std::u8string token::get_hover_text()
 
 std::u16string token::get_source_text()
 {
-    return document->get_substring(range);
+    return document.get_substring(range);
 }

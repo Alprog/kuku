@@ -266,5 +266,5 @@ bool Lexer::move_after_escaped(utf16unit end_symbol)
 
 token* Lexer::create_token(Source_iterator start_it, Token_type type)
 {
-    return new token { type, &text_document, start_it.position, it.position };
+    return new token { type, text_document, start_it.position, it.position };
 }

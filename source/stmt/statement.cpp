@@ -36,7 +36,7 @@ statement_scope* stmt::statement::get_scope() const
 
 std::u16string stmt::statement::get_source_text() const
 {
-	return start_token->document->get_substring(get_full_range());
+	return start_token->document.get_substring(get_full_range());
 }
 
 std::u8string stmt::statement::get_hover_text() const

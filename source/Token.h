@@ -9,13 +9,13 @@
 struct token
 {
     Token_type type;
-    Text_document* document;
+    Text_document& document;
     lsp::range range;
 
-    symbol_reference symbol_reference;
+    //symbol_reference symbol_reference;
 
     token& operator=(const token& token);
-    token(Token_type type, Text_document* document, lsp::position start, lsp::position end);
+    token(Token_type type, Text_document& document, lsp::position start, lsp::position end);
 
     bool is_end_statement_token();
 
