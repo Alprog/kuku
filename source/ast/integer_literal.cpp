@@ -14,5 +14,5 @@ ast::integer_literal::integer_literal(token* token)
 
 void ast::integer_literal::compile(compiler& compiler)
 {
-	compiler.spawn(Instruction<Instruction_type::INT_SET>{value});
+	compiler.spawn(Instruction_PUSH_INT{value});
 }

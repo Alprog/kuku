@@ -5,7 +5,7 @@
 
 enum class Instruction_type : byte
 {
-	INT_SET,
+	PUSH_INT,
 	INT_ADD,
 	INT_SUB,
 	INT_MULTIPLY,

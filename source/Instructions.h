@@ -27,6 +27,7 @@ struct Instruction : Base_instruction
 #define SEMICOLON ;
 
 #define Ins(NAME, ...) \
+	using Instruction_##NAME = Instruction<Instruction_type::NAME>; \
 	template<> \
 	struct Instruction<Instruction_type::NAME> : Base_instruction \
 	{ \
@@ -41,6 +42,7 @@ struct Instruction : Base_instruction
 		inline void execute(Routine& routine)
 
 #define Ins0(NAME) \
+	using Instruction_##NAME = Instruction<Instruction_type::NAME>; \
 	template<> \
 	struct Instruction<Instruction_type::NAME> : Base_instruction \
 	{ \
@@ -54,7 +56,7 @@ struct Instruction : Base_instruction
 #define INT(name) (integer, name) 
 #define BYTE(name) (byte, name) 
 
-Ins(INT_SET, INT(value))
+Ins(PUSH_INT, INT(value))
 {
 	Cell cell;
 	cell.integer = value;
