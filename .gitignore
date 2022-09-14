@@ -9,3 +9,4 @@ tools/vscode-extension/.vscode-test/
 tools/vscode-extension/*.vsix
 cloc-1.64.exe
 mongoose.exe
+*.bak
