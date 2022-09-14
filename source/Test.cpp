@@ -16,27 +16,16 @@
 #include "source_project.h"
 
 #include "mem/tracker.h"
+#include "Instructions.h"
 
 void test()
 {
 	Chunk chunk;
-	chunk.write(Instruction_type::INT_SET);
-	chunk.write((byte)0);
-	chunk.write((integer)111);
-
-	chunk.write(Instruction_type::INT_SET);
-	chunk.write((byte)1);
-	chunk.write((integer)222);
-
-	chunk.write(Instruction_type::INT_ADD);
-	chunk.write((byte)0);
-	chunk.write((byte)1);
-	chunk.write((byte)2);
-
-	chunk.write(Instruction_type::PRINT);
-	chunk.write((byte)2);
-
-	chunk.write(Instruction_type::END);
+	chunk.write(Instruction<Instruction_type::INT_SET>{111});
+	chunk.write(Instruction<Instruction_type::INT_SET>{222});
+	chunk.write(Instruction<Instruction_type::INT_ADD>{0, 1, 2});
+	chunk.write(Instruction<Instruction_type::PRINT>{2});
+	chunk.write(Instruction<Instruction_type::END>{});
 
 	Routine routine(chunk.get_start_pointer());	
 	routine.run();

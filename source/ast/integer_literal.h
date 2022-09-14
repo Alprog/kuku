@@ -10,7 +10,8 @@ namespace ast
 	{
 	public:
 		integer_literal(token* token);
+		virtual void compile(compiler& compiler) override;
 
-		int value;
+		integer value;
 	};
 }

@@ -4,6 +4,7 @@
 #include "source_project.h"
 #include "console.h"
 #include "scope_analyzer.h"
+#include "compiler.h"
 
 translation_module::translation_module(source_project& project, Input_stream<utf16unit>& stream)
 	: project{ project }
@@ -59,6 +60,12 @@ void translation_module::analyze_scope()
 void translation_module::analyze_semantic()
 {
 
+}
+
+void translation_module::compile()
+{
+    compiler compiler(*this);
+    compiler.compile();
 }
 
 void translation_module::clear()

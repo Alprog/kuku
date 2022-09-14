@@ -3,23 +3,14 @@
 #include "types.h"
 #include "cell.h"
 
-class Stack
+class stack
 {
 public:
-    Stack()
-    {
-        cells = new Cell[1024 * 1024 / sizeof(Cell)]; // 1 MB
-        pointer = nullptr;
-    }
+    stack();
+    ~stack();
 
-    ~Stack()
-    {
-        if (cells != nullptr)
-        {
-            delete[] cells;
-        }
-    }
+    void push(Cell cell);
 
     Cell* cells;
-    Cell* pointer;
+    Cell* head;
 };

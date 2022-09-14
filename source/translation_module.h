@@ -21,6 +21,7 @@ public:
 	void parse_statements();
 	void analyze_scope();
 	void analyze_semantic();
+	void compile();
 	
 	void clear();
 

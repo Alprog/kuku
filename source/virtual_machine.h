@@ -10,7 +10,7 @@ class Virtual_machine
 {
 public:
     Type_registry Type_registry;
-    Stack stack;
+    stack stack;
 
     void test();
 

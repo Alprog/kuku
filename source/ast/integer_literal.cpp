@@ -1,5 +1,7 @@
 
 #include "integer_literal.h"
+#include "Instructions.h"
+#include "compiler.h"
 
 ast::integer_literal::integer_literal(token* token)
 {
@@ -8,4 +10,9 @@ ast::integer_literal::integer_literal(token* token)
 
 	size_t size;
 	value = std::stoi(u8string, &size, 10);
+}
+
+void ast::integer_literal::compile(compiler& compiler)
+{
+	compiler.spawn(Instruction<Instruction_type::INT_SET>{value});
 }

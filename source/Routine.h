@@ -8,7 +8,7 @@ class Routine
 public:
 	Routine(byte* ip);
 
-	Stack stack;
+	stack stack;
 
 	byte* ip; // instruction pointer
 	bool running;
