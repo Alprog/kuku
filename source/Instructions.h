@@ -65,7 +65,31 @@ Ins(PUSH_INT, INT(value))
 
 Ins0(INT_ADD)
 {
-	routine.stack.head[-2].integer = routine.stack.head[-2].integer + routine.stack.head[-1].integer;
+	routine.stack.head[-2].integer += routine.stack.head[-1].integer;
+	routine.stack.head--;
+}};
+
+Ins0(INT_SUB)
+{
+	routine.stack.head[-2].integer -= routine.stack.head[-1].integer;
+	routine.stack.head--;
+}};
+
+Ins0(INT_MULTIPLY)
+{
+	routine.stack.head[-2].integer *= routine.stack.head[-1].integer;
+	routine.stack.head--;
+}};
+
+Ins0(INT_DIVIDE)
+{
+	routine.stack.head[-2].integer /= routine.stack.head[-1].integer;
+	routine.stack.head--;
+}};
+
+Ins0(INT_POWER)
+{
+	routine.stack.head[-2].integer = std::pow(routine.stack.head[-2].integer, routine.stack.head[-1].integer);
 	routine.stack.head--;
 }};
 

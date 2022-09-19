@@ -10,6 +10,7 @@ enum class Instruction_type : byte
 	INT_SUB,
 	INT_MULTIPLY,
 	INT_DIVIDE,
+	INT_POWER,
 	PRINT,
 	END
 };
