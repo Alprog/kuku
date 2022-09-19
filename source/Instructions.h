@@ -22,7 +22,7 @@ struct Instruction : Base_instruction
 #define EMPTY (,)
 #define FIRST(first, second) first
 #define SECOND(first, second) second
-#define ASSIGN(x) this->SECOND x = SECOND x
+#define INITIALIZATION(x) SECOND x { SECOND x }
 #define BOTH(x) FIRST x SECOND x
 #define SEMICOLON ;
 
@@ -34,8 +34,8 @@ struct Instruction : Base_instruction
 		FOR_EACH_SEPARATOR(BOTH, SEMICOLON, __VA_ARGS__); \
 		Instruction( FOR_EACH(BOTH, __VA_ARGS__) ) \
 			: Base_instruction{ Instruction_type::NAME } \
+			, FOR_EACH( INITIALIZATION, __VA_ARGS__) \
 		{ \
-			FOR_EACH_SEPARATOR( ASSIGN, SEMICOLON, __VA_ARGS__); \
 		} \
 		std::string get_name() { return #NAME; } \
 		std::string get_argsLine() { return ""; } \
