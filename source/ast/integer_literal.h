@@ -1,12 +1,12 @@
 
 #pragma once
 
-#include "operand.h"
+#include "expression.h"
 #include "single_token_node.h"
 
 namespace ast
 {
-	class integer_literal : public operand
+	class integer_literal : public expression
 	{
 	public:
 		integer_literal(token& token);

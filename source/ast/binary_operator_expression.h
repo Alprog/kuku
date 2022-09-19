@@ -2,12 +2,12 @@
 #pragma once
 
 #include <memory>
-#include "operand.h"
+#include "expression.h"
 #include "binary_operator.h"
 
 namespace ast
 {
-	class binary_operator_expression : public operand
+	class binary_operator_expression : public expression
 	{
 	public:
 		binary_operator_expression(std::unique_ptr<expression> left, binary_operator& op, std::unique_ptr<expression> right);

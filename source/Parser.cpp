@@ -94,22 +94,22 @@ std::unique_ptr<ast::expression> Parser::parse_expression()
 {
     auto operand = parse_operand();
 
-    auto binary_operator = match_binary_operator(precedence::maximum);
-    if (binary_operator)
+    binary_operator* binary_operator;
+    while (match_binary_operator(precedence::maximum, binary_operator))
     {
-        return parse_binary_operator_chain(std::move(operand), binary_operator);
+        operand = parse_binary_operator_chain(std::move(operand), binary_operator);
     }
 
 	return operand;
 }
 
-std::unique_ptr<ast::binary_operator_expression> Parser::parse_binary_operator_chain(std::unique_ptr<ast::operand> left_operand, binary_operator* current_operator)
+std::unique_ptr<ast::binary_operator_expression> Parser::parse_binary_operator_chain(std::unique_ptr<ast::expression> left_operand, binary_operator* current_operator)
 {
     auto right_operand = parse_operand();
 
     auto precedence = current_operator->precedence;    
-    auto next_operator = match_binary_operator(precedence);
-    while (next_operator)
+    binary_operator* next_operator;
+    while (match_binary_operator(precedence, next_operator))
     {
         if (next_operator->precedence < precedence)
         {
@@ -121,13 +121,12 @@ std::unique_ptr<ast::binary_operator_expression> Parser::parse_binary_operator_c
             current_operator = next_operator;
             right_operand = parse_operand();
         }
-        next_operator = match_binary_operator(precedence);
     }
 
     return std::make_unique<ast::binary_operator_expression>(std::move(left_operand), *current_operator, std::move(right_operand));
 }
 
-std::unique_ptr<ast::operand> Parser::parse_operand()
+std::unique_ptr<ast::expression> Parser::parse_operand()
 {
     if (current->type == Token_type::Integer_literal)
     {
@@ -135,15 +134,23 @@ std::unique_ptr<ast::operand> Parser::parse_operand()
         next();
         return literal;
     }
+    if (current->type == Token_type::Open_parenthesis)
+    {
+        next();
+        auto expression = parse_expression();
+        require(Token_type::Close_parenthesis);
+        return std::move(expression);
+    }
     return nullptr;
 }
 
-binary_operator* Parser::match_binary_operator(precedence maximum_precedence)
+binary_operator* Parser::match_binary_operator(precedence maximum_precedence, binary_operator*& out_operator)
 {
     for (auto& candidate : get_binary_operators())
     {
         if (candidate.token_type == current->type && candidate.precedence <= maximum_precedence)
         {
+            out_operator = &candidate;
             next();
             return &candidate;
         }

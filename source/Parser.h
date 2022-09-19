@@ -3,7 +3,6 @@
 #include <vector>
 #include "lexer.h"
 #include "statement_scope.h"
-#include "ast/operand.h"
 #include "ast/expression.h"
 #include "binary_operator.h"
 #include "ast/binary_operator_expression.h"
@@ -23,9 +22,9 @@ public:
 
 	stmt::statement* parse_next_statement();
 	std::unique_ptr<ast::expression> parse_expression();
-	std::unique_ptr<ast::binary_operator_expression> parse_binary_operator_chain(std::unique_ptr<ast::operand> left_operand, binary_operator* current_operator);
-	std::unique_ptr<ast::operand> parse_operand();
-	binary_operator* match_binary_operator(precedence maximum_precedence);
+	std::unique_ptr<ast::binary_operator_expression> parse_binary_operator_chain(std::unique_ptr<ast::expression> left_operand, binary_operator* current_operator);
+	std::unique_ptr<ast::expression> parse_operand();
+	binary_operator* match_binary_operator(precedence maximum_precedence, binary_operator*& out_operator);
 	
 	translation_module& module;
 	token** it;
