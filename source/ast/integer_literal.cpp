@@ -3,9 +3,9 @@
 #include "Instructions.h"
 #include "compiler.h"
 
-ast::integer_literal::integer_literal(token* token)
+ast::integer_literal::integer_literal(token& token)
 {
-	auto u16string = token->get_source_text();
+	auto u16string = token.get_source_text();
 	const std::string u8string(std::begin(u16string), std::end(u16string));
 
 	size_t size;

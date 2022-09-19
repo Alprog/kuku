@@ -4,6 +4,9 @@
 #include "lexer.h"
 #include "statement_scope.h"
 #include "ast/operand.h"
+#include "ast/expression.h"
+#include "binary_operator.h"
+#include "ast/binary_operator_expression.h"
 
 class symbol_reference;
 class translation_module;
@@ -19,9 +22,11 @@ public:
 	void skip_empty_tokens();
 
 	stmt::statement* parse_next_statement();
-	ast::operand* parse_operand();
-	void parse_expression();
-
+	std::unique_ptr<ast::expression> parse_expression();
+	std::unique_ptr<ast::binary_operator_expression> parse_binary_operator_chain(std::unique_ptr<ast::operand> left_operand, binary_operator* current_operator);
+	std::unique_ptr<ast::operand> parse_operand();
+	binary_operator* match_binary_operator(precedence maximum_precedence);
+	
 	translation_module& module;
 	token** it;
 	token* current;
@@ -38,5 +43,5 @@ public:
 	std::vector<stmt::statement*> statements;
 
 	template <typename T>
-	T* create_node();
+	T* create_statement();
 };

@@ -23,8 +23,8 @@ void test()
 	Chunk chunk;
 	chunk.write(Instruction_PUSH_INT{111});
 	chunk.write(Instruction_PUSH_INT{222});
-	chunk.write(Instruction_INT_ADD{0, 1, 2});
-	chunk.write(Instruction_PRINT{2});
+	chunk.write(Instruction_INT_ADD{});
+	chunk.write(Instruction_PRINT{0});
 	chunk.write(Instruction_END{});
 
 	Routine routine(chunk.get_start_pointer());	

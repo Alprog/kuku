@@ -1,12 +1,11 @@
 
 #pragma once
 
-class compiler;
+#include "expression.h"
 
 namespace ast
 {
-	class operand
+	class operand : public expression
 	{
-		virtual void compile(compiler& compile) {};
 	};
 }

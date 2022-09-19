@@ -88,21 +88,23 @@ token* Lexer::get_next_token()
             {
                 auto startIt = it++;
                 if (match('/'))
-                    return finish_binding_block_comment(startIt);        //:  */...    binding-comment begin marker
+                    return finish_binding_block_comment(startIt);                 //:  */...    binding-comment begin marker
                 else
-                    return create_token(startIt, Token_type::Operator);  //:  *        multiply operator
+                    return create_token(startIt, Token_type::Multiply_Operator);  //:  *        multiply operator
             }
 
             case '/':
             {
 				auto startIt = it++;
 				if (match('*'))
-					return finish_line_comment(startIt);                 //:  /*...    single line binding-comment
+					return finish_line_comment(startIt);                        //:  /*...    single line binding-comment
 				else
-					return create_token(startIt, Token_type::Operator);  //:  /        divide operator
+					return create_token(startIt, Token_type::Divide_Operator);  //:  /        divide operator
 			}
 
-            case '+': return create_token(it++, Token_type::Plus_sign);
+            case '^': return create_token(it++, Token_type::Exponent_operator);
+            case '-': return create_token(it++, Token_type::Minus_operator);
+            case '+': return create_token(it++, Token_type::Plus_operator);
             case '=': return create_token(it++, Token_type::Assign_operator);
             case ':': return create_token(it++, Token_type::Colon);
             case ';': return create_token(it++, Token_type::Semicolon);

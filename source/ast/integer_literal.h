@@ -6,10 +6,10 @@
 
 namespace ast
 {
-	class integer_literal : public single_token_node, public operand
+	class integer_literal : public operand
 	{
 	public:
-		integer_literal(token* token);
+		integer_literal(token& token);
 		virtual void compile(compiler& compiler) override;
 
 		integer value;

@@ -8,7 +8,7 @@ token::token(Token_type type, Text_document& document, lsp::position start, lsp:
 {
 }
 
-token& token::operator=(const token& token)
+token& token::operator=(token& token)
 {
     type = token.type;
     document = token.document;

@@ -1,7 +1,7 @@
 
 #include "parser.h"
 #include "console.h"
-#include "ast/binary_operator.h"
+#include "ast/binary_operator_expression.h"
 #include "ast/integer_literal.h"
 #include "stmt/variable_declaration_statement.h"
 #include "stmt/assign_statement.h"
@@ -39,7 +39,7 @@ void Parser::next()
 }
 
 template <typename T>
-T* Parser::create_node()
+T* Parser::create_statement()
 {
     auto node = new T();
     node->init(*this);
@@ -56,19 +56,19 @@ stmt::statement* Parser::parse_next_statement()
 
     if (current->type == Token_type::Keyword_var)
     {
-        return create_node<stmt::variable_declaration_statement>();
+        return create_statement<stmt::variable_declaration_statement>();
     }
     else if (current->type == Token_type::Keyword_end)
     {
-        return create_node<stmt::end_statement>();
+        return create_statement<stmt::end_statement>();
     }
     else if (current->type == Token_type::Keyword_function)
     {
-        return create_node<stmt::function_statement>();
+        return create_statement<stmt::function_statement>();
     }
     else if (current->type == Token_type::Keyword_class)
     {
-        return create_node<stmt::class_statement>();
+        return create_statement<stmt::class_statement>();
     }
     else if (current->type == Token_type::Identifier)
     {
@@ -102,45 +102,65 @@ stmt::statement* Parser::parse_next_statement()
     return (new stmt::unknown_statement())->init(*this);
 }
 
-ast::operand* Parser::parse_operand()
+std::unique_ptr<ast::expression> Parser::parse_expression()
+{
+    auto operand = parse_operand();
+
+    auto binary_operator = match_binary_operator(precedence::maximum);
+    if (binary_operator)
+    {
+        return parse_binary_operator_chain(std::move(operand), binary_operator);
+    }
+
+	return operand;
+}
+
+std::unique_ptr<ast::binary_operator_expression> Parser::parse_binary_operator_chain(std::unique_ptr<ast::operand> left_operand, binary_operator* current_operator)
+{
+    auto right_operand = parse_operand();
+
+    auto precedence = current_operator->precedence;    
+    auto next_operator = match_binary_operator(precedence);
+    while (next_operator)
+    {
+        if (next_operator->precedence < precedence)
+        {
+            right_operand = parse_binary_operator_chain(std::move(right_operand), next_operator);
+        }
+        else if (next_operator->precedence == precedence)
+        {
+            left_operand = std::make_unique<ast::binary_operator_expression>(std::move(left_operand), *current_operator, std::move(right_operand));
+            current_operator = next_operator;
+            right_operand = parse_operand();
+        }
+        next_operator = match_binary_operator(precedence);
+    }
+
+    return std::make_unique<ast::binary_operator_expression>(std::move(left_operand), *current_operator, std::move(right_operand));
+}
+
+std::unique_ptr<ast::operand> Parser::parse_operand()
 {
     if (current->type == Token_type::Integer_literal)
     {
-        auto literal = new ast::integer_literal(current);
+        auto literal = std::make_unique<ast::integer_literal>(*current);
         next();
         return literal;
     }
     return nullptr;
 }
 
-void Parser::parse_expression()
+binary_operator* Parser::match_binary_operator(precedence maximum_precedence)
 {
-    if (current->type == Token_type::Identifier)
+    for (auto& candidate : get_binary_operators())
     {
-        next();
-
-        while (true)
+        if (candidate.token_type == current->type && candidate.precedence <= maximum_precedence)
         {
-            if (current->type == Token_type::Dot)
-            {
-                next();
-                require(Token_type::Identifier);
-            }
-            else if (current->type == Token_type::Plus_sign)
-            {
-                next();
-                parse_expression();
-            }
-            else
-            {
-                break;
-            }
+            next();
+            return &candidate;
         }
     }
-    else if (current->type == Token_type::Integer_literal)
-    {
-        next();
-    }
+    return nullptr;
 }
 
 bool Parser::match(Token_type type)

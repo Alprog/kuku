@@ -63,9 +63,10 @@ Ins(PUSH_INT, INT(value))
 	routine.stack.push(cell);
 }};
 
-Ins(INT_ADD, BYTE(arg1), BYTE(arg2), BYTE(out))
+Ins0(INT_ADD)
 {
-	routine.stack.cells[out].integer = routine.stack.cells[arg1].integer + routine.stack.cells[arg2].integer;
+	routine.stack.head[-2].integer = routine.stack.head[-2].integer + routine.stack.head[-1].integer;
+	routine.stack.head--;
 }};
 
 Ins(PRINT, BYTE(arg))

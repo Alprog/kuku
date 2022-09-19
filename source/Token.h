@@ -14,7 +14,7 @@ struct token
 
     //symbol_reference symbol_reference;
 
-    token& operator=(const token& token);
+    token& operator=(token& token);
     token(Token_type type, Text_document& document, lsp::position start, lsp::position end);
 
     bool is_end_statement_token();
