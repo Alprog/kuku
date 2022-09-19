@@ -24,12 +24,12 @@ void test()
 	chunk.write(Instruction_PUSH_INT{111});
 	chunk.write(Instruction_PUSH_INT{222});
 	chunk.write(Instruction_INT_ADD{});
-	chunk.write(Instruction_PRINT{0});
+	chunk.write(Instruction_PRINT{});
 
 	chunk.write(Instruction_PUSH_INT{ 2 });
 	chunk.write(Instruction_PUSH_INT{ 4 });
 	chunk.write(Instruction_INT_POWER{});
-	chunk.write(Instruction_PRINT{1});
+	chunk.write(Instruction_PRINT{});
 	chunk.write(Instruction_END{});
 
 	Routine routine(chunk.get_start_pointer());	

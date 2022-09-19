@@ -13,6 +13,7 @@
 #include "unexepected_error.h"
 #include "source_project.h"
 #include "symbol_reference.h"
+#include "stmt/expression_statement.h"
 
 Parser::Parser(translation_module& module, token** it)
 	: module{ module }
@@ -42,7 +43,7 @@ template <typename T>
 T* Parser::create_statement()
 {
     auto node = new T();
-    node->init(*this);
+    node->init(*this, current);
     return node;
 }
 
@@ -70,36 +71,23 @@ stmt::statement* Parser::parse_next_statement()
     {
         return create_statement<stmt::class_statement>();
     }
-    else if (current->type == Token_type::Identifier)
+    else
     {
-        auto start_it = it;
         auto start_token = current;
-        auto id = current->get_source_text();
-        next();
+        auto expression = parse_expression();
+
+        stmt::statement* statement;
         if (current->type == Token_type::Assign_operator)
         {
-            next();
-
-            if (current->type == Token_type::Integer_literal || current->type == Token_type::String_literal)
-            {
-                next();
-                if (current->type == Token_type::End_of_line)
-                {
-                    auto statement = new stmt::assign_statement();
-                    statement->start_token = start_token;
-                    statement->end_token = current;
-                    statement->is_valid = true;
-                    next();
-                    return statement;
-                }
-            }
-
+            statement = new stmt::assign_statement();
         }
-        current = start_token;
-        it = start_it;
-    }
-
-    return (new stmt::unknown_statement())->init(*this);
+        else
+        {
+            statement = new stmt::expression_statement(std::move(expression));
+        }
+        statement->init(*this, start_token);
+        return statement;
+    }    
 }
 
 std::unique_ptr<ast::expression> Parser::parse_expression()

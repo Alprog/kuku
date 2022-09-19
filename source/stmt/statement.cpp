@@ -6,9 +6,9 @@ stmt::statement::~statement()
 {
 }
 
-stmt::statement* stmt::statement::init(Parser& parser)
+stmt::statement* stmt::statement::init(Parser& parser, token* start_token)
 {
-	this->start_token = parser.current;
+	this->start_token = start_token;
 
 	try
 	{
@@ -56,6 +56,10 @@ lsp::range stmt::statement::get_full_range() const
 void stmt::statement::set_scope(statement_scope* scope)
 {
 	this->scope = scope;
+}
+
+void stmt::statement::compile(compiler& compiler)
+{
 }
 
 void stmt::statement::define_symbols(statement_scope* scope)

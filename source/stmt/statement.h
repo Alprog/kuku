@@ -8,6 +8,8 @@
 
 #define CHECK_END_OF_STATEMENT if (parser.current->is_end_statement_token()) return;
 
+class compiler;
+
 namespace stmt
 {
 	class statement
@@ -23,7 +25,7 @@ namespace stmt
 		bool is_valid;
 		std::u16string error_text;
 
-		statement* init(Parser& parser);
+		statement* init(Parser& parser, token* start_token);
 
 		virtual scope_type get_allowed_scopes() const = 0;
 		virtual std::u16string get_statement_type() const { return u"<unknown>"; }
@@ -34,6 +36,7 @@ namespace stmt
 		lsp::range get_full_range() const;
 		void set_scope(statement_scope* scope);
 
+		virtual void compile(compiler& compiler);
 		virtual void define_symbols(statement_scope* scope);
 
 	protected:

@@ -22,6 +22,7 @@ public:
 	void analyze_scope();
 	void analyze_semantic();
 	void compile();
+	void compile_and_run();
 	
 	void clear();
 

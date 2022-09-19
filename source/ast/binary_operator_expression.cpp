@@ -12,8 +12,33 @@ ast::binary_operator_expression::binary_operator_expression(std::unique_ptr<expr
 void ast::binary_operator_expression::compile(compiler& compiler)
 {
 	left->compile(compiler);
-
-	compiler.spawn(Instruction_INT_ADD{});
-
 	right->compile(compiler);
+
+	switch (op.token_type)
+	{
+		case Token_type::Plus_operator:
+			compiler.spawn(Instruction_INT_ADD{});
+			break;
+
+		case Token_type::Minus_operator:
+			compiler.spawn(Instruction_INT_SUB{});
+			break;
+
+		case Token_type::Multiply_Operator:
+			compiler.spawn(Instruction_INT_MULTIPLY{});
+			break;
+
+		case Token_type::Divide_Operator:
+			compiler.spawn(Instruction_INT_DIVIDE{});
+			break;
+			
+		case Token_type::Exponent_operator:
+			compiler.spawn(Instruction_INT_POWER{});
+			break;
+
+		default:
+			throw std::exception("not implemented");
+	}
+
+	
 }

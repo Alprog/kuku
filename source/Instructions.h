@@ -93,9 +93,10 @@ Ins0(INT_POWER)
 	routine.stack.head--;
 }};
 
-Ins(PRINT, BYTE(arg))
+Ins0(PRINT)
 {
-	std::cout << routine.stack.cells[arg].integer << std::endl;
+	std::cout << routine.stack.head[-1].integer << std::endl;
+	routine.stack.head--;
 }};
 
 Ins0(END)

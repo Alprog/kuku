@@ -30,7 +30,10 @@ void Repl()
         project.add_memory_snippet(line);
         project.process_all();
 
+        project.get_module("memory")->compile_and_run();
         //machine.perform();
+
+        
 
         project.clear_all();
     }

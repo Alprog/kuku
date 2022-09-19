@@ -68,6 +68,18 @@ void translation_module::compile()
     compiler.compile();
 }
 
+void translation_module::compile_and_run()
+{
+    compiler compiler(*this);
+    compiler.compile();
+
+    compiler.chunk.write(Instruction_PRINT{});
+    compiler.chunk.write(Instruction_END{});
+
+    Routine routine{ compiler.chunk.get_start_pointer() };
+    routine.run();
+}
+
 void translation_module::clear()
 {
     for (auto& token : tokens)
