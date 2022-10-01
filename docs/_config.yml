@@ -1,5 +1,3 @@
-theme: minima
-
 minima:
   skin: solarized-dark
   
@@ -7,3 +5,5 @@ minima:
     twitter: alprog_
     github:  alprog
     telegram: alprog
+
+theme: minima
