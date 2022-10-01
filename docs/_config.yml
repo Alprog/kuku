@@ -14,5 +14,9 @@ minima:
     twitter: alprog_
     github:  alprog
     telegram: alprog
-
+    
+header_pages:
+ - index.md
+ - design_goals.md
+ 
 theme: minima
