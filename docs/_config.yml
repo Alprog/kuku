@@ -1,1 +1,6 @@
 theme: minima
+
+minima:
+  social_links:
+    twitter: alprog_
+    github:  alprog
