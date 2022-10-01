@@ -30,7 +30,6 @@ github_username:  alprog
 linkedin_username: alprog
 
 # Build settings
-theme: minima
 plugins:
   - jekyll-feed
 
