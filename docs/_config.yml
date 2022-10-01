@@ -33,6 +33,15 @@ linkedin_username: alprog
 plugins:
   - jekyll-feed
 
+minima:
+  skin: solarized-dark
+
+  social_links:
+      twitter: alprog_
+      github: alprog
+      linkedin: alprog
+      telegram: alprog
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
