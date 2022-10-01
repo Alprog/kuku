@@ -1,6 +1,8 @@
 theme: minima
 
 minima:
+  skin: solarized-dark
+  
   social_links:
     twitter: alprog_
     github:  alprog
