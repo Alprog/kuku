@@ -7,14 +7,11 @@ description: > # this means to ignore newlines until "show_excerpts:"
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
 
-minima:
-  skin: solarized-dark
-  
-  social_links:
-    twitter: alprog_
-    github:  alprog
-    telegram: alprog
-    
+twitter_username: alprog_
+github_username:  alprog
+instagram_username: alprog_
+linkedin_username: alprog
+
 header_pages:
  - index.md
  - design_goals.md
