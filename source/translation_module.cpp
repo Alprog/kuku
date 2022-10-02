@@ -5,6 +5,7 @@
 #include "console.h"
 #include "scope_analyzer.h"
 #include "compiler.h"
+#include "err/error.h"
 
 translation_module::translation_module(source_project& project, Input_stream<utf16unit>& stream)
 	: project{ project }
@@ -70,14 +71,21 @@ void translation_module::compile()
 
 void translation_module::compile_and_run()
 {
-    compiler compiler(*this);
-    compiler.compile();
+    try
+    {
+        compiler compiler(*this);
+        compiler.compile();
 
-    compiler.chunk.write(Instruction_PRINT{});
-    compiler.chunk.write(Instruction_END{});
+        compiler.chunk.write(Instruction_PRINT{});
+        compiler.chunk.write(Instruction_END{});
 
-    Routine routine{ compiler.chunk.get_start_pointer() };
-    routine.run();
+        Routine routine{ compiler.chunk.get_start_pointer() };
+        routine.run();
+    }
+    catch (error& error)
+    {
+        Console::write_line(error.get_message());
+    }
 }
 
 void translation_module::clear()
