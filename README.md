@@ -5,7 +5,7 @@
 
 Scripting language and data format designed for data-intensive video games and modding friendly.
 
-[Design Goals](https://github.com/Alprog/KuKu/blob/main/docs/design_goals.md)
+[Documentation](https://alprog.github.io/kuku/)
 
 
 # Install extension
