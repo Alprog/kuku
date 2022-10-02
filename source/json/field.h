@@ -30,6 +30,15 @@ namespace json
     std::u16string serialize(std::u16string value);
 
     template <typename T>
+    concept enum_type = std::is_enum<T>::value;
+
+    template <enum_type T>
+    json::object serialize(T value)
+    {
+        return static_cast<int>(value);
+    }
+
+    template <typename T>
     json::object serialize(std::vector<T> vector)
     {
         auto result = json::object::array();

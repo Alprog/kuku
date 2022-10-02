@@ -19,6 +19,6 @@ namespace lsp
         int code;
         std::string message;
         
-        JSCHEME(range, code, message)
+        JSCHEME(range, severity, code, message)
     };
 }

@@ -24,6 +24,9 @@ namespace json
 template <typename T>
 concept vector_type = is_vector<T>::value;
 
+template <typename T>
+concept enum_type = std::is_enum<T>::value;
+
 template <typename ResultType>
 ResultType from_json(json::object& object)
 {
@@ -37,6 +40,16 @@ template<> float from_json<float>(json::object& object);
 template<> std::string from_json<std::string>(json::object& object);
 template<> std::u8string from_json<std::u8string>(json::object& object);
 template<> std::u16string from_json<std::u16string>(json::object& object);
+
+template <enum_type EnumType>
+EnumType from_json(json::object& object)
+{
+    if (object.is_number_integer())
+    {
+        return static_cast<EnumType>(object.get<int>());
+    }
+    throw std::exception("not integer");
+}
 
 template <vector_type VectorType>
 VectorType from_json(json::object& object)
