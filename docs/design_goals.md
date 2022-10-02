@@ -1,9 +1,6 @@
 ---
 title: Design goals
 ---
-(* - working title)
-
-![logo](/logo.png)
 
 ## Abstract
 
