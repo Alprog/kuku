@@ -3,15 +3,16 @@
 
 #include "expression.h"
 #include "Token.h"
+#include "kuku/string.h"
 
 namespace ast
 {
-	class integer_literal : public expression
+	class string_literal : public expression
 	{
 	public:
-		integer_literal(token& token);
+		string_literal(token& token);
 		virtual void compile(compiler& compiler) override;
 
-		integer value;
+		kuku::string value;
 	};
 }

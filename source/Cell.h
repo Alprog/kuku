@@ -3,7 +3,7 @@
 #include "types.h"
 #include "instance.h"
 #include "class.h"
-#include "kuku_string.h"
+#include "kuku/string.h"
 
 union Cell
 {
@@ -11,6 +11,6 @@ union Cell
     integer integer;
     number number;
     Instance instance;
-    String* string;
+    kuku::string* string;
     Class* class_pointer;
 };

@@ -15,6 +15,7 @@
 #include "symbol_reference.h"
 #include "stmt/expression_statement.h"
 #include "stmt/return_statement.h"
+#include "ast/string_literal.h"
 
 Parser::Parser(translation_module& module, token** it)
 	: module{ module }
@@ -136,6 +137,12 @@ std::unique_ptr<ast::expression> Parser::parse_operand()
     if (current->type == Token_type::Integer_literal)
     {
         auto literal = std::make_unique<ast::integer_literal>(*current);
+        next();
+        return std::move(literal);
+    }
+    if (current->type == Token_type::String_literal)
+    {
+        auto literal = std::make_unique<ast::string_literal>(*current);
         next();
         return std::move(literal);
     }

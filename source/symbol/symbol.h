@@ -22,4 +22,3 @@ public:
 	symbol_reference* definition;
 	std::vector<symbol_reference*> usages;
 };
-

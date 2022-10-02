@@ -38,9 +38,9 @@ void test()
 
 
 
-	String s1("abc");
-	String s2(u"abc");
-	String s3(U"abc");
+	kuku::string s1("abc");
+	kuku::string s2(u"abc");
+	kuku::string s3(U"abc");
 
 	auto a1 = s1.get_character(1);
 	auto a2 = s2.get_character(1);
