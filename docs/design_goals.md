@@ -1,7 +1,9 @@
-# Kuku* language design goals
+---
+title: Design goals
+---
 (* - working title)
 
-![logo](https://github.com/Alprog/KuKu/blob/main/docs/logo.png)
+![logo](/logo.png)
 
 ## Abstract
 
