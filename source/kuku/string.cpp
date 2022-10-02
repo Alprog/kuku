@@ -81,37 +81,73 @@ int kuku::string::get_largest_character_size()
 
 void kuku::string::try_shrink()
 {
-	auto largest_character_size = get_largest_character_size();
-	if (largest_character_size < character_size)
+	change_character_size(get_largest_character_size());
+}
+
+void kuku::string::change_character_size(int new_character_size)
+{
+	if (new_character_size == character_size)
 	{
-		auto new_bytes = new byte[character_count * largest_character_size];
-		if (largest_character_size == 1)
+		return;
+	}
+
+	auto new_bytes = new byte[character_count * new_character_size];
+
+	if (new_character_size == 1)
+	{
+		if (character_size == 2)
 		{
-			if (character_size == 2)
+			for (int i = 0; i < character_count; i++)
 			{
-				for (int i = 0; i < character_count; i++)
-				{
-					new_bytes[i] = static_cast<byte>(units[i]);
-				}
-			}
-			else /* character_size == 4 */
-			{
-				for (int i = 0; i < character_count; i++)
-				{
-					new_bytes[i] = static_cast<byte>(characters[i]);
-				}
+				new_bytes[i] = static_cast<byte>(units[i]);
 			}
 		}
-		else
+		else /* character_size == 4 */
 		{
-			utf16unit* new_units = reinterpret_cast<utf16unit*>(new_bytes);
+			for (int i = 0; i < character_count; i++)
+			{
+				new_bytes[i] = static_cast<byte>(characters[i]);
+			}
+		}
+	}
+	else if ( new_character_size == 2 )
+	{
+		utf16unit* new_units = reinterpret_cast<utf16unit*>(new_bytes);
+		if (character_size == 1)
+		{
+			for (int i = 0; i < character_count; i++)
+			{
+				new_units[i] = bytes[i];
+			}
+		}
+		else /* character_size == 4 */
+		{
 			for (int i = 0; i < character_count; i++)
 			{
 				new_units[i] = static_cast<utf16unit>(characters[i]);
 			}
 		}
-		delete[] bytes;
-		bytes = new_bytes;
-		character_size = largest_character_size;
 	}
+	else /* new_character_size == 4 */
+	{
+		character* new_characters = reinterpret_cast<character*>(new_bytes);
+		if (character_size == 1)
+		{
+			for (int i = 0; i < character_count; i++)
+			{
+				new_characters[i] = bytes[i];
+			}
+		}
+		else /* character_size == 2 */
+		{
+			for (int i = 0; i < character_count; i++)
+			{
+				new_characters[i] = units[i];
+			}
+		}
+	}
+
+	delete[] bytes;
+	bytes = new_bytes;
+	character_size = new_character_size;
 }

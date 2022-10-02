@@ -45,6 +45,9 @@ void test()
 	auto a1 = s1.get_character(1);
 	auto a2 = s2.get_character(1);
 	auto a3 = s3.get_character(1);
+	s3.try_shrink();
+	auto a3s = s3.get_character(1);
+
 
 	source_project project;
 	project.add_file("C:/kuku/data/main.kuku");

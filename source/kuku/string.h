@@ -20,7 +20,7 @@ namespace kuku
 
 		int get_largest_character_size();
 		void try_shrink();
-
+		void change_character_size(int new_character_size);
 
 		int32_t character_count;
 		byte character_size;
