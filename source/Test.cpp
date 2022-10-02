@@ -17,6 +17,7 @@
 
 #include "mem/tracker.h"
 #include "Instructions.h"
+#include <memory>
 
 void test()
 {

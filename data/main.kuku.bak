@@ -1,21 +1,6 @@
 
-class A
+class ef
 	function foo()
 		var a
-		a = 1 + 2 - 3 * 4 ^ 5 * 6 + 7 - 8 
-	end
-	
-	function bar() : integer
-		return 4
-	end
-end
+		4 = 55
 
-#[efefefe
-efefefe
-#]
-
-
-a = "уауауап!!!"
-
-var b = 55
-var c = a + b

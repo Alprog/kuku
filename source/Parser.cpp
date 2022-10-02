@@ -14,6 +14,7 @@
 #include "source_project.h"
 #include "symbol_reference.h"
 #include "stmt/expression_statement.h"
+#include "stmt/return_statement.h"
 
 Parser::Parser(translation_module& module, token** it)
 	: module{ module }
@@ -71,6 +72,10 @@ stmt::statement* Parser::parse_next_statement()
     {
         return create_statement<stmt::class_statement>();
     }
+    else if (current->type == Token_type::Keyword_return)
+    {
+        return create_statement<stmt::return_statement>();
+    }
     else
     {
         auto start_token = current;
@@ -79,7 +84,7 @@ stmt::statement* Parser::parse_next_statement()
         stmt::statement* statement;
         if (current->type == Token_type::Assign_operator)
         {
-            statement = new stmt::assign_statement();
+            statement = new stmt::assign_statement(std::move(expression));
         }
         else
         {
@@ -87,7 +92,7 @@ stmt::statement* Parser::parse_next_statement()
         }
         statement->init(*this, start_token);
         return statement;
-    }    
+    }
 }
 
 std::unique_ptr<ast::expression> Parser::parse_expression()
@@ -132,7 +137,7 @@ std::unique_ptr<ast::expression> Parser::parse_operand()
     {
         auto literal = std::make_unique<ast::integer_literal>(*current);
         next();
-        return literal;
+        return std::move(literal);
     }
     if (current->type == Token_type::Open_parenthesis)
     {

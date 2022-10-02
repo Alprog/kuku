@@ -5,7 +5,6 @@
 void stmt::class_statement::parse_internal(Parser& parser)
 {
 	parser.require(Token_type::Keyword_class);
-	symbol_definition_reference = parser.read_symbol_reference();
 	parse_symbol(parser);
 }
 

@@ -39,7 +39,8 @@ Reflectable_enum(Token_type,
     Keyword_for,
     Keyword_function,
     Keyword_or,
+    Keyword_return,
     Keyword_then,
     Keyword_var,
-    Keyword_while
+    Keyword_while    
 );
