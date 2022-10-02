@@ -28,6 +28,7 @@ public:
 	void clear();
 
 	void print_statements();
+	std::vector<lsp::diagnostic> get_diagnostics();
 
 	token* get_token(lsp::position position);
 	stmt::statement* get_statement(lsp::position position);
@@ -38,8 +39,6 @@ public:
 	Text_document document;
 	std::vector<token*> tokens;
 	std::vector<stmt::statement*> statements;
-
-	std::vector<lsp::diagnostic> diagnostics;
 
 	statement_scope root_scope;
 

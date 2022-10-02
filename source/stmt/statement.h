@@ -5,6 +5,7 @@
 #include "parser.h"
 #include "statement_scope.h"
 #include "scope_type.h"
+#include "lsp/diagnostic.h"
 
 #define CHECK_END_OF_STATEMENT if (parser.current->is_end_statement_token()) return;
 
@@ -38,6 +39,8 @@ namespace stmt
 
 		virtual void compile(compiler& compiler);
 		virtual void define_symbols(statement_scope* scope);
+
+		std::vector<lsp::diagnostic> diagnostics;
 
 	protected:
 		virtual void parse_internal(Parser& parser) = 0;

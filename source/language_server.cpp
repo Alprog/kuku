@@ -93,6 +93,8 @@ void language_server::on_did_open(json::object& message)
 
     source_project.add_file(document.uri, document.text);
     source_project.process_all();
+
+    publish_diagnostics(*source_project.get_module(document.uri));
 }
 
 void language_server::on_did_change(json::object& message)
@@ -238,16 +240,15 @@ void language_server::on_execute_command(json::object& message)
 
 void language_server::publish_diagnostics(translation_module& module)
 {
-    if (module.diagnostics.size()  == 0)
+    auto array = nlohmann::json::array();
+    for (auto& diagnostic : module.get_diagnostics())
     {
-        return;
+        array.push_back(diagnostic.to_json());
     }
 
     json::object params = {
         { "uri", module.uri },
-        { "diagnostics", {
-            module.diagnostics.at(0).to_json()
-        }}
+        { "diagnostics", array }
     };
 
     json::object notification = {

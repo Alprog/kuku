@@ -3,6 +3,7 @@ class ef
 	function foo()
 		var a
 		4 = 55
+		3 = "efe"
 	end
 	
 	function bar() : integer

@@ -51,9 +51,6 @@ void translation_module::parse_statements()
         if (statement == nullptr) break;
         statements.push_back(statement);
     }
-
-    diagnostics.clear();
-    diagnostics.push_back(lsp::diagnostic(lsp::range(lsp::position(1, 1), lsp::position(1, 2)), lsp::diagnostic_severity::Error, 1, "yo"));
 }
 
 void translation_module::analyze_scope()
@@ -118,6 +115,19 @@ void translation_module::print_statements()
             Console::write_line(statement->error_text);
         }
     }
+}
+
+std::vector<lsp::diagnostic> translation_module::get_diagnostics()
+{
+    std::vector<lsp::diagnostic> result;
+    for (auto& statement : statements)
+    {
+        for (auto& diagnosic : statement->diagnostics)
+        {
+            result.push_back(diagnosic);
+        }
+    }
+    return result;
 }
 
 token* translation_module::get_token(lsp::position position)
