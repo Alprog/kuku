@@ -108,6 +108,7 @@ void language_server::on_did_change(json::object& message)
         }
         module->clear();
         module->process();
+        publish_diagnostics(*module);
     }
 }
 
@@ -231,7 +232,31 @@ void language_server::on_code_action(json::object& message)
 
 void language_server::on_execute_command(json::object& message)
 {
+    auto id = message["id"].get<int>();
+    auto uri = message["params"]["command"].get<std::string>();
+}
 
+void language_server::publish_diagnostics(translation_module& module)
+{
+    if (module.diagnostics.size()  == 0)
+    {
+        return;
+    }
+
+    json::object params = {
+        { "uri", module.uri },
+        { "diagnostics", {
+            module.diagnostics.at(0).to_json()
+        }}
+    };
+
+    json::object notification = {
+        { "jsonrpc", "2.0" },
+        { "method", "textDocument/publishDiagnostics" },
+        { "params", params }
+    };
+
+    ide_connection << notification;
 }
 
 void language_server::on_completion(json::object& message)

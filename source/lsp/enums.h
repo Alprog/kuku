@@ -8,4 +8,12 @@ namespace lsp
         Full = 1,
         Incremental = 2
     };
+
+    enum class diagnostic_severity
+    {
+		Error = 1,
+	    Warning = 2,
+	    Information = 3,
+	    Hint = 4
+    };
 }

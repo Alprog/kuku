@@ -7,10 +7,11 @@
 #include "compiler.h"
 #include "err/error.h"
 
-translation_module::translation_module(source_project& project, Input_stream<utf16unit>& stream)
+translation_module::translation_module(source_project& project, std::string uri, Input_stream<utf16unit>& stream)
 	: project{ project }
+	, uri{ uri }
 	, document{ stream }
-    , root_scope{ nullptr, scope_type::module_root }
+	, root_scope{ nullptr, scope_type::module_root }
 {
 }
 
@@ -50,6 +51,9 @@ void translation_module::parse_statements()
         if (statement == nullptr) break;
         statements.push_back(statement);
     }
+
+    diagnostics.clear();
+    diagnostics.push_back(lsp::diagnostic(lsp::range(lsp::position(1, 1), lsp::position(1, 2)), lsp::diagnostic_severity::Error, 1, "yo"));
 }
 
 void translation_module::analyze_scope()

@@ -20,6 +20,8 @@ private:
 	void on_execute_command(json::object& message);
 	void on_completion(json::object& message);
 
+	void publish_diagnostics(translation_module& module);
+
 	source_project source_project;
 	Ide_connection ide_connection;
 };

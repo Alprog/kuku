@@ -6,13 +6,14 @@
 #include "token.h"
 #include "stmt/statement.h"
 #include "typesystem/storage.h"
+#include "lsp/diagnostic.h"
 
 class source_project;
 
 class translation_module
 {
 public:
-	translation_module(source_project& project, Input_stream<utf16unit>& stream);
+	translation_module(source_project& project, std::string uri, Input_stream<utf16unit>& stream);
 	~translation_module();
 
 	void process();
@@ -33,9 +34,12 @@ public:
 
 	source_project& project;
 
+	std::string uri;
 	Text_document document;
 	std::vector<token*> tokens;
 	std::vector<stmt::statement*> statements;
+
+	std::vector<lsp::diagnostic> diagnostics;
 
 	statement_scope root_scope;
 
