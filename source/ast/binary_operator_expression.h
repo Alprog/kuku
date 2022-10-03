@@ -16,6 +16,7 @@ namespace ast
 		binary_operator& op;
 		std::unique_ptr<expression> right;
 
+		virtual void semantic_analyze(stmt::statement& statement) override;
 		virtual void compile(compiler& compiler) override;
 	};
 }

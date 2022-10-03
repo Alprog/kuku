@@ -9,15 +9,13 @@
 
 class symbol_reference;
 
-using symbol_name = std::u16string;
-
 class symbol
 {
 public:
 	symbol(symbol_reference& definition);
 	~symbol();
 
-	symbol_name name;
+	std::u16string name;
 
 	symbol_reference* definition;
 	std::vector<symbol_reference*> usages;

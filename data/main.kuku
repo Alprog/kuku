@@ -1,8 +1,8 @@
 
 class a
 	function foo()
-		var a
-		= 4
+		var a; var
+		a = b
 		3 = "efe"
 	end
 	

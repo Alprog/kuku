@@ -15,6 +15,7 @@ namespace stmt
 		virtual scope_type get_allowed_scopes() const override { return scope_type::imperative_scopes | scope_type::module_root; }
 
 		virtual void parse_internal(Parser& parser) override;
+		virtual void semantic_analyze() override;
 		virtual void compile(compiler& compiler) override;
 		
 		std::unique_ptr<ast::expression> expression;

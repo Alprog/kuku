@@ -16,7 +16,7 @@ namespace stmt
 
 		virtual void parse_internal(Parser& parser) override;
 		virtual void semantic_analyze() override;
-
+		
 		std::unique_ptr<ast::expression> lvalue;
 		std::unique_ptr<ast::expression> rvalue;
 	};

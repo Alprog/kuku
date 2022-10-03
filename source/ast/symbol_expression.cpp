@@ -10,3 +10,8 @@ void ast::symbol_expression::compile(compiler& compiler)
 {
 
 }
+
+void ast::symbol_expression::semantic_analyze(stmt::statement& statement)
+{
+	reference.semantic_analyze(statement);
+}

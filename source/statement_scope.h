@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "scope_type.h"
+#include "types.h"
 
 class symbol;
 
@@ -21,6 +22,7 @@ public:
 	scope_type type;
 
 	void define_symbol(symbol* symbol);
+	symbol* find_symbol(std::u16string name, int requesting_statement_sequence_number);
 
 	std::vector<symbol*> symbols;
 

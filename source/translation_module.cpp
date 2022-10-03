@@ -52,6 +52,29 @@ void translation_module::parse_statements()
         if (statement == nullptr) break;
         statements.push_back(statement);
     }
+
+    set_statement_to_tokens();
+}
+
+void translation_module::set_statement_to_tokens()
+{
+    auto index = 0;
+    for (auto& statement : statements)
+    {
+        while (tokens[index] != statement->start_token)
+        {
+            tokens[index++]->statement = nullptr;
+        }
+        while (tokens[index] != statement->end_token)
+        {
+            tokens[index++]->statement = statement;
+        }
+        tokens[index++]->statement = statement;
+    }
+    while (index < tokens.size())
+    {
+        tokens[index++]->statement = nullptr;
+    }
 }
 
 void translation_module::analyze_scope()

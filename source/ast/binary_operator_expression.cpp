@@ -9,6 +9,14 @@ ast::binary_operator_expression::binary_operator_expression(std::unique_ptr<expr
 {
 }
 
+void ast::binary_operator_expression::semantic_analyze(stmt::statement& statement)
+{
+	left->semantic_analyze(statement);
+	right->semantic_analyze(statement);
+
+	/* TODO: analyze is it applicable to do operation */
+}
+
 void ast::binary_operator_expression::compile(compiler& compiler)
 {
 	left->compile(compiler);

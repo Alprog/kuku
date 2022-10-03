@@ -25,6 +25,7 @@ public:
 	void compile();
 	void compile_and_run();
 	
+	void set_statement_to_tokens();
 	void clear();
 
 	void print_statements();

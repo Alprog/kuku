@@ -19,5 +19,6 @@ void stmt::assign_statement::parse_internal(Parser& parser)
 
 void stmt::assign_statement::semantic_analyze()
 {
-	
+	lvalue->semantic_analyze(*this);
+	rvalue->semantic_analyze(*this);
 }

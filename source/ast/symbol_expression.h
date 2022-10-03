@@ -10,6 +10,7 @@ namespace ast
 	{
 	public:
 		symbol_expression(token& token);
+		virtual void semantic_analyze(stmt::statement& statement) override;
 		virtual void compile(compiler& compiler) override;
 
 		symbol_reference reference;

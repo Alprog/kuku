@@ -134,14 +134,14 @@ void language_server::on_hover(json::object& message)
 		{
             auto hover_text = token->get_hover_text();
 
-			stmt::statement* statement = module->get_statement(position);
+            stmt::statement* statement = token->statement;
             if (statement != nullptr)
             {
-                hover_text += u8"  \r\n" + statement->get_hover_text();;
+                hover_text += u"  \r\n" + statement->get_hover_text();
             }
 
             result = {
-                { "contents", hover_text }
+                { "contents", unicode::to_utf8(hover_text) }
             };
 		}
     }

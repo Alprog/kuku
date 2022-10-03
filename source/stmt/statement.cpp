@@ -48,13 +48,13 @@ std::u16string stmt::statement::get_source_text() const
 	return start_token->document.get_substring(get_full_range());
 }
 
-std::u8string stmt::statement::get_hover_text() const
+std::u16string stmt::statement::get_hover_text() const
 {
 	const auto& text = 
 		u"**statement:** "_s + get_statement_type() + u"  \r\n" +
 		u"**content:** "_s + get_source_text();
 
-	return unicode::to_utf8(text);
+	return text;
 }
 
 lsp::range stmt::statement::get_full_range() const

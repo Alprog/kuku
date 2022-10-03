@@ -13,6 +13,11 @@ void stmt::expression_statement::parse_internal(Parser& parser)
 	return;
 }
 
+void stmt::expression_statement::semantic_analyze()
+{
+	expression->semantic_analyze(*this);
+}
+
 void stmt::expression_statement::compile(compiler& compiler)
 {
 	expression->compile(compiler);

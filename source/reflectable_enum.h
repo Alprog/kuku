@@ -29,8 +29,8 @@ std::string get_name(EnumT value)
 };
 
 template <typename EnumT>
-std::u8string get_u8name(EnumT value)
+std::u16string get_u16name(EnumT value)
 {
 	auto name = Enum_reflector<EnumT>::get_enum_name(value);
-	return std::u8string(std::begin(name), std::end(name));
+	return std::u16string(std::begin(name), std::end(name));
 };
