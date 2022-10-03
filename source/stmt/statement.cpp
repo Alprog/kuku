@@ -28,7 +28,7 @@ stmt::statement* stmt::statement::init(Parser& parser, token* start_token)
 		{
 			this->error_text = u"unexpected token '" + parser.current->get_source_text() + u"'";
 		}
-		diagnostics.push_back(lsp::diagnostic(parser.current->range, lsp::diagnostic_severity::Error, 1, std::string(error_text.begin(), error_text.end())));
+		diagnostics.push_back(lsp::diagnostic(parser.current->range, lsp::diagnostic_severity::Error, 1, error_text) );
 
 		while (!parser.current->is_end_statement_token()) parser.next(); // panic mode
 		this->end_token = parser.current;

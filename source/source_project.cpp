@@ -11,7 +11,6 @@ void source_project::add_file(std::string uri)
 {
 	Basic_input_stream basic_stream{ new std::basic_ifstream<utf8unit> { uri } };
 	unicode::Utf8to16_stream u16stream(basic_stream);
-
 	modules[uri] = new translation_module(*this, uri, u16stream);
 }
 
@@ -19,7 +18,12 @@ void source_project::add_file(std::string uri, std::u8string content)
 {
 	Basic_input_stream basic_stream{ new std::basic_istringstream{ content} };
 	unicode::Utf8to16_stream u16stream{ basic_stream };
+	modules[uri] = new translation_module(*this, uri, u16stream);
+}
 
+void source_project::add_file(std::string uri, std::u16string content)
+{
+	Basic_input_stream u16stream{ new std::basic_istringstream{ content } };
 	modules[uri] = new translation_module(*this, uri, u16stream);
 }
 

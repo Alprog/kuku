@@ -12,7 +12,7 @@ namespace lsp
         std::string uri;
         std::string language_id;
         int version;
-        std::u8string text;
+        std::u16string text;
 
         JSCHEME(uri, language_id, version, text)
     };

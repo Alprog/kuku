@@ -2,7 +2,7 @@
 class a
 	function foo()
 		var a
-		a = f
+		= 4
 		3 = "efe"
 	end
 	

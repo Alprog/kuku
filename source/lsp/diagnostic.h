@@ -12,12 +12,12 @@ namespace lsp
 {
     struct diagnostic : public json::serializable
     {
-        diagnostic(lsp::range range, diagnostic_severity severity, int code, std::string message);
+        diagnostic(lsp::range range, diagnostic_severity severity, int code, std::u16string message);
 
         lsp::range range;
         diagnostic_severity severity;
         int code;
-        std::string message;
+        std::u16string message;
         
         JSCHEME(range, severity, code, message)
     };

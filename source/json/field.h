@@ -27,7 +27,7 @@ namespace json
     float serialize(float value);
     std::string serialize(std::string value);
     std::u8string serialize(std::u8string value);
-    std::u16string serialize(std::u16string value);
+    std::u8string serialize(std::u16string value);
 
     template <typename T>
     concept enum_type = std::is_enum<T>::value;
