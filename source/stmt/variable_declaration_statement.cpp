@@ -6,7 +6,11 @@ void stmt::variable_declaration_statement::parse_internal(Parser& parser)
     parser.require(Token_type::Keyword_var);
     parse_symbol(parser);
 
-    CHECK_END_OF_STATEMENT
+    if (parser.match(Token_type::Colon))
+    {
+        parser.require(Token_type::Identifier);
+        CHECK_END_OF_STATEMENT
+    }
 
     parser.require(Token_type::Assign_operator);
     expression = parser.parse_expression();
