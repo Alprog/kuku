@@ -11,7 +11,7 @@ namespace lsp
 
     std::u16string position::to_str()
     {
-        auto asciiStr = "{" + std::to_string(line) + ":" + std::to_string(character) + "}";
+        auto asciiStr = "{" + std::to_string(line + 1) + ":" + std::to_string(character + 1) + "}";
         return std::u16string(std::begin(asciiStr), std::end(asciiStr));
     }
 

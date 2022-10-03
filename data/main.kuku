@@ -2,7 +2,7 @@
 class a
 	function foo()
 		var a
-		4 = 55
+		= 4
 		3 = "efe"
 	end
 	

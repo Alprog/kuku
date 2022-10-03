@@ -16,6 +16,7 @@
 #include "stmt/expression_statement.h"
 #include "stmt/return_statement.h"
 #include "ast/string_literal.h"
+#include "ast/symbol_expression.h"
 
 Parser::Parser(translation_module& module, token** it)
 	: module{ module }
@@ -42,10 +43,18 @@ void Parser::next()
 }
 
 template <typename T>
-T* Parser::create_statement()
+T* Parser::create_statement(token* start_token)
 {
-    auto node = new T();
-    node->init(*this, current);
+	auto node = new T();
+	node->init(*this, start_token ? start_token : current );
+	return node;
+}
+
+template <typename T>
+T* Parser::create_statement(token* start_token, std::unique_ptr<ast::expression> expression)
+{
+    auto node = new T( std::move( expression ) );
+    node->init(*this, start_token);
     return node;
 }
 
@@ -56,8 +65,7 @@ stmt::statement* Parser::parse_next_statement()
     {
         return nullptr;
     }
-
-    if (current->type == Token_type::Keyword_var)
+    else if (current->type == Token_type::Keyword_var)
     {
         return create_statement<stmt::variable_declaration_statement>();
     }
@@ -80,19 +88,22 @@ stmt::statement* Parser::parse_next_statement()
     else
     {
         auto start_token = current;
-        auto expression = parse_expression();
-
-        stmt::statement* statement;
-        if (current->type == Token_type::Assign_operator)
+        try
         {
-            statement = new stmt::assign_statement(std::move(expression));
+            auto expression = parse_expression();
+            if (current->type == Token_type::Assign_operator)
+            {
+                return create_statement<stmt::assign_statement>(start_token, std::move(expression));
+            }
+            else
+            {
+                return create_statement<stmt::expression_statement>(start_token, std::move(expression));
+            }
         }
-        else
+        catch (unexpected_error& error)
         {
-            statement = new stmt::expression_statement(std::move(expression));
+            return create_statement<stmt::unknown_statement>(start_token);
         }
-        statement->init(*this, start_token);
-        return statement;
     }
 }
 
@@ -134,6 +145,12 @@ std::unique_ptr<ast::binary_operator_expression> Parser::parse_binary_operator_c
 
 std::unique_ptr<ast::expression> Parser::parse_operand()
 {
+    if (current->type == Token_type::Identifier)
+    {
+        auto symbol_expression = std::make_unique<ast::symbol_expression>(*current);
+        next();
+        return std::move(symbol_expression);
+    }
     if (current->type == Token_type::Integer_literal)
     {
         auto literal = std::make_unique<ast::integer_literal>(*current);
@@ -153,7 +170,7 @@ std::unique_ptr<ast::expression> Parser::parse_operand()
         require(Token_type::Close_parenthesis);
         return std::move(expression);
     }
-    return nullptr;
+    throw unexpected_error();
 }
 
 binary_operator* Parser::match_binary_operator(precedence maximum_precedence, binary_operator*& out_operator)

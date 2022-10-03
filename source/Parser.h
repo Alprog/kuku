@@ -42,5 +42,8 @@ public:
 	std::vector<stmt::statement*> statements;
 
 	template <typename T>
-	T* create_statement();
+	T* create_statement(token* start_token = nullptr);
+
+	template <typename T>
+	T* create_statement(token* start_token, std::unique_ptr<ast::expression> expression);
 };
