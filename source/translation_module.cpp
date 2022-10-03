@@ -4,6 +4,7 @@
 #include "source_project.h"
 #include "console.h"
 #include "scope_analyzer.h"
+#include "semantic_analyzer.h"
 #include "compiler.h"
 #include "err/error.h"
 
@@ -55,13 +56,14 @@ void translation_module::parse_statements()
 
 void translation_module::analyze_scope()
 {
-    scope_analyzer analyzer(*this, statements);
+    scope_analyzer analyzer(*this);
     analyzer.analyze();
 }
 
 void translation_module::analyze_semantic()
 {
-
+    semantic_analyzer analyzer(*this);
+    analyzer.analyze();
 }
 
 void translation_module::compile()

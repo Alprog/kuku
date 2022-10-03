@@ -37,6 +37,7 @@ namespace stmt
 		lsp::range get_full_range() const;
 		void set_scope(statement_scope* scope);
 
+		virtual void semantic_analyze();
 		virtual void compile(compiler& compiler);
 		virtual void define_symbols(statement_scope* scope);
 

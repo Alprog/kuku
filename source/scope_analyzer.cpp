@@ -7,9 +7,8 @@
 #include "translation_module.h"
 #include "source_project.h"
 
-scope_analyzer::scope_analyzer(translation_module& module, std::vector<stmt::statement*>& statements)
+scope_analyzer::scope_analyzer(translation_module& module)
 	: module{ module }
-	, statements{ statements }
 {
 }
 
@@ -17,9 +16,9 @@ void scope_analyzer::analyze()
 {
 	auto current_scope = &module.root_scope;
 	
-	for (int i = 0; i < statements.size(); i++)
+	for (int i = 0; i < module.statements.size(); i++)
 	{
-		auto statement = statements[i];
+		auto statement = module.statements[i];
 
 		statement->sequence_number = i;
 		statement->set_scope(current_scope);

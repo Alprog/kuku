@@ -7,7 +7,7 @@
 			<!--keywords-->
 			<dict>
 				<key>name</key><string>keyword.other.kuku</string>
-				<key>match</key><string>\b(var|function|if|while|for|return|and|or|then|end)\b</string>
+				<key>match</key><string>\b(class|var|function|if|while|for|return|and|or|then|end)\b</string>
 			</dict>
 			<!--raw strings-->
 			<dict>

@@ -60,6 +60,10 @@ void stmt::statement::set_scope(statement_scope* scope)
 	this->scope = scope;
 }
 
+void stmt::statement::semantic_analyze()
+{
+}
+
 void stmt::statement::compile(compiler& compiler)
 {
 }

@@ -6,10 +6,10 @@
 
 class translation_module;
 
-class scope_analyzer
+class semantic_analyzer
 {
 public:
-	scope_analyzer(translation_module& module);
+	semantic_analyzer(translation_module& module);
 	void analyze();
 
 private:
