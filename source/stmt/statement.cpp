@@ -20,7 +20,14 @@ stmt::statement* stmt::statement::init(Parser& parser, token* start_token)
 	catch (unexpected_error ex)
 	{
 		this->is_valid = false;
-		this->error_text = u"unexpected token '" + parser.current->get_source_text() + u"' at " + parser.current->range.start.to_str();
+		if (parser.current->type == Token_type::End_of_line)
+		{
+			this->error_text = u"unexpected end of line";
+		}
+		else
+		{
+			this->error_text = u"unexpected token '" + parser.current->get_source_text() + u"'";
+		}
 		diagnostics.push_back(lsp::diagnostic(parser.current->range, lsp::diagnostic_severity::Error, 1, std::string(error_text.begin(), error_text.end())));
 
 		while (!parser.current->is_end_statement_token()) parser.next(); // panic mode
