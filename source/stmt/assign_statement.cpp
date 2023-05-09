@@ -22,3 +22,8 @@ void stmt::assign_statement::semantic_analyze()
 	lvalue->semantic_analyze(*this);
 	rvalue->semantic_analyze(*this);
 }
+
+void stmt::assign_statement::compile(compiler& compiler)
+{
+	rvalue->compile(compiler);
+}

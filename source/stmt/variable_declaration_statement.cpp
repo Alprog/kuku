@@ -1,5 +1,6 @@
 
 #include "variable_declaration_statement.h"
+#include "ast/expression.h"
 
 void stmt::variable_declaration_statement::parse_internal(Parser& parser)
 {
@@ -27,4 +28,9 @@ void stmt::variable_declaration_statement::semantic_analyze()
 void stmt::variable_declaration_statement::define_symbols(statement_scope* scope)
 {
     scope->define_symbol(symbol);
+}
+
+void stmt::variable_declaration_statement::compile(compiler& compiler)
+{
+    expression->compile(compiler);
 }

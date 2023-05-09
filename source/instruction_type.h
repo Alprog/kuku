@@ -12,5 +12,6 @@ enum class Instruction_type : byte
 	INT_DIVIDE,
 	INT_POWER,
 	PRINT,
+	SET_LOCAL,
 	END
 };

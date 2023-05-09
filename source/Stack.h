@@ -12,5 +12,6 @@ public:
     void push(Cell cell);
 
     Cell* cells;
+    Cell* frame_start;
     Cell* head;
 };

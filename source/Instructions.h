@@ -99,6 +99,12 @@ Ins0(PRINT)
 	routine.stack.head--;
 }};
 
+Ins(SET_LOCAL, BYTE(index))
+{
+	std::cout << routine.stack.frame_start[index].integer << std::endl;
+	routine.stack.head--;
+}};
+
 Ins0(END)
 {
 	routine.stop();
