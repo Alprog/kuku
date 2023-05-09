@@ -17,6 +17,7 @@ public:
 
 	std::u16string name;
 
+	// debug info
 	symbol_reference* definition;
 	std::vector<symbol_reference*> usages;
 	int stack_offset = -1;

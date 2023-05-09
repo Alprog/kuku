@@ -37,7 +37,6 @@ void test()
 	routine.run();
 
 
-
 	kuku::string s1("abc");
 	kuku::string s2(u"abc");
 	kuku::string s3(U"abc");

@@ -12,7 +12,7 @@ namespace stmt
 	public:
 		scoped_symboled_statement()
 		{
-			//symboled_statement<InfoT>::definition_symbol.inner_scope = &(scoped_statement<ScopeType>::inner_scope);
+			//symboled_statement<SymbolT>::symbol.inner_scope = &(scoped_statement<ScopeType>::inner_scope);
 		}
 	};
 }

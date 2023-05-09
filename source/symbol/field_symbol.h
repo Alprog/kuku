@@ -9,4 +9,3 @@ class field_symbol : public symbol
 {
 	type_symbol* type;
 };
-

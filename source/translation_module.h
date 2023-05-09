@@ -38,8 +38,8 @@ public:
 
 	std::string uri;
 	Text_document document;
-	std::vector<token*> tokens;
-	std::vector<stmt::statement*> statements;
+	std::vector<token*> tokens; // own
+	std::vector<stmt::statement*> statements;  // own
 
 	statement_scope root_scope;
 
