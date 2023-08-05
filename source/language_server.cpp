@@ -64,13 +64,14 @@ void language_server::on_initialize(json::object& message)
             }},
             { "hoverProvider", true },
             { "executeCommandProvider", {
-                { "commands", { "a", "b" } }
+                { "commands", { "kuku.test", "kuku.a", "kuku.b", "kuku.c"}}
             }},
             { "codeActionProvider", {
                 { "codeActionKinds", { 
                     "refactor.extract.function",
                     "refactor.extract.line",
-                    "source.fixAll"
+                    "source.fixAll",
+                    "source.c"
                 }},
                 { "resolveProvider", false }
             }}
@@ -179,14 +180,14 @@ void language_server::on_code_action(json::object& message)
     auto id = message["id"].get<int>();
 
     json::object result = {
-        {
+        /*{
             { "title", "extract function" },
             { "kind", "refactor.extract.function" },
             { "command", {
                 { "title", "CommandA" },
-                { "command", "a" }
+                { "command", "kuku.a" }
             }},
-            { "diagnostics", {
+            {"diagnostics", {
                 {
                     { "severity", 4 },
 
@@ -207,7 +208,7 @@ void language_server::on_code_action(json::object& message)
                 }
             }}
         },
-        /*{
+        {
             { "title", "extract line" },
             { "kind", "refactor.extract.line" },
             { "command", {
@@ -215,13 +216,24 @@ void language_server::on_code_action(json::object& message)
                 { "command", "b" },
             }},
             { "disabled", {{ "reason", "just because" }}}
-        }*/
+        },*/
+        {
+            { "title", "organizeImports" },
+            { "kind", "source.organizeImports" },
+            { "command", {
+                { "title", "CommandB" },
+                { "command", "kuku.b" }
+            }},
+        },
+        {
+            { "title", "Command C" },
+            { "kind", "source.c" },
+            { "command", {
+                { "title", "CommandC" },
+                { "command", "kuku.c" }
+            }},
+        },
     };
-
-    if (!message["params"]["context"].contains("only"))
-    {
-        result = {};
-    }
 
     json::object response = {
         { "jsonrpc", "2.0" },
@@ -251,7 +263,7 @@ void language_server::on_execute_command(json::object& message)
 void language_server::show_message(std::string text)
 {
     json::object params = {
-        { "type", 1 },
+        { "type", lsp::diagnostic_severity::Information },
         { "message", text }
     };
 

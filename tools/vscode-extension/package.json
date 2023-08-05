@@ -34,9 +34,22 @@
 				"path": "./kuku.tmGrammar"
 			}
 		],
+		"commands": [
+			{
+			  "command": "kuku.test",
+			  "title": "Test Command",
+			  "category": "KuKu"
+			}
+		],
+		"keybindings": [
+            {
+                "command": "kuku.test",
+                "key": "F7"
+            }
+        ],
 		"configuration": {
 			"type": "object",
-			"title": "Example configuration",
+			"title": "KuKu Language Server",
 			"properties": {
 				"kukuLanguageServer.maxNumberOfProblems": {
 					"scope": "resource",
