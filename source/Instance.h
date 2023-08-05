@@ -1,11 +1,11 @@
 #pragma once
 
-union Cell;
+union cell;
 
 struct Instance
 {
 public:
     void dump();
 
-    Cell* cells;
+    cell* cells;
 };

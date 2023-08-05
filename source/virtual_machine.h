@@ -14,7 +14,7 @@ public:
 
     void test();
 
-    void set_local(int cell_index, Cell cell_value);
+    void set_local(int cell_index, cell cell_value);
 
-    void set_field(Instance instance, int cell_index, Cell cell_value);
+    void set_field(Instance instance, int cell_index, cell cell_value);
 };

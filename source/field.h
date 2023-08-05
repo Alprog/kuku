@@ -5,13 +5,13 @@
 
 class Class;
 
-class Field
+class field
 {
 public:
-    Field(Class& const owner_class, std::string name, Data_type type, int instance_offset);
+    field(Class& const owner_class, std::string name, data_type type, int instance_offset);
 
     Class& owner_class;
-    Data_type type;
+    data_type type;
     std::string name;
     int instance_offset;
 };

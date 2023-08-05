@@ -6,10 +6,10 @@
 #include <iostream>
 #include "for_each.h"
 
-template <Instruction_type Type>
-struct Instruction : Base_instruction
+template <instruction_type Type>
+struct instruction : base_instruction
 {
-	Instruction() : Base_instruction{ Type } {};
+	instruction() : base_instruction{ Type } {};
 
 	char const* get_name() { return "unknown"; }
 
@@ -27,13 +27,13 @@ struct Instruction : Base_instruction
 #define SEMICOLON ;
 
 #define Ins(NAME, ...) \
-	using Instruction_##NAME = Instruction<Instruction_type::NAME>; \
+	using instruction_##NAME = instruction<instruction_type::NAME>; \
 	template<> \
-	struct Instruction<Instruction_type::NAME> : Base_instruction \
+	struct instruction<instruction_type::NAME> : base_instruction \
 	{ \
 		FOR_EACH_SEPARATOR(BOTH, SEMICOLON, __VA_ARGS__); \
-		Instruction( FOR_EACH(BOTH, __VA_ARGS__) ) \
-			: Base_instruction{ Instruction_type::NAME } \
+		instruction( FOR_EACH(BOTH, __VA_ARGS__) ) \
+			: base_instruction{ instruction_type::NAME } \
 			, FOR_EACH( INITIALIZATION, __VA_ARGS__) \
 		{ \
 		} \
@@ -42,11 +42,11 @@ struct Instruction : Base_instruction
 		inline void execute(Routine& routine)
 
 #define Ins0(NAME) \
-	using Instruction_##NAME = Instruction<Instruction_type::NAME>; \
+	using instruction_##NAME = instruction<instruction_type::NAME>; \
 	template<> \
-	struct Instruction<Instruction_type::NAME> : Base_instruction \
+	struct instruction<instruction_type::NAME> : base_instruction \
 	{ \
-		Instruction() : Base_instruction{ Instruction_type::NAME } {} \
+		instruction() : base_instruction{ instruction_type::NAME } {} \
 		std::string get_name() { return #NAME; } \
 		std::string get_argsLine() { return ""; } \
 		inline void execute(Routine& routine)
@@ -58,7 +58,7 @@ struct Instruction : Base_instruction
 
 Ins(PUSH_INT, INT(value))
 {
-	Cell cell;
+	cell cell;
 	cell.integer = value;
 	routine.stack.push(cell);
 }};

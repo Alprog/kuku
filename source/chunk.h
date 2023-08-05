@@ -4,7 +4,7 @@
 #include "types.h"
 #include <vector>
 
-class Chunk
+class chunk
 {
 public:
 	std::vector<byte> bytes;

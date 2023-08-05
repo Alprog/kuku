@@ -3,7 +3,7 @@
 #include <string>
 #include <conio.h>
 
-namespace Console
+namespace console
 {
     std::u16string read_line();
 

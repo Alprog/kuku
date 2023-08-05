@@ -20,7 +20,7 @@ void Repl()
     while (true)
     {
         std::cout << "> ";
-        std::u16string line = Console::read_line();
+        std::u16string line = console::read_line();
         if (line == u"exit")
         {
             break;

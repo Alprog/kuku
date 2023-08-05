@@ -1,7 +1,7 @@
 
 #include "field.h"
 
-Field::Field(Class& const owner_class, std::string name, Data_type type, int instance_offset)
+field::field(Class& const owner_class, std::string name, data_type type, int instance_offset)
     : owner_class{ owner_class }
     , name{ name }
     , type{ type }

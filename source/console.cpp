@@ -1,7 +1,7 @@
 
 #include "console.h"
 
-namespace Console
+namespace console
 {
     std::u16string read_line()
     {

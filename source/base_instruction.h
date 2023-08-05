@@ -6,18 +6,18 @@
 #include "routine.h"
 #include "jump_table.h"
 
-struct Base_instruction
+struct base_instruction
 {
-	Instruction_type Type;
+	instruction_type type;
 
 	inline void execute(Routine& routine)
 	{
-		Jump_table::execute_function[(byte)Type](routine);
+		Jump_table::execute_function[(byte)type](routine);
 	}
 
 	inline size_t getSize()
 	{
-		return Jump_table::get_size_function[(byte)Type]();
+		return Jump_table::get_size_function[(byte)type]();
 	}
 
 	inline size_t skip(Routine& routine)

@@ -1,6 +1,6 @@
 
 #include "integer_literal.h"
-#include "Instructions.h"
+#include "instructions.h"
 #include "compiler.h"
 
 ast::integer_literal::integer_literal(token& token)
@@ -14,5 +14,5 @@ ast::integer_literal::integer_literal(token& token)
 
 void ast::integer_literal::compile(compiler& compiler)
 {
-	compiler.spawn(Instruction_PUSH_INT{value});
+	compiler.spawn(instruction_PUSH_INT{value});
 }

@@ -102,15 +102,15 @@ void translation_module::compile_and_run()
         compiler compiler(*this);
         compiler.compile();
 
-        compiler.chunk.write(Instruction_PRINT{});
-        compiler.chunk.write(Instruction_END{});
+        compiler.chunk.write(instruction_PRINT{});
+        compiler.chunk.write(instruction_END{});
 
         Routine routine{ compiler.chunk.get_start_pointer() };
         routine.run();
     }
     catch (error& error)
     {
-        Console::write_line(error.get_message());
+        console::write_line(error.get_message());
     }
 }
 
@@ -133,11 +133,11 @@ void translation_module::print_statements()
     for (auto statement : statements)
     {
         auto line = statement->get_statement_type() + u" " + (statement->is_valid ? u"1" : u"0");
-        Console::write_line(line);
+        console::write_line(line);
 
         if (!statement->is_valid)
         {
-            Console::write_line(statement->error_text);
+            console::write_line(statement->error_text);
         }
     }
 }

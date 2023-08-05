@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include "Instructions.h"
-#include "Chunk.h"
+#include "instructions.h"
+#include "chunk.h"
 
 class translation_module;
 
@@ -19,12 +19,12 @@ public:
 		chunk.write(value);
 	}
 
-	template<Instruction_type T>
-	void spawn(Instruction<T> instruction)
+	template<instruction_type T>
+	void spawn(instruction<T> instruction)
 	{
 		chunk.write(instruction);
 	}
 
 	translation_module& module;
-	Chunk chunk;
+	chunk chunk;
 };

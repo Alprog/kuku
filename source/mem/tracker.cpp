@@ -1,6 +1,6 @@
 
 #include "tracker.h"
-#include "Console.h"
+#include "console.h"
 #include "unicode.h"
 
 mem::tracker mem::tracker::instance;
@@ -14,7 +14,7 @@ void mem::tracker::print_diagnostics()
 {
 	instance.enabled = false;
 	{
-		Console::write_line("Memory: " + std::to_string(instance.count) + " (" + std::to_string(instance.total_size) + " bytes)");
+		console::write_line("Memory: " + std::to_string(instance.count) + " (" + std::to_string(instance.total_size) + " bytes)");
 	}
 	instance.enabled = true;
 }

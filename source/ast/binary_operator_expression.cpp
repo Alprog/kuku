@@ -25,23 +25,23 @@ void ast::binary_operator_expression::compile(compiler& compiler)
 	switch (op.token_type)
 	{
 		case Token_type::Plus_operator:
-			compiler.spawn(Instruction_INT_ADD{});
+			compiler.spawn(instruction_INT_ADD{});
 			break;
 
 		case Token_type::Minus_operator:
-			compiler.spawn(Instruction_INT_SUB{});
+			compiler.spawn(instruction_INT_SUB{});
 			break;
 
 		case Token_type::Multiply_Operator:
-			compiler.spawn(Instruction_INT_MULTIPLY{});
+			compiler.spawn(instruction_INT_MULTIPLY{});
 			break;
 
 		case Token_type::Divide_Operator:
-			compiler.spawn(Instruction_INT_DIVIDE{});
+			compiler.spawn(instruction_INT_DIVIDE{});
 			break;
 			
 		case Token_type::Exponent_operator:
-			compiler.spawn(Instruction_INT_POWER{});
+			compiler.spawn(instruction_INT_POWER{});
 			break;
 
 		default:

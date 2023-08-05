@@ -3,7 +3,7 @@
 
 stack::stack()
 {
-    cells = new Cell[1024 * 1024 / sizeof(Cell)]; // 1 MB
+    cells = new cell[1024 * 1024 / sizeof(cell)]; // 1 MB
     head = &cells[0];
     frame_start = &cells[0];
 }
@@ -16,7 +16,7 @@ stack::~stack()
     }
 }
 
-void stack::push(Cell cell)
+void stack::push(cell cell)
 {
     *head++ = cell;
 }

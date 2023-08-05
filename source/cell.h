@@ -5,7 +5,7 @@
 #include "class.h"
 #include "kuku/string.h"
 
-union Cell
+union cell
 {
     byte byte;
     integer integer;

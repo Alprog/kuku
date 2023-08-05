@@ -23,7 +23,7 @@ void Routine::perform_instruction()
 {
 	while (running)
 	{
-		reinterpret_cast<Base_instruction*>(ip)->execute(*this);
+		reinterpret_cast<base_instruction*>(ip)->execute(*this);
 	}
 }
 

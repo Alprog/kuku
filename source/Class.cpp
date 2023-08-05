@@ -8,7 +8,7 @@ Class::Class(std::string name)
 {
 }
 
-Field& Class::register_field(std::string name, Data_type data_type)
+field& Class::register_field(std::string name, data_type data_type)
 {
     return fields.emplace_back(*this, name, data_type, instance_size++);
 }
@@ -16,7 +16,7 @@ Field& Class::register_field(std::string name, Data_type data_type)
 Instance Class::create_instance()
 {
     Instance instance;
-    instance.cells = new Cell[instance_size];
+    instance.cells = new cell[instance_size];
     instance.cells[0].class_pointer = this;
     return instance;
 }

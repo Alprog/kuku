@@ -1,6 +1,6 @@
 #pragma once
 
-enum class Encoding
+enum class encoding
 {
     Byte8,
     Byte16,

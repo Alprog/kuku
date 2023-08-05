@@ -22,9 +22,9 @@ inline size_t get_size()
 template <int I>
 void register_instruction()
 {
-	using InstructionT = Instruction<(Instruction_type)I>;
-	Jump_table::execute_function[I] = read_and_execute_instruction<InstructionT>;
-	Jump_table::get_size_function[I] = get_size<InstructionT>;
+	using instructionT = instruction<(instruction_type)I>;
+	Jump_table::execute_function[I] = read_and_execute_instruction<instructionT>;
+	Jump_table::get_size_function[I] = get_size<instructionT>;
 }
 
 template <int I>

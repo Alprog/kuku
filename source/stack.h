@@ -9,9 +9,9 @@ public:
     stack();
     ~stack();
 
-    void push(Cell cell);
+    void push(cell cell);
 
-    Cell* cells;
-    Cell* frame_start;
-    Cell* head;
+    cell* cells;
+    cell* frame_start;
+    cell* head;
 };
