@@ -235,7 +235,33 @@ void language_server::on_code_action(json::object& message)
 void language_server::on_execute_command(json::object& message)
 {
     auto id = message["id"].get<int>();
-    auto uri = message["params"]["command"].get<std::string>();
+    auto command_name = message["params"]["command"].get<std::string>();
+
+    show_message("command " + command_name + " was performed!");
+
+    json::object response = {
+        { "jsonrpc", "2.0" },
+        { "id", id },
+        { "result", 0 }
+    };
+
+    ide_connection << response;
+}
+
+void language_server::show_message(std::string text)
+{
+    json::object params = {
+        { "type", 1 },
+        { "message", text }
+    };
+
+    json::object notification = {
+        { "jsonrpc", "2.0" },
+        { "method", "window/showMessage" },
+        { "params", params }
+    };
+
+    ide_connection << notification;
 }
 
 void language_server::publish_diagnostics(translation_module& module)

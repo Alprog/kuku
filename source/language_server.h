@@ -20,6 +20,7 @@ private:
 	void on_execute_command(json::object& message);
 	void on_completion(json::object& message);
 
+	void show_message(std::string text);
 	void publish_diagnostics(translation_module& module);
 
 	source_project source_project;
