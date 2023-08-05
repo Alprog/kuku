@@ -3,12 +3,12 @@
 
 namespace unicode {
 
-Utf8to16_stream::Utf8to16_stream(Input_stream<utf8unit>& input_stream)
+utf8to16_stream::utf8to16_stream(::input_stream<utf8unit>& input_stream)
     : input_stream{ input_stream }
 {
 }
 
-bool Utf8to16_stream::read(utf16unit& out_unit)
+bool utf8to16_stream::read(utf16unit& out_unit)
 {
     if (queue_stream.read(out_unit))
     {

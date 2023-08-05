@@ -7,7 +7,7 @@ text_document::text_document()
 
 }
 
-text_document::text_document(Input_stream<utf16unit>& stream)
+text_document::text_document(input_stream<utf16unit>& stream)
 {
     std::vector<utf16unit> line;
 

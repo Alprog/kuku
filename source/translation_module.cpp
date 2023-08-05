@@ -8,7 +8,7 @@
 #include "compiler.h"
 #include "err/error.h"
 
-translation_module::translation_module(source_project& project, std::string uri, Input_stream<utf16unit>& stream)
+translation_module::translation_module(source_project& project, std::string uri, input_stream<utf16unit>& stream)
 	: project{ project }
 	, uri{ uri }
 	, document{ stream }

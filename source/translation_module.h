@@ -13,7 +13,7 @@ class source_project;
 class translation_module
 {
 public:
-	translation_module(source_project& project, std::string uri, Input_stream<utf16unit>& stream);
+	translation_module(source_project& project, std::string uri, input_stream<utf16unit>& stream);
 	~translation_module();
 
 	void process();

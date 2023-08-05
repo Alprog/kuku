@@ -17,7 +17,7 @@ stmt::statement* stmt::statement::init(parser& parser, token* start_token)
 		parser.require_end_of_statement();
 		this->is_valid = true;
 	}
-	catch (unexpected_error ex)
+	catch (unexpected_error)
 	{
 		this->is_valid = false;
 		if (parser.current->type == token_type::End_of_line)

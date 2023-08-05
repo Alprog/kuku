@@ -11,7 +11,7 @@ constexpr utf8unit HAS_3_OCTETS = 0b11100000;
 constexpr utf8unit HAS_4_OCTETS = 0b11110000;
 constexpr utf8unit CONTINUATION = 0b10000000;
 
-bool unicode::read_character(Input_stream<utf8unit>& stream, character& character)
+bool unicode::read_character(input_stream<utf8unit>& stream, character& character)
 {
     utf8unit byte;
     if (!stream.read(byte)) return false;
@@ -60,7 +60,7 @@ bool unicode::read_character(Input_stream<utf8unit>& stream, character& characte
     return true;
 }
 
-void unicode::write_character(Output_stream<utf8unit>& stream, character character)
+void unicode::write_character(output_stream<utf8unit>& stream, character character)
 {
     if (character < COUNT_7_BIT)
     {
@@ -90,7 +90,7 @@ constexpr utf16unit SURROGATES_START = 0xD800;
 constexpr utf16unit SURROGATES_HALF = 0xDC00;
 constexpr utf16unit SURROGATES_END = 0xE000;
 
-bool unicode::read_character(Input_stream<utf16unit>& stream, character& result)
+bool unicode::read_character(input_stream<utf16unit>& stream, character& result)
 {
     utf16unit first_unit;
     if (!stream.read(first_unit))
@@ -116,7 +116,7 @@ bool unicode::read_character(Input_stream<utf16unit>& stream, character& result)
     return true;
 }
 
-void unicode::write_character(Output_stream<utf16unit>& stream, character character)
+void unicode::write_character(output_stream<utf16unit>& stream, character character)
 {
     if (character < COUNT_16_BIT)
     {
@@ -140,7 +140,7 @@ void unicode::write_character(Output_stream<utf16unit>& stream, character charac
 }
 
 template <typename InT, typename OutT>
-void convert(Input_stream<InT>& input_stream, Output_stream<OutT>& output_stream)
+void convert(input_stream<InT>& input_stream, output_stream<OutT>& output_stream)
 {
     character character;
     while (unicode::read_character(input_stream, character))
@@ -151,16 +151,16 @@ void convert(Input_stream<InT>& input_stream, Output_stream<OutT>& output_stream
 
 std::u8string unicode::to_utf8(const std::u16string& input_string)
 {
-    Basic_input_stream input_stream{ new std::basic_istringstream { input_string } };
-    String_output_stream<utf8unit> output_stream;
+    basic_input_stream input_stream{ new std::basic_istringstream { input_string } };
+    string_output_stream<utf8unit> output_stream;
     convert(input_stream, output_stream);
     return output_stream.string_stream.str();
 }
 
 std::u16string unicode::to_utf16(const std::u8string& input_string)
 {
-    Basic_input_stream input_stream{ new std::basic_istringstream { input_string } };
-    String_output_stream<utf16unit> output_stream;
+    basic_input_stream input_stream{ new std::basic_istringstream { input_string } };
+    string_output_stream<utf16unit> output_stream;
     convert(input_stream, output_stream);
     return output_stream.string_stream.str();
 }
