@@ -3186,7 +3186,7 @@ namespace nlohmann
 
         // integer_sequence
         //
-        // Class template representing a compile-time integer sequence. An instantiation
+        // user_class template representing a compile-time integer sequence. An instantiation
         // of `integer_sequence<T, Ints...>` has a sequence of integers encoded in its
         // type through its template arguments (which is a common need when
         // working with C++11 variadic templates). `absl::integer_sequence` is designed

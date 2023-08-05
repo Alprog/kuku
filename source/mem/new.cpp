@@ -5,7 +5,7 @@
 
 auto& get_map()
 {
-	static std::map<void*, int> sizes;
+	static std::map<void*, std::size_t> sizes;
 	return sizes;
 }
 

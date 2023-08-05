@@ -6,7 +6,7 @@
 class type_registry
 {
 public:
-    Class& register_class(std::string name);
+    user_class& register_class(std::string name);
 
-    std::vector<Class> Classes;
+    std::vector<user_class> classes;
 };

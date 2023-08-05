@@ -12,5 +12,5 @@ union cell
     number number;
     instance instance;
     kuku::string* string;
-    Class* class_pointer;
+    user_class* class_pointer;
 };

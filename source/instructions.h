@@ -89,7 +89,7 @@ Ins0(INT_DIVIDE)
 
 Ins0(INT_POWER)
 {
-	routine.stack.head[-2].integer = std::pow(routine.stack.head[-2].integer, routine.stack.head[-1].integer);
+	routine.stack.head[-2].integer = static_cast<integer>(std::pow(routine.stack.head[-2].integer, routine.stack.head[-1].integer));
 	routine.stack.head--;
 }};
 

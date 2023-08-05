@@ -3,14 +3,14 @@
 #include <string>
 #include "data_type.h"
 
-class Class;
+class user_class;
 
 class field
 {
 public:
-    field(Class& const owner_class, std::string name, data_type type, int instance_offset);
+    field(user_class& owner_class, std::string name, data_type type, int instance_offset);
 
-    Class& owner_class;
+    user_class& owner_class;
     data_type type;
     std::string name;
     int instance_offset;

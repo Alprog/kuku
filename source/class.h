@@ -7,10 +7,10 @@
 #include "field.h"
 #include "cell.h"
 
-class Class
+class user_class
 {
 public:
-    Class(std::string name);
+    user_class(std::string name);
 
     std::string name;
 
