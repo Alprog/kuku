@@ -14,10 +14,10 @@ namespace stmt
 	class statement;
 }
 
-class Parser
+class parser
 {
 public:
-	Parser(translation_module& module, token** it);
+	parser(translation_module& module, token** it);
 	void skip_empty_tokens();
 
 	stmt::statement* parse_next_statement();
@@ -30,10 +30,10 @@ public:
 	token** it;
 	token* current;
 	
-	bool match(Token_type type);
+	bool match(token_type type);
 	bool match_end_of_statement();
 
-	void require(Token_type type);
+	void require(token_type type);
 	void require_end_of_statement();
 
 	symbol_reference read_symbol_reference();

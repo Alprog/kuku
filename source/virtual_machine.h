@@ -6,10 +6,10 @@
 #include "data_type.h"
 #include "instance.h"
 
-class Virtual_machine
+class virtual_machine
 {
 public:
-    Type_registry Type_registry;
+    type_registry type_registry;
     stack stack;
 
     void test();

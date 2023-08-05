@@ -66,7 +66,7 @@ int main(int argc, const char* argv[])
 
     if (mode == "repl")
     {
-        Repl();
+        repl();
     }
     else if (mode == "test")
     {

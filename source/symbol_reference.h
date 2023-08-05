@@ -1,7 +1,7 @@
 
 #pragma once
 
-class token;
+struct token;
 class symbol;
 
 namespace stmt

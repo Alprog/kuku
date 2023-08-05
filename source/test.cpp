@@ -33,7 +33,7 @@ void test()
 	chunk.write(instruction_PRINT{});
 	chunk.write(instruction_END{});
 
-	Routine routine(chunk.get_start_pointer());	
+	routine routine(chunk.get_start_pointer());	
 	routine.run();
 
 

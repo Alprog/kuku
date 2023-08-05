@@ -3,10 +3,10 @@
 
 #include "Stack.h"
 
-class Routine
+class routine
 {
 public:
-	Routine(byte* ip);
+	routine(byte* ip);
 
 	stack stack;
 

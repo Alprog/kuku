@@ -6,7 +6,7 @@ Execute_function_ptr jump_table::execute_function[INSTRUCTION_COUNT];
 Get_size_function_ptr jump_table::get_size_function[INSTRUCTION_COUNT];
 
 template <typename T>
-inline void read_and_execute_instruction(Routine& routine)
+inline void read_and_execute_instruction(routine& routine)
 {
 	auto instruction = reinterpret_cast<T*>(routine.ip);
 	instruction->execute(routine);

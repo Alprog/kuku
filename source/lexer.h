@@ -10,22 +10,22 @@
 class lexer
 {
 public:
-    lexer(Text_document& text_document);
+    lexer(text_document& text_document);
     token* get_next_token();
 
 public:
-    token* finish_line_comment(Source_iterator start_it);
-    token* finish_block_comment(Source_iterator start_it);
-    token* finish_binding_block_comment(Source_iterator start_it);
-    token* finish_string(Source_iterator start_it, utf16unit end_quote, bool escaping);
+    token* finish_line_comment(source_iterator start_it);
+    token* finish_block_comment(source_iterator start_it);
+    token* finish_binding_block_comment(source_iterator start_it);
+    token* finish_string(source_iterator start_it, utf16unit end_quote, bool escaping);
 
     bool match(utf16unit symbol);
 
     bool move_after(utf16unit end_symbol);
     bool move_after_escaped(utf16unit end_symbol);
 
-    token* create_token(Source_iterator start, Token_type type);
+    token* create_token(source_iterator start, token_type type);
 
-    Text_document& text_document;
-    Source_iterator it;
+    text_document& text_document;
+    source_iterator it;
 };

@@ -37,7 +37,7 @@ public:
 	source_project& project;
 
 	std::string uri;
-	Text_document document;
+	text_document document;
 	std::vector<token*> tokens; // own
 	std::vector<stmt::statement*> statements;  // own
 

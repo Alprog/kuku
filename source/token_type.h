@@ -2,7 +2,7 @@
 
 #include "reflectable_enum.h"
 
-Reflectable_enum(Token_type,
+reflectable_enum(token_type,
     Bool_literal,
     Integer_literal,
     Number_literal,

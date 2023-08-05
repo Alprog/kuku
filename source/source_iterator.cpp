@@ -3,19 +3,19 @@
 #include "unicode.h"
 #include "text_document.h"
 
-Source_iterator::Source_iterator(Text_document& text_document)
+source_iterator::source_iterator(::text_document& text_document)
     : text_document{ text_document }
     , position{ 0, 0 }
 {
 }
 
-utf16unit Source_iterator::operator*()
+utf16unit source_iterator::operator*()
 {
     return text_document.get_character(position);
 }
 
 // pre-increment
-Source_iterator& Source_iterator::operator++()
+source_iterator& source_iterator::operator++()
 {
     position.character++;
 
@@ -33,7 +33,7 @@ Source_iterator& Source_iterator::operator++()
 }
 
 // post-increment
-Source_iterator Source_iterator::operator++(int)
+source_iterator source_iterator::operator++(int)
 {
     auto old = *this;
     operator++();

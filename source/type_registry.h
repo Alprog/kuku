@@ -3,7 +3,7 @@
 #include <vector>
 #include "class.h"
 
-class Type_registry
+class type_registry
 {
 public:
     Class& register_class(std::string name);

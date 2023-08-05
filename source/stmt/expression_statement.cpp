@@ -8,7 +8,7 @@ stmt::expression_statement::expression_statement(std::unique_ptr<ast::expression
 {
 }
 
-void stmt::expression_statement::parse_internal(Parser& parser)
+void stmt::expression_statement::parse_internal(parser& parser)
 {
 	return;
 }

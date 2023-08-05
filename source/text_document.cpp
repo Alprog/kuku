@@ -2,12 +2,12 @@
 #include "text_document.h"
 #include "utils.h"
 
-Text_document::Text_document()
+text_document::text_document()
 {
 
 }
 
-Text_document::Text_document(Input_stream<utf16unit>& stream)
+text_document::text_document(Input_stream<utf16unit>& stream)
 {
     std::vector<utf16unit> line;
 
@@ -42,7 +42,7 @@ Text_document::Text_document(Input_stream<utf16unit>& stream)
     flush_line();
 }
 
-utf16unit Text_document::get_character(lsp::position position)
+utf16unit text_document::get_character(lsp::position position)
 {
     if (position.line < lines.size())
     {
@@ -62,7 +62,7 @@ utf16unit Text_document::get_character(lsp::position position)
     }
 }
 
-std::u16string Text_document::get_substring(lsp::range range)
+std::u16string text_document::get_substring(lsp::range range)
 {
     auto l1 = range.start.line;
     auto l2 = range.end.line;
@@ -92,7 +92,7 @@ std::u16string Text_document::get_substring(lsp::range range)
     throw std::exception("not implemented");
 }
 
-void Text_document::change_content(lsp::text_document_content_change_event& event)
+void text_document::change_content(lsp::text_document_content_change_event& event)
 {
     auto start = event.range.start;
     auto end = event.range.end;

@@ -14,15 +14,15 @@ namespace stmt
 struct token
 {
     token& operator=(token& token);
-    token(Token_type type, Text_document& document, lsp::position start, lsp::position end);
+    token(token_type type, text_document& document, lsp::position start, lsp::position end);
 
     bool is_end_statement_token();
 
     std::u16string get_hover_text();
     std::u16string get_source_text();
 
-    Token_type type;
-    Text_document& document;
+    token_type type;
+    text_document& document;
     lsp::range range;
     stmt::statement* statement;
 };

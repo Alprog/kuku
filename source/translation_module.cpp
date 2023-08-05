@@ -36,7 +36,7 @@ void translation_module::tokenize()
     {
         auto token = lexer.get_next_token();
         tokens.push_back(token);
-        if (token->type == Token_type::End_of_source)
+        if (token->type == token_type::End_of_source)
         {
             break;
         }
@@ -45,7 +45,7 @@ void translation_module::tokenize()
 
 void translation_module::parse_statements()
 {
-    Parser parser(*this, &tokens[0]);
+    parser parser(*this, &tokens[0]);
     while (true)
     {
         auto statement = parser.parse_next_statement();
@@ -105,7 +105,7 @@ void translation_module::compile_and_run()
         compiler.chunk.write(instruction_PRINT{});
         compiler.chunk.write(instruction_END{});
 
-        Routine routine{ compiler.chunk.get_start_pointer() };
+        routine routine{ compiler.chunk.get_start_pointer() };
         routine.run();
     }
     catch (error& error)

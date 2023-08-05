@@ -11,11 +11,11 @@
 #include "source_project.h"
 #include "virtual_machine.h"
 
-void Repl()
+void repl()
 {
     std::cout << "kuku language 0.1" << std::endl;
     
-    Virtual_machine machine;
+    virtual_machine machine;
 
     while (true)
     {

@@ -13,6 +13,6 @@ namespace stmt
 		virtual scope_type get_allowed_scopes() const override { return scope_type::end_scopes; }
 
 	protected:
-		virtual void parse_internal(Parser& parser) override;
+		virtual void parse_internal(parser& parser) override;
 	};
 }

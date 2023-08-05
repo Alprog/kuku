@@ -15,6 +15,6 @@ namespace stmt
 		virtual void define_symbols(statement_scope* scope) override;
 
 	protected:
-		virtual void parse_internal(Parser& parser) override;
+		virtual void parse_internal(parser& parser) override;
 	};
 }

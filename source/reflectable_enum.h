@@ -6,14 +6,14 @@
 #include "utils.h"
 
 template <typename T>
-struct Enum_reflector
+struct enum_reflector
 {
 };
 
-#define Reflectable_enum(EnumName, ...) \
+#define reflectable_enum(EnumName, ...) \
 	enum class EnumName { __VA_ARGS__ }; \
 	template <> \
-	struct Enum_reflector<EnumName> \
+	struct enum_reflector<EnumName> \
 	{ \
 		static std::string get_enum_name(EnumName value) \
 		{ \
@@ -25,12 +25,12 @@ struct Enum_reflector
 template <typename EnumT>
 std::string get_name(EnumT value)
 {
-	return Enum_reflector<EnumT>::get_enum_name(value);
+	return enum_reflector<EnumT>::get_enum_name(value);
 };
 
 template <typename EnumT>
 std::u16string get_u16name(EnumT value)
 {
-	auto name = Enum_reflector<EnumT>::get_enum_name(value);
+	auto name = enum_reflector<EnumT>::get_enum_name(value);
 	return std::u16string(std::begin(name), std::end(name));
 };

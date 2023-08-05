@@ -12,7 +12,7 @@ namespace stmt
 
 		virtual scope_type get_allowed_scopes() const override { return scope_type::any; }
 
-		virtual void parse_internal(Parser& parser) override
+		virtual void parse_internal(parser& parser) override
 		{
 			throw unexpected_error();
 		}

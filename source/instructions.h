@@ -13,7 +13,7 @@ struct instruction : base_instruction
 
 	char const* get_name() { return "unknown"; }
 
-	void execute(Routine& routine)
+	void execute(routine& routine)
 	{
 		throw std::exception("not implemented");
 	}
@@ -39,7 +39,7 @@ struct instruction : base_instruction
 		} \
 		std::string get_name() { return #NAME; } \
 		std::string get_argsLine() { return ""; } \
-		inline void execute(Routine& routine)
+		inline void execute(routine& routine)
 
 #define Ins0(NAME) \
 	using instruction_##NAME = instruction<instruction_type::NAME>; \
@@ -49,7 +49,7 @@ struct instruction : base_instruction
 		instruction() : base_instruction{ instruction_type::NAME } {} \
 		std::string get_name() { return #NAME; } \
 		std::string get_argsLine() { return ""; } \
-		inline void execute(Routine& routine)
+		inline void execute(routine& routine)
 
 #pragma pack(1)
 

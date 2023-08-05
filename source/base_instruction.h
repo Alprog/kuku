@@ -10,7 +10,7 @@ struct base_instruction
 {
 	instruction_type type;
 
-	inline void execute(Routine& routine)
+	inline void execute(routine& routine)
 	{
 		jump_table::execute_function[(byte)type](routine);
 	}
@@ -20,7 +20,7 @@ struct base_instruction
 		return jump_table::get_size_function[(byte)type]();
 	}
 
-	inline size_t skip(Routine& routine)
+	inline size_t skip(routine& routine)
 	{
 		routine.ip += getSize();
 	}

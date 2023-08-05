@@ -1,9 +1,9 @@
 
 #include "virtual_machine.h"
 
-void Virtual_machine::test()
+void virtual_machine::test()
 {
-    auto vector_class = Type_registry.register_class("Vector");
+    auto vector_class = type_registry.register_class("Vector");
     vector_class.register_field("X", data_type::Number);
     vector_class.register_field("Y", data_type::Number);
     vector_class.register_field("Z", data_type::Number);
@@ -17,12 +17,12 @@ void Virtual_machine::test()
     vector_instance.dump();
 }
 
-void Virtual_machine::set_local(int cellIndex, cell cellValue)
+void virtual_machine::set_local(int cellIndex, cell cellValue)
 {
     stack.cells[cellIndex] = cellValue;
 }
 
-void Virtual_machine::set_field(instance instance, int cellIndex, cell cellValue)
+void virtual_machine::set_field(instance instance, int cellIndex, cell cellValue)
 {
     instance.cells[cellIndex] = cellValue;
 }

@@ -7,7 +7,7 @@
 
 struct binary_operator
 {
-	Token_type token_type;
+	token_type token_type;
 	precedence precedence;
 };
 

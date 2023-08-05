@@ -5,18 +5,18 @@
 #include "encoding.h"
 #include "lsp/position.h"
 
-class Text_document;
+class text_document;
 
-class Source_iterator
+class source_iterator
 {
 public:
-    Source_iterator& operator++();   // pre
-    Source_iterator operator++(int); // post
+    source_iterator& operator++();   // pre
+    source_iterator operator++(int); // post
 
-    Source_iterator(Text_document& text_document);
+    source_iterator(text_document& text_document);
 
     utf16unit operator*();
 
     lsp::position position;
-    Text_document& text_document;
+    text_document& text_document;
 };

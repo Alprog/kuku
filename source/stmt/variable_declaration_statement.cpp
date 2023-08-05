@@ -2,18 +2,18 @@
 #include "variable_declaration_statement.h"
 #include "ast/expression.h"
 
-void stmt::variable_declaration_statement::parse_internal(Parser& parser)
+void stmt::variable_declaration_statement::parse_internal(parser& parser)
 {
-    parser.require(Token_type::Keyword_var);
+    parser.require(token_type::Keyword_var);
     parse_symbol(parser);
 
-    if (parser.match(Token_type::Colon))
+    if (parser.match(token_type::Colon))
     {
-        parser.require(Token_type::Identifier);
+        parser.require(token_type::Identifier);
         CHECK_END_OF_STATEMENT
     }
 
-    parser.require(Token_type::Assign_operator);
+    parser.require(token_type::Assign_operator);
     expression = parser.parse_expression();
 }
 

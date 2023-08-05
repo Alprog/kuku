@@ -1,7 +1,7 @@
 
 #include "end_statement.h"
 
-void stmt::end_statement::parse_internal(Parser& parser)
+void stmt::end_statement::parse_internal(parser& parser)
 {
-	parser.require(Token_type::Keyword_end);
+	parser.require(token_type::Keyword_end);
 }

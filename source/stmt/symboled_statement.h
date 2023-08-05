@@ -29,7 +29,7 @@ namespace stmt
 	public:
 		virtual symbol* get_symbol() override { return symbol.get(); }
 
-		void parse_symbol(Parser& parser)
+		void parse_symbol(parser& parser)
 		{
 			symbol_definition_reference = parser.read_symbol_reference();
 			symbol = std::make_unique<SymbolT>(symbol_definition_reference);

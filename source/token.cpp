@@ -1,7 +1,7 @@
 
 #include "token.h"
 
-token::token(Token_type type, Text_document& document, lsp::position start, lsp::position end)
+token::token(token_type type, text_document& document, lsp::position start, lsp::position end)
     : type{ type }
     , document{ document }
     , range{ start, end }
@@ -18,7 +18,7 @@ token& token::operator=(token& token)
 
 bool token::is_end_statement_token()
 {
-    return type == Token_type::End_of_line || type == Token_type::Semicolon;
+    return type == token_type::End_of_line || type == token_type::Semicolon;
 }
 
 std::u16string token::get_hover_text()

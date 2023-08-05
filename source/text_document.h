@@ -7,11 +7,11 @@
 #include "lsp/range.h"
 #include "lsp/text_document_content_change_event.h"
 
-class Text_document
+class text_document
 {
 public:
-    Text_document();
-    Text_document(Input_stream<utf16unit>& stream);
+    text_document();
+    text_document(Input_stream<utf16unit>& stream);
 
     std::vector<std::u16string> lines;
 

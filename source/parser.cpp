@@ -18,32 +18,32 @@
 #include "ast/string_literal.h"
 #include "ast/symbol_expression.h"
 
-Parser::Parser(translation_module& module, token** it)
+parser::parser(translation_module& module, token** it)
 	: module{ module }
 	, it{ it }
 	, current{ *it }
 {
 }
 
-void Parser::skip_empty_tokens()
+void parser::skip_empty_tokens()
 {
-    while (current->type == Token_type::Comment || current->type == Token_type::End_of_line)
+    while (current->type == token_type::Comment || current->type == token_type::End_of_line)
     {
         current = *(++it);
     }
 }
 
-void Parser::next()
+void parser::next()
 {
     current = *(++it);
-    while (current->type == Token_type::Comment)
+    while (current->type == token_type::Comment)
     {
         current = *(++it);
     }
 }
 
 template <typename T>
-T* Parser::create_statement(token* start_token)
+T* parser::create_statement(token* start_token)
 {
 	auto node = new T();
 	node->init(*this, start_token ? start_token : current );
@@ -51,37 +51,37 @@ T* Parser::create_statement(token* start_token)
 }
 
 template <typename T>
-T* Parser::create_statement(token* start_token, std::unique_ptr<ast::expression> expression)
+T* parser::create_statement(token* start_token, std::unique_ptr<ast::expression> expression)
 {
     auto node = new T( std::move( expression ) );
     node->init(*this, start_token);
     return node;
 }
 
-stmt::statement* Parser::parse_next_statement()
+stmt::statement* parser::parse_next_statement()
 {
     skip_empty_tokens();
-    if (current->type == Token_type::End_of_source)
+    if (current->type == token_type::End_of_source)
     {
         return nullptr;
     }
-    else if (current->type == Token_type::Keyword_var)
+    else if (current->type == token_type::Keyword_var)
     {
         return create_statement<stmt::variable_declaration_statement>();
     }
-    else if (current->type == Token_type::Keyword_end)
+    else if (current->type == token_type::Keyword_end)
     {
         return create_statement<stmt::end_statement>();
     }
-    else if (current->type == Token_type::Keyword_function)
+    else if (current->type == token_type::Keyword_function)
     {
         return create_statement<stmt::function_statement>();
     }
-    else if (current->type == Token_type::Keyword_class)
+    else if (current->type == token_type::Keyword_class)
     {
         return create_statement<stmt::class_statement>();
     }
-    else if (current->type == Token_type::Keyword_return)
+    else if (current->type == token_type::Keyword_return)
     {
         return create_statement<stmt::return_statement>();
     }
@@ -91,7 +91,7 @@ stmt::statement* Parser::parse_next_statement()
         try
         {
             auto expression = parse_expression();
-            if (current->type == Token_type::Assign_operator)
+            if (current->type == token_type::Assign_operator)
             {
                 return create_statement<stmt::assign_statement>(start_token, std::move(expression));
             }
@@ -107,7 +107,7 @@ stmt::statement* Parser::parse_next_statement()
     }
 }
 
-std::unique_ptr<ast::expression> Parser::parse_expression()
+std::unique_ptr<ast::expression> parser::parse_expression()
 {
     auto operand = parse_operand();
 
@@ -120,7 +120,7 @@ std::unique_ptr<ast::expression> Parser::parse_expression()
 	return operand;
 }
 
-std::unique_ptr<ast::binary_operator_expression> Parser::parse_binary_operator_chain(std::unique_ptr<ast::expression> left_operand, binary_operator* current_operator)
+std::unique_ptr<ast::binary_operator_expression> parser::parse_binary_operator_chain(std::unique_ptr<ast::expression> left_operand, binary_operator* current_operator)
 {
     auto right_operand = parse_operand();
 
@@ -143,37 +143,37 @@ std::unique_ptr<ast::binary_operator_expression> Parser::parse_binary_operator_c
     return std::make_unique<ast::binary_operator_expression>(std::move(left_operand), *current_operator, std::move(right_operand));
 }
 
-std::unique_ptr<ast::expression> Parser::parse_operand()
+std::unique_ptr<ast::expression> parser::parse_operand()
 {
-    if (current->type == Token_type::Identifier)
+    if (current->type == token_type::Identifier)
     {
         auto symbol_expression = std::make_unique<ast::symbol_expression>(*current);
         next();
         return std::move(symbol_expression);
     }
-    if (current->type == Token_type::Integer_literal)
+    if (current->type == token_type::Integer_literal)
     {
         auto literal = std::make_unique<ast::integer_literal>(*current);
         next();
         return std::move(literal);
     }
-    if (current->type == Token_type::String_literal)
+    if (current->type == token_type::String_literal)
     {
         auto literal = std::make_unique<ast::string_literal>(*current);
         next();
         return std::move(literal);
     }
-    if (current->type == Token_type::Open_parenthesis)
+    if (current->type == token_type::Open_parenthesis)
     {
         next();
         auto expression = parse_expression();
-        require(Token_type::Close_parenthesis);
+        require(token_type::Close_parenthesis);
         return std::move(expression);
     }
     throw unexpected_error();
 }
 
-binary_operator* Parser::match_binary_operator(precedence maximum_precedence, binary_operator*& out_operator)
+binary_operator* parser::match_binary_operator(precedence maximum_precedence, binary_operator*& out_operator)
 {
     for (auto& candidate : get_binary_operators())
     {
@@ -187,7 +187,7 @@ binary_operator* Parser::match_binary_operator(precedence maximum_precedence, bi
     return nullptr;
 }
 
-bool Parser::match(Token_type type)
+bool parser::match(token_type type)
 {
     if (current->type == type)
     {
@@ -197,7 +197,7 @@ bool Parser::match(Token_type type)
     return false;
 }
 
-bool Parser::match_end_of_statement()
+bool parser::match_end_of_statement()
 {
     if (current->is_end_statement_token())
     {
@@ -207,7 +207,7 @@ bool Parser::match_end_of_statement()
     return false;
 }
 
-void Parser::require(Token_type type)
+void parser::require(token_type type)
 {
     if (!match(type))
     {
@@ -215,7 +215,7 @@ void Parser::require(Token_type type)
     }
 }
 
-void Parser::require_end_of_statement()
+void parser::require_end_of_statement()
 {
     if (!match_end_of_statement())
     {
@@ -223,9 +223,9 @@ void Parser::require_end_of_statement()
     }
 }
 
-symbol_reference Parser::read_symbol_reference()
+symbol_reference parser::read_symbol_reference()
 {
-    if (current->type == Token_type::Identifier)
+    if (current->type == token_type::Identifier)
     {   
         auto name = current->get_source_text();
         auto reference = symbol_reference();

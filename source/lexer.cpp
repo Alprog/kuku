@@ -6,25 +6,25 @@
 
 auto& get_keywords()
 {
-    static std::map<std::u16string, Token_type> keywords {
-        { u"and", Token_type::Keyword_and },
-        { u"class", Token_type::Keyword_class },
-        { u"do", Token_type::Keyword_do },
-        { u"else", Token_type::Keyword_else },
-        { u"end", Token_type::Keyword_end },
-        { u"for", Token_type::Keyword_for },
-        { u"function", Token_type::Keyword_function },
-        { u"or", Token_type::Keyword_or },
-        { u"return", Token_type::Keyword_return },
-        { u"then", Token_type::Keyword_then },
-        { u"var", Token_type::Keyword_var },
-        { u"while", Token_type::Keyword_while }
+    static std::map<std::u16string, token_type> keywords {
+        { u"and", token_type::Keyword_and },
+        { u"class", token_type::Keyword_class },
+        { u"do", token_type::Keyword_do },
+        { u"else", token_type::Keyword_else },
+        { u"end", token_type::Keyword_end },
+        { u"for", token_type::Keyword_for },
+        { u"function", token_type::Keyword_function },
+        { u"or", token_type::Keyword_or },
+        { u"return", token_type::Keyword_return },
+        { u"then", token_type::Keyword_then },
+        { u"var", token_type::Keyword_var },
+        { u"while", token_type::Keyword_while }
     };
 
     return keywords;
 }
 
-lexer::lexer(Text_document& text_document)
+lexer::lexer(::text_document& text_document)
     : text_document{ text_document }
     , it{ text_document }
 {
@@ -60,10 +60,10 @@ token* lexer::get_next_token()
         switch (c)
         {
             case '\0':
-                return create_token(it++, Token_type::End_of_source);
+                return create_token(it++, token_type::End_of_source);
 
             case '\n': 
-                return create_token(it++, Token_type::End_of_line);
+                return create_token(it++, token_type::End_of_line);
 
             case ' ':
                 ++it;
@@ -75,12 +75,12 @@ token* lexer::get_next_token()
                 if (match('['))
                 {
                     if (match('#'))
-                        return create_token(startIt, Token_type::Comment); //:  #[#     disabled comment begin marker
+                        return create_token(startIt, token_type::Comment); //:  #[#     disabled comment begin marker
                     else
                         return finish_block_comment(startIt);              //:  #[...   comment begin marker
                 }
                 else if (match(']'))
-                    return create_token(startIt, Token_type::Comment);     //:  #]      comment end marker
+                    return create_token(startIt, token_type::Comment);     //:  #]      comment end marker
                 else
                     return finish_line_comment(startIt);                   //:  #...    single line comment
             }
@@ -91,7 +91,7 @@ token* lexer::get_next_token()
                 if (match('/'))
                     return finish_binding_block_comment(startIt);                 //:  */...    binding-comment begin marker
                 else
-                    return create_token(startIt, Token_type::Multiply_Operator);  //:  *        multiply operator
+                    return create_token(startIt, token_type::Multiply_Operator);  //:  *        multiply operator
             }
 
             case '/':
@@ -100,25 +100,25 @@ token* lexer::get_next_token()
 				if (match('*'))
 					return finish_line_comment(startIt);                        //:  /*...    single line binding-comment
 				else
-					return create_token(startIt, Token_type::Divide_Operator);  //:  /        divide operator
+					return create_token(startIt, token_type::Divide_Operator);  //:  /        divide operator
 			}
 
-            case '^': return create_token(it++, Token_type::Exponent_operator);
-            case '-': return create_token(it++, Token_type::Minus_operator);
-            case '+': return create_token(it++, Token_type::Plus_operator);
-            case '=': return create_token(it++, Token_type::Assign_operator);
-            case ':': return create_token(it++, Token_type::Colon);
-            case ';': return create_token(it++, Token_type::Semicolon);
-            case '.': return create_token(it++, Token_type::Dot);
-            case ',': return create_token(it++, Token_type::Comma);
-            case '[': return create_token(it++, Token_type::Open_bracket);
-            case ']': return create_token(it++, Token_type::Close_bracket);
-            case '{': return create_token(it++, Token_type::Open_brace);
-            case '}': return create_token(it++, Token_type::Close_brace);
-            case '<': return create_token(it++, Token_type::Open_chevron);
-            case '>': return create_token(it++, Token_type::Close_chevron);
-            case '(': return create_token(it++, Token_type::Open_parenthesis);
-            case ')': return create_token(it++, Token_type::Close_parenthesis);
+            case '^': return create_token(it++, token_type::Exponent_operator);
+            case '-': return create_token(it++, token_type::Minus_operator);
+            case '+': return create_token(it++, token_type::Plus_operator);
+            case '=': return create_token(it++, token_type::Assign_operator);
+            case ':': return create_token(it++, token_type::Colon);
+            case ';': return create_token(it++, token_type::Semicolon);
+            case '.': return create_token(it++, token_type::Dot);
+            case ',': return create_token(it++, token_type::Comma);
+            case '[': return create_token(it++, token_type::Open_bracket);
+            case ']': return create_token(it++, token_type::Close_bracket);
+            case '{': return create_token(it++, token_type::Open_brace);
+            case '}': return create_token(it++, token_type::Close_brace);
+            case '<': return create_token(it++, token_type::Open_chevron);
+            case '>': return create_token(it++, token_type::Close_chevron);
+            case '(': return create_token(it++, token_type::Open_parenthesis);
+            case ')': return create_token(it++, token_type::Close_parenthesis);
 		}
 
 		if (is_quote(c))
@@ -135,9 +135,9 @@ token* lexer::get_next_token()
             {
                 ++it;
                 while (is_digit(*it)) ++it;
-                return create_token(startIt, Token_type::Number_literal);
+                return create_token(startIt, token_type::Number_literal);
             }
-            return create_token(startIt, Token_type::Integer_literal);
+            return create_token(startIt, token_type::Integer_literal);
         }
 
         if (is_alpha(c))
@@ -152,7 +152,7 @@ token* lexer::get_next_token()
             }
             if (id == u"true" || id == u"false")
             {
-                return create_token(startIt, Token_type::Bool_literal);
+                return create_token(startIt, token_type::Bool_literal);
             }
 
             auto it = get_keywords().find(id);
@@ -161,20 +161,20 @@ token* lexer::get_next_token()
                 return create_token(startIt, it->second);
             }
 
-            return create_token(startIt, Token_type::Identifier);
+            return create_token(startIt, token_type::Identifier);
         }
 
         ++it;
     }
 }
 
-token* lexer::finish_line_comment(Source_iterator start_it)
+token* lexer::finish_line_comment(source_iterator start_it)
 {
     while (*it != '\n') ++it;
-    return create_token(start_it, Token_type::Comment);
+    return create_token(start_it, token_type::Comment);
 }
 
-token* lexer::finish_block_comment(Source_iterator start_it)
+token* lexer::finish_block_comment(source_iterator start_it)
 {
     int level = 1;
 
@@ -191,29 +191,29 @@ token* lexer::finish_block_comment(Source_iterator start_it)
         }
     }
 
-    return create_token(start_it, Token_type::Comment);
+    return create_token(start_it, token_type::Comment);
 }
 
-token* lexer::finish_binding_block_comment(Source_iterator start_it)
+token* lexer::finish_binding_block_comment(source_iterator start_it)
 {
     while (move_after('/'))
     {
         if (match('*'))
             break;
     }
-    return create_token(start_it, Token_type::Comment);
+    return create_token(start_it, token_type::Comment);
 }
 
-token* lexer::finish_string(Source_iterator start_it, utf16unit end_quote, bool escaping)
+token* lexer::finish_string(source_iterator start_it, utf16unit end_quote, bool escaping)
 {
     auto result = escaping ? move_after_escaped(end_quote) : move_after(end_quote);
     if (result)
     {
-        return create_token(start_it, Token_type::String_literal);
+        return create_token(start_it, token_type::String_literal);
     }
     else
     {
-        return create_token(start_it, Token_type::Unclosed_string_literal);
+        return create_token(start_it, token_type::Unclosed_string_literal);
     }
 }
 
@@ -267,7 +267,7 @@ bool lexer::move_after_escaped(utf16unit end_symbol)
     return false;
 }
 
-token* lexer::create_token(Source_iterator start_it, Token_type type)
+token* lexer::create_token(source_iterator start_it, token_type type)
 {
     return new token { type, text_document, start_it.position, it.position };
 }

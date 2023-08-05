@@ -26,7 +26,7 @@ namespace stmt
 		bool is_valid;
 		std::u16string error_text;
 
-		statement* init(Parser& parser, token* start_token);
+		statement* init(parser& parser, token* start_token);
 
 		virtual scope_type get_allowed_scopes() const = 0;
 		virtual std::u16string get_statement_type() const { return u"<unknown>"; }
@@ -44,7 +44,7 @@ namespace stmt
 		std::vector<lsp::diagnostic> diagnostics;
 
 	protected:
-		virtual void parse_internal(Parser& parser) = 0;
+		virtual void parse_internal(parser& parser) = 0;
 
 		statement_scope* scope;
 	};

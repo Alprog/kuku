@@ -2,9 +2,9 @@
 #include "class_statement.h"
 #include "symbol_reference.h"
 
-void stmt::class_statement::parse_internal(Parser& parser)
+void stmt::class_statement::parse_internal(parser& parser)
 {
-	parser.require(Token_type::Keyword_class);
+	parser.require(token_type::Keyword_class);
 	parse_symbol(parser);
 }
 
