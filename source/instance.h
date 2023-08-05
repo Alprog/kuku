@@ -2,7 +2,7 @@
 
 union cell;
 
-struct Instance
+struct instance
 {
 public:
     void dump();

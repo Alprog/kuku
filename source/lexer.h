@@ -7,10 +7,10 @@
 #include "text_document.h"
 #include "source_iterator.h"
 
-class Lexer
+class lexer
 {
 public:
-    Lexer(Text_document& text_document);
+    lexer(Text_document& text_document);
     token* get_next_token();
 
 public:

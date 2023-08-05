@@ -13,15 +13,15 @@ field& Class::register_field(std::string name, data_type data_type)
     return fields.emplace_back(*this, name, data_type, instance_size++);
 }
 
-Instance Class::create_instance()
+instance Class::create_instance()
 {
-    Instance instance;
+    instance instance;
     instance.cells = new cell[instance_size];
     instance.cells[0].class_pointer = this;
     return instance;
 }
 
-void Class::dump(Instance instance)
+void Class::dump(instance instance)
 {
     std::cout << sizeof(instance) << std::endl;
 

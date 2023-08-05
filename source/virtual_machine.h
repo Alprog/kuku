@@ -16,5 +16,5 @@ public:
 
     void set_local(int cell_index, cell cell_value);
 
-    void set_field(Instance instance, int cell_index, cell cell_value);
+    void set_field(instance instance, int cell_index, cell cell_value);
 };

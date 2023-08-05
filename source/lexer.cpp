@@ -24,7 +24,7 @@ auto& get_keywords()
     return keywords;
 }
 
-Lexer::Lexer(Text_document& text_document)
+lexer::lexer(Text_document& text_document)
     : text_document{ text_document }
     , it{ text_document }
 {
@@ -52,7 +52,7 @@ bool is_quote(utf16unit c)
     return c == '"' || c == '\'' || c == '`';
 }
 
-token* Lexer::get_next_token()
+token* lexer::get_next_token()
 {
     while (true)
     {
@@ -168,13 +168,13 @@ token* Lexer::get_next_token()
     }
 }
 
-token* Lexer::finish_line_comment(Source_iterator start_it)
+token* lexer::finish_line_comment(Source_iterator start_it)
 {
     while (*it != '\n') ++it;
     return create_token(start_it, Token_type::Comment);
 }
 
-token* Lexer::finish_block_comment(Source_iterator start_it)
+token* lexer::finish_block_comment(Source_iterator start_it)
 {
     int level = 1;
 
@@ -194,7 +194,7 @@ token* Lexer::finish_block_comment(Source_iterator start_it)
     return create_token(start_it, Token_type::Comment);
 }
 
-token* Lexer::finish_binding_block_comment(Source_iterator start_it)
+token* lexer::finish_binding_block_comment(Source_iterator start_it)
 {
     while (move_after('/'))
     {
@@ -204,7 +204,7 @@ token* Lexer::finish_binding_block_comment(Source_iterator start_it)
     return create_token(start_it, Token_type::Comment);
 }
 
-token* Lexer::finish_string(Source_iterator start_it, utf16unit end_quote, bool escaping)
+token* lexer::finish_string(Source_iterator start_it, utf16unit end_quote, bool escaping)
 {
     auto result = escaping ? move_after_escaped(end_quote) : move_after(end_quote);
     if (result)
@@ -218,7 +218,7 @@ token* Lexer::finish_string(Source_iterator start_it, utf16unit end_quote, bool 
 }
 
 // check current symbol and step forward if it match
-bool Lexer::match(utf16unit symbol)
+bool lexer::match(utf16unit symbol)
 {
     if (*it == symbol)
     {
@@ -228,7 +228,7 @@ bool Lexer::match(utf16unit symbol)
     return false;
 }
 
-bool Lexer::move_after(utf16unit end_symbol)
+bool lexer::move_after(utf16unit end_symbol)
 {
     utf16unit cur = *it;
     while (cur != '\0')
@@ -243,7 +243,7 @@ bool Lexer::move_after(utf16unit end_symbol)
     return false;
 }
 
-bool Lexer::move_after_escaped(utf16unit end_symbol)
+bool lexer::move_after_escaped(utf16unit end_symbol)
 {
     utf16unit cur = *it;
     bool escaping = false;
@@ -267,7 +267,7 @@ bool Lexer::move_after_escaped(utf16unit end_symbol)
     return false;
 }
 
-token* Lexer::create_token(Source_iterator start_it, Token_type type)
+token* lexer::create_token(Source_iterator start_it, Token_type type)
 {
     return new token { type, text_document, start_it.position, it.position };
 }

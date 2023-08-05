@@ -2,8 +2,8 @@
 #include "jump_table.h"
 #include "instructions.h"
 
-Execute_function_ptr Jump_table::execute_function[INSTRUCTION_COUNT];
-Get_size_function_ptr Jump_table::get_size_function[INSTRUCTION_COUNT];
+Execute_function_ptr jump_table::execute_function[INSTRUCTION_COUNT];
+Get_size_function_ptr jump_table::get_size_function[INSTRUCTION_COUNT];
 
 template <typename T>
 inline void read_and_execute_instruction(Routine& routine)
@@ -23,8 +23,8 @@ template <int I>
 void register_instruction()
 {
 	using instructionT = instruction<(instruction_type)I>;
-	Jump_table::execute_function[I] = read_and_execute_instruction<instructionT>;
-	Jump_table::get_size_function[I] = get_size<instructionT>;
+	jump_table::execute_function[I] = read_and_execute_instruction<instructionT>;
+	jump_table::get_size_function[I] = get_size<instructionT>;
 }
 
 template <int I>
@@ -40,7 +40,7 @@ void register_instruction_recursive<0>()
 	register_instruction<0>();
 }
 
-void Jump_table::init()
+void jump_table::init()
 {
 	register_instruction_recursive<255>();
 }

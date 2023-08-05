@@ -12,12 +12,12 @@ struct base_instruction
 
 	inline void execute(Routine& routine)
 	{
-		Jump_table::execute_function[(byte)type](routine);
+		jump_table::execute_function[(byte)type](routine);
 	}
 
 	inline size_t getSize()
 	{
-		return Jump_table::get_size_function[(byte)type]();
+		return jump_table::get_size_function[(byte)type]();
 	}
 
 	inline size_t skip(Routine& routine)

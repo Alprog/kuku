@@ -5,7 +5,7 @@
 Routine::Routine(byte* ip)
 	: ip { ip }
 {
-	Jump_table::init();
+	jump_table::init();
 }
 
 void Routine::run()

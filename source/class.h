@@ -15,12 +15,12 @@ public:
     std::string name;
 
     field& register_field(std::string name, data_type data_type);
-    Instance create_instance();
+    instance create_instance();
 
-    void dump(Instance instance);
+    void dump(instance instance);
 
     int instance_size;
 
     std::vector<field> fields;
-    std::vector<Function> functions;
+    std::vector<function> functions;
 };

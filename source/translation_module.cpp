@@ -31,7 +31,7 @@ void translation_module::process()
 
 void translation_module::tokenize()
 {
-	Lexer lexer(document);
+	lexer lexer(document);
     while (true)
     {
         auto token = lexer.get_next_token();

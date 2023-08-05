@@ -2,7 +2,7 @@
 
 #include <string>
 
-class Function
+class function
 {
 public:
     std::string name;

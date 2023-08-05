@@ -22,7 +22,7 @@ void Virtual_machine::set_local(int cellIndex, cell cellValue)
     stack.cells[cellIndex] = cellValue;
 }
 
-void Virtual_machine::set_field(Instance instance, int cellIndex, cell cellValue)
+void Virtual_machine::set_field(instance instance, int cellIndex, cell cellValue)
 {
     instance.cells[cellIndex] = cellValue;
 }
