@@ -1,17 +1,16 @@
 
 #include "symbol_table.h"
 
-void symbol_table::register_symbol(symbol& symbol)
+short symbol_table::to_index(symbol* symbol)
 {
-	symbols[symbol.name] = &symbol;
-}
+	auto it = indices.find(symbol);
+	if (it != std::end(indices))
+	{
+		return it->second;
+	}
 
-void symbol_table::remove_symbol(symbol& symbol)
-{
-	symbols.erase(symbol.name);
-}
-
-symbol* symbol_table::get_symbol(std::u16string name)
-{
-	return nullptr;
+	short index = symbols.size();
+	symbols.push_back({ index, symbol->name, symbol });
+	indices[symbol] = index;
+	return index;
 }

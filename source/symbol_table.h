@@ -5,15 +5,14 @@
 #include <string>
 
 #include "symbol/symbol.h"
+#include "symbol_record.h"
 
 class symbol_table
 {
 public:
-	void register_symbol(symbol& symbol);
-	void remove_symbol(symbol& symbol);
-
-	symbol* get_symbol(std::u16string name);
+	short to_index(symbol* symbol);
 
 private:
-	std::map<std::u16string, symbol*> symbols;
+	std::vector<symbol_record> symbols;
+	std::map<symbol*, short> indices;
 };

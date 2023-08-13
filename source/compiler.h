@@ -3,6 +3,7 @@
 
 #include "instructions.h"
 #include "chunk.h"
+#include "symbol_table.h"
 
 class translation_module;
 
@@ -26,5 +27,6 @@ public:
 	}
 
 	translation_module& module;
+	symbol_table symbol_table;
 	chunk chunk;
 };
