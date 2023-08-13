@@ -9,7 +9,6 @@
 class type_symbol : public symbol
 {
 public:
-	std::u16string name;
 	type_symbol* parent_type;
 
 	std::vector<field_symbol*> fields;
