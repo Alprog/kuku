@@ -5,6 +5,7 @@
 #include "routine.h"
 #include <iostream>
 #include "for_each.h"
+#include "instruction_arg.h"
 
 template <instruction_type Type>
 struct instruction : base_instruction
@@ -23,6 +24,7 @@ struct instruction : base_instruction
 #define FIRST(first, second) first
 #define SECOND(first, second) second
 #define INITIALIZATION(x) SECOND x { SECOND x }
+#define ARGUMENT_META(x) new instruction_arg<FIRST x>
 #define BOTH(x) FIRST x SECOND x
 #define SEMICOLON ;
 
@@ -38,7 +40,7 @@ struct instruction : base_instruction
 		{ \
 		} \
 		std::string get_name() { return #NAME; } \
-		std::string get_argsLine() { return ""; } \
+		std::vector<instruction_arg_base*> get_argsLine() { return { FOR_EACH( ARGUMENT_META, __VA_ARGS__) }; } \
 		inline void execute(routine& routine)
 
 #define Ins0(NAME) \
@@ -48,7 +50,7 @@ struct instruction : base_instruction
 	{ \
 		instruction() : base_instruction{ instruction_type::NAME } {} \
 		std::string get_name() { return #NAME; } \
-		std::string get_argsLine() { return ""; } \
+		std::vector<instruction_arg_base*> get_argsLine() { return {}; } \
 		inline void execute(routine& routine)
 
 #pragma pack(1)
