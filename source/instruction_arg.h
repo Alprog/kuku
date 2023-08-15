@@ -5,7 +5,8 @@
 
 struct instruction_arg_meta_base
 {
-	virtual void print_value(byte*& pointer) = 0;
+	virtual size_t get_size() = 0;
+	virtual std::string to_string(byte* ptr) = 0;
 };
 
 template <typename T>
@@ -17,9 +18,13 @@ struct instruction_arg_meta : public instruction_arg_meta_base
 		return &instance;
 	}
 
-	void print_value(byte*& pointer) override
+	size_t get_size()
 	{
-		//printf( *reinterpret_cast<T*>(pointer) );
-		//pointer += sizeof(T);
+		return sizeof(T);
+	}
+
+	std::string to_string(byte* ptr) override
+	{
+		return std::to_string(*reinterpret_cast<T*>(ptr));
 	}
 };

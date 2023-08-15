@@ -36,6 +36,7 @@ void test()
 	routine routine(chunk.get_start_pointer());	
 	routine.run();
 
+	chunk.print_instructions();
 
 	kuku::string s1("abc");
 	kuku::string s2(u"abc");

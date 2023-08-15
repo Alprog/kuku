@@ -8,4 +8,6 @@ struct instruction_info
 {
 	const char* name;
 	std::vector<instruction_arg_meta_base*> arguments;
+
+	std::string to_string(byte* ptr);
 };
