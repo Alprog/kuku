@@ -5,15 +5,15 @@
 #include "routine.h"
 #include <iostream>
 #include "for_each.h"
-#include "instruction_arg.h"
+#include "instruction_info.h"
 
 template <instruction_type Type>
 struct instruction : base_instruction
 {
 	instruction() : base_instruction{ Type } {};
 
-	char const* get_name() { return "unknown"; }
-
+	static instruction_info create_info() { return { "unknown" }; }
+	
 	void execute(routine& routine)
 	{
 		throw std::exception("not implemented");
@@ -39,8 +39,7 @@ struct instruction : base_instruction
 			, FOR_EACH( INITIALIZATION, __VA_ARGS__) \
 		{ \
 		} \
-		std::string get_name() { return #NAME; } \
-		std::vector<instruction_arg_meta_base*> get_args() { return { FOR_EACH( ARGUMENT_META, __VA_ARGS__) }; } \
+		static instruction_info create_info() { return { #NAME, { FOR_EACH( ARGUMENT_META, __VA_ARGS__) } }; } \
 		inline void execute(routine& routine)
 
 #define Ins0(NAME) \
@@ -49,8 +48,7 @@ struct instruction : base_instruction
 	struct instruction<instruction_type::NAME> : base_instruction \
 	{ \
 		instruction() : base_instruction{ instruction_type::NAME } {} \
-		std::string get_name() { return #NAME; } \
-		std::vector<instruction_arg_meta_base*> get_args() { return {}; } \
+		static instruction_info create_info() { return { #NAME }; } \
 		inline void execute(routine& routine)
 
 #pragma pack(1)

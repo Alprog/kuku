@@ -4,6 +4,7 @@
 
 Execute_function_ptr jump_table::execute_function[INSTRUCTION_COUNT];
 Get_size_function_ptr jump_table::get_size_function[INSTRUCTION_COUNT];
+Get_info_function_ptr jump_table::get_info_function[INSTRUCTION_COUNT];
 
 template <typename T>
 inline void read_and_execute_instruction(routine& routine)
@@ -19,13 +20,21 @@ inline size_t get_size()
 	return sizeof(T);
 }
 
+template <typename T>
+inline instruction_info* get_info()
+{
+	static instruction_info info = T::create_info();
+	return &info;
+}
+
 template <int I>
 void register_instruction()
 {
 	using instructionT = instruction<(instruction_type)I>;
 	jump_table::execute_function[I] = read_and_execute_instruction<instructionT>;
 	jump_table::get_size_function[I] = get_size<instructionT>;
-}
+	jump_table::get_info_function[I] = get_info<instructionT>;
+};
 
 template <int I>
 void register_instruction_recursive()
