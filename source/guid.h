@@ -19,10 +19,17 @@
 struct guid
 {
 	guid();
+	guid(uint64_t value);
 	guid(std::string string);
 
-	byte bytes[6];
+	union
+	{
+		uint64_t value : 48;
+		byte bytes[6];
+	};
 
 	std::string to_string();
 };
 
+template <>
+struct std::hash<guid>;

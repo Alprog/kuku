@@ -60,4 +60,16 @@ void test()
 
 	guid g("Aze4gmnP");
 	auto a = g.to_string();
+
+	object_header header(0);
+	header.class_index = 0x7777;
+	header.packed_guid[0] = 0xAA;
+	header.packed_guid[1] = 0xBB;
+	header.packed_guid[2] = 0xCC;
+	header.packed_guid[3] = 0xDD;
+	header.packed_guid[4] = 0xEE;
+	header.packed_guid[5] = 0xFF;
+
+	guid gg = header.get_guid();
+	guid ggg = guid(gg.value);
 }

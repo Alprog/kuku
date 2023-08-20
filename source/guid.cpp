@@ -3,7 +3,12 @@
 #include "base64.h"
 
 guid::guid()
-	: bytes{ 0 }
+	: value{ 0 }
+{
+}
+
+guid::guid(uint64_t value)
+	: value{ value }
 {
 }
 
@@ -21,3 +26,12 @@ std::string guid::to_string()
 	base64::convert_3_bytes_to_4_characters(&bytes[3], &string[4]);
 	return string;
 }
+
+template <>
+struct std::hash<guid>
+{
+    std::size_t operator()(const guid& g) const
+    {
+		return g.value;
+    }
+};

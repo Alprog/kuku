@@ -11,8 +11,10 @@ struct object_header
 	object_header(class_index class_index);
 	void destroy();
 
+	guid get_guid() const;
+
+	byte packed_guid[6];
 	class_index class_index;
-	guid guid;
 	cell* data;
 };
 

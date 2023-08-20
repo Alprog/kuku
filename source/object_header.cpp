@@ -3,7 +3,7 @@
 
 object_header::object_header(::class_index class_index)
 	: class_index { class_index }
-	, guid { 0 }
+	, packed_guid { 0 }
 {
 	data = nullptr;
 }
@@ -15,4 +15,9 @@ void object_header::destroy()
 	{
 		delete data;
 	}
+}
+
+guid object_header::get_guid() const
+{
+	return *reinterpret_cast<const guid*>(packed_guid);
 }
