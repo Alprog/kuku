@@ -5,10 +5,13 @@
 #include "type_registry.h"
 #include "data_type.h"
 #include "instance.h"
+#include "object_header.h"
 
 class virtual_machine
 {
 public:
+    std::vector<object_header> headers;
+
     type_registry type_registry;
     stack stack;
 

@@ -25,7 +25,7 @@ namespace kuku
 		int32_t character_count;
 		byte character_size;
 
-		union
+		union 
 		{
 			byte* bytes;
 			utf16unit* units;
