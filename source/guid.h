@@ -18,5 +18,11 @@
 
 struct guid
 {
+	guid();
+	guid(std::string string);
+
 	byte bytes[6];
+
+	std::string to_string();
 };
+

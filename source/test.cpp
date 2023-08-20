@@ -18,6 +18,8 @@
 #include "mem/tracker.h"
 #include "instructions.h"
 #include <memory>
+#include "base64.h"
+#include "guid.h"
 
 void test()
 {
@@ -55,4 +57,7 @@ void test()
 	project.print_info();
 
 	project.clear_all();
+
+	guid g("Aze4gmnP");
+	auto a = g.to_string();
 }
