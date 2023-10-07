@@ -13,5 +13,6 @@ enum class instruction_type : byte
 	INT_POWER,
 	PRINT,
 	SET_LOCAL,
+	GET_LOCAL,
 	END
 };

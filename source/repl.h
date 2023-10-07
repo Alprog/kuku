@@ -11,7 +11,7 @@
 #include "source_project.h"
 #include "virtual_machine.h"
 
-void repl()
+void repl() // read–eval–print loop
 {
     std::cout << "kuku language 0.1" << std::endl;
     

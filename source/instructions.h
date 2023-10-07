@@ -105,6 +105,11 @@ Ins(SET_LOCAL, BYTE(index))
 	routine.stack.head--;
 }};
 
+Ins(GET_LOCAL, BYTE(index))
+{
+	routine.stack.push(routine.stack.frame_start[index]);
+}};
+
 Ins0(END)
 {
 	routine.stop();
