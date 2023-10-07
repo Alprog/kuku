@@ -13,7 +13,7 @@ class symbol
 {
 public:
 	symbol(symbol_reference& definition);
-	~symbol();
+	virtual ~symbol();
 
 	std::u16string name;
 
