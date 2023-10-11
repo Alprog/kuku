@@ -1,19 +1,19 @@
-
-#include "class.h"
+#include "user_class.h"
 #include <iostream>
+#include "cell.h"
 
-user_class::user_class(std::string name)
+rt::user_class::user_class(std::string name)
     : name{name}
     , instance_size{1}
 {
 }
 
-field& user_class::register_field(std::string name, data_type data_type)
+rt::field& rt::user_class::register_field(std::string name, data_type data_type)
 {
     return fields.emplace_back(*this, name, data_type, instance_size++);
 }
 
-instance user_class::create_instance()
+instance rt::user_class::create_instance()
 {
     instance instance;
     instance.cells = new cell[instance_size];
@@ -21,7 +21,7 @@ instance user_class::create_instance()
     return instance;
 }
 
-void user_class::dump(instance instance)
+void rt::user_class::dump(instance instance)
 {
     std::cout << sizeof(instance) << std::endl;
 

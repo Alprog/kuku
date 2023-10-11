@@ -1,12 +1,12 @@
 #pragma once
 
 #include <vector>
-#include "class.h"
+#include "rt/user_class.h"
 
 class type_registry
 {
 public:
-    user_class& register_class(std::string name);
+	rt::user_class& register_class(std::string name);
 
-    std::vector<user_class> classes;
+	std::vector<rt::user_class> classes;
 };

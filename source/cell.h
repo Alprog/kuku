@@ -2,7 +2,7 @@
 
 #include "types.h"
 #include "instance.h"
-#include "class.h"
+#include "rt/user_class.h"
 #include "kuku/string.h"
 
 union cell
@@ -12,5 +12,5 @@ union cell
     number number;
     instance instance;
     kuku::string* string;
-    user_class* class_pointer;
+    rt::user_class* class_pointer;
 };
