@@ -1,9 +1,17 @@
 #pragma once
 
 #include <string>
+#include "bytecode.h"
+#include "localvar_info.h"
 
-class function
+namespace rt
 {
-public:
-    std::string name;
-};
+    class function
+    {
+    public:
+        std::string name;
+
+        bytecode bytecode;
+        std::vector<localvar_info> locals;
+    };
+}
