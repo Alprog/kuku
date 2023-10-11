@@ -9,7 +9,7 @@
 
 #include "virtual_machine.h"
 #include "string.h"
-#include "chunk.h"
+#include "bytecode.h"
 #include "instruction_type.h"
 #include "routine.h"
 
@@ -23,22 +23,22 @@
 
 void test()
 {
-	chunk chunk;
-	chunk.write(instruction_PUSH_INT{111});
-	chunk.write(instruction_PUSH_INT{222});
-	chunk.write(instruction_INT_ADD{});
-	chunk.write(instruction_PRINT{});
+	bytecode bytecode;
+	bytecode.write(instruction_PUSH_INT{111});
+	bytecode.write(instruction_PUSH_INT{222});
+	bytecode.write(instruction_INT_ADD{});
+	bytecode.write(instruction_PRINT{});
 
-	chunk.write(instruction_PUSH_INT{ 2 });
-	chunk.write(instruction_PUSH_INT{ 4 });
-	chunk.write(instruction_INT_POWER{});
-	chunk.write(instruction_PRINT{});
-	chunk.write(instruction_END{});
+	bytecode.write(instruction_PUSH_INT{ 2 });
+	bytecode.write(instruction_PUSH_INT{ 4 });
+	bytecode.write(instruction_INT_POWER{});
+	bytecode.write(instruction_PRINT{});
+	bytecode.write(instruction_END{});
 
-	routine routine(chunk.get_start_pointer());	
+	routine routine(bytecode.get_start_pointer());	
 	routine.run();
 
-	chunk.print_instructions();
+	bytecode.print_instructions();
 
 	kuku::string s1("abc");
 	kuku::string s2(u"abc");

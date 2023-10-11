@@ -9346,12 +9346,12 @@ namespace nlohmann
                 {
                     while (get() != 0xFF)
                     {
-                        string_t chunk;
-                        if (!get_cbor_string(chunk))
+                        string_t bytecode;
+                        if (!get_cbor_string(bytecode))
                         {
                             return false;
                         }
-                        result.append(chunk);
+                        result.append(bytecode);
                     }
                     return true;
                 }
@@ -9445,12 +9445,12 @@ namespace nlohmann
                 {
                     while (get() != 0xFF)
                     {
-                        binary_t chunk;
-                        if (!get_cbor_binary(chunk))
+                        binary_t bytecode;
+                        if (!get_cbor_binary(bytecode))
                         {
                             return false;
                         }
-                        result.insert(result.end(), chunk.begin(), chunk.end());
+                        result.insert(result.end(), bytecode.begin(), bytecode.end());
                     }
                     return true;
                 }

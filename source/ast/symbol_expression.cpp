@@ -15,7 +15,7 @@ void ast::symbol_expression::compile(compiler& compiler)
 		auto variable = dynamic_cast<variable_symbol*>(reference.symbol);
 		if (variable != nullptr)
 		{
-			compiler.spawn(instruction_GET_LOCAL{ variable->stack_offset })
+			compiler.spawn(instruction_GET_LOCAL{ (byte)variable->stack_offset });
 		}
 	}
 }

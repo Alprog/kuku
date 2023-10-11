@@ -39,7 +39,7 @@ public:
 	std::string uri;
 	text_document document;
 	std::vector<token*> tokens; // own
-	std::vector<stmt::statement*> statements;  // own
+	std::vector<stmt::statement*> statements; // own
 
 	statement_scope root_scope;
 

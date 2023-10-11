@@ -1,14 +1,14 @@
 
-#include "chunk.h"
+#include "bytecode.h"
 #include "jump_table.h"
 #include "console.h"
 
-byte* chunk::get_start_pointer()
+byte* bytecode::get_start_pointer()
 {
 	return &bytes[0];
 }
 
-void chunk::print_instructions()
+void bytecode::print_instructions()
 {
 	byte* ptr = get_start_pointer();
 	while (ptr - get_start_pointer() < bytes.size())

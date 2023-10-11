@@ -102,10 +102,10 @@ void translation_module::compile_and_run()
         compiler compiler(*this);
         compiler.compile();
 
-        compiler.chunk.write(instruction_PRINT{});
-        compiler.chunk.write(instruction_END{});
+        compiler.bytecode.write(instruction_PRINT{});
+        compiler.bytecode.write(instruction_END{});
 
-        routine routine{ compiler.chunk.get_start_pointer() };
+        routine routine{ compiler.bytecode.get_start_pointer() };
         routine.run();
     }
     catch (error& error)

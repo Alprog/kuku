@@ -19,7 +19,6 @@ void virtual_machine::test()
 
 void virtual_machine::set_local(int cellIndex, cell cellValue)
 {
-    stack.cells[cellIndex] = cellValue;
 }
 
 void virtual_machine::set_field(instance instance, int cellIndex, cell cellValue)

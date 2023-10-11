@@ -2,7 +2,7 @@
 #pragma once
 
 #include "instructions.h"
-#include "chunk.h"
+#include "bytecode.h"
 #include "symbol_table.h"
 
 class translation_module;
@@ -17,16 +17,16 @@ public:
 	template<typename T>
 	void spawn(T value)
 	{
-		chunk.write(value);
+		bytecode.write(value);
 	}
 
 	template<instruction_type T>
 	void spawn(instruction<T> instruction)
 	{
-		chunk.write(instruction);
+		bytecode.write(instruction);
 	}
 
 	translation_module& module;
 	symbol_table symbol_table;
-	chunk chunk;
+	bytecode bytecode;
 };

@@ -9,6 +9,8 @@
 class type_symbol : public symbol
 {
 public:
+	using symbol::symbol;
+
 	type_symbol* parent_type;
 
 	std::vector<field_symbol*> fields;
