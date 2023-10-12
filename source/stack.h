@@ -12,7 +12,7 @@ public:
     void push(cell cell);
     void push_integer(integer integer);
     void push_byte(byte byte);
-    void push_object(object_index object);
+    void push_object_index(object_index object_index);
 
     cell* cells;
     cell* frame_start;

@@ -24,6 +24,6 @@ namespace rt
         int instance_size;
 
         std::vector<field> fields;
-        std::vector<function> functions;
+        std::vector<function> vtable;
     };
 }

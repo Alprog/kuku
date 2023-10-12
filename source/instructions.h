@@ -114,8 +114,26 @@ Ins(GET_LOCAL, BYTE(index))
 
 Ins(CREATE_OBJECT, CLASS_INDEX(index))
 {
-	object_index object = routine.vm->object_storage.create_object(index);
-	routine.stack.push_object(object);
+	object_index object_index = routine.vm->object_storage.create_object(index);
+	routine.stack.push_object_index(object_index);
+}};
+
+Ins(SET_FIELD, BYTE(offset))
+{
+	object_index object_index = routine.stack.head[-2].object_index;
+	routine.vm->object_storage.get_object(object_index).data[offset] = routine.stack.head[-1];
+	routine.stack.head--;
+}};
+
+Ins(VIRTUAL_CALL, BYTE(arguments_size), INT(function_index))
+{
+	object_index object_index = routine.stack.head[-arguments_size].object_index;
+	object_header& object = routine.vm->object_storage.get_object(object_index);
+	const rt::user_class& runtime_class = routine.vm->type_registry.classes[object.class_index];
+	const rt::function& function = runtime_class.vtable[function_index];
+
+	//...
+
 }};
 
 Ins0(END)

@@ -15,5 +15,7 @@ enum class instruction_type : byte
 	SET_LOCAL,
 	GET_LOCAL,
 	CREATE_OBJECT,
+	SET_FIELD,
+	VIRTUAL_CALL,
 	END
 };

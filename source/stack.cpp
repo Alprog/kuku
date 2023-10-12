@@ -31,7 +31,7 @@ void stack::push_byte(byte byte)
     (head++)->byte = byte;
 }
 
-void stack::push_object(object_index object)
+void stack::push_object_index(object_index object_index)
 {
-    (head++)->object = object;
+    (head++)->object_index = object_index;
 }

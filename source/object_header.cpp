@@ -5,7 +5,7 @@ object_header::object_header(::class_index class_index)
 	: class_index { class_index }
 	, packed_guid { 0 }
 {
-	data = nullptr;
+	data = new cell[10];
 }
 
 void object_header::destroy()

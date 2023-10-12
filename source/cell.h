@@ -10,7 +10,7 @@ union cell
     byte byte;
     integer integer;
     number number;
-    object_index object;
+    object_index object_index;
     kuku::string* string;
     rt::user_class* class_pointer;
 };
