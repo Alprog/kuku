@@ -1,6 +1,11 @@
 
 #include "object_storage.h"
 
+object_storage::object_storage(virtual_machine& vm)
+	: vm { vm }
+{
+}
+
 object_header& object_storage::get_object(object_index object_index)
 {
 	return objects[object_index];

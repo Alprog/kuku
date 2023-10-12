@@ -11,15 +11,11 @@
 class virtual_machine
 {
 public:
+    explicit virtual_machine();
+
     type_registry type_registry;
     object_storage object_storage;
     std::vector<routine> routines;
 
     routine& create_routine(byte* ip);
-
-    void test();
-
-    void set_local(int cell_index, cell cell_value);
-
-    void set_field(instance instance, int cell_index, cell cell_value);
 };
