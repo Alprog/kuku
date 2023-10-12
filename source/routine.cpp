@@ -1,8 +1,9 @@
 
 #include "routine.h"
 #include "base_instruction.h"
+#include "virtual_machine.h"
 
-routine::routine(byte* ip)
+routine::routine(virtual_machine& vm, byte* ip)
 	: ip { ip }
 {
 	jump_table::init();

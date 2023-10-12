@@ -7,6 +7,7 @@
 #include "stmt/statement.h"
 #include "typesystem/storage.h"
 #include "lsp/diagnostic.h"
+#include "bytecode.h"
 
 class source_project;
 
@@ -23,7 +24,7 @@ public:
 	void analyze_scope();
 	void analyze_semantic();
 	void compile();
-	void compile_and_run();
+	bytecode compile_to_bytecode();
 	
 	void set_statement_to_tokens();
 	void clear();

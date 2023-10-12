@@ -23,6 +23,8 @@
 
 void test()
 {
+	virtual_machine machine;
+
 	bytecode bytecode;
 	bytecode.write(instruction_PUSH_INT{111});
 	bytecode.write(instruction_PUSH_INT{222});
@@ -35,7 +37,7 @@ void test()
 	bytecode.write(instruction_PRINT{});
 	bytecode.write(instruction_END{});
 
-	routine routine(bytecode.get_start_pointer());	
+	auto& routine = machine.create_routine(bytecode.get_start_pointer());
 	routine.run();
 
 	bytecode.print_instructions();

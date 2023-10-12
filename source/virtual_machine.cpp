@@ -1,6 +1,11 @@
 
 #include "virtual_machine.h"
 
+routine& virtual_machine::create_routine(byte* ip)
+{
+    return routines.emplace_back(*this, ip);
+}
+
 void virtual_machine::test()
 {
     auto vector_class = type_registry.register_class("Vector");

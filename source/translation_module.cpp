@@ -95,23 +95,22 @@ void translation_module::compile()
     compiler.compile();
 }
 
-void translation_module::compile_and_run()
+bytecode translation_module::compile_to_bytecode()
 {
     try
     {
         compiler compiler(*this);
         compiler.compile();
-
         compiler.bytecode.write(instruction_PRINT{});
         compiler.bytecode.write(instruction_END{});
-
-        routine routine{ compiler.bytecode.get_start_pointer() };
-        routine.run();
+        return compiler.bytecode;
     }
     catch (error& error)
     {
         console::write_line(error.get_message());
     }
+
+    return bytecode();
 }
 
 void translation_module::clear()

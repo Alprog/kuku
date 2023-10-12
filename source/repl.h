@@ -10,6 +10,7 @@
 
 #include "source_project.h"
 #include "virtual_machine.h"
+#include "bytecode.h"
 
 void repl() // read–eval–print loop
 {
@@ -30,10 +31,9 @@ void repl() // read–eval–print loop
         project.add_memory_snippet(line);
         project.process_all();
 
-        project.get_module("memory")->compile_and_run();
-        //machine.perform();
-
-        
+        bytecode bytecode = project.get_module("memory")->compile_to_bytecode();
+        auto& routine = machine.create_routine(bytecode.get_start_pointer());
+        routine.run();        
 
         project.clear_all();
     }

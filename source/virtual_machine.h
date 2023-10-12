@@ -5,19 +5,17 @@
 #include "type_registry.h"
 #include "data_type.h"
 #include "instance.h"
-#include "object_header.h"
+#include "object_storage.h"
 #include "routine.h"
 
 class virtual_machine
 {
 public:
     type_registry type_registry;
-
-    std::vector<object_header> headers;
+    object_storage object_storage;
     std::vector<routine> routines;
-    
-    
-    
+
+    routine& create_routine(byte* ip);
 
     void test();
 

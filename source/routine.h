@@ -1,12 +1,16 @@
 
 #pragma once
 
-#include "Stack.h"
+#include "stack.h"
+
+class virtual_machine;
 
 class routine
 {
 public:
-	routine(byte* ip);
+	routine(virtual_machine& vm, byte* ip);
+
+	virtual_machine* vm;
 
 	stack stack;
 
