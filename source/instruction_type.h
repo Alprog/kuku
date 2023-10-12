@@ -14,5 +14,6 @@ enum class instruction_type : byte
 	PRINT,
 	SET_LOCAL,
 	GET_LOCAL,
+	CREATE_OBJECT,
 	END
 };

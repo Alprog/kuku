@@ -20,3 +20,18 @@ void stack::push(cell cell)
 {
     *head++ = cell;
 }
+
+void stack::push_integer(integer integer)
+{
+    (head++)->integer = integer;
+}
+
+void stack::push_byte(byte byte)
+{
+    (head++)->byte = byte;
+}
+
+void stack::push_object(object_index object)
+{
+    (head++)->object = object;
+}

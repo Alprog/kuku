@@ -6,6 +6,7 @@
 #include <iostream>
 #include "for_each.h"
 #include "instruction_info.h"
+#include "virtual_machine.h"
 
 template <instruction_type Type>
 struct instruction : base_instruction
@@ -55,6 +56,7 @@ struct instruction : base_instruction
 
 #define INT(name) (integer, name) 
 #define BYTE(name) (byte, name) 
+#define CLASS_INDEX(name) (class_index, name) 
 
 Ins(PUSH_INT, INT(value))
 {
@@ -108,6 +110,12 @@ Ins(SET_LOCAL, BYTE(index))
 Ins(GET_LOCAL, BYTE(index))
 {
 	routine.stack.push(routine.stack.frame_start[index]);
+}};
+
+Ins(CREATE_OBJECT, CLASS_INDEX(index))
+{
+	object_index object = routine.vm->object_storage.create_object(index);
+	routine.stack.push_object(object);
 }};
 
 Ins0(END)
