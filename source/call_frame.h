@@ -7,8 +7,8 @@ union cell;
 struct call_frame
 {
 	explicit call_frame(rt::function& function, cell* start);
-
-	rt::function& function;
+	
+	rt::function* function;
 	byte* ip;
 	cell* start;
 };

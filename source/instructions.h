@@ -127,11 +127,11 @@ Ins(SET_FIELD, BYTE(offset))
 
 Ins(VIRTUAL_CALL, BYTE(arguments_size), INT(function_index))
 {
-	object_index object_index = routine.stack.head[-arguments_size].object_index;
-	object_header& object = routine.vm.object_storage.get_object(object_index);
-	rt::user_class& runtime_class = routine.vm.type_registry.classes[object.class_index];
-	rt::function& function = runtime_class.vtable[function_index];
-	routine.push_call_frame(function);
+	cell* frame_start = &routine.stack.head[-arguments_size];
+	object_header& self = routine.vm.object_storage.get_object(frame_start->object_index);
+	rt::user_class& self_class = routine.vm.type_registry.classes[self.class_index];
+	rt::function& function = self_class.vtable[function_index];
+	routine.push_call_frame(function, frame_start);
 }};
 
 Ins0(END)

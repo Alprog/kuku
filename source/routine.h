@@ -16,11 +16,10 @@ public:
 
 	virtual_machine& vm;
 
-	std::stack<call_frame> up_frames;
-
-	call_frame call_frame;
-
 	stack stack;
+
+	std::stack<call_frame> up_frames;
+	call_frame call_frame;
 
 	bool running;
 
@@ -28,7 +27,8 @@ public:
 	void stop();
 	void perform_instruction();
 
-	void push_call_frame(rt::function& function);
+	void push_call_frame(rt::function& function, cell* frame_start);
+	void pop_call_frame();
 
 	//template<typename T>
 	//inline T read()

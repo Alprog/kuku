@@ -28,10 +28,14 @@ void routine::perform_instruction()
 	}
 }
 
-void routine::push_call_frame(rt::function& function)
+void routine::push_call_frame(rt::function& function, cell* frame_start)
 {
 	up_frames.push(call_frame);
-	call_frame.function = function;
-	call_frame.ip = function.bytecode.get_start_pointer();
-	call_frame.start = stack.head;
+	call_frame = ::call_frame{ function, stack.head };
+}
+
+void routine::pop_call_frame()
+{
+	call_frame = up_frames.top();
+	up_frames.pop();
 }
