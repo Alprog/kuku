@@ -1,5 +1,6 @@
 
 #include "string_literal.h"
+#include "compiler.h"
 
 ast::string_literal::string_literal(token& token)
 	: value{ token.get_source_text() }
@@ -9,5 +10,5 @@ ast::string_literal::string_literal(token& token)
 
 void ast::string_literal::compile(compiler& compiler)
 {
-
+	compiler.compile_impl(this);
 }

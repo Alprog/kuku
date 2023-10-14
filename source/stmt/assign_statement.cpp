@@ -1,6 +1,7 @@
 
 #include "assign_statement.h"
 #include "unexepected_error.h"
+#include "compiler.h"
 
 stmt::assign_statement::assign_statement(std::unique_ptr<ast::expression> expression)
 	: lvalue{ std::move(expression) }
@@ -25,5 +26,5 @@ void stmt::assign_statement::semantic_analyze()
 
 void stmt::assign_statement::compile(compiler& compiler)
 {
-	rvalue->compile(compiler);
+	compiler.compile_impl(this);
 }

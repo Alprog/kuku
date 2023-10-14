@@ -22,6 +22,9 @@ public:
 		current_function->bytecode.write(instruction);
 	}
 
+	template<typename T>
+	void compile_impl(T value);
+
 	chunk chunk;
 	rt::function* current_function;
 	translation_module& module;

@@ -19,34 +19,5 @@ void ast::binary_operator_expression::semantic_analyze(stmt::statement& statemen
 
 void ast::binary_operator_expression::compile(compiler& compiler)
 {
-	left->compile(compiler);
-	right->compile(compiler);
-
-	switch (op.token_type)
-	{
-		case token_type::Plus_operator:
-			compiler.spawn(instruction_INT_ADD{});
-			break;
-
-		case token_type::Minus_operator:
-			compiler.spawn(instruction_INT_SUB{});
-			break;
-
-		case token_type::Multiply_Operator:
-			compiler.spawn(instruction_INT_MULTIPLY{});
-			break;
-
-		case token_type::Divide_Operator:
-			compiler.spawn(instruction_INT_DIVIDE{});
-			break;
-			
-		case token_type::Exponent_operator:
-			compiler.spawn(instruction_INT_POWER{});
-			break;
-
-		default:
-			throw std::exception("not implemented");
-	}
-
-	
+	compiler.compile_impl(this);
 }
