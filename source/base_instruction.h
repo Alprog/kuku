@@ -22,7 +22,7 @@ struct base_instruction
 
 	inline size_t skip(routine& routine)
 	{
-		routine.ip += getSize();
+		routine.call_frame.ip += getSize();
 	}
 };
 

@@ -3,10 +3,10 @@
 #include "base_instruction.h"
 #include "virtual_machine.h"
 
-routine::routine(virtual_machine& vm, byte* ip)
-	: ip { ip }
+routine::routine(virtual_machine& vm, rt::function& function)
+	: vm{ vm }
+	, call_frame{ function, stack.cells }
 {
-	jump_table::init();
 }
 
 void routine::run()
@@ -24,7 +24,14 @@ void routine::perform_instruction()
 {
 	while (running)
 	{
-		reinterpret_cast<base_instruction*>(ip)->execute(*this);
+		reinterpret_cast<base_instruction*>(call_frame.ip)->execute(*this);
 	}
 }
 
+void routine::push_call_frame(rt::function& function)
+{
+	up_frames.push(call_frame);
+	call_frame.function = function;
+	call_frame.ip = function.bytecode.get_start_pointer();
+	call_frame.start = stack.head;
+}

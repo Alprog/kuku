@@ -5,7 +5,6 @@ stack::stack()
 {
     cells = new cell[1024 * 1024 / sizeof(cell)]; // 1 MB
     head = &cells[0];
-    frame_start = &cells[0];
 }
 
 stack::~stack()

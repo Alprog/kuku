@@ -15,6 +15,5 @@ public:
     void push_object_index(object_index object_index);
 
     cell* cells;
-    cell* frame_start;
     cell* head;
 };

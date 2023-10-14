@@ -17,5 +17,5 @@ public:
     object_storage object_storage;
     std::vector<routine> routines;
 
-    routine& create_routine(byte* ip);
+    routine& create_routine(rt::function&);
 };

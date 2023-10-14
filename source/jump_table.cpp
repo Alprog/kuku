@@ -9,9 +9,9 @@ Get_info_function_ptr jump_table::get_info_function[INSTRUCTION_COUNT];
 template <typename T>
 inline void read_and_execute_instruction(routine& routine)
 {
-	auto instruction = reinterpret_cast<T*>(routine.ip);
+	auto instruction = reinterpret_cast<T*>(routine.call_frame.ip);
 	instruction->execute(routine);
-	routine.ip += sizeof(T);
+	routine.call_frame.ip += sizeof(T);
 }
 
 template <typename T>

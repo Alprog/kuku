@@ -31,8 +31,11 @@ void repl() // read–eval–print loop
         project.add_memory_snippet(line);
         project.process_all();
 
-        bytecode bytecode = project.get_module("memory")->compile_to_bytecode();
-        auto& routine = machine.create_routine(bytecode.get_start_pointer());
+        rt::function function;
+        function.name = "main";
+        function.bytecode = project.get_module("memory")->compile_to_bytecode();
+
+        auto& routine = machine.create_routine(function);
         routine.run();        
 
         project.clear_all();
