@@ -8,6 +8,7 @@
 #include "typesystem/storage.h"
 #include "lsp/diagnostic.h"
 #include "bytecode.h"
+#include "chunk.h"
 
 class source_project;
 
@@ -24,7 +25,7 @@ public:
 	void analyze_scope();
 	void analyze_semantic();
 	void compile();
-	bytecode compile_to_bytecode();
+	chunk compile_to_chunk();
 	
 	void set_statement_to_tokens();
 	void clear();

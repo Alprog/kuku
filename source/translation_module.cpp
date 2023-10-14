@@ -95,22 +95,22 @@ void translation_module::compile()
     compiler.compile();
 }
 
-bytecode translation_module::compile_to_bytecode()
+chunk translation_module::compile_to_chunk()
 {
     try
     {
         compiler compiler(*this);
         compiler.compile();
-        compiler.bytecode.write(instruction_PRINT{});
-        compiler.bytecode.write(instruction_END{});
-        return compiler.bytecode;
+        compiler.spawn(instruction_PRINT{});
+        compiler.spawn(instruction_END{});
+        return compiler.chunk;
     }
     catch (error& error)
     {
         console::write_line(error.get_message());
     }
 
-    return bytecode();
+    return chunk();
 }
 
 void translation_module::clear()

@@ -7,6 +7,8 @@
 compiler::compiler(translation_module& module)
 	: module{ module }
 {
+	current_function = &chunk.functions.emplace_back();
+	current_function->name = "main";
 }
 
 void compiler::compile()
@@ -31,4 +33,9 @@ void compiler::compile()
 	{
 		statement->compile(*this);
 	}
+}
+
+void compiler::start_new_function()
+{
+
 }

@@ -4,6 +4,7 @@
 #include "instructions.h"
 #include "bytecode.h"
 #include "symbol_table.h"
+#include "chunk.h"
 
 class translation_module;
 
@@ -13,20 +14,16 @@ public:
 	compiler(translation_module& module);
 
 	void compile();
-
-	template<typename T>
-	void spawn(T value)
-	{
-		bytecode.write(value);
-	}
+	void start_new_function();
 
 	template<instruction_type T>
 	void spawn(instruction<T> instruction)
 	{
-		bytecode.write(instruction);
+		current_function->bytecode.write(instruction);
 	}
 
+	chunk chunk;
+	rt::function* current_function;
 	translation_module& module;
 	symbol_table symbol_table;
-	bytecode bytecode;
 };
