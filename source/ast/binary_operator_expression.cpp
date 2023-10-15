@@ -19,5 +19,5 @@ void ast::binary_operator_expression::semantic_analyze(stmt::statement& statemen
 
 void ast::binary_operator_expression::compile(compiler& compiler)
 {
-	compiler.compile_impl(this);
+	compiler.compile(this);
 }

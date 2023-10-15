@@ -10,5 +10,5 @@ ast::string_literal::string_literal(token& token)
 
 void ast::string_literal::compile(compiler& compiler)
 {
-	compiler.compile_impl(this);
+	compiler.compile(this);
 }

@@ -15,5 +15,5 @@ void ast::symbol_expression::semantic_analyze(stmt::statement& statement)
 
 void ast::symbol_expression::compile(compiler& compiler)
 {
-	compiler.compile_impl(this);
+	compiler.compile(this);
 }

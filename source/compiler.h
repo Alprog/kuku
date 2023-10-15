@@ -28,7 +28,7 @@ public:
 	}
 
 	template<typename T>
-	void compile_impl(T value);
+	void compile(T value);
 
 	chunk chunk;
 	rt::function* current_function;

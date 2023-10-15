@@ -48,20 +48,26 @@ void compiler::start_new_function()
 
 //---------------------------------------------------------------------------------------------------------------
 
+template<typename T>
+void compiler::compile(T value)
+{
+	value->compile(*this);
+}
+
 template<>
-void compiler::compile_impl(ast::integer_literal* literal)
+void compiler::compile(ast::integer_literal* literal)
 {
 	spawn(instruction_PUSH_INT{ literal->value });
 }
 
 template<>
-void compiler::compile_impl(ast::string_literal* literal)
+void compiler::compile(ast::string_literal* literal)
 {
 	// not implemented
 }
 
 template<>
-void compiler::compile_impl(ast::symbol_expression* expression)
+void compiler::compile(ast::symbol_expression* expression)
 {
 	if (expression->reference.symbol != nullptr)
 	{
@@ -74,10 +80,10 @@ void compiler::compile_impl(ast::symbol_expression* expression)
 }
 
 template<>
-void compiler::compile_impl(ast::binary_operator_expression* expression)
+void compiler::compile(ast::binary_operator_expression* expression)
 {
-	expression->left->compile(*this);
-	expression->right->compile(*this);
+	compile(expression->left.get());
+	compile(expression->right.get());
 
 	switch (expression->op.token_type)
 	{
@@ -107,13 +113,13 @@ void compiler::compile_impl(ast::binary_operator_expression* expression)
 }
 
 template<>
-void compiler::compile_impl(stmt::assign_statement* statement)
+void compiler::compile(stmt::assign_statement* statement)
 {
-	statement->rvalue->compile(*this);
+	compile(statement->rvalue.get());
 }
 
 template<>
-void compiler::compile_impl(stmt::expression_statement* statement)
+void compiler::compile(stmt::expression_statement* statement)
 {
-	statement->expression->compile(*this);
+	compile(statement->expression.get());
 }

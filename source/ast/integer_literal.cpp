@@ -14,5 +14,5 @@ ast::integer_literal::integer_literal(token& token)
 
 void ast::integer_literal::compile(compiler& compiler)
 {
-	compiler.compile_impl(this);
+	compiler.compile(this);
 }

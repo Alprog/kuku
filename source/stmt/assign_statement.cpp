@@ -26,5 +26,5 @@ void stmt::assign_statement::semantic_analyze()
 
 void stmt::assign_statement::compile(compiler& compiler)
 {
-	compiler.compile_impl(this);
+	compiler.compile(this);
 }
