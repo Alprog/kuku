@@ -7,6 +7,11 @@
 #include "chunk.h"
 
 class translation_module;
+ 
+namespace stmt
+{
+	class expression_statement;
+}
 
 class compiler
 {

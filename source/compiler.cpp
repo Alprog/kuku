@@ -1,4 +1,5 @@
 
+#include "stmt/expression_statement.h"
 #include "compiler.h"
 #include "translation_module.h"
 #include "err/statement_error.h"
@@ -7,7 +8,6 @@
 #include "stmt/scoped_statement.h"
 #include "stmt/assign_statement.h"
 #include "ast/symbol_expression.h"
-#include "stmt/expression_statement.h"
 #include "ast/expression.h"
 
 compiler::compiler(translation_module& module)
@@ -115,6 +115,5 @@ void compiler::compile_impl(stmt::assign_statement* statement)
 template<>
 void compiler::compile_impl(stmt::expression_statement* statement)
 {
-	auto* ssss = statement->expression.get();
-	ssss->compile(*this);
+	statement->expression->compile(*this);
 }

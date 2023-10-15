@@ -21,5 +21,5 @@ void stmt::expression_statement::semantic_analyze()
 
 void stmt::expression_statement::compile(compiler& compiler)
 {
-	this->expression->compile(compiler);
+	compiler.compile_impl(this);
 }
