@@ -49,29 +49,29 @@ void compiler::start_new_function()
 //---------------------------------------------------------------------------------------------------------------
 
 template<typename T>
-void compiler::compile(T value)
+void compiler::compile(T& value)
 {
 	value->compile(*this);
 }
 
 template<>
-void compiler::compile(ast::integer_literal* literal)
+void compiler::compile(ast::integer_literal& literal)
 {
-	spawn(instruction_PUSH_INT{ literal->value });
+	spawn(instruction_PUSH_INT{ literal.value });
 }
 
 template<>
-void compiler::compile(ast::string_literal* literal)
+void compiler::compile(ast::string_literal& literal)
 {
 	// not implemented
 }
 
 template<>
-void compiler::compile(ast::symbol_expression* expression)
+void compiler::compile(ast::symbol_expression& expression)
 {
-	if (expression->reference.symbol != nullptr)
+	if (expression.reference.symbol != nullptr)
 	{
-		auto variable = dynamic_cast<variable_symbol*>(expression->reference.symbol);
+		auto variable = dynamic_cast<variable_symbol*>(expression.reference.symbol);
 		if (variable != nullptr)
 		{
 			spawn(instruction_GET_LOCAL{ (byte)variable->stack_offset });
@@ -80,12 +80,12 @@ void compiler::compile(ast::symbol_expression* expression)
 }
 
 template<>
-void compiler::compile(ast::binary_operator_expression* expression)
+void compiler::compile(ast::binary_operator_expression& expression)
 {
-	compile(expression->left.get());
-	compile(expression->right.get());
+	compile(expression.left);
+	compile(expression.right);
 
-	switch (expression->op.token_type)
+	switch (expression.op.token_type)
 	{
 		case token_type::Plus_operator:
 			spawn(instruction_INT_ADD{});
@@ -113,13 +113,13 @@ void compiler::compile(ast::binary_operator_expression* expression)
 }
 
 template<>
-void compiler::compile(stmt::assign_statement* statement)
+void compiler::compile(stmt::assign_statement& statement)
 {
-	compile(statement->rvalue.get());
+	compile(statement.rvalue);
 }
 
 template<>
-void compiler::compile(stmt::expression_statement* statement)
+void compiler::compile(stmt::expression_statement& statement)
 {
-	compile(statement->expression.get());
+	compile(statement.expression);
 }
