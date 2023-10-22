@@ -25,5 +25,6 @@ enum class instruction_type : byte
 	VIRTUAL_CALL,
 	JUMP,
 	JUMP_ON_FALSE,
+	POP,
 	END
 };

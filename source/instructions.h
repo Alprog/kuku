@@ -184,6 +184,11 @@ Ins(VIRTUAL_CALL, BYTE(arguments_size), INT(function_index))
 	routine.push_call_frame(function, frame_start);
 }};
 
+Ins(POP, BYTE(count))
+{
+	routine.stack.head -= count;
+}};
+
 Ins0(END)
 {
 	routine.stop();

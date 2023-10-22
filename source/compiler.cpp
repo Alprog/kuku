@@ -30,6 +30,7 @@ void compiler::compile()
 		}
 	}
 
+	scope_context.push_state();
 	for (auto& statement : module.statements)
 	{
 		compile(statement);
@@ -39,6 +40,33 @@ void compiler::compile()
 void compiler::start_new_function()
 {
 
+}
+
+void compiler::enter_scope()
+{
+	scope_context.push_state();
+}
+
+void compiler::exit_scope()
+{
+	int jump_place = scope_context.skip_jump_place;
+	int old_stack_size = scope_context.locals_size;
+
+	scope_context.pop_state();
+
+	int new_stack_size = scope_context.locals_size;
+	byte pop_count = (byte)(old_stack_size - new_stack_size);
+	spawn(instruction_POP{ pop_count });
+	for (auto& local : current_function->locals)
+	{
+		if (local.end_instruction < 0 && local.stack_offset >= new_stack_size)
+		{
+			local.end_instruction = current_function->bytecode.bytes.size();
+		}
+	}
+
+	int jump_offset = current_function->bytecode.bytes.size() - jump_place;
+	reinterpret_cast<instruction_JUMP_ON_FALSE*>(&current_function->bytecode.bytes[jump_place])->jump_offset = jump_offset;
 }
 
 //---------------------------------------------------------------------------------------------------------------
@@ -137,7 +165,7 @@ void compiler::compile(stmt::variable_declaration_statement& statement)
 	compile(statement.expression);
 
 	auto variable_symbol = statement.get_symbol();
-	variable_symbol->stack_offset = locals_size++;
+	variable_symbol->stack_offset = scope_context.locals_size++;
 
 	rt::localvar_info info;
 	info.name = variable_symbol->name;
@@ -180,37 +208,28 @@ void compiler::compile(stmt::if_statement& statement)
 {
 	compile(statement.condition);
 
-	int jump_place = current_function->bytecode.bytes.size();
-	jump_places.push(jump_place);
-	spawn(instruction_JUMP_ON_FALSE{0});
+	enter_scope();
+
+	scope_context.skip_jump_place = current_function->bytecode.bytes.size();
+	spawn(instruction_JUMP_ON_FALSE{ 0 });
 }
 
 template<>
 void compiler::compile(stmt::else_statement& statement)
 {
+	exit_scope();
 
+	int skip_else_place = current_function->bytecode.bytes.size();
+	spawn(instruction_JUMP{ 0 });
+		
+	enter_scope();
+
+	scope_context.skip_jump_place = skip_else_place;
 }
 
 template<>
 void compiler::compile(stmt::end_statement& statement)
-{
-	int jump_place = jump_places.top();
-	int jump_offset = current_function->bytecode.bytes.size() - jump_place;
-	reinterpret_cast<instruction_JUMP_ON_FALSE*>(&current_function->bytecode.bytes[jump_place])->jump_offset = jump_offset;
-	jump_places.pop();
-
-	int cutted_stack = 0;
-	for (auto& local : current_function->locals)
-	{
-		if (local.end_instruction < 0 && local.stack_offset >= cutted_stack)
-		{
-			local.end_instruction = current_function->bytecode.bytes.size();
-		}
-	}
-
-	//if (statement.get_scope()->statement->get_statement_type() == u"function_statement")
-	//{
-
-	//}
+{	
+	exit_scope();
 }
 

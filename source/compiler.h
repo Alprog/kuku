@@ -5,6 +5,8 @@
 #include "bytecode.h"
 #include "symbol_table.h"
 #include "chunk.h"
+#include "stackable.h"
+#include "scope_context.h"
 
 class translation_module;
  
@@ -15,6 +17,8 @@ public:
 
 	void compile();
 	void start_new_function();
+	void enter_scope();
+	void exit_scope();
 
 	template<instruction_type T>
 	void spawn(instruction<T> instruction)
@@ -28,10 +32,7 @@ public:
 	chunk chunk;
 	rt::function* current_function;
 	
-	std::stack<int> jump_places;
-
-	std::stack<int> locals_sizes;
-	int locals_size;
+	stackable<scope_context> scope_context;
 
 	translation_module& module;
 	symbol_table symbol_table;
