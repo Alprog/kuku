@@ -7,6 +7,7 @@
 
 union cell
 {
+    bool boolean;
     byte byte;
     integer integer;
     number number;

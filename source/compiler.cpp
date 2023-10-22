@@ -102,6 +102,30 @@ void compiler::compile(ast::binary_operator_expression& expression)
 			spawn(instruction_INT_POWER{});
 			break;
 
+		case token_type::Equal_operator:
+			spawn(instruction_EQUAL{});
+			break;
+
+		case token_type::Not_equal_operator:
+			spawn(instruction_NOT_EQUAL{});
+			break;
+
+		case token_type::Less_operator:
+			spawn(instruction_LESS{});
+			break;
+
+		case token_type::Greater_operator:
+			spawn(instruction_GREATER{});
+			break;
+
+		case token_type::Less_or_equal_operator:
+			spawn(instruction_LESS{});
+			break;
+
+		case token_type::Greater_or_equal_operator:
+			spawn(instruction_GREATER_OR_EQUAL{});
+			break;
+
 		default:
 			throw std::exception("not implemented");
 	}

@@ -5,4 +5,7 @@ var b = 4
 a = 2 + 3
 b = 7
 b = b + a
+
+var c = b < a
+
 end

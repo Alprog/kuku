@@ -95,6 +95,42 @@ Ins0(INT_POWER)
 	routine.stack.head--;
 }};
 
+Ins0(EQUAL)
+{
+	routine.stack.head[-2].boolean = routine.stack.head[-2].integer == routine.stack.head[-1].integer;
+	routine.stack.head--;
+}};
+
+Ins0(NOT_EQUAL)
+{
+	routine.stack.head[-2].boolean = routine.stack.head[-2].integer != routine.stack.head[-1].integer;
+	routine.stack.head--;
+}};
+
+Ins0(LESS)
+{
+	routine.stack.head[-2].boolean = routine.stack.head[-2].integer < routine.stack.head[-1].integer;
+	routine.stack.head--;
+}};
+
+Ins0(GREATER)
+{
+	routine.stack.head[-2].boolean = routine.stack.head[-2].integer > routine.stack.head[-1].integer;
+	routine.stack.head--;
+}};
+
+Ins0(LESS_OR_EQUAL)
+{
+	routine.stack.head[-2].boolean = routine.stack.head[-2].integer <= routine.stack.head[-1].integer;
+	routine.stack.head--;
+}};
+
+Ins0(GREATER_OR_EQUAL)
+{
+	routine.stack.head[-2].boolean = routine.stack.head[-2].integer >= routine.stack.head[-1].integer;
+	routine.stack.head--;
+}};
+
 Ins0(PRINT)
 {
 	std::cout << routine.stack.head[-1].integer << std::endl;

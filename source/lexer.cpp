@@ -103,10 +103,45 @@ token* lexer::get_next_token()
 					return create_token(startIt, token_type::Divide_Operator);  //:  /        divide operator
 			}
 
+            case '=':
+            {
+                auto startIt = it++;
+                if (match('='))
+                    return create_token(startIt, token_type::Equal_operator);   //: ==
+                else
+                    return create_token(startIt, token_type::Assign_operator);  //: =
+            }
+
+            case '<':
+            {
+                auto startIt = it++;
+                if (match('='))
+                    return create_token(startIt, token_type::Less_or_equal_operator);  //: <=
+                else
+                    return create_token(startIt, token_type::Less_operator);           //: <
+            }
+
+            case '>':
+            {
+                auto startIt = it++;
+                if (match('='))
+                    return create_token(startIt, token_type::Greater_or_equal_operator);  //: >=
+                else
+                    return create_token(startIt, token_type::Greater_operator);           //: >
+            }
+
+            case '!':
+            {
+                auto startIt = it++;
+                if (match('='))
+                    return create_token(startIt, token_type::Not_equal_operator); //: !=
+                else
+                    return create_token(startIt, token_type::Not_operator);       //: !
+            }
+
             case '^': return create_token(it++, token_type::Exponent_operator);
             case '-': return create_token(it++, token_type::Minus_operator);
-            case '+': return create_token(it++, token_type::Plus_operator);
-            case '=': return create_token(it++, token_type::Assign_operator);
+            case '+': return create_token(it++, token_type::Plus_operator);            
             case ':': return create_token(it++, token_type::Colon);
             case ';': return create_token(it++, token_type::Semicolon);
             case '.': return create_token(it++, token_type::Dot);
@@ -115,8 +150,6 @@ token* lexer::get_next_token()
             case ']': return create_token(it++, token_type::Close_bracket);
             case '{': return create_token(it++, token_type::Open_brace);
             case '}': return create_token(it++, token_type::Close_brace);
-            case '<': return create_token(it++, token_type::Open_chevron);
-            case '>': return create_token(it++, token_type::Close_chevron);
             case '(': return create_token(it++, token_type::Open_parenthesis);
             case ')': return create_token(it++, token_type::Close_parenthesis);
 		}
