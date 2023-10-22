@@ -23,5 +23,7 @@ enum class instruction_type : byte
 	CREATE_OBJECT,
 	SET_FIELD,
 	VIRTUAL_CALL,
+	JUMP,
+	JUMP_ON_FALSE,
 	END
 };

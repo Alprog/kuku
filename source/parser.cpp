@@ -1,22 +1,11 @@
 
 #include "parser.h"
 #include "console.h"
-#include "ast/binary_operator_expression.h"
-#include "ast/integer_literal.h"
-#include "stmt/variable_declaration_statement.h"
-#include "stmt/assign_statement.h"
-#include "stmt/unknown_statement.h"
-#include "stmt/statement.h"
-#include "stmt/end_statement.h"
-#include "stmt/function_statement.h"
-#include "stmt/class_statement.h"
 #include "unexepected_error.h"
 #include "source_project.h"
 #include "symbol_reference.h"
-#include "stmt/expression_statement.h"
-#include "stmt/return_statement.h"
-#include "ast/string_literal.h"
-#include "ast/symbol_expression.h"
+#include "stmt/all.h"
+#include "ast/all.h"
 
 parser::parser(translation_module& module, token** it)
 	: module{ module }
@@ -68,6 +57,14 @@ stmt::statement* parser::parse_next_statement()
     else if (current->type == token_type::Keyword_var)
     {
         return create_statement<stmt::variable_declaration_statement>();
+    }
+    else if (current->type == token_type::Keyword_if)
+    {
+        return create_statement<stmt::if_statement>();
+    }
+    else if (current->type == token_type::Keyword_else)
+    {
+        return create_statement<stmt::else_statement>();
     }
     else if (current->type == token_type::Keyword_end)
     {

@@ -28,6 +28,8 @@ public:
 	chunk chunk;
 	rt::function* current_function;
 	
+	std::stack<int> jump_places;
+
 	std::stack<int> locals_sizes;
 	int locals_size;
 

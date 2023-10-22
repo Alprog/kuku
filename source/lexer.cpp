@@ -14,6 +14,7 @@ auto& get_keywords()
         { u"end", token_type::Keyword_end },
         { u"for", token_type::Keyword_for },
         { u"function", token_type::Keyword_function },
+        { u"if", token_type::Keyword_if },
         { u"or", token_type::Keyword_or },
         { u"return", token_type::Keyword_return },
         { u"then", token_type::Keyword_then },

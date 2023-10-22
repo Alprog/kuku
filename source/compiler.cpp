@@ -176,10 +176,30 @@ void compiler::compile(stmt::function_statement& statement)
 }
 
 template<>
+void compiler::compile(stmt::if_statement& statement)
+{
+	compile(statement.condition);
+
+	int jump_place = current_function->bytecode.bytes.size();
+	jump_places.push(jump_place);
+	spawn(instruction_JUMP_ON_FALSE{0});
+}
+
+template<>
+void compiler::compile(stmt::else_statement& statement)
+{
+
+}
+
+template<>
 void compiler::compile(stmt::end_statement& statement)
 {
-	int cutted_stack = 0;
+	int jump_place = jump_places.top();
+	int jump_offset = current_function->bytecode.bytes.size() - jump_place;
+	reinterpret_cast<instruction_JUMP_ON_FALSE*>(&current_function->bytecode.bytes[jump_place])->jump_offset = jump_offset;
+	jump_places.pop();
 
+	int cutted_stack = 0;
 	for (auto& local : current_function->locals)
 	{
 		if (local.end_instruction < 0 && local.stack_offset >= cutted_stack)
@@ -193,3 +213,4 @@ void compiler::compile(stmt::end_statement& statement)
 
 	//}
 }
+

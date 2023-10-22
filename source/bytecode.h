@@ -10,6 +10,7 @@ public:
 	std::vector<byte> bytes;
 
 	byte* get_start_pointer();
+	byte* get_end_pointer();
 	void print_instructions();
 
 	template<typename T>

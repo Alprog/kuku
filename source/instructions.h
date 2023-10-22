@@ -60,9 +60,7 @@ struct instruction : base_instruction
 
 Ins(PUSH_INT, INT(value))
 {
-	cell cell;
-	cell.integer = value;
-	routine.stack.push(cell);
+	routine.stack.push_integer(value);
 }};
 
 Ins0(INT_ADD)
@@ -98,37 +96,54 @@ Ins0(INT_POWER)
 Ins0(EQUAL)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer == routine.stack.head[-1].integer;
-	routine.stack.head--;
+	routine.stack.head -= 2;
 }};
 
 Ins0(NOT_EQUAL)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer != routine.stack.head[-1].integer;
-	routine.stack.head--;
+	routine.stack.head -= 2;
 }};
 
 Ins0(LESS)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer < routine.stack.head[-1].integer;
-	routine.stack.head--;
+	routine.stack.head -= 2;
 }};
 
 Ins0(GREATER)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer > routine.stack.head[-1].integer;
-	routine.stack.head--;
+	routine.stack.head -= 2;
 }};
 
 Ins0(LESS_OR_EQUAL)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer <= routine.stack.head[-1].integer;
-	routine.stack.head--;
+	routine.stack.head -= 2;
 }};
 
 Ins0(GREATER_OR_EQUAL)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer >= routine.stack.head[-1].integer;
-	routine.stack.head--;
+	routine.stack.head -= 2;
+}};
+
+Ins(JUMP, INT(jump_offset))
+{
+	routine.call_frame.ip += jump_offset;
+}};
+
+Ins(JUMP_ON_FALSE, INT(jump_offset))
+{
+	if (routine.stack.head[-1].boolean)
+	{
+		routine.call_frame.ip += sizeof(instruction_JUMP_ON_FALSE);
+	}
+	else
+	{
+		routine.call_frame.ip += jump_offset;
+	}
 }};
 
 Ins0(PRINT)

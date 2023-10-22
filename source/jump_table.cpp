@@ -14,6 +14,18 @@ inline void read_and_execute_instruction(routine& routine)
 	routine.call_frame.ip += sizeof(T);
 }
 
+template <>
+inline void read_and_execute_instruction<instruction_JUMP>(routine& routine)
+{
+	reinterpret_cast<instruction_JUMP*>(routine.call_frame.ip)->execute(routine);
+}
+
+template <>
+inline void read_and_execute_instruction<instruction_JUMP_ON_FALSE>(routine& routine)
+{
+	reinterpret_cast<instruction_JUMP_ON_FALSE*>(routine.call_frame.ip)->execute(routine);
+}
+
 template <typename T>
 inline size_t get_size()
 {

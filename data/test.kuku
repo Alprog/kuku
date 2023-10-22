@@ -6,6 +6,6 @@ a = 2 + 3
 b = 7
 b = b + a
 
-var c = b < a
-
+if b < a then
+	var c = 10
 end

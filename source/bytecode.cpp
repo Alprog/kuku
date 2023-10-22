@@ -9,6 +9,11 @@ byte* bytecode::get_start_pointer()
 	return &bytes[0];
 }
 
+byte* bytecode::get_end_pointer()
+{
+	return &bytes[bytes.size()];
+}
+
 void bytecode::print_instructions()
 {
 	byte* ptr = get_start_pointer();
