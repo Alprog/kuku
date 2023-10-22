@@ -1,0 +1,8 @@
+
+var a = 3
+var b = 4
+
+a = 2 + 3
+b = 7
+b = b + a
+end

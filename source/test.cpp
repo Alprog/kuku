@@ -21,7 +21,9 @@
 #include "base64.h"
 #include "guid.h"
 
-void test()
+#include "console.h"
+
+void test_old()
 {
 	virtual_machine machine;
 
@@ -77,4 +79,28 @@ void test()
 
 	guid gg = header.get_guid();
 	guid ggg = guid(gg.value);
+}
+
+void test()
+{
+	while (true)
+	{
+		virtual_machine machine;
+
+		source_project project;
+		project.add_file("C:/kuku/data/test.kuku");
+		project.process_all();
+
+		chunk chunk = project.get_module("C:/kuku/data/test.kuku")->compile_to_chunk();
+
+		chunk.functions[0].bytecode.print_instructions();
+		chunk.functions[0].print_locals_info();
+
+		console::read_line();
+
+		auto& routine = machine.create_routine(chunk.functions[0]);
+		routine.run();
+
+		console::read_line();
+	}
 }

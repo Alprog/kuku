@@ -12,6 +12,21 @@ namespace console
         return std::u16string(std::begin(line), std::end(line));
     }
 
+    void write(std::string str)
+    {
+        _cputws(std::wstring(std::begin(str), std::end(str)).c_str());
+    }
+
+    void write(std::u8string str)
+    {
+        _cputws(std::wstring(std::begin(str), std::end(str)).c_str());
+    }
+
+    void write(std::u16string str)
+    {
+        _cputws(std::wstring(std::begin(str), std::end(str)).c_str());
+    } 
+
     void write_line(std::string line)
     {
         _cputws(std::wstring(std::begin(line), std::end(line)).c_str());

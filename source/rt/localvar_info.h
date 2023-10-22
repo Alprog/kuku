@@ -1,12 +1,15 @@
 #pragma once
 
 #include <string>
+#include "type_index.h"
 
 namespace rt
 {
-	class localvar_info
+	struct localvar_info
 	{
-		std::string name;
+		std::u16string name;
+		type_index type_index;
+		int stack_offset;
 		int start_instruction;
 		int end_instruction;
 	};

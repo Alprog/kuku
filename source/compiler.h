@@ -8,11 +8,6 @@
 
 class translation_module;
  
-namespace stmt
-{
-	class expression_statement;
-}
-
 class compiler
 {
 public:
@@ -32,6 +27,10 @@ public:
 
 	chunk chunk;
 	rt::function* current_function;
+	
+	std::stack<int> locals_sizes;
+	int locals_size;
+
 	translation_module& module;
 	symbol_table symbol_table;
 };

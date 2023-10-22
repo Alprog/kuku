@@ -13,5 +13,7 @@ namespace rt
 
         bytecode bytecode;
         std::vector<localvar_info> locals;
+
+        void print_locals_info();
     };
 }

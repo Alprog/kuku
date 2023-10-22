@@ -1,14 +1,9 @@
 
-#include "stmt/expression_statement.h"
+#include "stmt/all.h"
+#include "ast/all.h"
 #include "compiler.h"
 #include "translation_module.h"
 #include "err/statement_error.h"
-#include "ast/integer_literal.h"
-#include "ast/string_literal.h"
-#include "stmt/scoped_statement.h"
-#include "stmt/assign_statement.h"
-#include "ast/symbol_expression.h"
-#include "ast/expression.h"
 
 compiler::compiler(translation_module& module)
 	: module{ module }
@@ -37,7 +32,7 @@ void compiler::compile()
 
 	for (auto& statement : module.statements)
 	{
-		statement->compile(*this);
+		compile(statement);
 	}
 }
 
@@ -113,13 +108,64 @@ void compiler::compile(ast::binary_operator_expression& expression)
 }
 
 template<>
+void compiler::compile(stmt::variable_declaration_statement& statement)
+{
+	compile(statement.expression);
+
+	auto variable_symbol = statement.get_symbol();
+	variable_symbol->stack_offset = locals_size++;
+
+	rt::localvar_info info;
+	info.name = variable_symbol->name;
+	info.stack_offset = variable_symbol->stack_offset;
+	info.type_index = type_index::Integer;
+	info.start_instruction = current_function->bytecode.bytes.size();
+	info.end_instruction = -1;
+
+	current_function->locals.push_back(info);
+}
+
+template<>
 void compiler::compile(stmt::assign_statement& statement)
 {
 	compile(statement.rvalue);
+
+	auto symbol_expression = dynamic_cast<ast::symbol_expression*>(statement.lvalue.get());
+	if (symbol_expression)
+	{
+		auto symbol = symbol_expression->reference.symbol;
+		byte local_offset = symbol->stack_offset;
+		spawn(instruction_SET_LOCAL{ local_offset });
+	}
 }
 
 template<>
 void compiler::compile(stmt::expression_statement& statement)
 {
 	compile(statement.expression);
+}
+
+template<>
+void compiler::compile(stmt::function_statement& statement)
+{
+	start_new_function();
+}
+
+template<>
+void compiler::compile(stmt::end_statement& statement)
+{
+	int cutted_stack = 0;
+
+	for (auto& local : current_function->locals)
+	{
+		if (local.end_instruction < 0 && local.stack_offset >= cutted_stack)
+		{
+			local.end_instruction = current_function->bytecode.bytes.size();
+		}
+	}
+
+	//if (statement.get_scope()->statement->get_statement_type() == u"function_statement")
+	//{
+
+	//}
 }

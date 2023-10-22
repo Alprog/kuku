@@ -103,8 +103,7 @@ Ins0(PRINT)
 
 Ins(SET_LOCAL, BYTE(index))
 {
-	std::cout << routine.call_frame.start[index].integer << std::endl;
-	routine.stack.head--;
+	routine.call_frame.start[index] = *--routine.stack.head;
 }};
 
 Ins(GET_LOCAL, BYTE(index))

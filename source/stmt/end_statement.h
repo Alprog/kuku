@@ -3,6 +3,8 @@
 
 #include "statement.h"
 
+class compiler;
+
 namespace stmt
 {
 	class end_statement : public statement
@@ -14,5 +16,6 @@ namespace stmt
 
 	protected:
 		virtual void parse_internal(parser& parser) override;
+		virtual void compile(compiler& compiler) override;
 	};
 }
