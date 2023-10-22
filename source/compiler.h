@@ -20,6 +20,8 @@ public:
 	void enter_scope();
 	void exit_scope();
 
+	void jump_here(int jump_place);
+
 	template<instruction_type T>
 	void spawn(instruction<T> instruction)
 	{

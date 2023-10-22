@@ -49,14 +49,15 @@ void compiler::enter_scope()
 
 void compiler::exit_scope()
 {
-	int jump_place = scope_context.skip_jump_place;
 	int old_stack_size = scope_context.locals_size;
-
 	scope_context.pop_state();
 
 	int new_stack_size = scope_context.locals_size;
 	byte pop_count = (byte)(old_stack_size - new_stack_size);
-	spawn(instruction_POP{ pop_count });
+	if (pop_count > 0)
+	{
+		spawn(instruction_POP{ pop_count });
+	}
 	for (auto& local : current_function->locals)
 	{
 		if (local.end_instruction < 0 && local.stack_offset >= new_stack_size)
@@ -64,9 +65,12 @@ void compiler::exit_scope()
 			local.end_instruction = current_function->bytecode.bytes.size();
 		}
 	}
+}
 
+void compiler::jump_here(int jump_place)
+{
 	int jump_offset = current_function->bytecode.bytes.size() - jump_place;
-	reinterpret_cast<instruction_JUMP_ON_FALSE*>(&current_function->bytecode.bytes[jump_place])->jump_offset = jump_offset;
+	reinterpret_cast<instruction_JUMP*>(&current_function->bytecode.bytes[jump_place])->jump_offset = jump_offset;
 }
 
 //---------------------------------------------------------------------------------------------------------------
@@ -217,19 +221,22 @@ void compiler::compile(stmt::if_statement& statement)
 template<>
 void compiler::compile(stmt::else_statement& statement)
 {
+	int jump_place = scope_context.skip_jump_place;
+
 	exit_scope();
 
-	int skip_else_place = current_function->bytecode.bytes.size();
+	scope_context.skip_jump_place = current_function->bytecode.bytes.size();
 	spawn(instruction_JUMP{ 0 });
-		
-	enter_scope();
+	jump_here(jump_place);
 
-	scope_context.skip_jump_place = skip_else_place;
+	enter_scope();	
 }
 
 template<>
 void compiler::compile(stmt::end_statement& statement)
 {	
+	int jump_place = scope_context.skip_jump_place;
 	exit_scope();
+	jump_here(jump_place);
 }
 
