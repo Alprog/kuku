@@ -26,5 +26,6 @@ enum class instruction_type : byte
 	JUMP,
 	JUMP_ON_FALSE,
 	POP,
+
 	END
 };

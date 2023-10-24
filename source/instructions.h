@@ -13,7 +13,7 @@ struct instruction : base_instruction
 {
 	instruction() : base_instruction{ Type } {};
 
-	static instruction_info create_info() { return { "unknown" }; }
+	static instruction_info create_info() { return { Type, "unknown" }; }
 	
 	void execute(routine& routine)
 	{
@@ -40,7 +40,7 @@ struct instruction : base_instruction
 			, FOR_EACH( INITIALIZATION, __VA_ARGS__) \
 		{ \
 		} \
-		static instruction_info create_info() { return { #NAME, { FOR_EACH( ARGUMENT_META, __VA_ARGS__) } }; } \
+		static instruction_info create_info() { return { instruction_type::NAME, #NAME, { FOR_EACH( ARGUMENT_META, __VA_ARGS__) } }; } \
 		inline void execute(routine& routine)
 
 #define Ins0(NAME) \
@@ -49,7 +49,7 @@ struct instruction : base_instruction
 	struct instruction<instruction_type::NAME> : base_instruction \
 	{ \
 		instruction() : base_instruction{ instruction_type::NAME } {} \
-		static instruction_info create_info() { return { #NAME }; } \
+		static instruction_info create_info() { return { instruction_type::NAME, #NAME }; } \
 		inline void execute(routine& routine)
 
 #pragma pack(1)

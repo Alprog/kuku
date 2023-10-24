@@ -45,8 +45,6 @@ void test_old()
 	auto& routine = machine.create_routine(function);
 	routine.run();
 
-	bytecode.print_instructions();
-
 	kuku::string s1("abc");
 	kuku::string s2(u"abc");
 	kuku::string s3(U"abc");
@@ -93,7 +91,7 @@ void test()
 
 		chunk chunk = project.get_module("C:/kuku/data/test.kuku")->compile_to_chunk();
 
-		chunk.functions[0].bytecode.print_instructions();
+		chunk.functions[0].print_instructions(true);
 		chunk.functions[0].print_locals_info();
 
 		console::read_line();
