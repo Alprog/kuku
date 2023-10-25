@@ -4,7 +4,7 @@
 #include "base_instruction.h"
 #include "routine.h"
 #include <iostream>
-#include "for_each.h"
+#include "preprocessor/for_each.h"
 #include "instruction_info.h"
 #include "virtual_machine.h"
 
@@ -21,30 +21,28 @@ struct instruction : base_instruction
 	}
 };
 
-#define EMPTY
 #define FIRST(first, second) first
 #define SECOND(first, second) second
 #define BOTH(x) FIRST x SECOND x
 #define DECLARARION(x) FIRST x SECOND x;
 #define INITIALIZATION(x) , SECOND x { SECOND x }
 #define ARGUMENT_META(x) instruction_arg_meta<FIRST x>::get_instance()
-#define SEMICOLON ;
 
 #define Ins_X(ARG_COUNT, NAME, STACK_CHANGE, ...) \
 	using instruction_##NAME = instruction<instruction_type::NAME>; \
 	template<> \
 	struct instruction<instruction_type::NAME> : base_instruction \
 	{ \
-		FOR_SEPARATOR_(ARG_COUNT, DECLARARION, EMPTY, __VA_ARGS__) \
-		instruction( FOR_(ARG_COUNT, BOTH, __VA_ARGS__) ) \
+		FOR_(ARG_COUNT, DECLARARION, __VA_ARGS__) \
+		instruction( FOR_WITH_COMMA_(ARG_COUNT, BOTH, __VA_ARGS__) ) \
 			: base_instruction{ instruction_type::NAME } \
-			FOR_SEPARATOR_(ARG_COUNT, INITIALIZATION, EMPTY, __VA_ARGS__) \
+			FOR_(ARG_COUNT, INITIALIZATION, __VA_ARGS__) \
 		{ \
 		} \
-		static instruction_info create_info() { return { instruction_type::NAME, #NAME, { FOR_(ARG_COUNT, ARGUMENT_META, __VA_ARGS__) } }; } \
+		static instruction_info create_info() { return { instruction_type::NAME, #NAME, { FOR_WITH_COMMA_(ARG_COUNT, ARGUMENT_META, __VA_ARGS__) } }; } \
 		inline void execute(routine& routine)
 
-#define Ins(...) EXPAND(Ins_X(MINUS(MINUS(VA_LENGTH(__VA_ARGS__))), __VA_ARGS__))
+#define Ins(...) EXPAND(Ins_X(VA_LENGTH_MINUS_2(__VA_ARGS__), __VA_ARGS__))
 
 #pragma pack(1)
 

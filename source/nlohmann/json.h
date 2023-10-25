@@ -6670,8 +6670,8 @@ namespace nlohmann
                 begin_object,     ///< the character for object begin `{`
                 end_array,        ///< the character for array end `]`
                 end_object,       ///< the character for object end `}`
-                name_separator,   ///< the name separator `:`
-                value_separator,  ///< the value separator `,`
+                name_WITH_SEPARATOR,   ///< the name separator `:`
+                value_WITH_SEPARATOR,  ///< the value separator `,`
                 parse_error,      ///< indicating a parse error
                 end_of_input,     ///< indicating the end of the input buffer
                 literal_or_value  ///< a literal or the begin of a value (only for diagnostics)
@@ -6706,9 +6706,9 @@ namespace nlohmann
                     return "']'";
                 case token_type::end_object:
                     return "'}'";
-                case token_type::name_separator:
+                case token_type::name_WITH_SEPARATOR:
                     return "':'";
-                case token_type::value_separator:
+                case token_type::value_WITH_SEPARATOR:
                     return "','";
                 case token_type::parse_error:
                     return "<parse error>";
@@ -8162,9 +8162,9 @@ namespace nlohmann
                 case '}':
                     return token_type::end_object;
                 case ':':
-                    return token_type::name_separator;
+                    return token_type::name_WITH_SEPARATOR;
                 case ',':
-                    return token_type::value_separator;
+                    return token_type::value_WITH_SEPARATOR;
 
                     // literals
                 case 't':
@@ -10677,8 +10677,8 @@ namespace nlohmann
                 case token_type::begin_object:
                 case token_type::end_array:
                 case token_type::end_object:
-                case token_type::name_separator:
-                case token_type::value_separator:
+                case token_type::name_WITH_SEPARATOR:
+                case token_type::value_WITH_SEPARATOR:
                 case token_type::parse_error:
                 case token_type::end_of_input:
                 case token_type::literal_or_value:
@@ -11138,11 +11138,11 @@ namespace nlohmann
                             }
 
                             // parse separator (:)
-                            if (JSON_HEDLEY_UNLIKELY(get_token() != token_type::name_separator))
+                            if (JSON_HEDLEY_UNLIKELY(get_token() != token_type::name_WITH_SEPARATOR))
                             {
                                 return sax->parse_error(m_lexer.get_position(),
                                     m_lexer.get_token_string(),
-                                    parse_error::create(101, m_lexer.get_position(), exception_message(token_type::name_separator, "object separator"), BasicJsonType()));
+                                    parse_error::create(101, m_lexer.get_position(), exception_message(token_type::name_WITH_SEPARATOR, "object separator"), BasicJsonType()));
                             }
 
                             // remember we are now inside an object
@@ -11261,8 +11261,8 @@ namespace nlohmann
                         case token_type::uninitialized:
                         case token_type::end_array:
                         case token_type::end_object:
-                        case token_type::name_separator:
-                        case token_type::value_separator:
+                        case token_type::name_WITH_SEPARATOR:
+                        case token_type::value_WITH_SEPARATOR:
                         case token_type::end_of_input:
                         case token_type::literal_or_value:
                         default: // the last token was unexpected
@@ -11288,7 +11288,7 @@ namespace nlohmann
                     if (states.back())  // array
                     {
                         // comma -> next value
-                        if (get_token() == token_type::value_separator)
+                        if (get_token() == token_type::value_WITH_SEPARATOR)
                         {
                             // parse a new value
                             get_token();
@@ -11321,7 +11321,7 @@ namespace nlohmann
                     // states.back() is false -> object
 
                     // comma -> next value
-                    if (get_token() == token_type::value_separator)
+                    if (get_token() == token_type::value_WITH_SEPARATOR)
                     {
                         // parse key
                         if (JSON_HEDLEY_UNLIKELY(get_token() != token_type::value_string))
@@ -11337,11 +11337,11 @@ namespace nlohmann
                         }
 
                         // parse separator (:)
-                        if (JSON_HEDLEY_UNLIKELY(get_token() != token_type::name_separator))
+                        if (JSON_HEDLEY_UNLIKELY(get_token() != token_type::name_WITH_SEPARATOR))
                         {
                             return sax->parse_error(m_lexer.get_position(),
                                 m_lexer.get_token_string(),
-                                parse_error::create(101, m_lexer.get_position(), exception_message(token_type::name_separator, "object separator"), BasicJsonType()));
+                                parse_error::create(101, m_lexer.get_position(), exception_message(token_type::name_WITH_SEPARATOR, "object separator"), BasicJsonType()));
                         }
 
                         // parse values
