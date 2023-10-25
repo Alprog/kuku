@@ -21,36 +21,30 @@ struct instruction : base_instruction
 	}
 };
 
-#define EMPTY (,)
+#define EMPTY
 #define FIRST(first, second) first
 #define SECOND(first, second) second
-#define INITIALIZATION(x) SECOND x { SECOND x }
-#define ARGUMENT_META(x) instruction_arg_meta<FIRST x>::get_instance()
 #define BOTH(x) FIRST x SECOND x
+#define DECLARARION(x) FIRST x SECOND x;
+#define INITIALIZATION(x) , SECOND x { SECOND x }
+#define ARGUMENT_META(x) instruction_arg_meta<FIRST x>::get_instance()
 #define SEMICOLON ;
 
-#define Ins(NAME, ...) \
+#define Ins_X(N, NAME, ...) \
 	using instruction_##NAME = instruction<instruction_type::NAME>; \
 	template<> \
 	struct instruction<instruction_type::NAME> : base_instruction \
 	{ \
-		FOR_EACH_SEPARATOR(BOTH, SEMICOLON, __VA_ARGS__); \
-		instruction( FOR_EACH(BOTH, __VA_ARGS__) ) \
+		FOR_SEPARATOR_(N, DECLARARION, EMPTY, __VA_ARGS__) \
+		instruction( FOR_(N, BOTH, __VA_ARGS__) ) \
 			: base_instruction{ instruction_type::NAME } \
-			, FOR_EACH( INITIALIZATION, __VA_ARGS__) \
+			FOR_SEPARATOR_(N, INITIALIZATION, EMPTY, __VA_ARGS__) \
 		{ \
 		} \
-		static instruction_info create_info() { return { instruction_type::NAME, #NAME, { FOR_EACH( ARGUMENT_META, __VA_ARGS__) } }; } \
+		static instruction_info create_info() { return { instruction_type::NAME, #NAME, { FOR_(N, ARGUMENT_META, __VA_ARGS__) } }; } \
 		inline void execute(routine& routine)
 
-#define Ins0(NAME) \
-	using instruction_##NAME = instruction<instruction_type::NAME>; \
-	template<> \
-	struct instruction<instruction_type::NAME> : base_instruction \
-	{ \
-		instruction() : base_instruction{ instruction_type::NAME } {} \
-		static instruction_info create_info() { return { instruction_type::NAME, #NAME }; } \
-		inline void execute(routine& routine)
+#define Ins(...) EXPAND(Ins_X(MINUS(VA_LENGTH(__VA_ARGS__)), __VA_ARGS__))
 
 #pragma pack(1)
 
@@ -63,67 +57,67 @@ Ins(PUSH_INT, INT(value))
 	routine.stack.push_integer(value);
 }};
 
-Ins0(INT_ADD)
+Ins(INT_ADD)
 {
 	routine.stack.head[-2].integer += routine.stack.head[-1].integer;
 	routine.stack.head--;
 }};
 
-Ins0(INT_SUB)
+Ins(INT_SUB)
 {
 	routine.stack.head[-2].integer -= routine.stack.head[-1].integer;
 	routine.stack.head--;
 }};
 
-Ins0(INT_MULTIPLY)
+Ins(INT_MULTIPLY)
 {
 	routine.stack.head[-2].integer *= routine.stack.head[-1].integer;
 	routine.stack.head--;
 }};
 
-Ins0(INT_DIVIDE)
+Ins(INT_DIVIDE)
 {
 	routine.stack.head[-2].integer /= routine.stack.head[-1].integer;
 	routine.stack.head--;
 }};
 
-Ins0(INT_POWER)
+Ins(INT_POWER)
 {
 	routine.stack.head[-2].integer = static_cast<integer>(std::pow(routine.stack.head[-2].integer, routine.stack.head[-1].integer));
 	routine.stack.head--;
 }};
 
-Ins0(EQUAL)
+Ins(EQUAL)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer == routine.stack.head[-1].integer;
 	routine.stack.head -= 2;
 }};
 
-Ins0(NOT_EQUAL)
+Ins(NOT_EQUAL)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer != routine.stack.head[-1].integer;
 	routine.stack.head -= 2;
 }};
 
-Ins0(LESS)
+Ins(LESS)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer < routine.stack.head[-1].integer;
 	routine.stack.head -= 2;
 }};
 
-Ins0(GREATER)
+Ins(GREATER)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer > routine.stack.head[-1].integer;
 	routine.stack.head -= 2;
 }};
 
-Ins0(LESS_OR_EQUAL)
+Ins(LESS_OR_EQUAL)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer <= routine.stack.head[-1].integer;
 	routine.stack.head -= 2;
 }};
 
-Ins0(GREATER_OR_EQUAL)
+Ins(GREATER_OR_EQUAL)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer >= routine.stack.head[-1].integer;
 	routine.stack.head -= 2;
@@ -146,7 +140,7 @@ Ins(JUMP_ON_FALSE, INT(jump_offset))
 	}
 }};
 
-Ins0(PRINT)
+Ins(PRINT)
 {
 	std::cout << routine.stack.head[-1].integer << std::endl;
 	routine.stack.head--;
@@ -189,7 +183,7 @@ Ins(POP, BYTE(count))
 	routine.stack.head -= count;
 }};
 
-Ins0(END)
+Ins(END)
 {
 	routine.stop();
 }};
