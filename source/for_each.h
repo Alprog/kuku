@@ -1,5 +1,5 @@
 
-#define CONCATENATE(x,y) x##y
+#define CONCATENATE(x,y,z) x##y##z
 #define EXPAND(x) x
 
 #define VA_LENGTH_(_16, _15, _14, _13, _12, _11, _10, _09, _08, _07, _06, _05, _04, _03, _02, _01, N, ...) N
@@ -47,22 +47,22 @@
 #define FOR_SEPARATOR_(N, Macro, Separator, ...) EXPAND(CONCATENATE(FOR_SEPARATOR_, N)(Macro, Separator, __VA_ARGS__))
 #define FOR_EACH_SEPARATOR(Macro, Separator, ...) FOR_SEPARATOR_(VA_LENGTH(__VA_ARGS__), Macro, Separator, __VA_ARGS__)
 
-#define MINUS_01 00
-#define MINUS_02 01
-#define MINUS_03 02
-#define MINUS_04 03
-#define MINUS_05 04
-#define MINUS_06 05
-#define MINUS_07 06
-#define MINUS_08 07
-#define MINUS_09 08
-#define MINUS_10 09
-#define MINUS_11 10
-#define MINUS_12 11
-#define MINUS_13 12
-#define MINUS_14 13
-#define MINUS_15 14
-#define MINUS_16 15
+#define VALUE_01_MINUS_01 00
+#define VALUE_02_MINUS_01 01
+#define VALUE_03_MINUS_01 02
+#define VALUE_04_MINUS_01 03
+#define VALUE_05_MINUS_01 04
+#define VALUE_06_MINUS_01 05
+#define VALUE_07_MINUS_01 06
+#define VALUE_08_MINUS_01 07
+#define VALUE_09_MINUS_01 08
+#define VALUE_10_MINUS_01 09
+#define VALUE_11_MINUS_01 10
+#define VALUE_12_MINUS_01 11
+#define VALUE_13_MINUS_01 12
+#define VALUE_14_MINUS_01 13
+#define VALUE_15_MINUS_01 14
+#define VALUE_16_MINUS_01 15
 
-#define MINUS(N) EXPAND(CONCATENATE(MINUS_, N))
+#define MINUS(N) EXPAND(CONCATENATE(VALUE_, N, _MINUS_01))
 

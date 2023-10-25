@@ -30,21 +30,21 @@ struct instruction : base_instruction
 #define ARGUMENT_META(x) instruction_arg_meta<FIRST x>::get_instance()
 #define SEMICOLON ;
 
-#define Ins_X(N, NAME, ...) \
+#define Ins_X(ARG_COUNT, NAME, STACK_CHANGE, ...) \
 	using instruction_##NAME = instruction<instruction_type::NAME>; \
 	template<> \
 	struct instruction<instruction_type::NAME> : base_instruction \
 	{ \
-		FOR_SEPARATOR_(N, DECLARARION, EMPTY, __VA_ARGS__) \
-		instruction( FOR_(N, BOTH, __VA_ARGS__) ) \
+		FOR_SEPARATOR_(ARG_COUNT, DECLARARION, EMPTY, __VA_ARGS__) \
+		instruction( FOR_(ARG_COUNT, BOTH, __VA_ARGS__) ) \
 			: base_instruction{ instruction_type::NAME } \
-			FOR_SEPARATOR_(N, INITIALIZATION, EMPTY, __VA_ARGS__) \
+			FOR_SEPARATOR_(ARG_COUNT, INITIALIZATION, EMPTY, __VA_ARGS__) \
 		{ \
 		} \
-		static instruction_info create_info() { return { instruction_type::NAME, #NAME, { FOR_(N, ARGUMENT_META, __VA_ARGS__) } }; } \
+		static instruction_info create_info() { return { instruction_type::NAME, #NAME, { FOR_(ARG_COUNT, ARGUMENT_META, __VA_ARGS__) } }; } \
 		inline void execute(routine& routine)
 
-#define Ins(...) EXPAND(Ins_X(MINUS(VA_LENGTH(__VA_ARGS__)), __VA_ARGS__))
+#define Ins(...) EXPAND(Ins_X(MINUS(MINUS(VA_LENGTH(__VA_ARGS__))), __VA_ARGS__))
 
 #pragma pack(1)
 
@@ -52,83 +52,83 @@ struct instruction : base_instruction
 #define BYTE(name) (byte, name) 
 #define CLASS_INDEX(name) (class_index, name) 
 
-Ins(PUSH_INT, INT(value))
+Ins(PUSH_INT, +1, INT(value))
 {
 	routine.stack.push_integer(value);
 }};
 
-Ins(INT_ADD)
+Ins(INT_ADD, -1)
 {
 	routine.stack.head[-2].integer += routine.stack.head[-1].integer;
 	routine.stack.head--;
 }};
 
-Ins(INT_SUB)
+Ins(INT_SUB, -1)
 {
 	routine.stack.head[-2].integer -= routine.stack.head[-1].integer;
 	routine.stack.head--;
 }};
 
-Ins(INT_MULTIPLY)
+Ins(INT_MULTIPLY, -1)
 {
 	routine.stack.head[-2].integer *= routine.stack.head[-1].integer;
 	routine.stack.head--;
 }};
 
-Ins(INT_DIVIDE)
+Ins(INT_DIVIDE, -1)
 {
 	routine.stack.head[-2].integer /= routine.stack.head[-1].integer;
 	routine.stack.head--;
 }};
 
-Ins(INT_POWER)
+Ins(INT_POWER, -1)
 {
 	routine.stack.head[-2].integer = static_cast<integer>(std::pow(routine.stack.head[-2].integer, routine.stack.head[-1].integer));
 	routine.stack.head--;
 }};
 
-Ins(EQUAL)
+Ins(EQUAL, -1)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer == routine.stack.head[-1].integer;
-	routine.stack.head -= 2;
+	routine.stack.head--;
 }};
 
-Ins(NOT_EQUAL)
+Ins(NOT_EQUAL, -1)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer != routine.stack.head[-1].integer;
-	routine.stack.head -= 2;
+	routine.stack.head--;
 }};
 
-Ins(LESS)
+Ins(LESS, -1)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer < routine.stack.head[-1].integer;
-	routine.stack.head -= 2;
+	routine.stack.head--;
 }};
 
-Ins(GREATER)
+Ins(GREATER, -1)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer > routine.stack.head[-1].integer;
-	routine.stack.head -= 2;
+	routine.stack.head--;
 }};
 
-Ins(LESS_OR_EQUAL)
+Ins(LESS_OR_EQUAL, -1)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer <= routine.stack.head[-1].integer;
-	routine.stack.head -= 2;
+	routine.stack.head--;
 }};
 
-Ins(GREATER_OR_EQUAL)
+Ins(GREATER_OR_EQUAL, -1)
 {
 	routine.stack.head[-2].boolean = routine.stack.head[-2].integer >= routine.stack.head[-1].integer;
-	routine.stack.head -= 2;
+	routine.stack.head--;
 }};
 
-Ins(JUMP, INT(jump_offset))
+Ins(JUMP, 0, INT(jump_offset))
 {
 	routine.call_frame.ip += jump_offset;
 }};
 
-Ins(JUMP_ON_FALSE, INT(jump_offset))
+Ins(JUMP_ON_FALSE, 0, INT(jump_offset))
 {
 	if (routine.stack.head[-1].boolean)
 	{
@@ -140,36 +140,36 @@ Ins(JUMP_ON_FALSE, INT(jump_offset))
 	}
 }};
 
-Ins(PRINT)
+Ins(PRINT, -1)
 {
 	std::cout << routine.stack.head[-1].integer << std::endl;
 	routine.stack.head--;
 }};
 
-Ins(SET_LOCAL, BYTE(index))
+Ins(SET_LOCAL, -1, BYTE(index))
 {
 	routine.call_frame.start[index] = *--routine.stack.head;
 }};
 
-Ins(GET_LOCAL, BYTE(index))
+Ins(GET_LOCAL, +1, BYTE(index))
 {
 	routine.stack.push(routine.call_frame.start[index]);
 }};
 
-Ins(CREATE_OBJECT, CLASS_INDEX(index))
+Ins(CREATE_OBJECT, +1, CLASS_INDEX(index))
 {
 	object_index object_index = routine.vm.object_storage.create_object(index);
 	routine.stack.push_object_index(object_index);
 }};
 
-Ins(SET_FIELD, BYTE(offset))
+Ins(SET_FIELD, -1, BYTE(offset))
 {
 	object_index object_index = routine.stack.head[-2].object_index;
 	routine.vm.object_storage.get_object(object_index).data[offset] = routine.stack.head[-1];
 	routine.stack.head--;
 }};
 
-Ins(VIRTUAL_CALL, BYTE(arguments_size), INT(function_index))
+Ins(VIRTUAL_CALL, 0, BYTE(arguments_size), INT(function_index))
 {
 	cell* frame_start = &routine.stack.head[-arguments_size];
 	object_header& self = routine.vm.object_storage.get_object(frame_start->object_index);
@@ -178,12 +178,12 @@ Ins(VIRTUAL_CALL, BYTE(arguments_size), INT(function_index))
 	routine.push_call_frame(function, frame_start);
 }};
 
-Ins(POP, BYTE(count))
+Ins(POP, 0, BYTE(count))
 {
 	routine.stack.head -= count;
 }};
 
-Ins(END)
+Ins(END, 0)
 {
 	routine.stop();
 }};
