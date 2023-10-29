@@ -129,7 +129,7 @@ Ins(JUMP, 0, INT(jump_offset))
 	routine.call_frame.ip += jump_offset;
 }};
 
-Ins(JUMP_ON_FALSE, 0, INT(jump_offset))
+Ins(JUMP_ON_FALSE, -1, INT(jump_offset))
 {
 	if (routine.stack.head[-1].boolean)
 	{
@@ -139,6 +139,7 @@ Ins(JUMP_ON_FALSE, 0, INT(jump_offset))
 	{
 		routine.call_frame.ip += jump_offset;
 	}
+	routine.stack.head--;
 }};
 
 Ins(PRINT, -1)
