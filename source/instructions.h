@@ -11,6 +11,8 @@
 template <instruction_type Type>
 struct instruction : base_instruction
 {
+	static const int stack_change = 0;
+
 	instruction() : base_instruction{ Type } {};
 
 	static instruction_info create_info() { return { Type, "unknown" }; }
@@ -33,13 +35,14 @@ struct instruction : base_instruction
 	template<> \
 	struct instruction<instruction_type::NAME> : base_instruction \
 	{ \
+		static const int stack_change = STACK_CHANGE; \
 		FOR_(ARG_COUNT, DECLARARION, __VA_ARGS__) \
 		instruction( FOR_WITH_COMMA_(ARG_COUNT, BOTH, __VA_ARGS__) ) \
 			: base_instruction{ instruction_type::NAME } \
 			FOR_(ARG_COUNT, INITIALIZATION, __VA_ARGS__) \
 		{ \
 		} \
-		static instruction_info create_info() { return { instruction_type::NAME, #NAME, { FOR_WITH_COMMA_(ARG_COUNT, ARGUMENT_META, __VA_ARGS__) } }; } \
+		static instruction_info create_info() { return { instruction_type::NAME, #NAME, STACK_CHANGE, { FOR_WITH_COMMA_(ARG_COUNT, ARGUMENT_META, __VA_ARGS__) } }; } \
 		inline void execute(routine& routine)
 
 #define Ins(...) EXPAND(Ins_X(VA_LENGTH_MINUS_2(__VA_ARGS__), __VA_ARGS__))
@@ -176,7 +179,7 @@ Ins(VIRTUAL_CALL, 0, BYTE(arguments_size), INT(function_index))
 	routine.push_call_frame(function, frame_start);
 }};
 
-Ins(POP, 0, BYTE(count))
+Ins(POP, -1, BYTE(count))
 {
 	routine.stack.head -= count;
 }};

@@ -50,13 +50,3 @@ symbol* statement_scope::find_symbol(std::u16string name, int requesting_stateme
 
 	return nullptr;
 }
-
-void statement_scope::calculate_stack_offsets()
-{
-	int offset = 0;
-	for (auto symbol : symbols)
-	{
-		symbol->stack_offset = offset;
-		offset += 1;
-	}
-}

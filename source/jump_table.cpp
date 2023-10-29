@@ -11,6 +11,7 @@ inline void read_and_execute_instruction(routine& routine)
 {
 	auto instruction = reinterpret_cast<T*>(routine.call_frame.ip);
 	instruction->execute(routine);
+	//routine.stack.head += T::stack_change;
 	routine.call_frame.ip += sizeof(T);
 }
 

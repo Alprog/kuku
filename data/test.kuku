@@ -1,23 +1,26 @@
 
 if 1 then
-	var a = 3
-	var b = 4
+	if 1 then
+		var a = 3
+		var b = 4
 
-	a = 2 + 3
-	b = 7
-	b = b + a
+		a = 2 + 3
+		b = 7
+		b = b + a
 
-	if b < a then
-		var c = 10
-		c = 77
-	else
-		b = 19
+		if b < a then
+			var c = 10
+			c = 77
+		else
+			var e = 80
+			b = 19
+		end
+
+		a = 2 + 3
+		b = 7
+
+		var d = 99
+
+		b = b + a
 	end
-
-	a = 2 + 3
-	b = 7
-
-	var d = 99
-
-	b = b + a
 end

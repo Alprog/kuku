@@ -14,23 +14,18 @@ compiler::compiler(translation_module& module)
 
 void compiler::compile()
 {
-	module.root_scope.calculate_stack_offsets();
-
 	for (auto& statement : module.statements)
 	{
 		if (!statement->is_valid)
 		{
 			throw statement_error(*statement);
 		}
-
-		auto scoped_statement = dynamic_cast<stmt::scoped_statement_base*>(statement);
-		if (scoped_statement)
-		{
-			scoped_statement->inner_scope.calculate_stack_offsets();
-		}
 	}
 
-	scope_context.push_state();
+	scope_context.locals_size = 0;
+	scope_context.skip_jump_place = 0;
+
+	enter_scope();
 	for (auto& statement : module.statements)
 	{
 		compile(statement);
@@ -225,11 +220,13 @@ void compiler::compile(stmt::else_statement& statement)
 
 	exit_scope();
 
-	scope_context.skip_jump_place = current_function->bytecode.bytes.size();
+	int temp = current_function->bytecode.bytes.size();
 	spawn(instruction_JUMP{ 0 });
 	jump_here(jump_place);
 
 	enter_scope();	
+
+	scope_context.skip_jump_place = temp;
 }
 
 template<>

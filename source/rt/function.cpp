@@ -26,14 +26,17 @@ const rt::localvar_info& rt::function::get_local_info(int instruction_offset, in
 
 void rt::function::print_instructions(bool include_comments)
 {
+	int stack_size = 0;
+
 	byte* ptr = bytecode.get_start_pointer();
 	while (ptr - bytecode.get_start_pointer() < bytecode.bytes.size())
 	{
 		auto info = jump_table::get_info_function[*ptr]();
+		stack_size += info->stack_change;
 
 		int offset = ptr - bytecode.get_start_pointer();
 
-		auto line = std::format("{:3} | {:16} | ", offset, info->to_string(ptr));
+		auto line = std::format("{:3} | {:18} | {:1} | ", offset, info->to_string(ptr), stack_size);
 
 		if (include_comments)
 		{

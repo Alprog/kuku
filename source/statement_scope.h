@@ -24,8 +24,6 @@ public:
 	void define_symbol(symbol* symbol);
 	symbol* find_symbol(std::u16string name, int requesting_statement_sequence_number);
 
-	void calculate_stack_offsets();
-
 	std::vector<symbol*> symbols;
 
 	stmt::statement* statement;
