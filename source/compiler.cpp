@@ -207,33 +207,30 @@ void compiler::compile(stmt::if_statement& statement)
 {
 	compile(statement.condition);
 
-	enter_scope();
-
 	scope_context.skip_jump_place = current_function->bytecode.bytes.size();
 	spawn(instruction_JUMP_ON_FALSE{ 0 });
+
+	enter_scope();
 }
 
 template<>
 void compiler::compile(stmt::else_statement& statement)
 {
-	int jump_place = scope_context.skip_jump_place;
-
 	exit_scope();
-
-	int temp = current_function->bytecode.bytes.size();
+	
+	int tmp = current_function->bytecode.bytes.size();
 	spawn(instruction_JUMP{ 0 });
-	jump_here(jump_place);
+	jump_here(scope_context.skip_jump_place);
 
-	enter_scope();	
+	scope_context.skip_jump_place = tmp;
 
-	scope_context.skip_jump_place = temp;
+	enter_scope();
 }
 
 template<>
 void compiler::compile(stmt::end_statement& statement)
 {	
-	int jump_place = scope_context.skip_jump_place;
 	exit_scope();
-	jump_here(jump_place);
+	jump_here(scope_context.skip_jump_place);
 }
 
