@@ -19,4 +19,6 @@ public:
 		bytes.resize(end + sizeof(T));
 		memcpy(&bytes[end], &value, sizeof(T));
 	}
+
+	void align(int size);
 };

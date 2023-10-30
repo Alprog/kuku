@@ -26,6 +26,26 @@ public:
 	void spawn(instruction<T> instruction)
 	{
 		current_function->bytecode.write(instruction);
+		types.push(instruction.type);
+		//current_function->bytecode.align(8);
+	}
+
+	template<instruction_type T>
+	instruction<T>& peek()
+	{
+		auto& bytes = current_function->bytecode.bytes;
+		auto start = bytes.size() - sizeof(instruction<T>);
+		return *reinterpret_cast<instruction<T>*>(&bytes[start]);
+	}
+
+	template<instruction_type T>
+	instruction<T> pop()
+	{
+		auto& bytes = current_function->bytecode.bytes;
+		auto new_size = bytes.size() - sizeof(instruction<T>);
+		instruction<T> result = *reinterpret_cast<instruction<T>*>(&bytes[new_size]);
+		bytes.resize(new_size);
+		return result;
 	}
 
 	template<typename T>
@@ -35,6 +55,8 @@ public:
 	rt::function* current_function;
 		
 	stackable<scope_context> scope_context;
+
+	std::stack<instruction_type> types;
 
 	translation_module& module;
 	symbol_table symbol_table;

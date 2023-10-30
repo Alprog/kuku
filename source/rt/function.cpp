@@ -20,30 +20,35 @@ const rt::localvar_info& rt::function::get_local_info(int instruction_offset, in
 		}
 	}
 
-	static localvar_info unknown_info { u"unknown" };
-	return unknown_info;
+	static std::vector<localvar_info> temporaries;
+	if (temporaries.size() == 0)
+	{
+		for (int i = 0; i < 100; i++)
+		{
+			auto name = "%" + std::to_string(i);
+			temporaries.push_back( { std::u16string(std::begin(name), std::end(name)) } );
+		}
+	}
+
+	return temporaries[stack_offset];
 }
 
 void rt::function::print_instructions(bool include_comments)
 {
-	int stack_size = 0;
-
 	byte* ptr = bytecode.get_start_pointer();
 	while (ptr - bytecode.get_start_pointer() < bytecode.bytes.size())
 	{
 		auto info = jump_table::get_info_function[*ptr]();
-		stack_size += info->stack_change;
-
 		int offset = ptr - bytecode.get_start_pointer();
 
-		auto line = std::format("{:3} | {:18} | {:1} | ", offset, info->to_string(ptr), stack_size);
+		auto line = std::format("{:3} | {:18} | ", offset, info->to_string(ptr));
 
 		if (include_comments)
 		{
 			auto comment = get_comment(ptr, info->type, offset);
 			if (!comment.empty())
 			{
-				line = std::format("{} | ({})", line, comment);
+				line = std::format("{} {}", line, comment);
 			}
 		}
 
@@ -84,12 +89,27 @@ std::string rt::function::get_comment(byte* ptr, instruction_type type, int offs
 		}
 
 		case instruction_type::SET_LOCAL_REG:
+		{
 			auto a = reinterpret_cast<instruction_SET_LOCAL_REG*>(ptr)->a;
 			auto b = reinterpret_cast<instruction_SET_LOCAL_REG*>(ptr)->b;
 			std::u16string nameA = get_local_info(offset, a).name;
 			std::u16string nameB = get_local_info(offset, b).name;
-			std::u16string line = nameA + u" " + nameB;
+			std::u16string line = nameA + u" = " + nameB;
 			return std::string(std::begin(line), std::end(line));
+		}
+
+		case instruction_type::INT_ADD_REG:
+		case instruction_type::LESS_REG:
+		{
+			auto a = reinterpret_cast<instruction_INT_ADD_REG*>(ptr)->a;
+			auto b = reinterpret_cast<instruction_INT_ADD_REG*>(ptr)->b;
+			auto c = reinterpret_cast<instruction_INT_ADD_REG*>(ptr)->c;
+			std::u16string nameA = get_local_info(offset, a).name;
+			std::u16string nameB = get_local_info(offset, b).name;
+			std::u16string nameC = get_local_info(offset, c).name;
+			std::u16string line = nameA + u" = " + nameB + u" op " + nameC;
+			return std::string(std::begin(line), std::end(line));
+		}
 
 	};
 

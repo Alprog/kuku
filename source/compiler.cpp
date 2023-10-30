@@ -107,24 +107,39 @@ void compiler::compile(ast::symbol_expression& expression)
 template<>
 void compiler::compile(ast::binary_operator_expression& expression)
 {
+	byte a = (byte)scope_context.locals_size;
+	
+	byte b = (byte)scope_context.locals_size;
 	compile(expression.left);
+	if (types.top() == instruction_type::GET_LOCAL)
+	{
+		b = pop<instruction_type::GET_LOCAL>().index;
+		scope_context.locals_size--;
+	}
+
+	byte c = (byte)scope_context.locals_size;
 	compile(expression.right);
+	if (types.top() == instruction_type::GET_LOCAL)
+	{
+		c = pop<instruction_type::GET_LOCAL>().index;
+		scope_context.locals_size--;
+	}
 
 	switch (expression.op.token_type)
 	{
 		case token_type::Plus_operator:
 		{
 			byte size = (byte)scope_context.locals_size;
-			spawn(instruction_INT_ADD_REG{ (byte)(size - 2), (byte)(size - 2), (byte)(size - 1) });
-			scope_context.locals_size--;
+			spawn(instruction_INT_ADD_REG{ a, b, c });
+			scope_context.locals_size = a + 1;
 			break;
 		}
 
 		case token_type::Less_operator:
 		{
 			byte size = (byte)scope_context.locals_size;
-			spawn(instruction_LESS_REG{ (byte)(size - 2), (byte)(size - 2), (byte)(size - 1) });
-			scope_context.locals_size--;
+			spawn(instruction_LESS_REG{ a, b, c });
+			scope_context.locals_size = a + 1;
 			break;
 		}
 
@@ -193,15 +208,25 @@ void compiler::compile(stmt::assign_statement& statement)
 	auto symbol_expression = dynamic_cast<ast::symbol_expression*>(statement.lvalue.get());
 	if (symbol_expression)
 	{
-		auto src_offset = (byte)scope_context.locals_size;
+		auto symbol = symbol_expression->reference.symbol;
+		byte a = symbol->stack_offset;
+
+		auto b = (byte)scope_context.locals_size;
 		compile(statement.rvalue); // spawn src
 
-		auto symbol = symbol_expression->reference.symbol;
-		byte dst_offset = symbol->stack_offset;
-		spawn(instruction_SET_LOCAL_REG{ dst_offset, src_offset });
+		if (types.top() == instruction_type::INT_ADD_REG)
+		{
+			peek<instruction_type::INT_ADD_REG>().a = a;
+		}
+		else
+		{
+			spawn(instruction_SET_LOCAL_REG{ a, b });
+		}
 		scope_context.locals_size--;
 	}
 }
+
+
 
 template<>
 void compiler::compile(stmt::expression_statement& statement)
