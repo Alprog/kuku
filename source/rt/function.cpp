@@ -82,6 +82,15 @@ std::string rt::function::get_comment(byte* ptr, instruction_type type, int offs
 			std::u16string name = get_local_info(offset, index).name;
 			return std::string(std::begin(name), std::end(name));
 		}
+
+		case instruction_type::SET_LOCAL_REG:
+			auto a = reinterpret_cast<instruction_SET_LOCAL_REG*>(ptr)->a;
+			auto b = reinterpret_cast<instruction_SET_LOCAL_REG*>(ptr)->b;
+			std::u16string nameA = get_local_info(offset, a).name;
+			std::u16string nameB = get_local_info(offset, b).name;
+			std::u16string line = nameA + u" " + nameB;
+			return std::string(std::begin(line), std::end(line));
+
 	};
 
 	return "";

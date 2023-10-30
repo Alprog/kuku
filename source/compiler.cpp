@@ -51,7 +51,7 @@ void compiler::exit_scope()
 	byte pop_count = (byte)(old_stack_size - new_stack_size);
 	if (pop_count > 0)
 	{
-		spawn(instruction_POP{ pop_count });
+		//spawn(instruction_POP{ pop_count });
 	}
 	for (auto& local : current_function->locals)
 	{
@@ -79,7 +79,9 @@ void compiler::compile(T& value)
 template<>
 void compiler::compile(ast::integer_literal& literal)
 {
-	spawn(instruction_PUSH_INT{ literal.value });
+	//spawn(instruction_PUSH_INT{ literal.value });
+
+	spawn(instruction_SET_CELL{ (byte)scope_context.locals_size++, literal.value});
 }
 
 template<>
@@ -97,6 +99,7 @@ void compiler::compile(ast::symbol_expression& expression)
 		if (variable != nullptr)
 		{
 			spawn(instruction_GET_LOCAL{ (byte)variable->stack_offset });
+			scope_context.locals_size++;
 		}
 	}
 }
@@ -110,8 +113,20 @@ void compiler::compile(ast::binary_operator_expression& expression)
 	switch (expression.op.token_type)
 	{
 		case token_type::Plus_operator:
-			spawn(instruction_INT_ADD{});
+		{
+			byte size = (byte)scope_context.locals_size;
+			spawn(instruction_INT_ADD_REG{ (byte)(size - 2), (byte)(size - 2), (byte)(size - 1) });
+			scope_context.locals_size--;
 			break;
+		}
+
+		case token_type::Less_operator:
+		{
+			byte size = (byte)scope_context.locals_size;
+			spawn(instruction_LESS_REG{ (byte)(size - 2), (byte)(size - 2), (byte)(size - 1) });
+			scope_context.locals_size--;
+			break;
+		}
 
 		case token_type::Minus_operator:
 			spawn(instruction_INT_SUB{});
@@ -137,10 +152,6 @@ void compiler::compile(ast::binary_operator_expression& expression)
 			spawn(instruction_NOT_EQUAL{});
 			break;
 
-		case token_type::Less_operator:
-			spawn(instruction_LESS{});
-			break;
-
 		case token_type::Greater_operator:
 			spawn(instruction_GREATER{});
 			break;
@@ -161,10 +172,10 @@ void compiler::compile(ast::binary_operator_expression& expression)
 template<>
 void compiler::compile(stmt::variable_declaration_statement& statement)
 {
-	compile(statement.expression);
-
 	auto variable_symbol = statement.get_symbol();
-	variable_symbol->stack_offset = scope_context.locals_size++;
+	variable_symbol->stack_offset = scope_context.locals_size;
+
+	compile(statement.expression);
 
 	rt::localvar_info info;
 	info.name = variable_symbol->name;
@@ -179,14 +190,16 @@ void compiler::compile(stmt::variable_declaration_statement& statement)
 template<>
 void compiler::compile(stmt::assign_statement& statement)
 {
-	compile(statement.rvalue);
-
 	auto symbol_expression = dynamic_cast<ast::symbol_expression*>(statement.lvalue.get());
 	if (symbol_expression)
 	{
+		auto src_offset = (byte)scope_context.locals_size;
+		compile(statement.rvalue); // spawn src
+
 		auto symbol = symbol_expression->reference.symbol;
-		byte local_offset = symbol->stack_offset;
-		spawn(instruction_SET_LOCAL{ local_offset });
+		byte dst_offset = symbol->stack_offset;
+		spawn(instruction_SET_LOCAL_REG{ dst_offset, src_offset });
+		scope_context.locals_size--;
 	}
 }
 
@@ -209,6 +222,7 @@ void compiler::compile(stmt::if_statement& statement)
 
 	scope_context.skip_jump_place = current_function->bytecode.bytes.size();
 	spawn(instruction_JUMP_ON_FALSE{ 0 });
+	scope_context.locals_size--;
 
 	enter_scope();
 }

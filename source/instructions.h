@@ -50,8 +50,30 @@ struct instruction : base_instruction
 #pragma pack(1)
 
 #define INT(name) (integer, name) 
-#define BYTE(name) (byte, name) 
+#define BYTE(name) (byte, name)
 #define CLASS_INDEX(name) (class_index, name) 
+
+Ins(SET_CELL, 0, BYTE(index), INT(value))
+{
+	routine.stack.cells[index].integer = value;
+}};
+
+Ins(INT_ADD_REG, 0, BYTE(a), BYTE(b), BYTE(c))
+{
+	routine.stack.cells[a].integer = routine.stack.cells[b].integer + routine.stack.cells[c].integer;
+}};
+
+Ins(LESS_REG, 0, BYTE(a), BYTE(b), BYTE(c))
+{
+	routine.stack.cells[a].boolean = routine.stack.cells[b].integer < routine.stack.cells[c].integer;
+}};
+
+Ins(SET_LOCAL_REG, 0, BYTE(a), BYTE(b))
+{
+	routine.stack.cells[a] = routine.stack.cells[b];
+}};
+
+//--------------------------------------
 
 Ins(PUSH_INT, +1, INT(value))
 {
