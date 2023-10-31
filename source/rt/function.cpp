@@ -41,7 +41,7 @@ void rt::function::print_instructions(bool include_comments)
 		auto info = jump_table::get_info_function[*ptr]();
 		int offset = ptr - bytecode.get_start_pointer();
 
-		auto line = std::format("{:3} | {:18} | ", offset, info->to_string(ptr));
+		auto line = std::format("{:3} | {:18} |", offset, info->to_string(ptr));
 
 		if (include_comments)
 		{
@@ -63,7 +63,7 @@ void rt::function::print_locals_info()
 
 	for (auto& info : locals)
 	{
-		auto record = std::format("{:<4} {:<6} {:<5} {:<3} ", (int)info.type_index, info.stack_offset, info.start_instruction, info.end_instruction);
+		auto record = std::format("{:<4} {:<6} {:<5} {:<3}", (int)info.type_index, info.stack_offset, info.start_instruction, info.end_instruction);
 		console::write(record);
 		console::write_line(info.name);
 	}
