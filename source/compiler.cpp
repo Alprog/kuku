@@ -111,17 +111,17 @@ void compiler::compile(ast::binary_operator_expression& expression)
 	
 	byte b = (byte)scope_context.locals_size;
 	compile(expression.left);
-	if (types.top() == instruction_type::GET_LOCAL)
+	if (peek().op_code == instruction_type::GET_LOCAL)
 	{
-		b = pop<instruction_type::GET_LOCAL>().index;
+		b = pop().A;
 		scope_context.locals_size--;
 	}
 
 	byte c = (byte)scope_context.locals_size;
 	compile(expression.right);
-	if (types.top() == instruction_type::GET_LOCAL)
+	if (peek().op_code == instruction_type::GET_LOCAL)
 	{
-		c = pop<instruction_type::GET_LOCAL>().index;
+		c = pop().A;
 		scope_context.locals_size--;
 	}
 

@@ -4,210 +4,158 @@
 #include "base_instruction.h"
 #include "routine.h"
 #include <iostream>
-#include "preprocessor/for_each.h"
 #include "instruction_info.h"
 #include "virtual_machine.h"
+#include "instruction_flags.h"
+#include "preprocessor/common.h"
 
-template <instruction_type Type>
-struct instruction : base_instruction
+#define ARG_A (uint8_t, A)
+#define ARG_B (uint8_t, B)
+#define ARG_C (uint8_t, C)
+#define ARG_Bx (uint16_t, Bx)
+#define ARG_sBx (int16_t, sBx)
+
+#define ARGS_NONE
+#define ARGS_A ARG_A
+#define ARGS_AB ARG_A, ARG_B
+#define ARGS_ABx ARG_A, ARG_Bx
+#define ARGS_AsBx ARG_A, ARG_sBx
+#define ARGS_ABC ARG_A, ARG_B, ARG_C
+
+
+
+template<instruction_type Type>
+instruction::flags instruction_flags = instruction::flags::ARGS_NONE;
+
+template<instruction_type Type>
+inline void execute(base_instruction& i, routine& routine)
 {
-	static const int stack_change = 0;
+	throw std::exception("not implemented");
+}
 
-	instruction() : base_instruction{ Type } {};
+#define Ins(OP_CODE, FLAGS) \
+template<> instruction::flags instruction_flags<instruction_type::OP_CODE> = instruction::flags::ARGS_##FLAGS; \
+template<> inline void execute<instruction_type::OP_CODE>(base_instruction& i, routine& routine) \
 
-	static instruction_info create_info() { return { Type, "unknown" }; }
-	
-	void execute(routine& routine)
-	{
-		throw std::exception("not implemented");
-	}
+//--------------------------------------------------------------------------------------------
+
+template<>
+inline void execute<instruction_type::SET_CELL>(base_instruction& i, routine& routine)
+{
+	routine.stack.cells[i.A].integer = i.sBx;
 };
 
-#define FIRST(first, second) first
-#define SECOND(first, second) second
-#define BOTH(x) FIRST x SECOND x
-#define DECLARARION(x) FIRST x SECOND x;
-#define INITIALIZATION(x) , SECOND x { SECOND x }
-#define ARGUMENT_META(x) instruction_arg_meta<FIRST x>::get_instance()
-
-#define Ins_X(ARG_COUNT, NAME, STACK_CHANGE, ...) \
-	using instruction_##NAME = instruction<instruction_type::NAME>; \
-	template<> \
-	struct instruction<instruction_type::NAME> : base_instruction \
-	{ \
-		static const int stack_change = STACK_CHANGE; \
-		FOR_(ARG_COUNT, DECLARARION, __VA_ARGS__) \
-		instruction( FOR_WITH_COMMA_(ARG_COUNT, BOTH, __VA_ARGS__) ) \
-			: base_instruction{ instruction_type::NAME } \
-			FOR_(ARG_COUNT, INITIALIZATION, __VA_ARGS__) \
-		{ \
-		} \
-		static instruction_info create_info() { return { instruction_type::NAME, #NAME, STACK_CHANGE, { FOR_WITH_COMMA_(ARG_COUNT, ARGUMENT_META, __VA_ARGS__) } }; } \
-		inline void execute(routine& routine)
-
-#define Ins(...) EXPAND(Ins_X(VA_LENGTH_MINUS_2(__VA_ARGS__), __VA_ARGS__))
-
-#pragma pack(1)
-
-#define INT(name) (integer, name) 
-#define BYTE(name) (byte, name)
-#define CLASS_INDEX(name) (class_index, name) 
-
-Ins(SET_CELL, 0, BYTE(index), INT(value))
+Ins(INT_ADD_REG, ABC)
 {
-	routine.stack.cells[index].integer = value;
-}};
+	routine.stack.cells[i.A].integer = routine.stack.cells[i.B].integer + routine.stack.cells[i.C].integer;
+};
 
-Ins(INT_ADD_REG, 0, BYTE(a), BYTE(b), BYTE(c))
+Ins(LESS_REG, ABC)
 {
-	routine.stack.cells[a].integer = routine.stack.cells[b].integer + routine.stack.cells[c].integer;
-}};
+	routine.stack.cells[i.A].boolean = routine.stack.cells[i.B].integer < routine.stack.cells[i.C].integer;
+};
 
-Ins(LESS_REG, 0, BYTE(a), BYTE(b), BYTE(c))
+Ins(SET_LOCAL_REG, AB)
 {
-	routine.stack.cells[a].boolean = routine.stack.cells[b].integer < routine.stack.cells[c].integer;
-}};
-
-Ins(SET_LOCAL_REG, 0, BYTE(a), BYTE(b))
-{
-	routine.stack.cells[a] = routine.stack.cells[b];
-}};
+	routine.stack.cells[i.A] = routine.stack.cells[i.B];
+};
 
 //--------------------------------------
 
-Ins(PUSH_INT, +1, INT(value))
+Ins(INT_ADD, ABC, "R(A) = R(B) + R(C)")
 {
-	routine.stack.push_integer(value);
-}};
+	routine.stack.cells[i.A].integer = routine.stack.cells[i.B].integer + routine.stack.cells[i.C].integer;
+};
 
-Ins(INT_ADD, -1)
+Ins(INT_SUB, ABC, "R(A) = R(B) - R(C)")
 {
-	routine.stack.head[-2].integer += routine.stack.head[-1].integer;
-	routine.stack.head--;
-}};
+	routine.stack.cells[i.A].integer = routine.stack.cells[i.B].integer - routine.stack.cells[i.C].integer;
+};
 
-Ins(INT_SUB, -1)
+Ins(INT_MULTIPLY, ABC, "R(A) = R(B) * R(C)")
 {
-	routine.stack.head[-2].integer -= routine.stack.head[-1].integer;
-	routine.stack.head--;
-}};
+	routine.stack.cells[i.A].integer = routine.stack.cells[i.B].integer * routine.stack.cells[i.C].integer;
+};
 
-Ins(INT_MULTIPLY, -1)
+Ins(INT_DIVIDE, ABC, "R(A) = R(B) / R(C)")
 {
-	routine.stack.head[-2].integer *= routine.stack.head[-1].integer;
-	routine.stack.head--;
-}};
+	routine.stack.cells[i.A].integer = routine.stack.cells[i.B].integer / routine.stack.cells[i.C].integer;
+};
 
-Ins(INT_DIVIDE, -1)
+Ins(INT_POWER, ABC, "R(A) = R(B) ^ R(C)")
 {
-	routine.stack.head[-2].integer /= routine.stack.head[-1].integer;
-	routine.stack.head--;
-}};
+	routine.stack.head[i.A].integer = static_cast<integer>(std::pow(routine.stack.head[i.B].integer, routine.stack.head[i.C].integer));
+};
 
-Ins(INT_POWER, -1)
+Ins(EQUAL, ABC, "R(A) = R(B) == R(C)")
 {
-	routine.stack.head[-2].integer = static_cast<integer>(std::pow(routine.stack.head[-2].integer, routine.stack.head[-1].integer));
-	routine.stack.head--;
-}};
+	routine.stack.cells[i.A].boolean = routine.stack.cells[i.B].integer == routine.stack.cells[i.C].integer;
+};
 
-Ins(EQUAL, -1)
+Ins(NOT_EQUAL, ABC, "R(A) = R(B) != R(C)")
 {
-	routine.stack.head[-2].boolean = routine.stack.head[-2].integer == routine.stack.head[-1].integer;
-	routine.stack.head--;
-}};
+	routine.stack.cells[i.A].boolean = routine.stack.cells[i.B].integer != routine.stack.cells[i.C].integer;
+};
 
-Ins(NOT_EQUAL, -1)
+Ins(LESS, ABC, "R(A) = R(B) < R(C)")
 {
-	routine.stack.head[-2].boolean = routine.stack.head[-2].integer != routine.stack.head[-1].integer;
-	routine.stack.head--;
-}};
+	routine.stack.cells[i.A].boolean = routine.stack.cells[i.B].integer < routine.stack.cells[i.C].integer;
+};
 
-Ins(LESS, -1)
+Ins(GREATER, ABC, "R(A) = R(B) > R(C)")
 {
-	routine.stack.head[-2].boolean = routine.stack.head[-2].integer < routine.stack.head[-1].integer;
-	routine.stack.head--;
-}};
+	routine.stack.cells[i.A].boolean = routine.stack.cells[i.B].integer > routine.stack.cells[i.C].integer;
+};
 
-Ins(GREATER, -1)
+Ins(LESS_OR_EQUAL, ABC, "R(A) = R(B) <= R(C)")
 {
-	routine.stack.head[-2].boolean = routine.stack.head[-2].integer > routine.stack.head[-1].integer;
-	routine.stack.head--;
-}};
+	routine.stack.cells[i.A].boolean = routine.stack.cells[i.B].integer <= routine.stack.cells[i.C].integer;
+};
 
-Ins(LESS_OR_EQUAL, -1)
+Ins(GREATER_OR_EQUAL, ABC, "R(A) = R(B) >= R(C)")
 {
-	routine.stack.head[-2].boolean = routine.stack.head[-2].integer <= routine.stack.head[-1].integer;
-	routine.stack.head--;
-}};
+	routine.stack.cells[i.A].boolean = routine.stack.cells[i.B].integer >= routine.stack.cells[i.C].integer;
+};
 
-Ins(GREATER_OR_EQUAL, -1)
+Ins(JUMP, A, "goto JMP(A)")
 {
-	routine.stack.head[-2].boolean = routine.stack.head[-2].integer >= routine.stack.head[-1].integer;
-	routine.stack.head--;
-}};
+	routine.call_frame.ip += i.A;
+};
 
-Ins(JUMP, 0, INT(jump_offset))
+Ins(JUMP_ON_FALSE, AsBx, "if !R(A) then goto JMP(B)")
 {
-	routine.call_frame.ip += jump_offset;
-}};
-
-Ins(JUMP_ON_FALSE, -1, INT(jump_offset))
-{
-	if (routine.stack.head[-1].boolean)
+	if (!routine.stack.cells[i.A].boolean)
 	{
-		routine.call_frame.ip += sizeof(instruction_JUMP_ON_FALSE);
+		routine.call_frame.ip += i.sBx;
 	}
-	else
-	{
-		routine.call_frame.ip += jump_offset;
-	}
-	routine.stack.head--;
-}};
+};
 
-Ins(PRINT, -1)
+Ins(PRINT, A, "print R(A)")
 {
-	std::cout << routine.stack.head[-1].integer << std::endl;
-	routine.stack.head--;
-}};
+	std::cout << routine.stack.cells[i.A].integer << std::endl;
+};
 
-Ins(SET_LOCAL, -1, BYTE(index))
+Ins(CREATE_OBJECT, ABx, "R(A) = new CLS(Bx)")
 {
-	routine.call_frame.start[index] = *--routine.stack.head;
-}};
+	routine.stack.cells[i.A].object_index = routine.vm.object_storage.create_object(i.Bx);
+};
 
-Ins(GET_LOCAL, +1, BYTE(index))
+Ins(SET_FIELD, ABC, "R(A).FLD(B) = R(C)")
 {
-	routine.stack.push(routine.call_frame.start[index]);
-}};
+	object_index object_index = routine.stack.cells[i.A].object_index;
+	routine.vm.object_storage.get_object(object_index).data[i.B] = routine.stack.cells[i.C];
+};
 
-Ins(CREATE_OBJECT, +1, CLASS_INDEX(index))
+Ins(VIRTUAL_CALL, AB, "call FNC(B) with INT(A) args")
 {
-	object_index object_index = routine.vm.object_storage.create_object(index);
-	routine.stack.push_object_index(object_index);
-}};
-
-Ins(SET_FIELD, -1, BYTE(offset))
-{
-	object_index object_index = routine.stack.head[-2].object_index;
-	routine.vm.object_storage.get_object(object_index).data[offset] = routine.stack.head[-1];
-	routine.stack.head--;
-}};
-
-Ins(VIRTUAL_CALL, 0, BYTE(arguments_size), INT(function_index))
-{
-	cell* frame_start = &routine.stack.head[-arguments_size];
+	cell* frame_start = &routine.stack.cells[-i.A];
 	object_header& self = routine.vm.object_storage.get_object(frame_start->object_index);
 	rt::user_class& self_class = routine.vm.type_registry.classes[self.class_index];
-	rt::function& function = self_class.vtable[function_index];
+	rt::function& function = self_class.vtable[i.B];
 	routine.push_call_frame(function, frame_start);
-}};
+};
 
-Ins(POP, -1, BYTE(count))
-{
-	routine.stack.head -= count;
-}};
-
-Ins(END, 0)
+Ins(END, NONE, "end")
 {
 	routine.stop();
-}};
+};

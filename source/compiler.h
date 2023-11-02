@@ -22,29 +22,21 @@ public:
 
 	void jump_here(int jump_place);
 
-	template<instruction_type T>
-	void spawn(instruction<T> instruction)
+	void spawn(base_instruction instruction)
 	{
-		current_function->bytecode.write(instruction);
-		types.push(instruction.type);
-		//current_function->bytecode.align(8);
+		current_function->bytecode.instructions.push_back(instruction);
 	}
 
-	template<instruction_type T>
-	instruction<T>& peek()
+	base_instruction& peek()
 	{
-		auto& bytes = current_function->bytecode.bytes;
-		auto start = bytes.size() - sizeof(instruction<T>);
-		return *reinterpret_cast<instruction<T>*>(&bytes[start]);
+		auto& instructions = current_function->bytecode.instructions;
+		return instructions[instructions.size() - 1];
 	}
 
-	template<instruction_type T>
-	instruction<T> pop()
+	base_instruction pop()
 	{
-		auto& bytes = current_function->bytecode.bytes;
-		auto new_size = bytes.size() - sizeof(instruction<T>);
-		instruction<T> result = *reinterpret_cast<instruction<T>*>(&bytes[new_size]);
-		bytes.resize(new_size);
+		base_instruction result = peek();
+		current_function->bytecode.instructions.pop_back();
 		return result;
 	}
 
@@ -55,8 +47,6 @@ public:
 	rt::function* current_function;
 		
 	stackable<scope_context> scope_context;
-
-	std::stack<instruction_type> types;
 
 	translation_module& module;
 	symbol_table symbol_table;

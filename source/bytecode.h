@@ -2,23 +2,14 @@
 #pragma once
 
 #include "types.h"
-#include <vector>
+#include <stack>
+#include "base_instruction.h"
 
 class bytecode
 {
 public:
-	std::vector<byte> bytes;
+	std::vector<base_instruction> instructions;
 
-	byte* get_start_pointer();
-	byte* get_end_pointer();
-	
-	template<typename T>
-	void write(T value)
-	{
-		int end = bytes.size();
-		bytes.resize(end + sizeof(T));
-		memcpy(&bytes[end], &value, sizeof(T));
-	}
-
-	void align(int size);
+	base_instruction* get_start_pointer();
+	base_instruction* get_end_pointer();
 };

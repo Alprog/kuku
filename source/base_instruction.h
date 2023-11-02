@@ -6,24 +6,37 @@
 #include "routine.h"
 #include "jump_table.h"
 
+#pragma pack(1)
+ 
 struct base_instruction
 {
-	instruction_type type;
+	union
+	{
+		uint32_t uint_value;
+		struct
+		{
+			uint8_t I;
+			uint8_t A;
+			uint8_t B;
+			uint8_t C;
+		};
+		struct
+		{
+			instruction_type op_code;
+			uint8_t _;
+			uint16_t Bx;
+		};
+		struct
+		{
+			int16_t _;
+			int16_t sBx;
+		};
+	};
 
 	inline void execute(routine& routine)
 	{
-		jump_table::execute_function[(byte)type](routine);
-	}
-
-	inline size_t getSize()
-	{
-		return jump_table::get_size_function[(byte)type]();
-	}
-
-	inline size_t skip(routine& routine)
-	{
-		routine.call_frame.ip += getSize();
+		jump_table::execute_function[I](*this, routine);
 	}
 };
 
-
+static_assert(sizeof(base_instruction) == 4);
