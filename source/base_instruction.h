@@ -28,15 +28,10 @@ struct base_instruction
 		};
 		struct
 		{
-			int16_t _;
+			int16_t __;
 			int16_t sBx;
 		};
 	};
-
-	inline void execute(routine& routine)
-	{
-		jump_table::execute_function[I](*this, routine);
-	}
 };
 
 static_assert(sizeof(base_instruction) == 4);

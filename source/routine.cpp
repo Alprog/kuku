@@ -24,7 +24,7 @@ void routine::perform_instruction()
 {
 	while (running)
 	{
-		reinterpret_cast<base_instruction*>(call_frame.ip)->execute(*this);
+		jump_table::execute_function[call_frame.ip->I](*this);
 	}
 }
 

@@ -4,6 +4,7 @@
 #include "compiler.h"
 #include "translation_module.h"
 #include "err/statement_error.h"
+#include "bytecode.h"
 
 compiler::compiler(translation_module& module)
 	: module{ module }
@@ -57,15 +58,33 @@ void compiler::exit_scope()
 	{
 		if (local.end_instruction < 0 && local.stack_offset >= new_stack_size)
 		{
-			local.end_instruction = current_function->bytecode.bytes.size();
+			local.end_instruction = current_function->bytecode.instructions.size();
 		}
 	}
 }
 
 void compiler::jump_here(int jump_place)
 {
-	int jump_offset = current_function->bytecode.bytes.size() - jump_place;
-	reinterpret_cast<instruction_JUMP*>(&current_function->bytecode.bytes[jump_place])->jump_offset = jump_offset;
+	int jump_offset = current_function->bytecode.instructions.size() - jump_place;
+	reinterpret_cast<instruction_JUMP*>(&current_function->bytecode.instructions[jump_place])->A = jump_offset;
+}
+
+void compiler::spawn(base_instruction instruction)
+{
+	current_function->bytecode.instructions.push_back(instruction);
+}
+
+base_instruction& compiler::peek()
+{
+	auto& instructions = current_function->bytecode.instructions;
+	return instructions[instructions.size() - 1];
+}
+
+base_instruction compiler::pop()
+{
+	base_instruction result = peek();
+	current_function->bytecode.instructions.pop_back();
+	return result;
 }
 
 //---------------------------------------------------------------------------------------------------------------
@@ -98,7 +117,7 @@ void compiler::compile(ast::symbol_expression& expression)
 		auto variable = dynamic_cast<variable_symbol*>(expression.reference.symbol);
 		if (variable != nullptr)
 		{
-			spawn(instruction_GET_LOCAL{ (byte)variable->stack_offset });
+			spawn(instruction_SET_CELL{ scope_context.locals_size, (byte)variable->stack_offset });
 			scope_context.locals_size++;
 		}
 	}
@@ -129,59 +148,57 @@ void compiler::compile(ast::binary_operator_expression& expression)
 	{
 		case token_type::Plus_operator:
 		{
-			byte size = (byte)scope_context.locals_size;
-			spawn(instruction_INT_ADD_REG{ a, b, c });
-			scope_context.locals_size = a + 1;
+			spawn(instruction_INT_ADD{ a, b, c });
 			break;
 		}
 
 		case token_type::Less_operator:
 		{
-			byte size = (byte)scope_context.locals_size;
-			spawn(instruction_LESS_REG{ a, b, c });
-			scope_context.locals_size = a + 1;
+			spawn(instruction_LESS{ a, b, c });
 			break;
 		}
 
 		case token_type::Minus_operator:
-			spawn(instruction_INT_SUB{});
+			spawn(instruction_INT_SUB{ a, b, c });
 			break;
 
 		case token_type::Multiply_Operator:
-			spawn(instruction_INT_MULTIPLY{});
+			spawn(instruction_INT_MULTIPLY{ a, b, c });
 			break;
 
 		case token_type::Divide_Operator:
-			spawn(instruction_INT_DIVIDE{});
+			spawn(instruction_INT_DIVIDE{ a, b, c });
 			break;
 
 		case token_type::Exponent_operator:
-			spawn(instruction_INT_POWER{});
+			spawn(instruction_INT_POWER{ a, b, c });
 			break;
 
 		case token_type::Equal_operator:
-			spawn(instruction_EQUAL{});
+			spawn(instruction_EQUAL{ a, b, c });
 			break;
 
 		case token_type::Not_equal_operator:
-			spawn(instruction_NOT_EQUAL{});
+			spawn(instruction_NOT_EQUAL{ a, b, c });
 			break;
 
 		case token_type::Greater_operator:
-			spawn(instruction_GREATER{});
+			spawn(instruction_GREATER{ a, b, c });
 			break;
 
 		case token_type::Less_or_equal_operator:
-			spawn(instruction_LESS{});
+			spawn(instruction_LESS{ a, b, c });
 			break;
 
 		case token_type::Greater_or_equal_operator:
-			spawn(instruction_GREATER_OR_EQUAL{});
+			spawn(instruction_GREATER_OR_EQUAL{ a, b, c });
 			break;
 
 		default:
 			throw std::exception("not implemented");
 	}
+
+	scope_context.locals_size = a + 1;
 }
 
 template<>
@@ -196,7 +213,7 @@ void compiler::compile(stmt::variable_declaration_statement& statement)
 	info.name = variable_symbol->name;
 	info.stack_offset = variable_symbol->stack_offset;
 	info.type_index = type_index::Integer;
-	info.start_instruction = current_function->bytecode.bytes.size();
+	info.start_instruction = current_function->bytecode.instructions.size();
 	info.end_instruction = -1;
 
 	current_function->locals.push_back(info);
@@ -214,19 +231,17 @@ void compiler::compile(stmt::assign_statement& statement)
 		auto b = (byte)scope_context.locals_size;
 		compile(statement.rvalue); // spawn src
 
-		if (types.top() == instruction_type::INT_ADD_REG)
+		if (peek().op_code == instruction_type::INT_ADD)
 		{
-			peek<instruction_type::INT_ADD_REG>().a = a;
+			peek().A = a;
 		}
 		else
 		{
-			spawn(instruction_SET_LOCAL_REG{ a, b });
+			spawn(instruction_SET_CELL{ a, b });
 		}
 		scope_context.locals_size--;
 	}
 }
-
-
 
 template<>
 void compiler::compile(stmt::expression_statement& statement)
@@ -245,8 +260,8 @@ void compiler::compile(stmt::if_statement& statement)
 {
 	compile(statement.condition);
 
-	scope_context.skip_jump_place = current_function->bytecode.bytes.size();
-	spawn(instruction_JUMP_ON_FALSE{ 0 });
+	scope_context.skip_jump_place = current_function->bytecode.instructions.size();
+	spawn(instruction_JUMP_ON_FALSE{ 0, scope_context.locals_size });
 	scope_context.locals_size--;
 
 	enter_scope();
@@ -257,7 +272,7 @@ void compiler::compile(stmt::else_statement& statement)
 {
 	exit_scope();
 	
-	int tmp = current_function->bytecode.bytes.size();
+	int tmp = current_function->bytecode.instructions.size();
 	spawn(instruction_JUMP{ 0 });
 	jump_here(scope_context.skip_jump_place);
 

@@ -5,6 +5,8 @@
 #include <stack>
 #include "base_instruction.h"
 
+#pragma pack(1)
+
 class bytecode
 {
 public:

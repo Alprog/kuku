@@ -6,10 +6,6 @@
 enum class instruction_type : byte
 {
 	SET_CELL,
-	INT_ADD_REG,
-	SET_LOCAL_REG,
-	LESS_REG,
-
 	PUSH_INT,
 	INT_ADD,
 	INT_SUB,

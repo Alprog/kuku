@@ -3,9 +3,14 @@
 #include "instructions.h"
 
 execute_function_ptr jump_table::execute_function[INSTRUCTION_COUNT];
-instruction::flags flags[INSTRUCTION_COUNT];
 
 //------------------------------------------------------------------------------
+
+template <typename T>
+inline void read_and_execute_instruction(routine& routine)
+{
+	reinterpret_cast<T*>(routine.call_frame.ip)->execute(routine);
+}	
 
 template <int I>
 void register_instruction()

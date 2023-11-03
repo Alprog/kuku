@@ -2,7 +2,6 @@
 #pragma once
 
 #include "instructions.h"
-#include "bytecode.h"
 #include "symbol_table.h"
 #include "chunk.h"
 #include "stackable.h"
@@ -22,23 +21,10 @@ public:
 
 	void jump_here(int jump_place);
 
-	void spawn(base_instruction instruction)
-	{
-		current_function->bytecode.instructions.push_back(instruction);
-	}
+	void spawn(base_instruction instruction);
 
-	base_instruction& peek()
-	{
-		auto& instructions = current_function->bytecode.instructions;
-		return instructions[instructions.size() - 1];
-	}
-
-	base_instruction pop()
-	{
-		base_instruction result = peek();
-		current_function->bytecode.instructions.pop_back();
-		return result;
-	}
+	base_instruction& peek();
+	base_instruction pop();
 
 	template<typename T>
 	void compile(T& value);

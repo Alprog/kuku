@@ -9,6 +9,6 @@ struct call_frame
 	explicit call_frame(rt::function& function, cell* start);
 	
 	rt::function* function;
-	byte* ip;
+	base_instruction* ip;
 	cell* start;
 };
