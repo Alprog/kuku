@@ -33,7 +33,7 @@
 #define THIRD(first, second, third) third
 #define BOTH(x) FIRST x SECOND x THIRD x
 #define USING(x) using base_instruction::SECOND x;
-#define INITIALIZATION(x) this->SECOND x = { SECOND x };
+#define INITIALIZATION(x) this->SECOND x = SECOND x;
 #define ARGUMENT_META(x) instruction_arg_meta<FIRST x>::get_instance()
 
 template <instruction_type Type>
@@ -50,11 +50,11 @@ struct instruction : private protected_instruction
 	template<> \
 	struct instruction<instruction_type::NAME> : public protected_instruction \
 	{ \
-		instruction_type opcode; \
+		using base_instruction::opcode; \
 		FOR_EACH(USING, __VA_ARGS__) \
 		instruction( FOR_EACH_WITH_COMMA(BOTH, __VA_ARGS__) ) \
-			: opcode { instruction_type::NAME } \
 		{ \
+			opcode = instruction_type::NAME; \
 			FOR_EACH(INITIALIZATION, __VA_ARGS__) \
 		} \
 		instruction(instruction<instruction_type::NAME>&&) = delete; \
@@ -64,7 +64,12 @@ struct instruction : private protected_instruction
 
 //--------------------------------------------------------------------------------------------
 
-Ins(SET_CELL, "R(A) = R(B)", AB)
+Ins(SET_INT, "R(A) = R(sBx)", AsBx)
+{
+	routine.stack.cells[A] = routine.stack.cells[sBx];
+}};
+
+Ins(MOVE, "R(A) = R(B)", AB)
 {
 	routine.stack.cells[A] = routine.stack.cells[B];
 }};

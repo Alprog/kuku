@@ -1,11 +1,9 @@
-
 #pragma once
 
 #include "instruction_type.h"
 #include "types.h"
-#include "routine.h"
-#include "jump_table.h"
 
+#pragma pack(push)
 #pragma pack(1)
  
 struct base_instruction
@@ -22,7 +20,7 @@ struct base_instruction
 		};
 		struct
 		{
-			instruction_type op_code;
+			instruction_type opcode;
 			uint8_t _;
 			uint16_t Bx;
 		};
@@ -33,5 +31,7 @@ struct base_instruction
 		};
 	};
 };
+
+#pragma pack(pop)
 
 static_assert(sizeof(base_instruction) == 4);

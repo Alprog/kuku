@@ -2,6 +2,7 @@
 #include "routine.h"
 #include "base_instruction.h"
 #include "virtual_machine.h"
+#include "jump_table.h"
 
 routine::routine(virtual_machine& vm, rt::function& function)
 	: vm{ vm }

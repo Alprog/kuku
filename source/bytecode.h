@@ -1,11 +1,8 @@
-
 #pragma once
 
 #include "types.h"
-#include <stack>
+#include <vector>
 #include "base_instruction.h"
-
-#pragma pack(1)
 
 class bytecode
 {

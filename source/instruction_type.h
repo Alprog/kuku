@@ -5,8 +5,8 @@
 
 enum class instruction_type : byte
 {
-	SET_CELL,
-	PUSH_INT,
+	SET_INT,
+	MOVE,
 	INT_ADD,
 	INT_SUB,
 	INT_MULTIPLY,
@@ -19,8 +19,6 @@ enum class instruction_type : byte
 	LESS_OR_EQUAL,
 	GREATER_OR_EQUAL,
 	PRINT,
-	SET_LOCAL,
-	GET_LOCAL,
 	CREATE_OBJECT,
 	SET_FIELD,
 	VIRTUAL_CALL,

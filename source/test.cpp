@@ -31,16 +31,16 @@ void test_old()
 	function.name = "test";
 
 	auto& bytecode = function.bytecode;
-	bytecode.write(instruction_PUSH_INT{111});
-	bytecode.write(instruction_PUSH_INT{222});
-	bytecode.write(instruction_INT_ADD{});
-	bytecode.write(instruction_PRINT{});
+	bytecode.instructions.push_back(instruction_SET_INT{ 0, 111 });
+	bytecode.instructions.push_back(instruction_SET_INT{ 1, 222 });
+	bytecode.instructions.push_back(instruction_INT_ADD{ 0, 0, 1 });
+	bytecode.instructions.push_back(instruction_PRINT{ 0 });
 
-	bytecode.write(instruction_PUSH_INT{ 2 });
-	bytecode.write(instruction_PUSH_INT{ 4 });
-	bytecode.write(instruction_INT_POWER{});
-	bytecode.write(instruction_PRINT{});
-	bytecode.write(instruction_END{});
+	bytecode.instructions.push_back(instruction_SET_INT{ 0, 2 });
+	bytecode.instructions.push_back(instruction_SET_INT{ 1, 4 });
+	bytecode.instructions.push_back(instruction_INT_POWER{ 0, 0, 1 });
+	bytecode.instructions.push_back(instruction_PRINT{ 0 });
+	bytecode.instructions.push_back(instruction_END{});
 
 	auto& routine = machine.create_routine(function);
 	routine.run();

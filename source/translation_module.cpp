@@ -101,8 +101,6 @@ chunk translation_module::compile_to_chunk()
     {
         compiler compiler(*this);
         compiler.compile();
-        compiler.spawn(instruction_PRINT{});
-        compiler.spawn(instruction_END{});
         return compiler.chunk;
     }
     catch (error& error)

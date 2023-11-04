@@ -1,7 +1,5 @@
-
 #pragma once
 
-#include "instructions.h"
 #include "symbol_table.h"
 #include "chunk.h"
 #include "stackable.h"

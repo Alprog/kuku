@@ -5,6 +5,7 @@
 #include "translation_module.h"
 #include "err/statement_error.h"
 #include "bytecode.h"
+#include "instructions.h"
 
 compiler::compiler(translation_module& module)
 	: module{ module }
@@ -98,9 +99,7 @@ void compiler::compile(T& value)
 template<>
 void compiler::compile(ast::integer_literal& literal)
 {
-	//spawn(instruction_PUSH_INT{ literal.value });
-
-	spawn(instruction_SET_CELL{ (byte)scope_context.locals_size++, literal.value});
+	spawn(instruction_SET_INT{ (byte)scope_context.locals_size++, (int16_t)literal.value });
 }
 
 template<>
@@ -117,7 +116,7 @@ void compiler::compile(ast::symbol_expression& expression)
 		auto variable = dynamic_cast<variable_symbol*>(expression.reference.symbol);
 		if (variable != nullptr)
 		{
-			spawn(instruction_SET_CELL{ scope_context.locals_size, (byte)variable->stack_offset });
+			spawn(instruction_MOVE{ (byte)scope_context.locals_size, (byte)variable->stack_offset });
 			scope_context.locals_size++;
 		}
 	}
@@ -130,17 +129,17 @@ void compiler::compile(ast::binary_operator_expression& expression)
 	
 	byte b = (byte)scope_context.locals_size;
 	compile(expression.left);
-	if (peek().op_code == instruction_type::GET_LOCAL)
+	if (peek().opcode == instruction_type::MOVE && peek().A == scope_context.locals_size - 1)
 	{
-		b = pop().A;
+		b = pop().B;
 		scope_context.locals_size--;
 	}
 
 	byte c = (byte)scope_context.locals_size;
 	compile(expression.right);
-	if (peek().op_code == instruction_type::GET_LOCAL)
+	if (peek().opcode == instruction_type::MOVE && peek().A == scope_context.locals_size - 1)
 	{
-		c = pop().A;
+		c = pop().B;
 		scope_context.locals_size--;
 	}
 
@@ -231,13 +230,13 @@ void compiler::compile(stmt::assign_statement& statement)
 		auto b = (byte)scope_context.locals_size;
 		compile(statement.rvalue); // spawn src
 
-		if (peek().op_code == instruction_type::INT_ADD)
+		if (peek().opcode == instruction_type::INT_ADD)
 		{
 			peek().A = a;
 		}
 		else
 		{
-			spawn(instruction_SET_CELL{ a, b });
+			spawn(instruction_MOVE{ a, b });
 		}
 		scope_context.locals_size--;
 	}
@@ -261,7 +260,7 @@ void compiler::compile(stmt::if_statement& statement)
 	compile(statement.condition);
 
 	scope_context.skip_jump_place = current_function->bytecode.instructions.size();
-	spawn(instruction_JUMP_ON_FALSE{ 0, scope_context.locals_size });
+	spawn(instruction_JUMP_ON_FALSE{ 0, (byte)scope_context.locals_size });
 	scope_context.locals_size--;
 
 	enter_scope();

@@ -35,25 +35,25 @@ const rt::localvar_info& rt::function::get_local_info(int instruction_offset, in
 
 void rt::function::print_instructions(bool include_comments)
 {
-	byte* ptr = bytecode.get_start_pointer();
-	while (ptr - bytecode.get_start_pointer() < bytecode.bytes.size())
+	base_instruction* ptr = bytecode.get_start_pointer();
+	while (ptr - bytecode.get_start_pointer() < bytecode.instructions.size())
 	{
-		auto info = jump_table::get_info_function[*ptr]();
-		int offset = ptr - bytecode.get_start_pointer();
+		//auto info = jump_table::get_info_function[*ptr]();
+		//int offset = ptr - bytecode.get_start_pointer();
 
-		auto line = std::format("{:3} | {:18} |", offset, info->to_string(ptr));
+		//auto line = std::format("{:3} | {:18} |", offset, info->to_string(ptr));
 
-		if (include_comments)
-		{
-			auto comment = get_comment(ptr, info->type, offset);
-			if (!comment.empty())
-			{
-				line = std::format("{} {}", line, comment);
-			}
-		}
+		//if (include_comments)
+		//{
+		//	auto comment = get_comment(ptr, info->type, offset);
+		//	if (!comment.empty())
+		//	{
+		//		line = std::format("{} {}", line, comment);
+		//	}
+		//}
 
-		console::write_line(line);
-		ptr += jump_table::get_size_function[*ptr]();
+		//console::write_line(line);
+		//ptr += jump_table::get_size_function[*ptr]();
 	}
 }
 
@@ -76,34 +76,26 @@ std::string rt::function::get_comment(byte* ptr, instruction_type type, int offs
 		case instruction_type::JUMP:
 		case instruction_type::JUMP_ON_FALSE:
 		{
-			auto jump_offset = reinterpret_cast<instruction_JUMP*>(ptr)->jump_offset;
+			auto jump_offset = reinterpret_cast<instruction_JUMP*>(ptr)->A;
 			return std::to_string(offset + jump_offset);
 		}
 
-		case instruction_type::GET_LOCAL:
-		case instruction_type::SET_LOCAL:
+		case instruction_type::MOVE:
 		{
-			auto index = reinterpret_cast<instruction_SET_LOCAL*>(ptr)->index;
-			std::u16string name = get_local_info(offset, index).name;
-			return std::string(std::begin(name), std::end(name));
-		}
-
-		case instruction_type::SET_LOCAL_REG:
-		{
-			auto a = reinterpret_cast<instruction_SET_LOCAL_REG*>(ptr)->a;
-			auto b = reinterpret_cast<instruction_SET_LOCAL_REG*>(ptr)->b;
+			auto a = reinterpret_cast<instruction_MOVE*>(ptr)->A;
+			auto b = reinterpret_cast<instruction_MOVE*>(ptr)->B;
 			std::u16string nameA = get_local_info(offset, a).name;
 			std::u16string nameB = get_local_info(offset, b).name;
 			std::u16string line = nameA + u" = " + nameB;
 			return std::string(std::begin(line), std::end(line));
 		}
 
-		case instruction_type::INT_ADD_REG:
-		case instruction_type::LESS_REG:
+		case instruction_type::INT_ADD:
+		case instruction_type::LESS:
 		{
-			auto a = reinterpret_cast<instruction_INT_ADD_REG*>(ptr)->a;
-			auto b = reinterpret_cast<instruction_INT_ADD_REG*>(ptr)->b;
-			auto c = reinterpret_cast<instruction_INT_ADD_REG*>(ptr)->c;
+			auto a = reinterpret_cast<instruction_INT_ADD*>(ptr)->A;
+			auto b = reinterpret_cast<instruction_INT_ADD*>(ptr)->B;
+			auto c = reinterpret_cast<instruction_INT_ADD*>(ptr)->C;
 			std::u16string nameA = get_local_info(offset, a).name;
 			std::u16string nameB = get_local_info(offset, b).name;
 			std::u16string nameC = get_local_info(offset, c).name;
