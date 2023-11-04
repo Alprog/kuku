@@ -32,6 +32,8 @@ void compiler::compile()
 	{
 		compile(statement);
 	}
+
+	spawn(instruction_END{});
 }
 
 void compiler::start_new_function()

@@ -72,7 +72,7 @@ struct instruction<instruction_type::NAME> : public protected_instruction \
 
 Ins(SET_INT, "R(A) = INT(sBx)", AsBx)
 {
-	routine.stack.cells[A] = routine.stack.cells[sBx];
+	routine.stack.cells[A].integer = sBx;
 }};
 
 Ins(MOVE, "R(A) = R(B)", AB)
@@ -102,7 +102,7 @@ Ins(INT_DIVIDE, "R(A) = R(B) / R(C)", ABC)
 
 Ins(INT_POWER, "R(A) = R(B) ^ R(C)", ABC)
 {
-	routine.stack.head[A].integer = static_cast<integer>(std::pow(routine.stack.head[B].integer, routine.stack.head[C].integer));
+	routine.stack.cells[A].integer = static_cast<integer>(std::pow(routine.stack.cells[B].integer, routine.stack.cells[C].integer));
 }};
 
 Ins(EQUAL, "R(A) = R(B) == R(C)", ABC)
@@ -142,10 +142,7 @@ Ins(JUMP, "goto JMP(A)", A)
 
 Ins(JUMP_ON_FALSE, "if !R(B) then goto JMP(A)", AB)
 {
-	if (!routine.stack.cells[B].boolean)
-	{
-		routine.call_frame.ip += A;
-	}
+	routine.call_frame.ip += routine.stack.cells[B].boolean ? 1 : A;
 }};
 
 Ins(PRINT, "print R(A)", A)

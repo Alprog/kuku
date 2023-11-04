@@ -6,7 +6,7 @@
 
 routine::routine(virtual_machine& vm, rt::function& function)
 	: vm{ vm }
-	, call_frame{ function, stack.cells }
+	, call_frame{ function, &stack.cells[0] }
 {
 }
 
@@ -32,7 +32,7 @@ void routine::perform_instruction()
 void routine::push_call_frame(rt::function& function, cell* frame_start)
 {
 	up_frames.push(call_frame);
-	call_frame = ::call_frame{ function, stack.head };
+	call_frame = ::call_frame{ function, &stack.cells[0] };
 }
 
 void routine::pop_call_frame()
