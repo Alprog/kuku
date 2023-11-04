@@ -35,25 +35,14 @@ const rt::localvar_info& rt::function::get_local_info(int instruction_offset, in
 
 void rt::function::print_instructions(bool include_comments)
 {
-	base_instruction* ptr = bytecode.get_start_pointer();
-	while (ptr - bytecode.get_start_pointer() < bytecode.instructions.size())
+	int index = 0;
+	for (auto& instruction : bytecode.instructions)
 	{
-		//auto info = jump_table::get_info_function[*ptr]();
-		//int offset = ptr - bytecode.get_start_pointer();
+		auto info = jump_table::get_info_function[instruction.I]();
 
-		//auto line = std::format("{:3} | {:18} |", offset, info->to_string(ptr));
+		auto line = std::format("{:3} | {:27}| ", index++, info->to_string(instruction));
 
-		//if (include_comments)
-		//{
-		//	auto comment = get_comment(ptr, info->type, offset);
-		//	if (!comment.empty())
-		//	{
-		//		line = std::format("{} {}", line, comment);
-		//	}
-		//}
-
-		//console::write_line(line);
-		//ptr += jump_table::get_size_function[*ptr]();
+		console::write_line(line);
 	}
 }
 

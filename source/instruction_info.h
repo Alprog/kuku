@@ -2,15 +2,16 @@
 #pragma once
 
 #include <vector>
+#include "base_instruction.h"
 #include "instruction_type.h"
-#include "instruction_arg.h"
+#include "instruction_args.h"
 
 struct instruction_info
 {
 	instruction_type type;
 	const char* name;
-	int stack_change;
-	std::vector<instruction_arg_meta_base*> arguments;
+	instruction_args args;
 
-	std::string to_string(byte* ptr);
+	bool has_arg(instruction_args arg) const;
+	std::string to_string(base_instruction& instruction) const;
 };

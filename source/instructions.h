@@ -6,9 +6,10 @@
 #include <iostream>
 #include "instruction_info.h"
 #include "virtual_machine.h"
-#include "instruction_flags.h"
+#include "instruction_args.h"
 #include "preprocessor/for_each.h"
 #include "protected_instruction.h"
+#include "instruction_info.h"
 
 #pragma warning( disable : 4003 )
 
@@ -18,23 +19,20 @@
 #define MACRO_ARG_C (uint8_t, C)
 #define MACRO_ARG_Bx (uint16_t, Bx)
 #define MACRO_ARG_sBx (int16_t, sBx)
-#define MACRO_ARG_NONE (uint8_t, _, = 0)
 
-#define MACRO_ARGS_     MACRO_ARG_NONE
+#define MACRO_ARGS_NONE
 #define MACRO_ARGS_A    MACRO_ARG_A
 #define MACRO_ARGS_AB   MACRO_ARG_A, MACRO_ARG_B
 #define MACRO_ARGS_ABx  MACRO_ARG_A, MACRO_ARG_Bx
 #define MACRO_ARGS_AsBx MACRO_ARG_A, MACRO_ARG_sBx
 #define MACRO_ARGS_ABC  MACRO_ARG_A, MACRO_ARG_B, MACRO_ARG_C
 
-
-#define FIRST(first, second, third) first
-#define SECOND(first, second, third) second
-#define THIRD(first, second, third) third
-#define BOTH(x) FIRST x SECOND x THIRD x
+#define FIRST(first, second) first
+#define SECOND(first, second) second
+#define BOTH(x) FIRST x SECOND x
 #define USING(x) using base_instruction::SECOND x;
 #define INITIALIZATION(x) this->SECOND x = SECOND x;
-#define ARGUMENT_META(x) instruction_arg_meta<FIRST x>::get_instance()
+#define ARGUMENT(x) | CONCATENATE(instruction_args::, SECOND x)
 
 template <instruction_type Type>
 struct instruction : private protected_instruction
@@ -43,22 +41,28 @@ struct instruction : private protected_instruction
 	{
 		throw std::exception("not implemented");
 	}
+
+	static instruction_info create_info()
+	{
+		return { instruction_type::END, "unknown", instruction_args::NONE };
+	}
 };
 
 #define Ins_X(NAME, COMMENT, ...) \
-	using instruction_##NAME = instruction<instruction_type::NAME>; \
-	template<> \
-	struct instruction<instruction_type::NAME> : public protected_instruction \
+using instruction_##NAME = instruction<instruction_type::NAME>; \
+template<> \
+struct instruction<instruction_type::NAME> : public protected_instruction \
+{ \
+	using base_instruction::opcode; \
+	FOR_EACH(USING, __VA_ARGS__) \
+	instruction( FOR_EACH_WITH_COMMA(BOTH, __VA_ARGS__) ) \
 	{ \
-		using base_instruction::opcode; \
-		FOR_EACH(USING, __VA_ARGS__) \
-		instruction( FOR_EACH_WITH_COMMA(BOTH, __VA_ARGS__) ) \
-		{ \
-			opcode = instruction_type::NAME; \
-			FOR_EACH(INITIALIZATION, __VA_ARGS__) \
-		} \
-		instruction(instruction<instruction_type::NAME>&&) = delete; \
-		inline void execute(routine& routine)
+		opcode = instruction_type::NAME; \
+		FOR_EACH(INITIALIZATION, __VA_ARGS__) \
+	} \
+	instruction(instruction<instruction_type::NAME>&&) = delete; \
+	static instruction_info create_info() { return { instruction_type::NAME, #NAME, instruction_args::NONE FOR_EACH(ARGUMENT, __VA_ARGS__) }; } \
+	inline void execute(routine& routine)
 
 #define Ins(NAME, COMMENT, ARGUMENTS) Ins_X(NAME, COMMENT, EXPAND(CONCATENATE(MACRO_ARGS_, ARGUMENTS)))
 
@@ -167,7 +171,7 @@ Ins(VIRTUAL_CALL, "call FNC(B) with INT(A) args", AB)
 	routine.push_call_frame(function, frame_start);
 }};
 
-Ins(END, "end")
+Ins(END, "end", NONE)
 {
 	routine.stop();
 }};

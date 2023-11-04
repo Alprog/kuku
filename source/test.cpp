@@ -92,6 +92,7 @@ void test()
 		chunk chunk = project.get_module("C:/kuku/data/test.kuku")->compile_to_chunk();
 
 		chunk.functions[0].print_instructions(true);
+		console::write_line("");
 		chunk.functions[0].print_locals_info();
 
 		console::read_line();
