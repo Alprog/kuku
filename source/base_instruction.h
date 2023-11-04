@@ -30,6 +30,8 @@ struct base_instruction
 			int16_t sBx;
 		};
 	};
+
+	int get_argument_value(std::string name) const;
 };
 
 #pragma pack(pop)

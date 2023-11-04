@@ -44,8 +44,10 @@ struct instruction : private protected_instruction
 
 	static instruction_info create_info()
 	{
-		return { instruction_type::END, "unknown", instruction_args::NONE };
+		return { instruction_type::END, "unknown", "", instruction_args::NONE};
 	}
+
+	inline static instruction_info info = { instruction_type::END, "unknown", "", instruction_args::NONE };
 };
 
 #define Ins_X(NAME, COMMENT, ...) \
@@ -61,14 +63,14 @@ struct instruction<instruction_type::NAME> : public protected_instruction \
 		FOR_EACH(INITIALIZATION, __VA_ARGS__) \
 	} \
 	instruction(instruction<instruction_type::NAME>&&) = delete; \
-	static instruction_info create_info() { return { instruction_type::NAME, #NAME, instruction_args::NONE FOR_EACH(ARGUMENT, __VA_ARGS__) }; } \
+	static instruction_info create_info() { return { instruction_type::NAME, #NAME, COMMENT, instruction_args::NONE FOR_EACH(ARGUMENT, __VA_ARGS__) }; } \
 	inline void execute(routine& routine)
 
 #define Ins(NAME, COMMENT, ARGUMENTS) Ins_X(NAME, COMMENT, EXPAND(CONCATENATE(MACRO_ARGS_, ARGUMENTS)))
 
 //--------------------------------------------------------------------------------------------
 
-Ins(SET_INT, "R(A) = R(sBx)", AsBx)
+Ins(SET_INT, "R(A) = INT(sBx)", AsBx)
 {
 	routine.stack.cells[A] = routine.stack.cells[sBx];
 }};

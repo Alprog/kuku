@@ -10,7 +10,7 @@ get_info_function_ptr jump_table::get_info_function[INSTRUCTION_COUNT];
 template <typename T>
 inline void execute_instruction(routine& routine)
 {
-	reinterpret_cast<T*>(routine.call_frame.ip)->execute(routine);
+	reinterpret_cast<T*>(++routine.call_frame.ip)->execute(routine);
 }	
 
 template <typename T>

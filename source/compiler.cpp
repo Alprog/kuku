@@ -206,14 +206,14 @@ void compiler::compile(stmt::variable_declaration_statement& statement)
 	auto variable_symbol = statement.get_symbol();
 	variable_symbol->stack_offset = scope_context.locals_size;
 
-	compile(statement.expression);
-
 	rt::localvar_info info;
 	info.name = variable_symbol->name;
 	info.stack_offset = variable_symbol->stack_offset;
 	info.type_index = type_index::Integer;
 	info.start_instruction = current_function->bytecode.instructions.size();
 	info.end_instruction = -1;
+
+	compile(statement.expression);
 
 	current_function->locals.push_back(info);
 }
@@ -230,15 +230,18 @@ void compiler::compile(stmt::assign_statement& statement)
 		auto b = (byte)scope_context.locals_size;
 		compile(statement.rvalue); // spawn src
 
-		if (peek().opcode == instruction_type::INT_ADD)
-		{
-			peek().A = a;
-		}
-		else
-		{
-			spawn(instruction_MOVE{ a, b });
-		}
 		scope_context.locals_size--;
+
+		if (peek().opcode == instruction_type::INT_ADD || peek().opcode == instruction_type::SET_INT)
+		{
+			if (peek().A == scope_context.locals_size)
+			{
+				peek().A = a;
+				return;
+			}
+		}
+		
+		spawn(instruction_MOVE{ a, b });
 	}
 }
 
@@ -260,9 +263,9 @@ void compiler::compile(stmt::if_statement& statement)
 	compile(statement.condition);
 
 	scope_context.skip_jump_place = current_function->bytecode.instructions.size();
-	spawn(instruction_JUMP_ON_FALSE{ 0, (byte)scope_context.locals_size });
 	scope_context.locals_size--;
-
+	spawn(instruction_JUMP_ON_FALSE{ 0, (byte)scope_context.locals_size });
+	
 	enter_scope();
 }
 

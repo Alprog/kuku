@@ -6,6 +6,7 @@
 #include "jump_table.h"
 #include "unicode.h"
 #include "instructions.h"
+#include <functional>
 
 const rt::localvar_info& rt::function::get_local_info(int instruction_offset, int stack_offset) const
 {
@@ -40,7 +41,15 @@ void rt::function::print_instructions(bool include_comments)
 	{
 		auto info = jump_table::get_info_function[instruction.I]();
 
-		auto line = std::format("{:3} | {:27}| ", index++, info->to_string(instruction));
+
+		auto comment = get_comment(index, instruction, info->comment);
+
+		auto line = std::format("{:3} | {:27} | ", index++, info->to_string(instruction));
+
+		if (include_comments)
+		{
+			line += comment;
+		}
 
 		console::write_line(line);
 	}
@@ -52,47 +61,45 @@ void rt::function::print_locals_info()
 
 	for (auto& info : locals)
 	{
-		auto record = std::format("{:<4} {:<6} {:<5} {:<3}", (int)info.type_index, info.stack_offset, info.start_instruction, info.end_instruction);
+		auto record = std::format("{:<4} {:<6} {:<5} {:<4}", (int)info.type_index, info.stack_offset, info.start_instruction, info.end_instruction);
 		console::write(record);
 		console::write_line(info.name);
 	}
 }
 
-std::string rt::function::get_comment(byte* ptr, instruction_type type, int offset)
+bool perform_replacement(std::string& comment, base_instruction& instruction, std::string macro_name, std::function<std::string(int)> macro)
 {
-	switch (type)
+	auto macro_start = comment.find(macro_name + "(");
+	if (macro_start != std::string::npos)
 	{
-		case instruction_type::JUMP:
-		case instruction_type::JUMP_ON_FALSE:
-		{
-			auto jump_offset = reinterpret_cast<instruction_JUMP*>(ptr)->A;
-			return std::to_string(offset + jump_offset);
-		}
+		auto macro_end = comment.find(")", macro_start) + 1;
+		auto arg_start = macro_start + macro_name.size() + 1;
+		auto arg_name = comment.substr(arg_start, macro_end - arg_start - 1);
+		auto arg_value = instruction.get_argument_value(arg_name);
+		comment.replace(macro_start, macro_end - macro_start, macro(arg_value));
+		return true;
+	}
+	return false;
+}
 
-		case instruction_type::MOVE:
-		{
-			auto a = reinterpret_cast<instruction_MOVE*>(ptr)->A;
-			auto b = reinterpret_cast<instruction_MOVE*>(ptr)->B;
-			std::u16string nameA = get_local_info(offset, a).name;
-			std::u16string nameB = get_local_info(offset, b).name;
-			std::u16string line = nameA + u" = " + nameB;
-			return std::string(std::begin(line), std::end(line));
-		}
-
-		case instruction_type::INT_ADD:
-		case instruction_type::LESS:
-		{
-			auto a = reinterpret_cast<instruction_INT_ADD*>(ptr)->A;
-			auto b = reinterpret_cast<instruction_INT_ADD*>(ptr)->B;
-			auto c = reinterpret_cast<instruction_INT_ADD*>(ptr)->C;
-			std::u16string nameA = get_local_info(offset, a).name;
-			std::u16string nameB = get_local_info(offset, b).name;
-			std::u16string nameC = get_local_info(offset, c).name;
-			std::u16string line = nameA + u" = " + nameB + u" op " + nameC;
-			return std::string(std::begin(line), std::end(line));
-		}
-
+std::string rt::function::get_comment(int index, base_instruction& instruction, std::string comment)
+{
+	auto R = [&](int value)
+	{
+		auto name = get_local_info(index, value).name;
+		return std::string(std::begin(name), end(name));
 	};
 
-	return "";
+	auto INT = [&](int value) { return std::to_string(value); };
+
+	auto JMP = [&](int value)
+	{
+		return std::to_string(index + value);
+	};
+
+	while (perform_replacement(comment, instruction, "R", R)) {}
+	while (perform_replacement(comment, instruction, "INT", INT)) {}
+	while (perform_replacement(comment, instruction, "JMP", JMP)) {}
+
+	return comment;
 }

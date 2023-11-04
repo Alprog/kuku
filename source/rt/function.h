@@ -20,6 +20,6 @@ namespace rt
         void print_instructions(bool include_comments);
         void print_locals_info();
 
-        std::string get_comment(byte* ptr, instruction_type type, int offset);
+        std::string get_comment(int index, base_instruction& instruction, std::string comment);
     };
 }

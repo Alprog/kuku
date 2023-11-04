@@ -10,6 +10,7 @@ struct instruction_info
 {
 	instruction_type type;
 	const char* name;
+	std::string comment;
 	instruction_args args;
 
 	bool has_arg(instruction_args arg) const;
