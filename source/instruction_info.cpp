@@ -1,6 +1,6 @@
 
 #include "instruction_info.h"
-#include "instruction_type.h"
+#include "opcode.h"
 #include <sstream>
 #include <iomanip>
 

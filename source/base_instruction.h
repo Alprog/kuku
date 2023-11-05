@@ -1,6 +1,6 @@
 #pragma once
 
-#include "instruction_type.h"
+#include "opcode.h"
 #include "types.h"
 
 #pragma pack(push)
@@ -20,7 +20,7 @@ struct base_instruction
 		};
 		struct
 		{
-			instruction_type opcode;
+			opcode opcode;
 			uint8_t _;
 			uint16_t Bx;
 		};

@@ -101,7 +101,10 @@ void compiler::compile(T& value)
 template<>
 void compiler::compile(ast::integer_literal& literal)
 {
-	spawn(instruction_SET_INT{ (byte)scope_context.locals_size++, (int16_t)literal.value });
+	const int index = current_function->add_constant(literal.value);
+	spawn(instruction_GET_CONSTANT{ (byte)scope_context.locals_size++, (byte)index });
+
+	//spawn(instruction_SET_INT{ (byte)scope_context.locals_size++, (int16_t)literal.value });
 }
 
 template<>
@@ -131,7 +134,7 @@ void compiler::compile(ast::binary_operator_expression& expression)
 	
 	byte b = (byte)scope_context.locals_size;
 	compile(expression.left);
-	if (peek().opcode == instruction_type::MOVE && peek().A == scope_context.locals_size - 1)
+	if (peek().opcode == opcode::MOVE && peek().A == scope_context.locals_size - 1)
 	{
 		b = pop().B;
 		scope_context.locals_size--;
@@ -139,7 +142,7 @@ void compiler::compile(ast::binary_operator_expression& expression)
 
 	byte c = (byte)scope_context.locals_size;
 	compile(expression.right);
-	if (peek().opcode == instruction_type::MOVE && peek().A == scope_context.locals_size - 1)
+	if (peek().opcode == opcode::MOVE && peek().A == scope_context.locals_size - 1)
 	{
 		c = pop().B;
 		scope_context.locals_size--;
@@ -234,7 +237,7 @@ void compiler::compile(stmt::assign_statement& statement)
 
 		scope_context.locals_size--;
 
-		if (peek().opcode == instruction_type::INT_ADD || peek().opcode == instruction_type::SET_INT)
+		if (peek().opcode == opcode::INT_ADD || peek().opcode == opcode::SET_INT)
 		{
 			if (peek().A == scope_context.locals_size)
 			{

@@ -13,7 +13,7 @@
 
 #pragma warning( disable : 4003 )
 
-#define MACRO_ARG_OPCODE (instruction_type, opcode)
+#define MACRO_ARG_OPCODE (opcode, opcode)
 #define MACRO_ARG_A (uint8_t, A)
 #define MACRO_ARG_B (uint8_t, B)
 #define MACRO_ARG_C (uint8_t, C)
@@ -34,7 +34,7 @@
 #define INITIALIZATION(x) this->SECOND x = SECOND x;
 #define ARGUMENT(x) | CONCATENATE(instruction_args::, SECOND x)
 
-template <instruction_type Type>
+template <opcode>
 struct instruction : private protected_instruction
 {
 	inline void execute(routine& routine)
@@ -44,31 +44,36 @@ struct instruction : private protected_instruction
 
 	static instruction_info create_info()
 	{
-		return { instruction_type::END, "unknown", "", instruction_args::NONE};
+		return { opcode::END, "unknown", "", instruction_args::NONE};
 	}
 
-	inline static instruction_info info = { instruction_type::END, "unknown", "", instruction_args::NONE };
+	inline static instruction_info info = { opcode::END, "unknown", "", instruction_args::NONE };
 };
 
 #define Ins_X(NAME, COMMENT, ...) \
-using instruction_##NAME = instruction<instruction_type::NAME>; \
+using instruction_##NAME = instruction<opcode::NAME>; \
 template<> \
-struct instruction<instruction_type::NAME> : public protected_instruction \
+struct instruction<opcode::NAME> : public protected_instruction \
 { \
 	using base_instruction::opcode; \
 	FOR_EACH(USING, __VA_ARGS__) \
 	instruction( FOR_EACH_WITH_COMMA(BOTH, __VA_ARGS__) ) \
 	{ \
-		opcode = instruction_type::NAME; \
+		opcode = opcode::NAME; \
 		FOR_EACH(INITIALIZATION, __VA_ARGS__) \
 	} \
-	instruction(instruction<instruction_type::NAME>&&) = delete; \
-	static instruction_info create_info() { return { instruction_type::NAME, #NAME, COMMENT, instruction_args::NONE FOR_EACH(ARGUMENT, __VA_ARGS__) }; } \
+	instruction(instruction<opcode::NAME>&&) = delete; \
+	static instruction_info create_info() { return { opcode::NAME, #NAME, COMMENT, instruction_args::NONE FOR_EACH(ARGUMENT, __VA_ARGS__) }; } \
 	inline void execute(routine& routine)
 
 #define Ins(NAME, COMMENT, ARGUMENTS) Ins_X(NAME, COMMENT, EXPAND(CONCATENATE(MACRO_ARGS_, ARGUMENTS)))
 
 //--------------------------------------------------------------------------------------------
+
+Ins(GET_CONSTANT, "R(A) = K(B)", AB)
+{
+	routine.stack.cells[A] = routine.call_frame.function->constant_buffer[B];
+}};
 
 Ins(SET_INT, "R(A) = INT(sBx)", AsBx)
 {

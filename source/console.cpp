@@ -44,4 +44,9 @@ namespace console
         _cputws(std::wstring(std::begin(line), std::end(line)).c_str());
         _cputws(L"\n");
     }
+
+    void new_line()
+    {
+        _cputws(L"\n");
+    }
 }

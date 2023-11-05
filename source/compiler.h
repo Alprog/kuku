@@ -29,7 +29,6 @@ public:
 
 	chunk chunk;
 	rt::function* current_function;
-		
 	stackable<scope_context> scope_context;
 
 	translation_module& module;

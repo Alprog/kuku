@@ -2,11 +2,18 @@
 
 #include "types.h"
 #include "instance.h"
-#include "rt/user_class.h"
 #include "kuku/string.h"
+
+namespace rt
+{
+    class user_class;
+}
 
 union cell
 {
+    cell() = default;
+    cell(int integer);
+
     bool boolean;
     byte byte;
     integer integer;
@@ -14,4 +21,7 @@ union cell
     object_index object_index;
     kuku::string* string;
     rt::user_class* class_pointer;
+
+    bool operator==(const cell& other) const;
+    bool operator!=(const cell& other) const;
 };

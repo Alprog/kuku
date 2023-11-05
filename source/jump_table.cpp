@@ -35,7 +35,7 @@ inline instruction_info* get_info()
 template <int I>
 void register_instruction()
 {
-	using instructionT = instruction<(instruction_type)I>;
+	using instructionT = instruction<(opcode)I>;
 	jump_table::execute_function[I] = execute_instruction<instructionT>;
 	jump_table::get_info_function[I] = get_info<instructionT>;
 };

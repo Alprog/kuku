@@ -10,7 +10,7 @@
 #include "virtual_machine.h"
 #include "string.h"
 #include "bytecode.h"
-#include "instruction_type.h"
+#include "opcode.h"
 #include "routine.h"
 
 #include "source_project.h"
@@ -91,9 +91,7 @@ void test()
 
 		chunk chunk = project.get_module("C:/kuku/data/test.kuku")->compile_to_chunk();
 
-		chunk.functions[0].print_instructions(true);
-		console::write_line("");
-		chunk.functions[0].print_locals_info();
+		chunk.functions[0].full_dump();
 
 		console::read_line();
 

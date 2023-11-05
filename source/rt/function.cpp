@@ -34,6 +34,28 @@ const rt::localvar_info& rt::function::get_local_info(int instruction_offset, in
 	return temporaries[stack_offset];
 }
 
+integer rt::function::add_constant(cell cell)
+{
+	for (int i = 0; i < constant_buffer.size(); i++)
+	{
+		if (cell == constant_buffer[i])
+		{
+			return i;
+		}
+	}
+	constant_buffer.push_back(cell);
+	return constant_buffer.size() - 1;
+}
+
+void rt::function::full_dump()
+{
+	print_instructions(true);
+	console::new_line();
+	print_constant_buffer();
+	console::new_line();
+	print_locals_info();
+}
+
 void rt::function::print_instructions(bool include_comments)
 {
 	int index = 0;
@@ -52,6 +74,14 @@ void rt::function::print_instructions(bool include_comments)
 		}
 
 		console::write_line(line);
+	}
+}
+
+void rt::function::print_constant_buffer()
+{
+	for (int i = 0; i < constant_buffer.size(); i++)
+	{
+		console::write_line(std::format("{} {}", i, constant_buffer[i].integer));
 	}
 }
 
@@ -90,6 +120,8 @@ std::string rt::function::get_comment(int index, base_instruction& instruction, 
 		return std::string(std::begin(name), end(name));
 	};
 
+	auto K = [&](int value) { return std::to_string(constant_buffer[value].integer); };
+
 	auto INT = [&](int value) { return std::to_string(value); };
 
 	auto JMP = [&](int value)
@@ -98,6 +130,7 @@ std::string rt::function::get_comment(int index, base_instruction& instruction, 
 	};
 
 	while (perform_replacement(comment, instruction, "R", R)) {}
+	while (perform_replacement(comment, instruction, "K", K)) {}
 	while (perform_replacement(comment, instruction, "INT", INT)) {}
 	while (perform_replacement(comment, instruction, "JMP", JMP)) {}
 

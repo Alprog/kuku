@@ -3,8 +3,9 @@
 
 #include "types.h"
 
-enum class instruction_type : byte
+enum class opcode : byte
 {
+	GET_CONSTANT,
 	SET_INT,
 	MOVE,
 	INT_ADD,

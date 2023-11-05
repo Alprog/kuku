@@ -13,4 +13,5 @@ namespace console
     void write_line(std::string line);
     void write_line(std::u8string line);
     void write_line(std::u16string line);
+    void new_line();
 }

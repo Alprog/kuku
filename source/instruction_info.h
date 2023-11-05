@@ -3,12 +3,12 @@
 
 #include <vector>
 #include "base_instruction.h"
-#include "instruction_type.h"
+#include "opcode.h"
 #include "instruction_args.h"
 
 struct instruction_info
 {
-	instruction_type type;
+	opcode type;
 	const char* name;
 	std::string comment;
 	instruction_args args;
