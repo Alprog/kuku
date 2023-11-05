@@ -102,7 +102,7 @@ template<>
 void compiler::compile(ast::integer_literal& literal)
 {
 	const int index = current_function->add_constant(literal.value);
-	spawn(instruction_GET_CONSTANT{ (byte)scope_context.locals_size++, (byte)index });
+	spawn(instruction_GET_CONSTANT{ (byte)scope_context.locals_size++, (int8_t)index });
 
 	//spawn(instruction_SET_INT{ (byte)scope_context.locals_size++, (int16_t)literal.value });
 }
@@ -152,7 +152,7 @@ void compiler::compile(ast::binary_operator_expression& expression)
 	{
 		case token_type::Plus_operator:
 		{
-			spawn(instruction_INT_ADD{ a, b, c });
+			spawn(instruction_INT_ADD{ a, (int8_t)b, (int8_t)c });
 			break;
 		}
 

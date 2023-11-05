@@ -10,8 +10,11 @@ struct protected_instruction : public base_instruction
 	using I = void;
 	using A = void;
 	using B = void;
+	using C = void;
+	using sA = void;
+	using sB = void;
+	using sC = void;
 	using Bx = void;
 	using sBx = void;
-	using C = void;
 	using _ = void;
 };

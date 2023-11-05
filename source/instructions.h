@@ -17,15 +17,20 @@
 #define MACRO_ARG_A (uint8_t, A)
 #define MACRO_ARG_B (uint8_t, B)
 #define MACRO_ARG_C (uint8_t, C)
+#define MACRO_ARG_sA (int8_t, sA)
+#define MACRO_ARG_sB (int8_t, sB)
+#define MACRO_ARG_sC (int8_t, sC)
 #define MACRO_ARG_Bx (uint16_t, Bx)
 #define MACRO_ARG_sBx (int16_t, sBx)
 
 #define MACRO_ARGS_NONE
-#define MACRO_ARGS_A    MACRO_ARG_A
-#define MACRO_ARGS_AB   MACRO_ARG_A, MACRO_ARG_B
-#define MACRO_ARGS_ABx  MACRO_ARG_A, MACRO_ARG_Bx
-#define MACRO_ARGS_AsBx MACRO_ARG_A, MACRO_ARG_sBx
-#define MACRO_ARGS_ABC  MACRO_ARG_A, MACRO_ARG_B, MACRO_ARG_C
+#define MACRO_ARGS_A     MACRO_ARG_A
+#define MACRO_ARGS_AB    MACRO_ARG_A, MACRO_ARG_B
+#define MACRO_ARGS_ABx   MACRO_ARG_A, MACRO_ARG_Bx
+#define MACRO_ARGS_AsBx  MACRO_ARG_A, MACRO_ARG_sBx
+#define MACRO_ARGS_ABC   MACRO_ARG_A, MACRO_ARG_B, MACRO_ARG_C
+#define MACRO_ARGS_AsB   MACRO_ARG_A, MACRO_ARG_sB
+#define MACRO_ARGS_AsBsC MACRO_ARG_A, MACRO_ARG_sB, MACRO_ARG_sC
 
 #define FIRST(first, second) first
 #define SECOND(first, second) second
@@ -70,74 +75,74 @@ struct instruction<opcode::NAME> : public protected_instruction \
 
 //--------------------------------------------------------------------------------------------
 
-Ins(GET_CONSTANT, "R(A) = K(B)", AB)
+Ins(GET_CONSTANT, "R(A) = K(sB)", AsB)
 {
-	routine.stack.cells[A] = routine.call_frame.function->constant_buffer[B];
+	routine.call_frame.stack[A] = routine.call_frame.function->constant_buffer[sB];
 }};
 
 Ins(SET_INT, "R(A) = INT(sBx)", AsBx)
 {
-	routine.stack.cells[A].integer = sBx;
+	routine.call_frame.stack[A].integer = sBx;
 }};
 
 Ins(MOVE, "R(A) = R(B)", AB)
 {
-	routine.stack.cells[A] = routine.stack.cells[B];
+	routine.call_frame.stack[A] = routine.call_frame.stack[B];
 }};
 
-Ins(INT_ADD, "R(A) = R(B) + R(C)", ABC)
+Ins(INT_ADD, "R(A) = R(sB) + R(sC)", AsBsC)
 {
-	routine.stack.cells[A].integer = routine.stack.cells[B].integer + routine.stack.cells[C].integer;
+	routine.call_frame.stack[A].integer = routine.call_frame.ptr[sB < 0][sB].integer + routine.call_frame.ptr[sC < 0][sC].integer;
 }};
 
 Ins(INT_SUB, "R(A) = R(B) - R(C)", ABC)
 {
-	routine.stack.cells[A].integer = routine.stack.cells[B].integer - routine.stack.cells[C].integer;
+	routine.call_frame.stack[A].integer = routine.call_frame.stack[B].integer - routine.call_frame.stack[C].integer;
 }};
 
 Ins(INT_MULTIPLY, "R(A) = R(B) * R(C)", ABC)
 {
-	routine.stack.cells[A].integer = routine.stack.cells[B].integer * routine.stack.cells[C].integer;
+	routine.call_frame.stack[A].integer = routine.call_frame.stack[B].integer * routine.call_frame.stack[C].integer;
 }};
 
 Ins(INT_DIVIDE, "R(A) = R(B) / R(C)", ABC)
 {
-	routine.stack.cells[A].integer = routine.stack.cells[B].integer / routine.stack.cells[C].integer;
+	routine.call_frame.stack[A].integer = routine.call_frame.stack[B].integer / routine.call_frame.stack[C].integer;
 }};
 
 Ins(INT_POWER, "R(A) = R(B) ^ R(C)", ABC)
 {
-	routine.stack.cells[A].integer = static_cast<integer>(std::pow(routine.stack.cells[B].integer, routine.stack.cells[C].integer));
+	routine.call_frame.stack[A].integer = static_cast<integer>(std::pow(routine.call_frame.stack[B].integer, routine.call_frame.stack[C].integer));
 }};
 
 Ins(EQUAL, "R(A) = R(B) == R(C)", ABC)
 {
-	routine.stack.cells[A].boolean = routine.stack.cells[B].integer == routine.stack.cells[C].integer;
+	routine.call_frame.stack[A].boolean = routine.call_frame.stack[B].integer == routine.call_frame.stack[C].integer;
 }};
 
 Ins(NOT_EQUAL, "R(A) = R(B) != R(C)", ABC)
 {
-	routine.stack.cells[A].boolean = routine.stack.cells[B].integer != routine.stack.cells[C].integer;
+	routine.call_frame.stack[A].boolean = routine.call_frame.stack[B].integer != routine.call_frame.stack[C].integer;
 }};
 
 Ins(LESS, "R(A) = R(B) < R(C)", ABC)
 {
-	routine.stack.cells[A].boolean = routine.stack.cells[B].integer < routine.stack.cells[C].integer;
+	routine.call_frame.stack[A].boolean = routine.call_frame.stack[B].integer < routine.call_frame.stack[C].integer;
 }};
 
 Ins(GREATER, "R(A) = R(B) > R(C)", ABC)
 {
-	routine.stack.cells[A].boolean = routine.stack.cells[B].integer > routine.stack.cells[C].integer;
+	routine.call_frame.stack[A].boolean = routine.call_frame.stack[B].integer > routine.call_frame.stack[C].integer;
 }};
 
 Ins(LESS_OR_EQUAL, "R(A) = R(B) <= R(C)", ABC)
 {
-	routine.stack.cells[A].boolean = routine.stack.cells[B].integer <= routine.stack.cells[C].integer;
+	routine.call_frame.stack[A].boolean = routine.call_frame.stack[B].integer <= routine.call_frame.stack[C].integer;
 }};
 
 Ins(GREATER_OR_EQUAL, "R(A) = R(B) >= R(C)", ABC)
 {
-	routine.stack.cells[A].boolean = routine.stack.cells[B].integer >= routine.stack.cells[C].integer;
+	routine.call_frame.stack[A].boolean = routine.call_frame.stack[B].integer >= routine.call_frame.stack[C].integer;
 }};
 
 Ins(JUMP, "goto JMP(A)", A)
@@ -147,28 +152,28 @@ Ins(JUMP, "goto JMP(A)", A)
 
 Ins(JUMP_ON_FALSE, "if !R(B) then goto JMP(A)", AB)
 {
-	routine.call_frame.ip += routine.stack.cells[B].boolean ? 1 : A;
+	routine.call_frame.ip += routine.call_frame.stack[B].boolean ? 1 : A;
 }};
 
 Ins(PRINT, "print R(A)", A)
 {
-	std::cout << routine.stack.cells[A].integer << std::endl;
+	std::cout << routine.call_frame.stack[A].integer << std::endl;
 }};
 
 Ins(CREATE_OBJECT, "R(A) = new CLS(Bx)", ABx)
 {
-	routine.stack.cells[A].object_index = routine.vm.object_storage.create_object(Bx);
+	routine.call_frame.stack[A].object_index = routine.vm.object_storage.create_object(Bx);
 }};
 
 Ins(SET_FIELD, "R(A).FLD(B) = R(C)", ABC)
 {
-	object_index object_index = routine.stack.cells[A].object_index;
-	routine.vm.object_storage.get_object(object_index).data[B] = routine.stack.cells[C];
+	object_index object_index = routine.call_frame.stack[A].object_index;
+	routine.vm.object_storage.get_object(object_index).data[B] = routine.call_frame.stack[C];
 }};
 
 Ins(VIRTUAL_CALL, "call FNC(B) with INT(A) args", AB)
 {
-	cell* frame_start = &routine.stack.cells[-A];
+	cell* frame_start = &routine.call_frame.stack[-A];
 	object_header& self = routine.vm.object_storage.get_object(frame_start->object_index);
 	rt::user_class& self_class = routine.vm.type_registry.classes[self.class_index];
 	rt::function& function = self_class.vtable[B];

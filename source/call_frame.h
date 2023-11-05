@@ -6,9 +6,18 @@ union cell;
 
 struct call_frame
 {
-	explicit call_frame(rt::function& function, cell* start);
+	explicit call_frame(rt::function& function, cell* stack);
 	
 	rt::function* function;
 	base_instruction* ip;
-	cell* start;
+	
+	union
+	{
+		struct
+		{
+			cell* stack;
+			cell* constants;
+		};
+		cell* ptr[2];
+	};
 };
