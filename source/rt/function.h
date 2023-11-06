@@ -19,7 +19,7 @@ namespace rt
 
         const localvar_info& get_local_info(int instruction_offset, int stack_offset) const;
 
-        integer add_constant(cell cell);
+        byte add_constant(cell cell);
 
         void full_dump();
         void print_instructions(bool include_comments);

@@ -32,18 +32,6 @@ std::string instruction_info::to_string(base_instruction& instruction) const
 	{
 		print_value(instruction.C);
 	}
-	if (has_arg(instruction_args::sA))
-	{
-		print_value(instruction.sA);
-	}
-	if (has_arg(instruction_args::sB))
-	{
-		print_value(instruction.sB);
-	}
-	if (has_arg(instruction_args::sC))
-	{
-		print_value(instruction.sC);
-	}
 	if (has_arg(instruction_args::Bx))
 	{
 		print_value(instruction.Bx);

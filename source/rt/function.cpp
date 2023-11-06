@@ -34,17 +34,17 @@ const rt::localvar_info& rt::function::get_local_info(int instruction_offset, in
 	return temporaries[stack_offset];
 }
 
-integer rt::function::add_constant(cell cell)
+byte rt::function::add_constant(cell cell)
 {
 	for (int i = 0; i < constant_buffer.size(); i++)
 	{
 		if (cell == constant_buffer[i])
 		{
-			return i - constant_buffer.size();
+			return i;
 		}
 	}
-	constant_buffer.insert(std::begin(constant_buffer), cell);
-	return -(integer)constant_buffer.size();
+	constant_buffer.push_back(cell);
+	return constant_buffer.size() - 1;
 }
 
 void rt::function::full_dump()
@@ -81,7 +81,7 @@ void rt::function::print_constant_buffer()
 {
 	for (int i = 0; i < constant_buffer.size(); i++)
 	{
-		console::write_line(std::format("{:<3} {}", i - (int)constant_buffer.size(), constant_buffer[i].integer));
+		console::write_line(std::format("{:<3} {:<3} {}", i, i + 128, constant_buffer[i].integer));
 	}
 }
 
@@ -120,12 +120,16 @@ std::string rt::function::get_comment(int index, base_instruction& instruction, 
 		return std::string(std::begin(name), end(name));
 	};
 
-	auto K = [&](int value) { return std::to_string(constant_buffer.end()[value].integer); 	};
+	auto K = [&](int value) { return std::to_string(constant_buffer[value].integer); };
+
+	auto RK = [&](int value) { return value >> 7 ? K(value - 128) : R(value); };
 
 	auto INT = [&](int value) { return std::to_string(value); };
 
 	auto JMP = [&](int value) { return std::to_string(index + value); };
 
+
+	while (perform_replacement(comment, instruction, "RK", RK)) {}
 	while (perform_replacement(comment, instruction, "R", R)) {}
 	while (perform_replacement(comment, instruction, "K", K)) {}
 	while (perform_replacement(comment, instruction, "INT", INT)) {}

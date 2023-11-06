@@ -25,7 +25,6 @@ enum class opcode : byte
 	VIRTUAL_CALL,
 	JUMP,
 	JUMP_ON_FALSE,
-	POP,
 
 	END
 };

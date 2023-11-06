@@ -21,13 +21,7 @@ struct base_instruction
 		struct
 		{
 			opcode opcode;
-			int8_t sA;
-			int8_t sB;
-			int8_t sC;
-		};
-		struct
-		{
-			uint16_t __;
+			uint8_t _;
 			uint16_t Bx;
 		};
 		struct

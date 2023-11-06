@@ -102,7 +102,7 @@ template<>
 void compiler::compile(ast::integer_literal& literal)
 {
 	const int index = current_function->add_constant(literal.value);
-	spawn(instruction_GET_CONSTANT{ (byte)scope_context.locals_size++, (int8_t)index });
+	spawn(instruction_GET_CONSTANT{ (byte)scope_context.locals_size++, (byte)index });
 
 	//spawn(instruction_SET_INT{ (byte)scope_context.locals_size++, (int16_t)literal.value });
 }
@@ -139,6 +139,11 @@ void compiler::compile(ast::binary_operator_expression& expression)
 		b = pop().B;
 		scope_context.locals_size--;
 	}
+	else if (peek().opcode == opcode::GET_CONSTANT && peek().A == scope_context.locals_size - 1)
+	{
+		b = pop().B + 128;
+		scope_context.locals_size--;
+	}
 
 	byte c = (byte)scope_context.locals_size;
 	compile(expression.right);
@@ -147,12 +152,17 @@ void compiler::compile(ast::binary_operator_expression& expression)
 		c = pop().B;
 		scope_context.locals_size--;
 	}
+	else if (peek().opcode == opcode::GET_CONSTANT && peek().A == scope_context.locals_size - 1)
+	{
+		c = pop().B + 128;
+		scope_context.locals_size--;
+	}
 
 	switch (expression.op.token_type)
 	{
 		case token_type::Plus_operator:
 		{
-			spawn(instruction_INT_ADD{ a, (int8_t)b, (int8_t)c });
+			spawn(instruction_INT_ADD{ a, b, c });
 			break;
 		}
 

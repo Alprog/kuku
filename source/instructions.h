@@ -17,9 +17,6 @@
 #define MACRO_ARG_A (uint8_t, A)
 #define MACRO_ARG_B (uint8_t, B)
 #define MACRO_ARG_C (uint8_t, C)
-#define MACRO_ARG_sA (int8_t, sA)
-#define MACRO_ARG_sB (int8_t, sB)
-#define MACRO_ARG_sC (int8_t, sC)
 #define MACRO_ARG_Bx (uint16_t, Bx)
 #define MACRO_ARG_sBx (int16_t, sBx)
 
@@ -75,9 +72,9 @@ struct instruction<opcode::NAME> : public protected_instruction \
 
 //--------------------------------------------------------------------------------------------
 
-Ins(GET_CONSTANT, "R(A) = K(sB)", AsB)
+Ins(GET_CONSTANT, "R(A) = K(B)", AB)
 {
-	routine.call_frame.stack[A] = routine.call_frame.function->constant_buffer[sB];
+	routine.call_frame.stack[A] = routine.call_frame.function->constant_buffer[B];
 }};
 
 Ins(SET_INT, "R(A) = INT(sBx)", AsBx)
@@ -90,59 +87,59 @@ Ins(MOVE, "R(A) = R(B)", AB)
 	routine.call_frame.stack[A] = routine.call_frame.stack[B];
 }};
 
-Ins(INT_ADD, "R(A) = R(sB) + R(sC)", AsBsC)
+Ins(INT_ADD, "RK(A) = RK(B) + RK(C)", ABC)
 {
-	routine.call_frame.stack[A].integer = routine.call_frame.ptr[sB < 0][sB].integer + routine.call_frame.ptr[sC < 0][sC].integer;
+	routine.call_frame.stack[A].integer = routine.call_frame.ptr[B >> 7][B].integer + routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(INT_SUB, "R(A) = R(B) - R(C)", ABC)
+Ins(INT_SUB, "RK(A) = RK(B) - RK(C)", ABC)
 {
-	routine.call_frame.stack[A].integer = routine.call_frame.stack[B].integer - routine.call_frame.stack[C].integer;
+	routine.call_frame.stack[A].integer = routine.call_frame.ptr[B >> 7][B].integer - routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(INT_MULTIPLY, "R(A) = R(B) * R(C)", ABC)
+Ins(INT_MULTIPLY, "RK(A) = RK(B) * RK(C)", ABC)
 {
-	routine.call_frame.stack[A].integer = routine.call_frame.stack[B].integer * routine.call_frame.stack[C].integer;
+	routine.call_frame.stack[A].integer = routine.call_frame.ptr[B >> 7][B].integer * routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(INT_DIVIDE, "R(A) = R(B) / R(C)", ABC)
+Ins(INT_DIVIDE, "RK(A) = RK(B) / RK(C)", ABC)
 {
-	routine.call_frame.stack[A].integer = routine.call_frame.stack[B].integer / routine.call_frame.stack[C].integer;
+	routine.call_frame.stack[A].integer = routine.call_frame.ptr[B >> 7][B].integer / routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(INT_POWER, "R(A) = R(B) ^ R(C)", ABC)
+Ins(INT_POWER, "RK(A) = RK(B) ^ RK(C)", ABC)
 {
-	routine.call_frame.stack[A].integer = static_cast<integer>(std::pow(routine.call_frame.stack[B].integer, routine.call_frame.stack[C].integer));
+	routine.call_frame.stack[A].integer = static_cast<integer>(std::pow(routine.call_frame.ptr[B >> 7][B].integer, routine.call_frame.ptr[C >> 7][C].integer));
 }};
 
-Ins(EQUAL, "R(A) = R(B) == R(C)", ABC)
+Ins(EQUAL, "RK(A) = RK(B) == RK(C)", ABC)
 {
-	routine.call_frame.stack[A].boolean = routine.call_frame.stack[B].integer == routine.call_frame.stack[C].integer;
+	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer == routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(NOT_EQUAL, "R(A) = R(B) != R(C)", ABC)
+Ins(NOT_EQUAL, "RK(A) = RK(B) != RK(C)", ABC)
 {
-	routine.call_frame.stack[A].boolean = routine.call_frame.stack[B].integer != routine.call_frame.stack[C].integer;
+	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer != routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(LESS, "R(A) = R(B) < R(C)", ABC)
+Ins(LESS, "RK(A) = RK(B) < RK(C)", ABC)
 {
-	routine.call_frame.stack[A].boolean = routine.call_frame.stack[B].integer < routine.call_frame.stack[C].integer;
+	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer < routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(GREATER, "R(A) = R(B) > R(C)", ABC)
+Ins(GREATER, "RK(A) = RK(B) > RK(C)", ABC)
 {
-	routine.call_frame.stack[A].boolean = routine.call_frame.stack[B].integer > routine.call_frame.stack[C].integer;
+	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer > routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(LESS_OR_EQUAL, "R(A) = R(B) <= R(C)", ABC)
+Ins(LESS_OR_EQUAL, "RK(A) = RK(B) <= RK(C)", ABC)
 {
-	routine.call_frame.stack[A].boolean = routine.call_frame.stack[B].integer <= routine.call_frame.stack[C].integer;
+	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer <= routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(GREATER_OR_EQUAL, "R(A) = R(B) >= R(C)", ABC)
+Ins(GREATER_OR_EQUAL, "RK(A) = RK(B) >= RK(C)", ABC)
 {
-	routine.call_frame.stack[A].boolean = routine.call_frame.stack[B].integer >= routine.call_frame.stack[C].integer;
+	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer >= routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
 Ins(JUMP, "goto JMP(A)", A)
