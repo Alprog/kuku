@@ -13,7 +13,7 @@ std::string instruction_info::to_string(base_instruction& instruction) const
 {
 	std::stringstream ss;
 
-	ss << std::left << std::setw(15) << name;
+	ss << std::left << std::setw(10) << name;
 	
 	auto print_value = [&](int value)
 	{
@@ -40,8 +40,6 @@ std::string instruction_info::to_string(base_instruction& instruction) const
 	{
 		print_value(instruction.sBx);
 	}
-
-
 
 	return ss.str();
 }

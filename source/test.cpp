@@ -31,14 +31,14 @@ void test_old()
 	function.name = "test";
 
 	auto& bytecode = function.bytecode;
-	bytecode.instructions.push_back(instruction_SET_INT{ 0, 111 });
- 	bytecode.instructions.push_back(instruction_SET_INT{ 1, 222 });
-	bytecode.instructions.push_back(instruction_INT_ADD{ 0, 0, 1 });
+	bytecode.instructions.push_back(instruction_VALUE{ 0, 111 });
+ 	bytecode.instructions.push_back(instruction_VALUE{ 1, 222 });
+	bytecode.instructions.push_back(instruction_ADD{ 0, 0, 1 });
 	bytecode.instructions.push_back(instruction_PRINT{ 0 });
 
-	bytecode.instructions.push_back(instruction_SET_INT{ 0, 2 });
-	bytecode.instructions.push_back(instruction_SET_INT{ 1, 4 });
-	bytecode.instructions.push_back(instruction_INT_POWER{ 0, 0, 1 });
+	bytecode.instructions.push_back(instruction_VALUE{ 0, 2 });
+	bytecode.instructions.push_back(instruction_VALUE{ 1, 4 });
+	bytecode.instructions.push_back(instruction_POWER{ 0, 0, 1 });
 	bytecode.instructions.push_back(instruction_PRINT{ 0 });
 	bytecode.instructions.push_back(instruction_END{});
 

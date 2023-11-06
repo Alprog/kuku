@@ -20,9 +20,9 @@ inline void execute_instruction<instruction_JUMP>(routine& routine)
 }
 
 template <>
-inline void execute_instruction<instruction_JUMP_ON_FALSE>(routine& routine)
+inline void execute_instruction<instruction_IFJUMP>(routine& routine)
 {
-	reinterpret_cast<instruction_JUMP_ON_FALSE*>(routine.call_frame.ip)->execute(routine);
+	reinterpret_cast<instruction_IFJUMP*>(routine.call_frame.ip)->execute(routine);
 }
 
 template <typename T>

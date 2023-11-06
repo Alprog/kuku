@@ -66,7 +66,7 @@ void rt::function::print_instructions(bool include_comments)
 
 		auto comment = get_comment(index, instruction, info->comment);
 
-		auto line = std::format("{:3} | {:27} | ", index++, info->to_string(instruction));
+		auto line = std::format("{:3} | {:22} | ", index++, info->to_string(instruction));
 
 		if (include_comments)
 		{

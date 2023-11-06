@@ -95,37 +95,37 @@ opcode opeartor_token_to_opcode(token_type token_type)
 	switch (token_type)
 	{
 		case token_type::Plus_operator:
-			return opcode::INT_ADD;
+			return opcode::ADD;
 
 		case token_type::Less_operator:
-			return opcode::LESS;
+			return opcode::L;
 
 		case token_type::Minus_operator:
-			return opcode::INT_SUB;
+			return opcode::SUB;
 
 		case token_type::Multiply_Operator:
-			return opcode::INT_MULTIPLY;
+			return opcode::MULTIPLY;
 
 		case token_type::Divide_Operator:
-			return opcode::INT_DIVIDE;
+			return opcode::DIVIDE;
 
 		case token_type::Exponent_operator:
-			return opcode::INT_POWER;
+			return opcode::POWER;
 
 		case token_type::Equal_operator:
-			return opcode::EQUAL;
+			return opcode::EQ;
 
 		case token_type::Not_equal_operator:
-			return opcode::NOT_EQUAL;
+			return opcode::NEQ;
 
 		case token_type::Greater_operator:
-			return opcode::GREATER;
+			return opcode::G;
 
 		case token_type::Less_or_equal_operator:
-			return opcode::LESS_OR_EQUAL;
+			return opcode::LEQ;
 
 		case token_type::Greater_or_equal_operator:
-			return opcode::GREATER_OR_EQUAL;
+			return opcode::GEQ;
 
 		default:
 			throw std::exception("not implemented");
@@ -144,7 +144,7 @@ inline_operand compiler::get_top_operand()
 			operand = inline_operand::from_RK_format(pop().B);
 			scope_context.locals_size--;
 		}
-		else if (peek().opcode == opcode::GET_CONSTANT)
+		else if (peek().opcode == opcode::CONSTANT)
 		{
 			operand = { true, pop().B };
 			scope_context.locals_size--;
@@ -166,7 +166,7 @@ template<>
 void compiler::compile(ast::integer_literal& literal)
 {
 	const int index = current_function->add_constant(literal.value);
-	spawn(instruction_GET_CONSTANT{ (byte)scope_context.locals_size++, (byte)index });
+	spawn(instruction_CONSTANT{ (byte)scope_context.locals_size++, (byte)index });
 
 	//spawn(instruction_SET_INT{ (byte)scope_context.locals_size++, (int16_t)literal.value });
 }
@@ -244,7 +244,7 @@ void compiler::compile(stmt::assign_statement& statement)
 
 		scope_context.locals_size = size;
 
-		if (peek().opcode == opcode::INT_ADD || peek().opcode == opcode::SET_INT)
+		if (peek().opcode == opcode::ADD || peek().opcode == opcode::VALUE)
 		{
 			if (peek().A == scope_context.locals_size)
 			{
@@ -279,7 +279,7 @@ void compiler::compile(stmt::if_statement& statement)
 
 	scope_context.skip_jump_place = current_function->bytecode.instructions.size();
 	scope_context.locals_size = size;
-	spawn(instruction_JUMP_ON_FALSE{ 0, b });
+	spawn(instruction_IFJUMP{ 0, b });
 	
 	enter_scope();
 }
