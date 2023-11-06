@@ -1,12 +1,12 @@
 
 if 1 then
-	if 1 then
-		var a = 3
+	var a = 3
+	if a then
 		var b = 4
 
 		a = 2 + 3
 		b = 7
-		b = b + a
+		b = b + 18
 
 		if b < a then
 			var c = 10

@@ -82,9 +82,9 @@ Ins(SET_INT, "R(A) = INT(sBx)", AsBx)
 	routine.call_frame.stack[A].integer = sBx;
 }};
 
-Ins(MOVE, "R(A) = R(B)", AB)
+Ins(MOVE, "R(A) = RK(B)", AB)
 {
-	routine.call_frame.stack[A] = routine.call_frame.stack[B];
+	routine.call_frame.stack[A] = routine.call_frame.ptr[B >> 7][B];
 }};
 
 Ins(INT_ADD, "RK(A) = RK(B) + RK(C)", ABC)
@@ -147,9 +147,9 @@ Ins(JUMP, "goto JMP(A)", A)
 	routine.call_frame.ip += A;
 }};
 
-Ins(JUMP_ON_FALSE, "if !R(B) then goto JMP(A)", AB)
+Ins(JUMP_ON_FALSE, "if !RK(B) then goto JMP(A)", AB)
 {
-	routine.call_frame.ip += routine.call_frame.stack[B].boolean ? 1 : A;
+	routine.call_frame.ip += routine.call_frame.ptr[B >> 7][B].boolean ? 1 : A;
 }};
 
 Ins(PRINT, "print R(A)", A)

@@ -90,6 +90,70 @@ base_instruction compiler::pop()
 	return result;
 }
 
+opcode opeartor_token_to_opcode(token_type token_type)
+{
+	switch (token_type)
+	{
+		case token_type::Plus_operator:
+			return opcode::INT_ADD;
+
+		case token_type::Less_operator:
+			return opcode::LESS;
+
+		case token_type::Minus_operator:
+			return opcode::INT_SUB;
+
+		case token_type::Multiply_Operator:
+			return opcode::INT_MULTIPLY;
+
+		case token_type::Divide_Operator:
+			return opcode::INT_DIVIDE;
+
+		case token_type::Exponent_operator:
+			return opcode::INT_POWER;
+
+		case token_type::Equal_operator:
+			return opcode::EQUAL;
+
+		case token_type::Not_equal_operator:
+			return opcode::NOT_EQUAL;
+
+		case token_type::Greater_operator:
+			return opcode::GREATER;
+
+		case token_type::Less_or_equal_operator:
+			return opcode::LESS_OR_EQUAL;
+
+		case token_type::Greater_or_equal_operator:
+			return opcode::GREATER_OR_EQUAL;
+
+		default:
+			throw std::exception("not implemented");
+		}
+}
+
+inline_operand compiler::get_top_operand()
+{
+	inline_operand operand = { false, scope_context.locals_size - 1 };
+
+	// forward value optimizations
+	if (peek().A == operand.value)
+	{
+		if (peek().opcode == opcode::MOVE)
+		{
+			operand = inline_operand::from_RK_format(pop().B);
+			scope_context.locals_size--;
+		}
+		else if (peek().opcode == opcode::GET_CONSTANT)
+		{
+			operand = { true, pop().B };
+			scope_context.locals_size--;
+		}
+	}
+
+	return operand;
+}
+
 //---------------------------------------------------------------------------------------------------------------
 
 template<typename T>
@@ -130,89 +194,20 @@ void compiler::compile(ast::symbol_expression& expression)
 template<>
 void compiler::compile(ast::binary_operator_expression& expression)
 {
-	byte a = (byte)scope_context.locals_size;
-	
-	byte b = (byte)scope_context.locals_size;
+	base_instruction instruction;
+	instruction.opcode = opeartor_token_to_opcode(expression.op.token_type);
+
+	instruction.A = (byte)scope_context.locals_size;
+
 	compile(expression.left);
-	if (peek().opcode == opcode::MOVE && peek().A == scope_context.locals_size - 1)
-	{
-		b = pop().B;
-		scope_context.locals_size--;
-	}
-	else if (peek().opcode == opcode::GET_CONSTANT && peek().A == scope_context.locals_size - 1)
-	{
-		b = pop().B + 128;
-		scope_context.locals_size--;
-	}
+	instruction.B = get_top_operand().to_RK_format();
 
-	byte c = (byte)scope_context.locals_size;
 	compile(expression.right);
-	if (peek().opcode == opcode::MOVE && peek().A == scope_context.locals_size - 1)
-	{
-		c = pop().B;
-		scope_context.locals_size--;
-	}
-	else if (peek().opcode == opcode::GET_CONSTANT && peek().A == scope_context.locals_size - 1)
-	{
-		c = pop().B + 128;
-		scope_context.locals_size--;
-	}
+	instruction.C = get_top_operand().to_RK_format();
 
-	switch (expression.op.token_type)
-	{
-		case token_type::Plus_operator:
-		{
-			spawn(instruction_INT_ADD{ a, b, c });
-			break;
-		}
+	spawn(instruction);
 
-		case token_type::Less_operator:
-		{
-			spawn(instruction_LESS{ a, b, c });
-			break;
-		}
-
-		case token_type::Minus_operator:
-			spawn(instruction_INT_SUB{ a, b, c });
-			break;
-
-		case token_type::Multiply_Operator:
-			spawn(instruction_INT_MULTIPLY{ a, b, c });
-			break;
-
-		case token_type::Divide_Operator:
-			spawn(instruction_INT_DIVIDE{ a, b, c });
-			break;
-
-		case token_type::Exponent_operator:
-			spawn(instruction_INT_POWER{ a, b, c });
-			break;
-
-		case token_type::Equal_operator:
-			spawn(instruction_EQUAL{ a, b, c });
-			break;
-
-		case token_type::Not_equal_operator:
-			spawn(instruction_NOT_EQUAL{ a, b, c });
-			break;
-
-		case token_type::Greater_operator:
-			spawn(instruction_GREATER{ a, b, c });
-			break;
-
-		case token_type::Less_or_equal_operator:
-			spawn(instruction_LESS{ a, b, c });
-			break;
-
-		case token_type::Greater_or_equal_operator:
-			spawn(instruction_GREATER_OR_EQUAL{ a, b, c });
-			break;
-
-		default:
-			throw std::exception("not implemented");
-	}
-
-	scope_context.locals_size = a + 1;
+	scope_context.locals_size = instruction.A + 1;
 }
 
 template<>
@@ -242,10 +237,12 @@ void compiler::compile(stmt::assign_statement& statement)
 		auto symbol = symbol_expression->reference.symbol;
 		byte a = symbol->stack_offset;
 
-		auto b = (byte)scope_context.locals_size;
-		compile(statement.rvalue); // spawn src
+		auto size = (byte)scope_context.locals_size;
 
-		scope_context.locals_size--;
+		compile(statement.rvalue); // spawn src
+		byte b = get_top_operand().to_RK_format();
+
+		scope_context.locals_size = size;
 
 		if (peek().opcode == opcode::INT_ADD || peek().opcode == opcode::SET_INT)
 		{
@@ -275,11 +272,14 @@ void compiler::compile(stmt::function_statement& statement)
 template<>
 void compiler::compile(stmt::if_statement& statement)
 {
+	auto size = scope_context.locals_size;
+
 	compile(statement.condition);
+	byte b = get_top_operand().to_RK_format();
 
 	scope_context.skip_jump_place = current_function->bytecode.instructions.size();
-	scope_context.locals_size--;
-	spawn(instruction_JUMP_ON_FALSE{ 0, (byte)scope_context.locals_size });
+	scope_context.locals_size = size;
+	spawn(instruction_JUMP_ON_FALSE{ 0, b });
 	
 	enter_scope();
 }

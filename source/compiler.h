@@ -4,6 +4,7 @@
 #include "chunk.h"
 #include "stackable.h"
 #include "scope_context.h"
+#include "inline_operand.h"
 
 class translation_module;
  
@@ -23,6 +24,8 @@ public:
 
 	base_instruction& peek();
 	base_instruction pop();
+
+	inline_operand get_top_operand();
 
 	template<typename T>
 	void compile(T& value);
