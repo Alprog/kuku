@@ -26,6 +26,12 @@ inline void execute_instruction<instruction_IFJUMP>(routine& routine)
 	reinterpret_cast<instruction_IFJUMP*>(routine.call_frame.ip)->execute(routine);
 }
 
+template <>
+inline void execute_instruction<instruction<opcode::IFJUMP, instruction_mode::K>>(routine& routine)
+{
+	reinterpret_cast<instruction<opcode::IFJUMP, instruction_mode::K>*>(routine.call_frame.ip)->execute(routine);
+}
+
 template <typename T>
 inline instruction_info* get_info()
 {
