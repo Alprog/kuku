@@ -26,6 +26,6 @@ namespace rt
         void print_constant_buffer();
         void print_locals_info();
 
-        std::string get_comment(int index, base_instruction& instruction, std::string comment);
+        std::string get_comment(int index, base_instruction& instruction);
     };
 }

@@ -1,11 +1,12 @@
 #pragma once
 
 #include "opcode.h"
-#include "types.h"
+#include "instruction_mode.h"
+#include "inline_operand.h"
 
 #pragma pack(push)
 #pragma pack(1)
- 
+
 struct base_instruction
 {
 	union
@@ -29,9 +30,23 @@ struct base_instruction
 			uint16_t __;
 			int16_t sBx;
 		};
+		struct
+		{
+			instruction_mode MB : 1;
+			instruction_mode MC : 1;
+			uint8_t _ : 5;
+			uint8_t breakpoint : 1;
+		};
+		struct
+		{
+			instruction_mode M2 : 2;
+		};
 	};
 
 	int get_argument_value(std::string name) const;
+
+	void set_B_cell(inline_operand operand);
+	void set_C_cell(inline_operand operand);
 };
 
 #pragma pack(pop)

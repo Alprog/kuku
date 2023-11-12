@@ -1,4 +1,3 @@
-
 #include "integer_literal.h"
 #include "instructions.h"
 #include "compiler.h"

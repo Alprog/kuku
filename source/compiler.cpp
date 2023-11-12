@@ -134,7 +134,7 @@ opcode opeartor_token_to_opcode(token_type token_type)
 
 inline_operand compiler::get_top_operand()
 {
-	inline_operand operand = { false, scope_context.locals_size - 1 };
+	inline_operand operand = { instruction_mode::R, scope_context.locals_size - 1 };
 
 	// forward value optimizations
 	if (peek().A == operand.value)
@@ -146,7 +146,7 @@ inline_operand compiler::get_top_operand()
 		}
 		else if (peek().opcode == opcode::CONSTANT)
 		{
-			operand = { true, pop().B };
+			operand = { instruction_mode::K, pop().B };
 			scope_context.locals_size--;
 		}
 	}
@@ -167,7 +167,6 @@ void compiler::compile(ast::integer_literal& literal)
 {
 	const int index = current_function->add_constant(literal.value);
 	spawn(instruction_CONSTANT{ (byte)scope_context.locals_size++, (byte)index });
-
 	//spawn(instruction_SET_INT{ (byte)scope_context.locals_size++, (int16_t)literal.value });
 }
 
@@ -200,10 +199,10 @@ void compiler::compile(ast::binary_operator_expression& expression)
 	instruction.A = (byte)scope_context.locals_size;
 
 	compile(expression.left);
-	instruction.B = get_top_operand().to_RK_format();
+	instruction.set_B_cell(get_top_operand());
 
 	compile(expression.right);
-	instruction.C = get_top_operand().to_RK_format();
+	instruction.set_C_cell(get_top_operand());
 
 	spawn(instruction);
 
@@ -275,11 +274,11 @@ void compiler::compile(stmt::if_statement& statement)
 	auto size = scope_context.locals_size;
 
 	compile(statement.condition);
-	byte b = get_top_operand().to_RK_format();
+	inline_operand b = get_top_operand();
 
 	scope_context.skip_jump_place = current_function->bytecode.instructions.size();
 	scope_context.locals_size = size;
-	spawn(instruction_IFJUMP{ 0, b });
+	spawn(instruction_IFJUMP{ b.mode, 0, b.value });
 	
 	enter_scope();
 }

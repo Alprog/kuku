@@ -64,7 +64,7 @@ void rt::function::print_instructions(bool include_comments)
 		auto info = jump_table::get_info_function[instruction.I]();
 
 
-		auto comment = get_comment(index, instruction, info->comment);
+		auto comment = get_comment(index, instruction);
 
 		auto line = std::format("{:3} | {:22} | ", index++, info->to_string(instruction));
 
@@ -112,8 +112,28 @@ bool perform_replacement(std::string& comment, base_instruction& instruction, st
 	return false;
 }
 
-std::string rt::function::get_comment(int index, base_instruction& instruction, std::string comment)
+void replace(std::string& str, std::string substr, std::string newstr)
 {
+	auto start = str.find(substr);
+	if (start != std::string::npos)
+	{
+		str.replace(start, substr.size(), newstr);
+	}
+}
+
+std::string rt::function::get_comment(int index, base_instruction& instruction)
+{
+	auto info = jump_table::get_info_function[instruction.I]();
+	std::string comment = info->comment;
+	if (info->has_arg(instruction_args::MB) && instruction.MB == instruction_mode::K)
+	{
+		replace(comment, "R(B)", "K(B)");
+	}
+	if (info->has_arg(instruction_args::MC) && instruction.MC == instruction_mode::K)
+	{
+		replace(comment, "R(C)", "K(C)");
+	}
+
 	auto R = [&](int value)
 	{
 		auto name = get_local_info(index, value).name;
@@ -127,7 +147,6 @@ std::string rt::function::get_comment(int index, base_instruction& instruction, 
 	auto INT = [&](int value) { return std::to_string(value); };
 
 	auto JMP = [&](int value) { return std::to_string(index + value); };
-
 
 	while (perform_replacement(comment, instruction, "RK", RK)) {}
 	while (perform_replacement(comment, instruction, "R", R)) {}

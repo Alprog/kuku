@@ -6,15 +6,15 @@
 
 bool instruction_info::has_arg(instruction_args arg) const
 {
-	return (args & arg) != instruction_args::NONE;
+	return (args & arg) == arg;
 }
 
 std::string instruction_info::to_string(base_instruction& instruction) const
 {
 	std::stringstream ss;
 
-	ss << std::left << std::setw(10) << name;
-	
+	ss << std::left << std::setw(10) << get_name(instruction.opcode);
+
 	auto print_value = [&](int value)
 	{
 		ss << std::left << std::setw(4) << std::to_string(value);

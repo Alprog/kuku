@@ -8,8 +8,7 @@
 
 struct instruction_info
 {
-	opcode type;
-	const char* name;
+	opcode base_code;
 	std::string comment;
 	instruction_args args;
 

@@ -1,10 +1,11 @@
 #pragma once
 
 #include "types.h"
+#include "instruction_mode.h"
 
 struct inline_operand
 {
-	bool is_constant;
+	instruction_mode mode;
 	byte value;
 
 	byte to_RK_format();

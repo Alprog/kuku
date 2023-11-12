@@ -10,8 +10,8 @@ struct enum_reflector
 {
 };
 
-#define reflectable_enum(EnumName, ...) \
-	enum class EnumName { __VA_ARGS__ }; \
+#define reflectable_enum_internal(EnumName, type, ...) \
+	enum class EnumName : type { __VA_ARGS__ }; \
 	template <> \
 	struct enum_reflector<EnumName> \
 	{ \
@@ -21,6 +21,8 @@ struct enum_reflector
 			return vector[(int)value]; \
 		}; \
 	};
+
+#define reflectable_enum(...) reflectable_enum_internal(__VA_ARGS__)
 
 template <typename EnumT>
 std::string get_name(EnumT value)

@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "base_instruction.h"
@@ -13,21 +12,23 @@
 
 #pragma warning( disable : 4003 )
 
-#define MACRO_ARG_OPCODE (opcode, opcode)
 #define MACRO_ARG_A (uint8_t, A)
 #define MACRO_ARG_B (uint8_t, B)
 #define MACRO_ARG_C (uint8_t, C)
 #define MACRO_ARG_Bx (uint16_t, Bx)
 #define MACRO_ARG_sBx (int16_t, sBx)
+#define MACRO_ARG_MB (instruction_mode, MB)
+#define MACRO_ARG_M2 (instruction_mode, M2)
 
 #define MACRO_ARGS_NONE
 #define MACRO_ARGS_A     MACRO_ARG_A
 #define MACRO_ARGS_AB    MACRO_ARG_A, MACRO_ARG_B
+#define MACRO_ARGS_MAB   MACRO_ARG_MB, MACRO_ARG_A, MACRO_ARG_B
 #define MACRO_ARGS_ABx   MACRO_ARG_A, MACRO_ARG_Bx
 #define MACRO_ARGS_AsBx  MACRO_ARG_A, MACRO_ARG_sBx
 #define MACRO_ARGS_ABC   MACRO_ARG_A, MACRO_ARG_B, MACRO_ARG_C
-#define MACRO_ARGS_AsB   MACRO_ARG_A, MACRO_ARG_sB
-#define MACRO_ARGS_AsBsC MACRO_ARG_A, MACRO_ARG_sB, MACRO_ARG_sC
+
+#define MACRO_ARGS_M2ABC MACRO_ARG_M2, MACRO_ARG_A, MACRO_ARG_B, MACRO_ARG_C
 
 #define FIRST(first, second) first
 #define SECOND(first, second) second
@@ -36,7 +37,7 @@
 #define INITIALIZATION(x) this->SECOND x = SECOND x;
 #define ARGUMENT(x) | CONCATENATE(instruction_args::, SECOND x)
 
-template <opcode>
+template <opcode, instruction_mode MODE = instruction_mode::RR>
 struct instruction : private protected_instruction
 {
 	inline void execute(routine& routine)
@@ -49,13 +50,15 @@ struct instruction : private protected_instruction
 		return { opcode::END, "unknown", "", instruction_args::NONE};
 	}
 
-	inline static instruction_info info = { opcode::END, "unknown", "", instruction_args::NONE };
+	static const instruction_args args = instruction_args::invalid;
+
+	inline static instruction_info info = { opcode::END, "", args };
 };
 
 #define Ins_X(NAME, COMMENT, ...) \
 using instruction_##NAME = instruction<opcode::NAME>; \
-template<> \
-struct instruction<opcode::NAME> : public protected_instruction \
+template<instruction_mode MODE> \
+struct instruction<opcode::NAME, MODE> : public protected_instruction \
 { \
 	using base_instruction::opcode; \
 	FOR_EACH(USING, __VA_ARGS__) \
@@ -65,12 +68,16 @@ struct instruction<opcode::NAME> : public protected_instruction \
 		FOR_EACH(INITIALIZATION, __VA_ARGS__) \
 	} \
 	instruction(instruction<opcode::NAME>&&) = delete; \
-	static instruction_info create_info() { return { opcode::NAME, #NAME, COMMENT, instruction_args::NONE FOR_EACH(ARGUMENT, __VA_ARGS__) }; } \
+	static const instruction_args args = instruction_args::NONE FOR_EACH(ARGUMENT, __VA_ARGS__); \
+	static instruction_info create_info() { return { opcode::NAME, COMMENT, args }; } \
 	inline void execute(routine& routine)
 
 #define Ins(NAME, COMMENT, ARGUMENTS) Ins_X(NAME, COMMENT, EXPAND(CONCATENATE(MACRO_ARGS_, ARGUMENTS)))
 
 //--------------------------------------------------------------------------------------------
+
+#define cellB routine.call_frame.get_cell<MODE & 1>(B)
+#define cellC routine.call_frame.get_cell<(MODE >> 1 & 1)>(C)
 
 Ins(VALUE, "R(A) = INT(sBx)", AsBx)
 {
@@ -87,57 +94,57 @@ Ins(MOVE, "R(A) = RK(B)", AB)
 	routine.call_frame.stack[A] = routine.call_frame.ptr[B >> 7][B];
 }};
 
-Ins(ADD, "RK(A) = RK(B) + RK(C)", ABC)
+Ins(ADD, "R(A) = R(B) + R(C)", M2ABC)
 {
-	routine.call_frame.stack[A].integer = routine.call_frame.ptr[B >> 7][B].integer + routine.call_frame.ptr[C >> 7][C].integer;
+	routine.call_frame.stack[A].integer = cellB.integer + cellC.integer;
 }};
 
-Ins(SUB, "RK(A) = RK(B) - RK(C)", ABC)
+Ins(SUB, "R(A) = R(B) - R(C)", M2ABC)
 {
 	routine.call_frame.stack[A].integer = routine.call_frame.ptr[B >> 7][B].integer - routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(MULTIPLY, "RK(A) = RK(B) * RK(C)", ABC)
+Ins(MULTIPLY, "R(A) = R(B) * R(C)", M2ABC)
 {
 	routine.call_frame.stack[A].integer = routine.call_frame.ptr[B >> 7][B].integer * routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(DIVIDE, "RK(A) = RK(B) / RK(C)", ABC)
+Ins(DIVIDE, "R(A) = R(B) / R(C)", M2ABC)
 {
 	routine.call_frame.stack[A].integer = routine.call_frame.ptr[B >> 7][B].integer / routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(POWER, "RK(A) = RK(B) ^ RK(C)", ABC)
+Ins(POWER, "R(A) = R(B) ^ R(C)", M2ABC)
 {
 	routine.call_frame.stack[A].integer = static_cast<integer>(std::pow(routine.call_frame.ptr[B >> 7][B].integer, routine.call_frame.ptr[C >> 7][C].integer));
 }};
 
-Ins(EQ, "RK(A) = RK(B) == RK(C)", ABC)
+Ins(EQ, "R(A) = R(B) == R(C)", M2ABC)
 {
 	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer == routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(NEQ, "RK(A) = RK(B) != RK(C)", ABC)
+Ins(NEQ, "R(A) = R(B) != R(C)", M2ABC)
 {
 	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer != routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(L, "RK(A) = RK(B) < RK(C)", ABC)
+Ins(L, "R(A) = R(B) < R(C)", M2ABC)
 {
 	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer < routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(G, "RK(A) = RK(B) > RK(C)", ABC)
+Ins(G, "R(A) = R(B) > R(C)", M2ABC)
 {
 	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer > routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(LEQ, "RK(A) = RK(B) <= RK(C)", ABC)
+Ins(LEQ, "R(A) = R(B) <= R(C)", M2ABC)
 {
 	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer <= routine.call_frame.ptr[C >> 7][C].integer;
 }};
 
-Ins(GEQ, "RK(A) = RK(B) >= RK(C)", ABC)
+Ins(GEQ, "R(A) = R(B) >= R(C)", M2ABC)
 {
 	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer >= routine.call_frame.ptr[C >> 7][C].integer;
 }};
@@ -147,9 +154,9 @@ Ins(JUMP, "goto JMP(A)", A)
 	routine.call_frame.ip += A;
 }};
 
-Ins(IFJUMP, "if !RK(B) then goto JMP(A)", AB)
+Ins(IFJUMP, "if !R(B) then goto JMP(A)", MAB)
 {
-	routine.call_frame.ip += routine.call_frame.ptr[B >> 7][B].boolean ? 1 : A;
+	routine.call_frame.ip += cellB.boolean ? 1 : A;
 }};
 
 Ins(PRINT, "print R(A)", A)

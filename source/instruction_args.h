@@ -14,6 +14,12 @@ enum class instruction_args
 
 	Bx = 1 << 6,
 	sBx = 1 << 7,
+
+	MB = 1 << 8,
+	MC = 1 << 9,
+	M2 = MB | MC,
+
+	invalid = 1 << 10,
 };
 
 inline constexpr instruction_args operator|(instruction_args lhs, instruction_args rhs) 

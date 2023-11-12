@@ -7,7 +7,7 @@ byte inline_operand::to_RK_format()
 		throw std::exception("can't be represented in RK format");
 	}
 
-	if (is_constant)
+	if (mode == instruction_mode::K)
 	{
 		return 128 + value;
 	}
@@ -21,10 +21,10 @@ inline_operand inline_operand::from_RK_format(byte value)
 {
 	if (value < 128)
 	{
-		return { false, value };
+		return { instruction_mode::R, value };
 	}
 	else
 	{
-		return { true, (byte)(value - 128) };
+		return { instruction_mode::K, (byte)(value - 128) };
 	}
 }
