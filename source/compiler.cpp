@@ -139,14 +139,10 @@ inline_operand compiler::get_top_operand()
 	// forward value optimizations
 	if (peek().A == operand.value)
 	{
-		if (peek().opcode == opcode::MOVE)
+		auto opcode = peek().opcode;
+		if (opcode == opcode::ASSIGN || opcode == opcode::ASSIGN_K)
 		{
 			operand = { peek().MB, pop().B };
-			scope_context.locals_size--;
-		}
-		else if (peek().opcode == opcode::CONSTANT)
-		{
-			operand = { instruction_mode::K, pop().B };
 			scope_context.locals_size--;
 		}
 	}
@@ -204,10 +200,9 @@ bool has_regA(opcode code)
 		case opcode::GEQ_RK:
 		case opcode::GEQ_KR:
 		case opcode::GEQ_KK:
-		case opcode::MOVE:
-		case opcode::MOVE_K:
+		case opcode::ASSIGN:
+		case opcode::ASSIGN_K:
 		case opcode::VALUE:
-		case opcode::CONSTANT:
 			return true;
 	}
 
@@ -224,8 +219,7 @@ template<>
 void compiler::compile(ast::integer_literal& literal)
 {
 	const int index = current_function->add_constant(literal.value);
-	spawn(instruction_CONSTANT{ (byte)scope_context.locals_size++, (byte)index });
-	//spawn(instruction_SET_INT{ (byte)scope_context.locals_size++, (int16_t)literal.value });
+	spawn(instruction_ASSIGN{ instruction_mode::K, (byte)scope_context.locals_size++, (byte)index });
 }
 
 template<>
@@ -242,7 +236,7 @@ void compiler::compile(ast::symbol_expression& expression)
 		auto variable = dynamic_cast<variable_symbol*>(expression.reference.symbol);
 		if (variable != nullptr)
 		{
-			spawn(instruction_MOVE{ (byte)scope_context.locals_size, (byte)variable->stack_offset });
+			spawn(instruction_ASSIGN{ instruction_mode::R, (byte)scope_context.locals_size, (byte)variable->stack_offset });
 			scope_context.locals_size++;
 		}
 	}
@@ -297,8 +291,7 @@ void compiler::compile(stmt::assign_statement& statement)
 		auto size = (byte)scope_context.locals_size;
 
 		compile(statement.rvalue); // spawn src
-		byte b = get_top_operand().to_RK_format();
-
+		inline_operand b = get_top_operand();
 		scope_context.locals_size = size;
 
 		if (has_regA(peek().opcode))
@@ -308,9 +301,9 @@ void compiler::compile(stmt::assign_statement& statement)
 				peek().A = a;
 				return;
 			}
-		}
+		}		
 		
-		spawn(instruction_MOVE{ a, b });
+		spawn(instruction_ASSIGN{ b.mode, a, b.value });
 	}
 }
 

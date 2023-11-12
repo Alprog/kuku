@@ -84,14 +84,9 @@ Ins(VALUE, "R(A) = INT(sBx)", AsBx)
 	routine.call_frame.stack[A].integer = sBx;
 }};
 
-Ins(CONSTANT, "R(A) = K(B)", AB)
+Ins(ASSIGN, "R(A) = R(B)", MAB)
 {
-	routine.call_frame.stack[A] = routine.call_frame.function->constant_buffer[B];
-}};
-
-Ins(MOVE, "R(A) = RK(B)", AB)
-{
-	routine.call_frame.stack[A] = routine.call_frame.ptr[B >> 7][B];
+	routine.call_frame.stack[A] = cellB;
 }};
 
 Ins(ADD, "R(A) = R(B) + R(C)", M2ABC)

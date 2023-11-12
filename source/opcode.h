@@ -19,11 +19,10 @@ reflectable_enum(opcode, byte,
 	CODES4(LEQ),
 	CODES4(GEQ),
 
-	CODES2(MOVE),
+	CODES2(ASSIGN),
 	CODES2(IFJUMP),
 
 	VALUE,
-	CONSTANT,
 	PRINT,
 	CREATE_OBJECT,
 	SET_FIELD,
