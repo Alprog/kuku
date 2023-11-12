@@ -7,6 +7,8 @@
 #include "bytecode.h"
 #include "instructions.h"
 
+bool optimizations = true;
+
 compiler::compiler(translation_module& module)
 	: module{ module }
 {
@@ -52,11 +54,6 @@ void compiler::exit_scope()
 	scope_context.pop_state();
 
 	int new_stack_size = scope_context.locals_size;
-	byte pop_count = (byte)(old_stack_size - new_stack_size);
-	if (pop_count > 0)
-	{
-		//spawn(instruction_POP{ pop_count });
-	}
 	for (auto& local : current_function->locals)
 	{
 		if (local.end_instruction < 0 && local.stack_offset >= new_stack_size)
@@ -137,13 +134,16 @@ inline_operand compiler::get_top_operand()
 	inline_operand operand = { instruction_mode::R, scope_context.locals_size - 1 };
 
 	// forward value optimizations
-	if (peek().A == operand.value)
+	if (optimizations)
 	{
-		auto opcode = peek().opcode;
-		if (opcode == opcode::ASSIGN || opcode == opcode::ASSIGN_K)
+		if (peek().A == operand.value)
 		{
-			operand = { peek().MB, pop().B };
-			scope_context.locals_size--;
+			auto opcode = peek().opcode;
+			if (opcode == opcode::ASSIGN || opcode == opcode::ASSIGN_K)
+			{
+				operand = { peek().MB, pop().B };
+				scope_context.locals_size--;
+			}
 		}
 	}
 
@@ -294,14 +294,18 @@ void compiler::compile(stmt::assign_statement& statement)
 		inline_operand b = get_top_operand();
 		scope_context.locals_size = size;
 
-		if (has_regA(peek().opcode))
+		// last command retarget optimization 
+		if (optimizations)
 		{
-			if (peek().A == scope_context.locals_size)
+			if (has_regA(peek().opcode))
 			{
-				peek().A = a;
-				return;
+				if (peek().A == scope_context.locals_size)
+				{
+					peek().A = a;
+					return;
+				}
 			}
-		}		
+		}
 		
 		spawn(instruction_ASSIGN{ b.mode, a, b.value });
 	}
