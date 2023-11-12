@@ -141,7 +141,7 @@ inline_operand compiler::get_top_operand()
 	{
 		if (peek().opcode == opcode::MOVE)
 		{
-			operand = inline_operand::from_RK_format(pop().B);
+			operand = { peek().MB, pop().B };
 			scope_context.locals_size--;
 		}
 		else if (peek().opcode == opcode::CONSTANT)
@@ -155,6 +155,64 @@ inline_operand compiler::get_top_operand()
 }
 
 //---------------------------------------------------------------------------------------------------------------
+
+bool has_regA(opcode code)
+{
+	switch (code)
+	{
+		case opcode::ADD:
+		case opcode::ADD_RK:
+		case opcode::ADD_KR:
+		case opcode::ADD_KK:
+		case opcode::SUB:
+		case opcode::SUB_RK:
+		case opcode::SUB_KR:
+		case opcode::SUB_KK:
+		case opcode::MULTIPLY:
+		case opcode::MULTIPLY_RK:
+		case opcode::MULTIPLY_KR:
+		case opcode::MULTIPLY_KK:
+		case opcode::DIVIDE:
+		case opcode::DIVIDE_RK:
+		case opcode::DIVIDE_KR:
+		case opcode::DIVIDE_KK:
+		case opcode::POWER:
+		case opcode::POWER_RK:
+		case opcode::POWER_KR:
+		case opcode::POWER_KK:
+		case opcode::EQ:
+		case opcode::EQ_RK:
+		case opcode::EQ_KR:
+		case opcode::EQ_KK:
+		case opcode::NEQ:
+		case opcode::NEQ_RK:
+		case opcode::NEQ_KR:
+		case opcode::NEQ_KK:
+		case opcode::L:
+		case opcode::L_RK:
+		case opcode::L_KR:
+		case opcode::L_KK:
+		case opcode::G:
+		case opcode::G_RK:
+		case opcode::G_KR:
+		case opcode::G_KK:
+		case opcode::LEQ:
+		case opcode::LEQ_RK:
+		case opcode::LEQ_KR:
+		case opcode::LEQ_KK:
+		case opcode::GEQ:
+		case opcode::GEQ_RK:
+		case opcode::GEQ_KR:
+		case opcode::GEQ_KK:
+		case opcode::MOVE:
+		case opcode::MOVE_K:
+		case opcode::VALUE:
+		case opcode::CONSTANT:
+			return true;
+	}
+
+	return false;
+}
 
 template<typename T>
 void compiler::compile(T& value)
@@ -243,7 +301,7 @@ void compiler::compile(stmt::assign_statement& statement)
 
 		scope_context.locals_size = size;
 
-		if (peek().opcode == opcode::ADD || peek().opcode == opcode::VALUE)
+		if (has_regA(peek().opcode))
 		{
 			if (peek().A == scope_context.locals_size)
 			{
