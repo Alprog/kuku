@@ -22,6 +22,7 @@ union cell
     kuku::string* string;
     rt::user_class* class_pointer;
 
+    std::strong_ordering operator<=>(const cell& other) const;
     bool operator==(const cell& other) const;
     bool operator!=(const cell& other) const;
 };

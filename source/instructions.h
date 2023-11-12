@@ -76,8 +76,8 @@ struct instruction<opcode::NAME, MODE> : public protected_instruction \
 
 //--------------------------------------------------------------------------------------------
 
-#define cellB routine.call_frame.get_cell<MODE & 1>(B)
-#define cellC routine.call_frame.get_cell<(MODE >> 1 & 1)>(C)
+#define cellB static_cast<cell&>( routine.call_frame.get_cell<MODE & 1>(B) )
+#define cellC static_cast<cell&>( routine.call_frame.get_cell<(MODE >> 1 & 1)>(C) )
 
 Ins(VALUE, "R(A) = INT(sBx)", AsBx)
 {
@@ -101,17 +101,17 @@ Ins(ADD, "R(A) = R(B) + R(C)", M2ABC)
 
 Ins(SUB, "R(A) = R(B) - R(C)", M2ABC)
 {
-	routine.call_frame.stack[A].integer = routine.call_frame.ptr[B >> 7][B].integer - routine.call_frame.ptr[C >> 7][C].integer;
+	routine.call_frame.stack[A].integer = cellB.integer - cellC.integer;
 }};
 
 Ins(MULTIPLY, "R(A) = R(B) * R(C)", M2ABC)
 {
-	routine.call_frame.stack[A].integer = routine.call_frame.ptr[B >> 7][B].integer * routine.call_frame.ptr[C >> 7][C].integer;
+	routine.call_frame.stack[A].integer = cellB.integer * cellC.integer;
 }};
 
 Ins(DIVIDE, "R(A) = R(B) / R(C)", M2ABC)
 {
-	routine.call_frame.stack[A].integer = routine.call_frame.ptr[B >> 7][B].integer / routine.call_frame.ptr[C >> 7][C].integer;
+	routine.call_frame.stack[A].integer = cellB.integer / cellC.integer;
 }};
 
 Ins(POWER, "R(A) = R(B) ^ R(C)", M2ABC)
@@ -121,32 +121,32 @@ Ins(POWER, "R(A) = R(B) ^ R(C)", M2ABC)
 
 Ins(EQ, "R(A) = R(B) == R(C)", M2ABC)
 {
-	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer == routine.call_frame.ptr[C >> 7][C].integer;
+	routine.call_frame.stack[A].boolean = cellB == cellC;
 }};
 
 Ins(NEQ, "R(A) = R(B) != R(C)", M2ABC)
 {
-	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer != routine.call_frame.ptr[C >> 7][C].integer;
+	routine.call_frame.stack[A].boolean = cellB != cellC;
 }};
 
 Ins(L, "R(A) = R(B) < R(C)", M2ABC)
 {
-	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer < routine.call_frame.ptr[C >> 7][C].integer;
+	routine.call_frame.stack[A].boolean = cellB < cellC;
 }};
 
 Ins(G, "R(A) = R(B) > R(C)", M2ABC)
 {
-	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer > routine.call_frame.ptr[C >> 7][C].integer;
+	routine.call_frame.stack[A].boolean = cellB > cellC;
 }};
 
 Ins(LEQ, "R(A) = R(B) <= R(C)", M2ABC)
 {
-	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer <= routine.call_frame.ptr[C >> 7][C].integer;
+	routine.call_frame.stack[A].boolean = cellB <= cellC;
 }};
 
 Ins(GEQ, "R(A) = R(B) >= R(C)", M2ABC)
 {
-	routine.call_frame.stack[A].boolean = routine.call_frame.ptr[B >> 7][B].integer >= routine.call_frame.ptr[C >> 7][C].integer;
+	routine.call_frame.stack[A].boolean = cellB >= cellC;
 }};
 
 Ins(JUMP, "goto JMP(A)", A)
