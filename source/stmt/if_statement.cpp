@@ -4,9 +4,9 @@
 
 void stmt::if_statement::parse_internal(parser& parser)
 {
-	parser.require(token_type::Keyword_if);
+	parser.require(token_type::keyword_if);
 	condition = parser.parse_expression();
-	parser.require(token_type::Keyword_then);
+	parser.require(token_type::keyword_then);
 }
 
 void stmt::if_statement::semantic_analyze()

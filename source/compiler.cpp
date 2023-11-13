@@ -91,37 +91,37 @@ opcode opeartor_token_to_opcode(token_type token_type)
 {
 	switch (token_type)
 	{
-		case token_type::Plus_operator:
+		case token_type::plus_operator:
 			return opcode::ADD;
 
-		case token_type::Less_operator:
+		case token_type::less_operator:
 			return opcode::L;
 
-		case token_type::Minus_operator:
+		case token_type::minus_operator:
 			return opcode::SUB;
 
-		case token_type::Multiply_Operator:
+		case token_type::multiply_Operator:
 			return opcode::MULTIPLY;
 
-		case token_type::Divide_Operator:
+		case token_type::divide_Operator:
 			return opcode::DIVIDE;
 
-		case token_type::Exponent_operator:
+		case token_type::exponent_operator:
 			return opcode::POWER;
 
-		case token_type::Equal_operator:
+		case token_type::equal_operator:
 			return opcode::EQ;
 
-		case token_type::Not_equal_operator:
+		case token_type::not_equal_operator:
 			return opcode::NEQ;
 
-		case token_type::Greater_operator:
+		case token_type::greater_operator:
 			return opcode::G;
 
-		case token_type::Less_or_equal_operator:
+		case token_type::less_or_equal_operator:
 			return opcode::LEQ;
 
-		case token_type::Greater_or_equal_operator:
+		case token_type::greater_or_equal_operator:
 			return opcode::GEQ;
 
 		default:

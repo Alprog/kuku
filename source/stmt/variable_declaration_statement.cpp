@@ -5,7 +5,7 @@
 
 void stmt::variable_declaration_statement::parse_internal(parser& parser)
 {
-    parser.require(token_type::Keyword_var);
+    parser.require(token_type::keyword_var);
     parse_symbol(parser);
 
     if (parser.match(token_type::Colon))

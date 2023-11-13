@@ -18,7 +18,7 @@ token& token::operator=(token& token)
 
 bool token::is_end_statement_token()
 {
-    return type == token_type::End_of_line || type == token_type::Semicolon;
+    return type == token_type::end_of_line || type == token_type::semicolon;
 }
 
 std::u16string token::get_hover_text()

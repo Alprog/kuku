@@ -4,7 +4,7 @@
 
 void stmt::else_statement::parse_internal(parser& parser)
 {
-	parser.require(token_type::Keyword_else);
+	parser.require(token_type::keyword_else);
 }
 
 void stmt::else_statement::compile(compiler& compiler)

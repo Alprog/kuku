@@ -36,7 +36,7 @@ void translation_module::tokenize()
     {
         auto token = lexer.get_next_token();
         tokens.push_back(token);
-        if (token->type == token_type::End_of_source)
+        if (token->type == token_type::end_of_source)
         {
             break;
         }

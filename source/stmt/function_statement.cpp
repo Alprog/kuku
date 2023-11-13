@@ -3,7 +3,7 @@
 
 void stmt::function_statement::parse_internal(parser& parser)
 {
-	parser.require(token_type::Keyword_function);
+	parser.require(token_type::keyword_function);
 	parse_symbol(parser);
 	parser.require(token_type::Open_parenthesis);
 	// arguments

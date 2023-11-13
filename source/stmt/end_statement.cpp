@@ -5,7 +5,7 @@
 
 void stmt::end_statement::parse_internal(parser& parser)
 {
-	parser.require(token_type::Keyword_end);
+	parser.require(token_type::keyword_end);
 }
 
 void stmt::end_statement::compile(compiler& compiler)

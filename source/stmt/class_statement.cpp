@@ -4,7 +4,7 @@
 
 void stmt::class_statement::parse_internal(parser& parser)
 {
-	parser.require(token_type::Keyword_class);
+	parser.require(token_type::keyword_class);
 	parse_symbol(parser);
 }
 

@@ -16,7 +16,7 @@ parser::parser(translation_module& module, token** it)
 
 void parser::skip_empty_tokens()
 {
-    while (current->type == token_type::Comment || current->type == token_type::End_of_line)
+    while (current->type == token_type::comment || current->type == token_type::end_of_line)
     {
         current = *(++it);
     }
@@ -25,7 +25,7 @@ void parser::skip_empty_tokens()
 void parser::next()
 {
     current = *(++it);
-    while (current->type == token_type::Comment)
+    while (current->type == token_type::comment)
     {
         current = *(++it);
     }
@@ -50,35 +50,35 @@ T* parser::create_statement(token* start_token, std::unique_ptr<ast::expression>
 stmt::statement* parser::parse_next_statement()
 {
     skip_empty_tokens();
-    if (current->type == token_type::End_of_source)
+    if (current->type == token_type::end_of_source)
     {
         return nullptr;
     }
-    else if (current->type == token_type::Keyword_var)
+    else if (current->type == token_type::keyword_var)
     {
         return create_statement<stmt::variable_declaration_statement>();
     }
-    else if (current->type == token_type::Keyword_if)
+    else if (current->type == token_type::keyword_if)
     {
         return create_statement<stmt::if_statement>();
     }
-    else if (current->type == token_type::Keyword_else)
+    else if (current->type == token_type::keyword_else)
     {
         return create_statement<stmt::else_statement>();
     }
-    else if (current->type == token_type::Keyword_end)
+    else if (current->type == token_type::keyword_end)
     {
         return create_statement<stmt::end_statement>();
     }
-    else if (current->type == token_type::Keyword_function)
+    else if (current->type == token_type::keyword_function)
     {
         return create_statement<stmt::function_statement>();
     }
-    else if (current->type == token_type::Keyword_class)
+    else if (current->type == token_type::keyword_class)
     {
         return create_statement<stmt::class_statement>();
     }
-    else if (current->type == token_type::Keyword_return)
+    else if (current->type == token_type::keyword_return)
     {
         return create_statement<stmt::return_statement>();
     }
@@ -88,7 +88,7 @@ stmt::statement* parser::parse_next_statement()
         try
         {
             auto expression = parse_expression();
-            if (current->type == token_type::Assign_operator)
+            if (current->type == token_type::assign_operator)
             {
                 return create_statement<stmt::assign_statement>(start_token, std::move(expression));
             }
@@ -142,29 +142,29 @@ std::unique_ptr<ast::binary_operator_expression> parser::parse_binary_operator_c
 
 std::unique_ptr<ast::expression> parser::parse_operand()
 {
-    if (current->type == token_type::Identifier)
+    if (current->type == token_type::identifier)
     {
         auto symbol_expression = std::make_unique<ast::symbol_expression>(*current);
         next();
         return std::move(symbol_expression);
     }
-    if (current->type == token_type::Integer_literal)
+    if (current->type == token_type::integer_literal)
     {
         auto literal = std::make_unique<ast::integer_literal>(*current);
         next();
         return std::move(literal);
     }
-    if (current->type == token_type::String_literal)
+    if (current->type == token_type::string_literal)
     {
         auto literal = std::make_unique<ast::string_literal>(*current);
         next();
         return std::move(literal);
     }
-    if (current->type == token_type::Open_parenthesis)
+    if (current->type == token_type::open_parenthesis)
     {
         next();
         auto expression = parse_expression();
-        require(token_type::Close_parenthesis);
+        require(token_type::close_parenthesis);
         return std::move(expression);
     }
     throw unexpected_error();
@@ -222,7 +222,7 @@ void parser::require_end_of_statement()
 
 symbol_reference parser::read_symbol_reference()
 {
-    if (current->type == token_type::Identifier)
+    if (current->type == token_type::identifier)
     {   
         auto name = current->get_source_text();
         auto reference = symbol_reference();
