@@ -10,7 +10,7 @@ stmt::assign_statement::assign_statement(std::unique_ptr<ast::expression> expres
 
 void stmt::assign_statement::parse_internal(parser& parser)
 {
-	parser.require(token_type::Assign_operator);
+	parser.require(token_type::assign_operator);
 	rvalue = parser.parse_expression();
 	if (!rvalue)
 	{
