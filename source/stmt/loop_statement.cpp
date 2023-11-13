@@ -13,7 +13,10 @@ void stmt::loop_statement::parse_internal(parser& parser)
 
 void stmt::loop_statement::semantic_analyze()
 {
-	condition->semantic_analyze(*this);
+	if (condition)
+	{
+		condition->semantic_analyze(*this);
+	}
 }
 
 void stmt::loop_statement::compile(compiler& compiler)
