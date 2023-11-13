@@ -359,3 +359,18 @@ void compiler::compile(stmt::end_statement& statement)
 	jump_here(scope_context.skip_jump_place);
 }
 
+template<>
+void compiler::compile(stmt::while_statement& statement)
+{
+}
+
+template<>
+void compiler::compile(stmt::for_statement& statement)
+{
+}
+
+
+template<>
+void compiler::compile(stmt::loop_statement& statement)
+{
+}
