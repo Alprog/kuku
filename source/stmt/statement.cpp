@@ -20,7 +20,7 @@ stmt::statement* stmt::statement::init(parser& parser, token* start_token)
 	catch (unexpected_error)
 	{
 		this->is_valid = false;
-		if (parser.current->type == token_type::End_of_line)
+		if (parser.current->type == token_type::end_of_line)
 		{
 			this->error_text = u"unexpected end of line";
 		}

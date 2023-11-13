@@ -8,13 +8,13 @@ void stmt::variable_declaration_statement::parse_internal(parser& parser)
     parser.require(token_type::keyword_var);
     parse_symbol(parser);
 
-    if (parser.match(token_type::Colon))
+    if (parser.match(token_type::colon))
     {
-        parser.require(token_type::Identifier);
+        parser.require(token_type::identifier);
         CHECK_END_OF_STATEMENT
     }
 
-    parser.require(token_type::Assign_operator);
+    parser.require(token_type::assign_operator);
     expression = parser.parse_expression();
 }
 
