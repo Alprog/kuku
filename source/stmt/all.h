@@ -2,7 +2,9 @@
 
 #include "assign_statement.h"
 #include "block_statement.h"
+#include "break_statement.h"
 #include "class_statement.h"
+#include "continue_statement.h"
 #include "else_statement.h"
 #include "end_statement.h"
 #include "expression_statement.h"

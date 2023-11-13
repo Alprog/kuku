@@ -369,8 +369,18 @@ void compiler::compile(stmt::for_statement& statement)
 {
 }
 
-
 template<>
 void compiler::compile(stmt::loop_statement& statement)
 {
 }
+
+template<>
+void compiler::compile(stmt::continue_statement& statement)
+{
+}
+
+template<>
+void compiler::compile(stmt::break_statement& statement)
+{
+}
+

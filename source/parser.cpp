@@ -50,57 +50,65 @@ T* parser::create_statement(token* start_token, std::unique_ptr<ast::expression>
 stmt::statement* parser::parse_next_statement()
 {
     skip_empty_tokens();
-    if (current->type == token_type::end_of_source)
+    
+    switch (current->type)
     {
-        return nullptr;
+        case token_type::keyword_break:
+            return create_statement<stmt::break_statement>();
+
+        case token_type::keyword_class:
+            return create_statement<stmt::class_statement>();
+
+        case token_type::keyword_continue:
+            return create_statement<stmt::continue_statement>();
+
+        case token_type::keyword_else:
+            return create_statement<stmt::else_statement>();
+
+        case token_type::keyword_end:
+            return create_statement<stmt::end_statement>();
+
+        case token_type::end_of_source:
+            return nullptr;
+
+        case token_type::keyword_for:
+            return create_statement<stmt::for_statement>();
+
+        case token_type::keyword_function:
+            return create_statement<stmt::function_statement>();
+
+        case token_type::keyword_if:
+            return create_statement<stmt::if_statement>();
+
+        case token_type::keyword_loop:
+            return create_statement<stmt::loop_statement>();
+
+        case token_type::keyword_return:
+            return create_statement<stmt::return_statement>();
+
+        case token_type::keyword_var:
+            return create_statement<stmt::variable_declaration_statement>();
+
+        case token_type::keyword_while:
+            return create_statement<stmt::while_statement>();
     }
-    else if (current->type == token_type::keyword_var)
+
+    auto start_token = current;
+    try
     {
-        return create_statement<stmt::variable_declaration_statement>();
-    }
-    else if (current->type == token_type::keyword_if)
-    {
-        return create_statement<stmt::if_statement>();
-    }
-    else if (current->type == token_type::keyword_else)
-    {
-        return create_statement<stmt::else_statement>();
-    }
-    else if (current->type == token_type::keyword_end)
-    {
-        return create_statement<stmt::end_statement>();
-    }
-    else if (current->type == token_type::keyword_function)
-    {
-        return create_statement<stmt::function_statement>();
-    }
-    else if (current->type == token_type::keyword_class)
-    {
-        return create_statement<stmt::class_statement>();
-    }
-    else if (current->type == token_type::keyword_return)
-    {
-        return create_statement<stmt::return_statement>();
-    }
-    else
-    {
-        auto start_token = current;
-        try
+        auto expression = parse_expression();
+        if (current->type == token_type::assign_operator)
         {
-            auto expression = parse_expression();
-            if (current->type == token_type::assign_operator)
-            {
-                return create_statement<stmt::assign_statement>(start_token, std::move(expression));
-            }
-            else
-            {
-                return create_statement<stmt::expression_statement>(start_token, std::move(expression));
-            }
+            return create_statement<stmt::assign_statement>(start_token, std::move(expression));
         }
-        catch (unexpected_error& error)
+        else
         {
-            return create_statement<stmt::unknown_statement>(start_token);
+            return create_statement<stmt::expression_statement>(start_token, std::move(expression));
         }
+    }
+    catch (unexpected_error& error)
+    {
+        return create_statement<stmt::unknown_statement>(start_token);
     }
 }
 

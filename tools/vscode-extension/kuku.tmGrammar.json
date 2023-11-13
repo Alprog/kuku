@@ -5,7 +5,7 @@
 	[
 		{
 			"name": "keyword.other.kuku",
-			"match": "\\b(class|var|function|if|while|for|return)\\b"
+			"match": "\\b(class|var|function|if|while|for|loop|continue|break|do|return|and|or|then|end)\\b"
 		},
 		{
 			"name": "string.quoted.single.kuku",
