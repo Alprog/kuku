@@ -113,6 +113,7 @@ chunk translation_module::compile_to_chunk()
 
 void translation_module::clear()
 {
+    root_scope.clear();
     for (auto& token : tokens)
     {
         delete token;

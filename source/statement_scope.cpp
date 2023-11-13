@@ -50,3 +50,8 @@ symbol* statement_scope::find_symbol(std::u16string name, int requesting_stateme
 
 	return nullptr;
 }
+
+void statement_scope::clear()
+{
+	symbols.clear();
+}

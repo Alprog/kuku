@@ -19,12 +19,12 @@ public:
 
 	bool is_root();
 	statement_scope* get_parent();
-	scope_type type;
 
 	void define_symbol(symbol* symbol);
 	symbol* find_symbol(std::u16string name, int requesting_statement_sequence_number);
+	void clear();
 
+	scope_type type;
 	std::vector<symbol*> symbols;
-
 	stmt::statement* statement;
 };
