@@ -1,5 +1,16 @@
 
 if 1 then
+
+	var a = 0
+	while a < 4 do
+		a = a + 1
+	loop
+
+end
+
+#[
+
+if 1 then
 	var a = 3
 	if a then
 		var b = 4
@@ -24,3 +35,5 @@ if 1 then
 		b = b + a
 	end
 end
+
+#]

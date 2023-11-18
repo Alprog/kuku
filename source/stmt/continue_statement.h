@@ -16,5 +16,7 @@ namespace stmt
 	protected:
 		virtual void parse_internal(parser& parser) override;
 		virtual void compile(compiler& compiler) override;
+
+		int level = 1;
 	};
 }

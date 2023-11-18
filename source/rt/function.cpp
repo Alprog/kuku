@@ -14,7 +14,7 @@ const rt::localvar_info& rt::function::get_local_info(int instruction_offset, in
 	{
 		if (info.stack_offset == stack_offset)
 		{
-			if (instruction_offset >= info.start_instruction && instruction_offset < info.end_instruction)
+			if (instruction_offset >= info.start_instruction && instruction_offset <= info.end_instruction)
 			{
 				return info;
 			}

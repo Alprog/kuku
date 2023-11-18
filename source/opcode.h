@@ -4,7 +4,7 @@
 #include "reflectable_enum.h"
 
 #define CODES2(X) X, X##_K
-#define CODES4(X) X, X##_RK, X##_KR, X##_KK
+#define CODES4(X) X, X##_KR, X##_RK, X##_KK
 
 reflectable_enum(opcode, byte,
 	CODES4(ADD),
@@ -20,14 +20,14 @@ reflectable_enum(opcode, byte,
 	CODES4(GEQ),
 
 	CODES2(ASSIGN),
-	CODES2(IFJUMP),
-
+	
 	VALUE,
 	PRINT,
 	CREATE_OBJECT,
 	SET_FIELD,
 	VIRTUAL_CALL,
 	JUMP,
+	IFJUMP,
 
 	END
 );

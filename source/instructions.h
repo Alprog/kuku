@@ -25,6 +25,7 @@
 #define MACRO_ARGS_AB    MACRO_ARG_A, MACRO_ARG_B
 #define MACRO_ARGS_MAB   MACRO_ARG_MB, MACRO_ARG_A, MACRO_ARG_B
 #define MACRO_ARGS_ABx   MACRO_ARG_A, MACRO_ARG_Bx
+#define MACRO_ARGS_sBx   MACRO_ARG_sBx
 #define MACRO_ARGS_AsBx  MACRO_ARG_A, MACRO_ARG_sBx
 #define MACRO_ARGS_ABC   MACRO_ARG_A, MACRO_ARG_B, MACRO_ARG_C
 
@@ -144,14 +145,14 @@ Ins(GEQ, "R(A) = R(B) >= R(C)", M2ABC)
 	routine.call_frame.stack[A].boolean = cellB >= cellC;
 }};
 
-Ins(JUMP, "goto JMP(A)", A)
+Ins(JUMP, "goto JMP(sBx)", sBx)
 {
-	routine.call_frame.ip += A;
+	routine.call_frame.ip += sBx;
 }};
 
-Ins(IFJUMP, "if !R(B) then goto JMP(A)", MAB)
+Ins(IFJUMP, "if !R(A) then goto JMP(sBx)", AsBx)
 {
-	routine.call_frame.ip += cellB.boolean ? 1 : A;
+	routine.call_frame.ip += routine.call_frame.stack[A].boolean ? 1 : sBx;
 }};
 
 Ins(PRINT, "print R(A)", A)
