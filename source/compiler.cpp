@@ -43,7 +43,7 @@ void compiler::start_new_function()
 
 void compiler::enter_scope(bool is_loop)
 {
-	scope_contexts.push_emplace(get_current_place(), scope_context().stack_size, is_loop);
+	scope_contexts.push_emplace(get_current_place(), get_scope_context().stack_size, is_loop);
 }
 
 void compiler::enter_loop_scope()
@@ -53,7 +53,7 @@ void compiler::enter_loop_scope()
 
 void compiler::exit_scope()
 {
-	for (auto& jump_place : scope_context().jump_to_end_places)
+	for (auto& jump_place : get_scope_context().jump_to_end_places)
 	{
 		int jump_offset = get_current_place() - jump_place;
 		reinterpret_cast<instruction_JUMP*>(&current_function->bytecode.instructions[jump_place])->sBx = jump_offset;
@@ -80,6 +80,28 @@ void compiler::jump_here(int jump_place)
 void compiler::spawn(base_instruction instruction)
 {
 	current_function->bytecode.instructions.push_back(instruction);
+}
+
+void compiler::spawn_jump_to_start()
+{
+	spawn_jump_to_start(get_scope_context());
+}
+
+void compiler::spawn_jump_to_start(scope_context& scope_context)
+{
+	int offset = scope_context.start_place - get_current_place();
+	spawn(instruction_JUMP{ (int16_t)offset });
+}
+
+void compiler::spawn_jump_to_end()
+{
+	spawn_jump_to_end(get_scope_context());
+}
+
+void compiler::spawn_jump_to_end(scope_context& scope_context)
+{
+	scope_context.jump_to_end_places.push_back(get_current_place());
+	spawn(instruction_JUMP{ 0 });
 }
 
 base_instruction& compiler::peek()
@@ -150,7 +172,7 @@ inline_operand compiler::get_top_operand()
 			if (opcode == opcode::ASSIGN || opcode == opcode::ASSIGN_K)
 			{
 				operand = { peek().MB, pop().B };
-				scope_context().stack_size--;
+				get_scope_context().stack_size--;
 			}
 		}
 	}
@@ -161,6 +183,27 @@ inline_operand compiler::get_top_operand()
 int compiler::get_current_place()
 {
 	return current_function->bytecode.instructions.size();
+}
+
+scope_context& compiler::get_loop_context(int level)
+{
+	auto& elements = scope_contexts.elements;
+	for (int i = elements.size() - 1; i >= 0; i--)
+	{
+		if (elements[i].is_loop)
+		{
+			if (--level == 0)
+			{
+				return elements[i];
+			}
+		}
+	}
+	throw std::exception("can't find loop context");
+}
+
+scope_context& compiler::get_scope_context()
+{
+	return scope_contexts.top(); 
 }
 
 //---------------------------------------------------------------------------------------------------------------
@@ -232,7 +275,7 @@ template<>
 void compiler::compile(ast::integer_literal& literal)
 {
 	const int index = current_function->add_constant(literal.value);
-	spawn(instruction_ASSIGN{ instruction_mode::K, (byte)scope_context().stack_size++, (byte)index });
+	spawn(instruction_ASSIGN{ instruction_mode::K, (byte)get_scope_context().stack_size++, (byte)index });
 }
 
 template<>
@@ -249,8 +292,8 @@ void compiler::compile(ast::symbol_expression& expression)
 		auto variable = dynamic_cast<variable_symbol*>(expression.reference.symbol);
 		if (variable != nullptr)
 		{
-			spawn(instruction_ASSIGN{ instruction_mode::R, (byte)scope_context().stack_size, (byte)variable->stack_offset });
-			scope_context().stack_size++;
+			spawn(instruction_ASSIGN{ instruction_mode::R, (byte)get_scope_context().stack_size, (byte)variable->stack_offset });
+			get_scope_context().stack_size++;
 		}
 	}
 }
@@ -261,7 +304,7 @@ void compiler::compile(ast::binary_operator_expression& expression)
 	base_instruction instruction;
 	instruction.opcode = opeartor_token_to_opcode(expression.op.token_type);
 
-	instruction.A = (byte)scope_context().stack_size;
+	instruction.A = (byte)get_scope_context().stack_size;
 
 	compile(expression.left);
 	instruction.set_B_cell(get_top_operand());
@@ -271,14 +314,14 @@ void compiler::compile(ast::binary_operator_expression& expression)
 
 	spawn(instruction);
 
-	scope_context().stack_size = instruction.A + 1;
+	get_scope_context().stack_size = instruction.A + 1;
 }
 
 template<>
 void compiler::compile(stmt::variable_declaration_statement& statement)
 {
 	auto variable_symbol = statement.get_symbol();
-	variable_symbol->stack_offset = scope_context().stack_size;
+	variable_symbol->stack_offset = get_scope_context().stack_size;
 
 	rt::localvar_info info;
 	info.name = variable_symbol->name;
@@ -301,18 +344,18 @@ void compiler::compile(stmt::assign_statement& statement)
 		auto symbol = symbol_expression->reference.symbol;
 		byte a = symbol->stack_offset;
 
-		auto size = (byte)scope_context().stack_size;
+		auto size = (byte)get_scope_context().stack_size;
 
 		compile(statement.rvalue); // spawn src
 		inline_operand b = get_top_operand();
-		scope_context().stack_size = size;
+		get_scope_context().stack_size = size;
 
 		// last command retarget optimization 
 		if (optimizations)
 		{
 			if (has_regA(peek().opcode))
 			{
-				if (peek().A == scope_context().stack_size)
+				if (peek().A == get_scope_context().stack_size)
 				{
 					peek().A = a;
 					return;
@@ -341,26 +384,25 @@ void compiler::compile(stmt::if_statement& statement)
 {
 	enter_scope();
 
-	auto size = scope_context().stack_size;
+	auto size = get_scope_context().stack_size;
 
 	compile(statement.condition);
 	inline_operand b = get_top_operand();
 
 	if (b.mode == instruction_mode::R)
 	{
-		scope_context().jump_to_end_places.push_back(get_current_place());
+		get_scope_context().jump_to_end_places.push_back(get_current_place());
 		spawn(instruction_IFJUMP{ b.value, 0 });
 	}
 	else
 	{
 		if (!current_function->constant_buffer[b.value].boolean)
 		{
-			scope_context().jump_to_end_places.push_back(get_current_place());
-			spawn(instruction_JUMP{ 0 });
+			spawn_jump_to_end();
 		}
 	}
 	
-	scope_context().stack_size = size;
+	get_scope_context().stack_size = size;
 }
 
 template<>
@@ -372,7 +414,7 @@ void compiler::compile(stmt::else_statement& statement)
 	exit_scope();
 	enter_scope(false);
 
-	scope_context().jump_to_end_places.push_back(jump_place);
+	get_scope_context().jump_to_end_places.push_back(jump_place);
 }
 
 template<>
@@ -386,26 +428,25 @@ void compiler::compile(stmt::while_statement& statement)
 {
 	enter_scope(true);
 
-	auto size = scope_context().stack_size;
+	auto size = get_scope_context().stack_size;
 
 	compile(statement.condition);
 	inline_operand b = get_top_operand();
 
 	if (b.mode == instruction_mode::R)
 	{
-		scope_context().jump_to_end_places.push_back(get_current_place());
+		get_scope_context().jump_to_end_places.push_back(get_current_place());
 		spawn(instruction_IFJUMP{ b.value, 0 });
 	}
 	else
 	{
 		if (!current_function->constant_buffer[b.value].boolean)
 		{
-			scope_context().jump_to_end_places.push_back(get_current_place());
-			spawn(instruction_JUMP{ 0 });
+			spawn_jump_to_end();
 		}
 	}
 
-	scope_context().stack_size = size;
+	get_scope_context().stack_size = size;
 }
 
 template<>
@@ -416,18 +457,19 @@ void compiler::compile(stmt::for_statement& statement)
 template<>
 void compiler::compile(stmt::loop_statement& statement)
 {
-	int offset = scope_context().start_place - get_current_place();
-	spawn(instruction_JUMP{(int16_t)offset});
+	spawn_jump_to_start();
 	exit_scope();
 }
 
 template<>
 void compiler::compile(stmt::continue_statement& statement)
 {
+	spawn_jump_to_start(get_loop_context(statement.level));
 }
 
 template<>
 void compiler::compile(stmt::break_statement& statement)
 {
+	spawn_jump_to_end(get_loop_context(statement.level));
 }
 

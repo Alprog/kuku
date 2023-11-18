@@ -1,11 +1,15 @@
 
 if 1 then
-
 	var a = 0
+	var b = 0
 	while a < 4 do
 		a = a + 1
+		if b == 2 then
+			break
+		end
+		b = b + 1
 	loop
-
+	b = 7
 end
 
 #[

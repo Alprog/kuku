@@ -23,6 +23,10 @@ public:
 	void jump_here(int jump_place);
 
 	void spawn(base_instruction instruction);
+	void spawn_jump_to_start();
+	void spawn_jump_to_start(scope_context& scope_context);
+	void spawn_jump_to_end();
+	void spawn_jump_to_end(scope_context& scope_context);
 
 	base_instruction& peek();
 	base_instruction pop();
@@ -30,15 +34,16 @@ public:
 	inline_operand get_top_operand();
 	int get_current_place();
 
+	scope_context& get_loop_context(int level = 1);
+	scope_context& get_scope_context();
+
 	template<typename T>
 	void compile(T& value);
 
 	chunk chunk;
 	rt::function* current_function;
 
-	stack_ex<scope_context> scope_contexts;
-	scope_context& scope_context() { return scope_contexts.top(); }
-
+	stack_ex<::scope_context> scope_contexts;
 	translation_module& module;
 	symbol_table symbol_table;
 };
