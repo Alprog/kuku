@@ -21,8 +21,7 @@ public:
 
 	void compile();
 	void start_new_function(std::u16string name);
-	void enter_scope(bool is_loop = false);
-	void enter_loop_scope();
+	void enter_scope(scope_type scope_type);
 	void exit_scope();
 	void define_local_variable(stmt::symboled_statement_base& statement);
 	

@@ -24,14 +24,12 @@ void compiler::compile()
 		}
 	}
 	
-	scope_contexts.push_emplace(0, 0, false);
+	scope_contexts.push_emplace(scope_type::module_root, 0, 0);
 
 	for (auto& statement : module.statements)
 	{
 		compile(statement);
 	}
-
-	spawn(instruction_END());
 }
 
 void compiler::start_new_function(std::u16string name)
@@ -40,14 +38,9 @@ void compiler::start_new_function(std::u16string name)
 	current_function->name = name;
 }
 
-void compiler::enter_scope(bool is_loop)
+void compiler::enter_scope(scope_type scope_type)
 {
-	scope_contexts.push_emplace(get_current_place(), get_scope_context().stack_size, is_loop);
-}
-
-void compiler::enter_loop_scope()
-{
-	enter_scope(true);
+	scope_contexts.push_emplace(scope_type, get_current_place(), get_scope_context().stack_size);
 }
 
 void compiler::exit_scope()
@@ -197,7 +190,7 @@ scope_context& compiler::get_loop_context(int level)
 	auto& elements = scope_contexts.elements;
 	for (int i = elements.size() - 1; i >= 0; i--)
 	{
-		if (elements[i].is_loop)
+		if (elements[i].scope_type == scope_type::loop_body)
 		{
 			if (--level == 0)
 			{
@@ -373,13 +366,13 @@ template<>
 void compiler::compile(stmt::function_statement& statement)
 {
 	start_new_function(statement.symbol->name);
-	enter_scope();
+	enter_scope(statement.inner_scope.type);
 }
 
 template<>
 void compiler::compile(stmt::if_statement& statement)
 {
-	enter_scope();
+	enter_scope(statement.inner_scope.type);
 
 	auto size = get_scope_context().stack_size;
 
@@ -409,7 +402,7 @@ void compiler::compile(stmt::else_statement& statement)
 	spawn(instruction_JUMP(0));
 
 	exit_scope();
-	enter_scope(false);
+	enter_scope(statement.inner_scope.type);
 
 	get_scope_context().jump_to_end_places.push_back(jump_place);
 }
@@ -417,13 +410,17 @@ void compiler::compile(stmt::else_statement& statement)
 template<>
 void compiler::compile(stmt::end_statement& statement)
 {	
+	if (get_scope_context().scope_type == scope_type::function_body)
+	{
+		spawn(instruction_END());
+	}
 	exit_scope();
 }
 
 template<>
 void compiler::compile(stmt::while_statement& statement)
 {
-	enter_scope(true);
+	enter_scope(statement.inner_scope.type);
 
 	auto size = get_scope_context().stack_size;
 
@@ -449,7 +446,7 @@ void compiler::compile(stmt::while_statement& statement)
 template<>
 void compiler::compile(stmt::for_statement& statement)
 {
-	enter_scope();
+	enter_scope(statement.inner_scope.type);
 
 	uint8_t index = (uint8_t)get_scope_context().stack_size;
 
