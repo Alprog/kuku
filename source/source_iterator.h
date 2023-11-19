@@ -14,7 +14,7 @@ public:
     source_iterator operator++(int); // post
 
     source_iterator(text_document& text_document);
-
+    
     utf16unit operator*();
 
     lsp::position position;

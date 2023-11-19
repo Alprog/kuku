@@ -8,7 +8,12 @@
 #include "stack_ex.h"
 
 class translation_module;
- 
+
+namespace stmt
+{
+	class symboled_statement_base;
+}
+
 class compiler
 {
 public:
@@ -19,9 +24,8 @@ public:
 	void enter_scope(bool is_loop = false);
 	void enter_loop_scope();
 	void exit_scope();
-
-	void jump_here(int jump_place);
-
+	void define_local_variable(stmt::symboled_statement_base& statement);
+	
 	void spawn(base_instruction instruction);
 	void spawn_jump_to_start();
 	void spawn_jump_to_start(scope_context& scope_context);

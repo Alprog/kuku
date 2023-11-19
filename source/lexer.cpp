@@ -177,7 +177,8 @@ token* lexer::get_next_token()
         {
             auto startIt = it++;
             while (is_digit(*it)) ++it;
-            if (*it == '.')
+            auto it2 = it;
+            if (*it2++ == '.' && *it2 != '.')
             {
                 ++it;
                 while (is_digit(*it)) ++it;

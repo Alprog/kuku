@@ -100,7 +100,7 @@ Ins(SUB, "R(A) = R(B) - R(C)", M2ABC)
 	routine.call_frame.stack[A].integer = cellB.integer - cellC.integer;
 }};
 
-Ins(MULTIPLY, "R(A) = R(B) * R(C)", M2ABC)
+Ins(MULT, "R(A) = R(B) * R(C)", M2ABC)
 {
 	routine.call_frame.stack[A].integer = cellB.integer * cellC.integer;
 }};
@@ -178,6 +178,11 @@ Ins(VIRTUAL_CALL, "call FNC(B) with INT(A) args", AB)
 	rt::user_class& self_class = routine.vm.type_registry.classes[self.class_index];
 	rt::function& function = self_class.vtable[B];
 	routine.push_call_frame(function, frame_start);
+}};
+
+Ins(INC, "R(A) += 1", A)
+{
+	routine.call_frame.stack[A].integer++;
 }};
 
 Ins(END, "end", NONE)

@@ -33,7 +33,7 @@ void compiler::compile()
 		compile(statement);
 	}
 
-	spawn(instruction_END{});
+	spawn(instruction_END());
 }
 
 void compiler::start_new_function()
@@ -71,10 +71,18 @@ void compiler::exit_scope()
 	}
 }
 
-void compiler::jump_here(int jump_place)
+void compiler::define_local_variable(stmt::symboled_statement_base& statement)
 {
-	int jump_offset = current_function->bytecode.instructions.size() - jump_place;
-	reinterpret_cast<instruction_JUMP*>(&current_function->bytecode.instructions[jump_place])->sBx = jump_offset;
+	auto variable_symbol = statement.get_symbol();
+	variable_symbol->stack_offset = get_scope_context().stack_size;
+
+	rt::localvar_info info;
+	info.name = variable_symbol->name;
+	info.stack_offset = variable_symbol->stack_offset;
+	info.type_index = type_index::Integer;
+	info.start_instruction = get_current_place();
+	info.end_instruction = -1;
+	current_function->locals.push_back(info);
 }
 
 void compiler::spawn(base_instruction instruction)
@@ -90,7 +98,7 @@ void compiler::spawn_jump_to_start()
 void compiler::spawn_jump_to_start(scope_context& scope_context)
 {
 	int offset = scope_context.start_place - get_current_place();
-	spawn(instruction_JUMP{ (int16_t)offset });
+	spawn(instruction_JUMP(offset));
 }
 
 void compiler::spawn_jump_to_end()
@@ -101,7 +109,7 @@ void compiler::spawn_jump_to_end()
 void compiler::spawn_jump_to_end(scope_context& scope_context)
 {
 	scope_context.jump_to_end_places.push_back(get_current_place());
-	spawn(instruction_JUMP{ 0 });
+	spawn(instruction_JUMP(0));
 }
 
 base_instruction& compiler::peek()
@@ -131,7 +139,7 @@ opcode opeartor_token_to_opcode(token_type token_type)
 			return opcode::SUB;
 
 		case token_type::multiply_Operator:
-			return opcode::MULTIPLY;
+			return opcode::MULT;
 
 		case token_type::divide_Operator:
 			return opcode::DIVIDE;
@@ -220,10 +228,10 @@ bool has_regA(opcode code)
 		case opcode::SUB_RK:
 		case opcode::SUB_KR:
 		case opcode::SUB_KK:
-		case opcode::MULTIPLY:
-		case opcode::MULTIPLY_RK:
-		case opcode::MULTIPLY_KR:
-		case opcode::MULTIPLY_KK:
+		case opcode::MULT:
+		case opcode::MULT_RK:
+		case opcode::MULT_KR:
+		case opcode::MULT_KK:
 		case opcode::DIVIDE:
 		case opcode::DIVIDE_RK:
 		case opcode::DIVIDE_KR:
@@ -275,7 +283,7 @@ template<>
 void compiler::compile(ast::integer_literal& literal)
 {
 	const int index = current_function->add_constant(literal.value);
-	spawn(instruction_ASSIGN{ instruction_mode::K, (byte)get_scope_context().stack_size++, (byte)index });
+	spawn(instruction_ASSIGN(instruction_mode::K, get_scope_context().stack_size++, index));
 }
 
 template<>
@@ -292,7 +300,7 @@ void compiler::compile(ast::symbol_expression& expression)
 		auto variable = dynamic_cast<variable_symbol*>(expression.reference.symbol);
 		if (variable != nullptr)
 		{
-			spawn(instruction_ASSIGN{ instruction_mode::R, (byte)get_scope_context().stack_size, (byte)variable->stack_offset });
+			spawn(instruction_ASSIGN(instruction_mode::R, get_scope_context().stack_size, variable->stack_offset));
 			get_scope_context().stack_size++;
 		}
 	}
@@ -320,19 +328,8 @@ void compiler::compile(ast::binary_operator_expression& expression)
 template<>
 void compiler::compile(stmt::variable_declaration_statement& statement)
 {
-	auto variable_symbol = statement.get_symbol();
-	variable_symbol->stack_offset = get_scope_context().stack_size;
-
-	rt::localvar_info info;
-	info.name = variable_symbol->name;
-	info.stack_offset = variable_symbol->stack_offset;
-	info.type_index = type_index::Integer;
-	info.start_instruction = current_function->bytecode.instructions.size();
-	info.end_instruction = -1;
-
+	define_local_variable(statement);
 	compile(statement.expression);
-
-	current_function->locals.push_back(info);
 }
 
 template<>
@@ -362,8 +359,8 @@ void compiler::compile(stmt::assign_statement& statement)
 				}
 			}
 		}
-		
-		spawn(instruction_ASSIGN{ b.mode, a, b.value });
+
+		spawn(instruction_ASSIGN(b.mode, a, b.value));
 	}
 }
 
@@ -392,7 +389,7 @@ void compiler::compile(stmt::if_statement& statement)
 	if (b.mode == instruction_mode::R)
 	{
 		get_scope_context().jump_to_end_places.push_back(get_current_place());
-		spawn(instruction_IFJUMP{ b.value, 0 });
+		spawn(instruction_IFJUMP(b.value, 0));
 	}
 	else
 	{
@@ -409,7 +406,7 @@ template<>
 void compiler::compile(stmt::else_statement& statement)
 {
 	int jump_place = get_current_place();
-	spawn(instruction_JUMP{ 0 });
+	spawn(instruction_JUMP(0));
 
 	exit_scope();
 	enter_scope(false);
@@ -436,7 +433,7 @@ void compiler::compile(stmt::while_statement& statement)
 	if (b.mode == instruction_mode::R)
 	{
 		get_scope_context().jump_to_end_places.push_back(get_current_place());
-		spawn(instruction_IFJUMP{ b.value, 0 });
+		spawn(instruction_IFJUMP(b.value, 0));
 	}
 	else
 	{
@@ -452,6 +449,29 @@ void compiler::compile(stmt::while_statement& statement)
 template<>
 void compiler::compile(stmt::for_statement& statement)
 {
+	enter_scope();
+
+	uint8_t index = (uint8_t)get_scope_context().stack_size;
+
+	// index + 0: counter
+	// index + 1: max_value
+	// index + 2: temp comparison
+
+	// preparation
+	define_local_variable(statement);
+	compile(statement.start_expression);
+	compile(statement.end_expression);
+	spawn(instruction_JUMP(2));
+
+	get_scope_context().start_place = get_current_place();
+
+	// increment
+	spawn(instruction_INC(index));
+
+	// condition
+	spawn(instruction_LEQ(instruction_mode::RR, index + 2, index, index + 1));
+	get_scope_context().jump_to_end_places.push_back(get_current_place());
+	spawn(instruction_IFJUMP(index + 2, 0));
 }
 
 template<>

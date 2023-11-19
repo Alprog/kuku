@@ -9,7 +9,7 @@
 reflectable_enum(opcode, byte,
 	CODES4(ADD),
 	CODES4(SUB),
-	CODES4(MULTIPLY),
+	CODES4(MULT),
 	CODES4(DIVIDE),
 	CODES4(POWER),
 	CODES4(EQ),
@@ -28,6 +28,7 @@ reflectable_enum(opcode, byte,
 	VIRTUAL_CALL,
 	JUMP,
 	IFJUMP,
+	INC,
 
 	END
 );

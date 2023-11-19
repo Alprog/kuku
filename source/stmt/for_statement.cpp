@@ -15,6 +15,8 @@ void stmt::for_statement::parse_internal(parser& parser)
 
 void stmt::for_statement::semantic_analyze()
 {
+	start_expression->semantic_analyze(*this);
+	end_expression->semantic_analyze(*this);
 }
 
 void stmt::for_statement::compile(compiler& compiler)
