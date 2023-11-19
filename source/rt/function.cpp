@@ -49,6 +49,7 @@ byte rt::function::add_constant(cell cell)
 
 void rt::function::full_dump()
 {
+	console::write_line(name);
 	print_instructions(true);
 	console::new_line();
 	print_constant_buffer();

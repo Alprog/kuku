@@ -35,7 +35,12 @@ void test()
 
 		chunk chunk = project.get_module("C:/kuku/data/test.kuku")->compile_to_chunk();
 
-		chunk.functions[0].full_dump();
+		for (auto& function : chunk.functions)
+		{
+			function.full_dump();
+
+			console::new_line();
+		}
 
 		console::read_line();
 
