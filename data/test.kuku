@@ -1,5 +1,5 @@
 
-if 1 then
+function main()
 	var a = 1
 	for i in 1..10 do
 		a = a * 2
@@ -7,9 +7,7 @@ if 1 then
 	print a
 end
 
-print 111111111
-
-if 2 then
+function yo()
 	var a = 1
 	var i = 0
 	while i < 10 do

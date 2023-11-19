@@ -20,7 +20,7 @@ public:
 	compiler(translation_module& module);
 
 	void compile();
-	void start_new_function();
+	void start_new_function(std::u16string name);
 	void enter_scope(bool is_loop = false);
 	void enter_loop_scope();
 	void exit_scope();

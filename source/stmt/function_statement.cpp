@@ -1,5 +1,6 @@
-
 #include "function_statement.h"
+
+#include "compiler.h"
 
 void stmt::function_statement::parse_internal(parser& parser)
 {
@@ -18,4 +19,9 @@ void stmt::function_statement::parse_internal(parser& parser)
 void stmt::function_statement::define_symbols(statement_scope* scope)
 {
 	scope->define_symbol(symbol);
+}
+
+void stmt::function_statement::compile(compiler& compiler)
+{
+	compiler.compile(*this);
 }

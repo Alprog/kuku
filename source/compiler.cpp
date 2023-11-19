@@ -12,8 +12,6 @@ bool optimizations = true;
 compiler::compiler(translation_module& module)
 	: module{ module }
 {
-	current_function = &chunk.functions.emplace_back();
-	current_function->name = "main";
 }
 
 void compiler::compile()
@@ -36,9 +34,10 @@ void compiler::compile()
 	spawn(instruction_END());
 }
 
-void compiler::start_new_function()
+void compiler::start_new_function(std::u16string name)
 {
-
+	current_function = &chunk.functions.emplace_back();
+	current_function->name = name;
 }
 
 void compiler::enter_scope(bool is_loop)
@@ -373,7 +372,8 @@ void compiler::compile(stmt::expression_statement& statement)
 template<>
 void compiler::compile(stmt::function_statement& statement)
 {
-	start_new_function();
+	start_new_function(statement.symbol->name);
+	enter_scope();
 }
 
 template<>

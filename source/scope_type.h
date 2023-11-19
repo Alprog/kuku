@@ -11,7 +11,7 @@ enum class scope_type
 	block_body = 1 << 4,
 	loop_body = 1 << 5,
 
-	imperative_scopes = function_body | property_body | block_body | loop_body | module_root,
+	imperative_scopes = function_body | property_body | block_body | loop_body,
 	end_scopes = imperative_scopes | class_body,
 	any = end_scopes | module_root
 };

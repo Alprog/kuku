@@ -11,7 +11,7 @@ namespace rt
     class function
     {
     public:
-        std::string name;
+        std::u16string name;
 
         bytecode bytecode;
         std::vector<cell> constant_buffer;
