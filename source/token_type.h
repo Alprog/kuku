@@ -50,8 +50,9 @@ reflectable_enum(token_type, int,
     keyword_in,
     keyword_loop,
     keyword_or,
+    keyword_print,
     keyword_return,
     keyword_then,
     keyword_var,
-    keyword_while    
+    keyword_while
 );

@@ -83,6 +83,9 @@ stmt::statement* parser::parse_next_statement()
         case token_type::keyword_loop:
             return create_statement<stmt::loop_statement>();
 
+        case token_type::keyword_print:
+            return create_statement<stmt::print_statement>();
+
         case token_type::keyword_return:
             return create_statement<stmt::return_statement>();
 

@@ -155,9 +155,9 @@ Ins(IFJUMP, "if !R(A) then goto JMP(sBx)", AsBx)
 	routine.call_frame.ip += routine.call_frame.stack[A].boolean ? 1 : sBx;
 }};
 
-Ins(PRINT, "print R(A)", A)
+Ins(PRINT, "print R(A)", MAB)
 {
-	std::cout << routine.call_frame.stack[A].integer << std::endl;
+	std::cout << cellB.integer << std::endl;
 }};
 
 Ins(CREATE_OBJECT, "R(A) = new CLS(Bx)", ABx)

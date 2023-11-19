@@ -20,6 +20,7 @@ auto& get_keywords()
         { u"in", token_type::keyword_in },
         { u"loop", token_type::keyword_loop },
         { u"or", token_type::keyword_or },
+        { u"print", token_type::keyword_print },
         { u"return", token_type::keyword_return },
         { u"then", token_type::keyword_then },
         { u"var", token_type::keyword_var },

@@ -12,6 +12,7 @@
 #include "function_statement.h"
 #include "if_statement.h"
 #include "loop_statement.h"
+#include "print_statement.h"
 #include "return_statement.h"
 #include "scoped_statement.h"
 #include "scoped_symboled_statement.h"

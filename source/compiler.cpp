@@ -493,3 +493,10 @@ void compiler::compile(stmt::break_statement& statement)
 	spawn_jump_to_end(get_loop_context(statement.level));
 }
 
+template<>
+void compiler::compile(stmt::print_statement& statement)
+{
+	compile(statement.expression);
+	inline_operand b = get_top_operand();
+	spawn(instruction_PRINT(b.mode, 0, b.value));
+}

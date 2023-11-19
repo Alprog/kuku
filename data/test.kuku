@@ -4,8 +4,20 @@ if 1 then
 	for i in 1..10 do
 		a = a * 2
 	loop
+	print a
 end
 
+print 111111111
+
+if 2 then
+	var a = 1
+	var i = 0
+	while i < 10 do
+		a = a * 2
+		i = i + 1
+	loop
+	print a
+end
 
 
 #[

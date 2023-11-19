@@ -20,9 +20,9 @@ reflectable_enum(opcode, byte,
 	CODES4(GEQ),
 
 	CODES2(ASSIGN),
-	
+	CODES2(PRINT),
+
 	VALUE,
-	PRINT,
 	CREATE_OBJECT,
 	SET_FIELD,
 	VIRTUAL_CALL,
