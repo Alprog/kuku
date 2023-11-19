@@ -1,11 +1,11 @@
 #pragma once
 
-#include "statement.h"
+#include "scoped_statement.h"
 #include "ast/expression.h"
 
 namespace stmt
 {
-	class if_statement : public statement
+	class if_statement : public scoped_statement<scope_type::block_body>
 	{
 	public:
 		virtual std::u16string get_statement_type() const override { return u"if_statement"; }

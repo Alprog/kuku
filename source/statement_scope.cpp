@@ -48,7 +48,14 @@ symbol* statement_scope::find_symbol(std::u16string name, int requesting_stateme
 		}
 	}
 
-	return nullptr;
+	if (is_root())
+	{
+		return nullptr;
+	}
+	else
+	{
+		return get_parent()->find_symbol(name, requesting_statement_sequence_number);
+	}
 }
 
 void statement_scope::clear()

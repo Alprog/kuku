@@ -1,9 +1,7 @@
 
 #include "scope_analyzer.h"
 #include "statement_scope.h"
-#include "stmt/scoped_statement.h"
-#include "stmt/symboled_statement.h"
-#include "stmt/end_statement.h"
+#include "stmt/all.h"
 #include "translation_module.h"
 #include "source_project.h"
 
@@ -37,14 +35,15 @@ void scope_analyzer::analyze()
 			current_scope->define_symbol(symboled_statement->get_symbol());
 		}
 		
+		if (dynamic_cast<stmt::end_statement*>(statement) || dynamic_cast<stmt::loop_statement*>(statement) || dynamic_cast<stmt::else_statement*>(statement))
+		{
+			current_scope = current_scope->get_parent();
+		}
+
 		auto scoped_statement = dynamic_cast<stmt::scoped_statement_base*>(statement);
 		if (scoped_statement)
 		{
 			current_scope = &scoped_statement->inner_scope;
-		}
-		else if (dynamic_cast<stmt::end_statement*>(statement))
-		{
-			current_scope = current_scope->get_parent();
 		}
 	}
 }

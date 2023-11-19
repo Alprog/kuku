@@ -1,11 +1,11 @@
 #pragma once
 
-#include "statement.h"
+#include "scoped_statement.h"
 #include "ast/expression.h"
 
 namespace stmt
 {
-	class while_statement : public statement
+	class while_statement : public scoped_statement<scope_type::loop_body>
 	{
 	public:
 		virtual std::u16string get_statement_type() const override { return u"while_statement"; }

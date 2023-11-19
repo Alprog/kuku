@@ -144,12 +144,20 @@ token* lexer::get_next_token()
                     return create_token(startIt, token_type::not_operator);       //: !
             }
 
+            case '.':
+            {
+                auto startIt = it++;
+                if (match('.'))
+                    return create_token(startIt, token_type::double_dot); //: ..
+                else
+                    return create_token(startIt, token_type::dot);       //: .
+            }
+
             case '^': return create_token(it++, token_type::exponent_operator);
             case '-': return create_token(it++, token_type::minus_operator);
             case '+': return create_token(it++, token_type::plus_operator);            
             case ':': return create_token(it++, token_type::colon);
             case ';': return create_token(it++, token_type::semicolon);
-            case '.': return create_token(it++, token_type::dot);
             case ',': return create_token(it++, token_type::comma);
             case '[': return create_token(it++, token_type::open_bracket);
             case ']': return create_token(it++, token_type::close_bracket);
