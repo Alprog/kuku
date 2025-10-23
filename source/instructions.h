@@ -112,7 +112,7 @@ Ins(DIVIDE, "R(A) = R(B) / R(C)", M2ABC)
 
 Ins(POWER, "R(A) = R(B) ^ R(C)", M2ABC)
 {
-	routine.call_frame.stack[A].integer = static_cast<integer>(std::pow(routine.call_frame.ptr[B >> 7][B].integer, routine.call_frame.ptr[C >> 7][C].integer));
+	routine.call_frame.stack[A].integer = static_cast<integer>(std::pow(cellB.integer, cellC.integer));
 }};
 
 Ins(EQ, "R(A) = R(B) == R(C)", M2ABC)
